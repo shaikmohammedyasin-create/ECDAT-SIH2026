@@ -1,3 +1,5 @@
+import sys
+import os
 import subprocess
 
 # Add root folder to sys.path so streamlit runs properly

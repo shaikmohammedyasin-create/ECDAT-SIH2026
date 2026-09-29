@@ -91,20 +91,48 @@ def run_full_scan(
     scenario_year: int = 2035,
     x_lifetime: float = 10.0,
     y_migration: float = 3.0,
+    log_callback = None,
 ) -> Tuple[List[CryptoAsset], dict]:
     """
     Runs the complete discovery + analysis pipeline over a directory.
     Returns (processed_assets, metrics).
     """
+    def _log(level: str, msg: str):
+        if log_callback:
+            log_callback(level, msg)
+
     t0 = time.time()
+    _log("INFO", f"Initializing ECDAT engine. Target directory: {directory}")
+    _log("INFO", f"Active Mosca planning horizon: Z={scenario_year}, X={x_lifetime}y, Y={y_migration}y")
     raw = []
-    raw += _scan_source(directory)
-    raw += _scan_dependencies(directory)
-    raw += _scan_certificates(directory)
-    raw += _scan_configs(directory)
-    raw += _scan_binaries(directory)
+
+    _log("INFO", "Executing source scanner (AST call-site visitor & regex fallback)...")
+    src = _scan_source(directory)
+    raw += src
+    _log("INFO", f"Source scan complete: discovered {len(src)} cryptographic instances.")
+
+    _log("INFO", "Executing dependency scanner (multi-manifest parser)...")
+    deps = _scan_dependencies(directory)
+    raw += deps
+    _log("INFO", f"Dependency scan complete: discovered {len(deps)} cryptographic libraries.")
+
+    _log("INFO", "Executing certificate scanner (X.509, PKCS#12, OpenSSH)...")
+    certs = _scan_certificates(directory)
+    raw += certs
+    _log("INFO", f"Certificate scan complete: discovered {len(certs)} certificates & public keys.")
+
+    _log("INFO", "Executing configuration scanner (cipher suites & protocols)...")
+    cfgs = _scan_configs(directory)
+    raw += cfgs
+    _log("INFO", f"Configuration scan complete: discovered {len(cfgs)} configuration rules.")
+
+    _log("INFO", "Executing binary constant pool scanner (JVM bytecode)...")
+    bins = _scan_binaries(directory)
+    raw += bins
+    _log("INFO", f"Binary scan complete: discovered {len(bins)} compiled cryptographic references.")
 
     # Cross-scanner deduplication using deterministic identity
+    _log("INFO", f"Deduplicating {len(raw)} raw cryptographic instances...")
     deduped = []
     seen = {}
     conf_rank = {"HIGH": 3, "MEDIUM": 2, "LOW": 1}
@@ -124,7 +152,9 @@ def run_full_scan(
                 idx = deduped.index(existing)
                 deduped[idx] = asset
                 seen[key] = asset
+    _log("INFO", f"Deduplication complete: {len(deduped)} distinct cryptographic assets normalized.")
 
+    _log("INFO", "Running Post-Quantum analysis pipeline (Quantum Rules, Mosca, Risk Scoring, PQC Recommendations)...")
     processed = []
     for asset in deduped:
         a = apply_quantum_rules(asset)
@@ -145,4 +175,5 @@ def run_full_scan(
         "high_risk": sum(1 for a in processed if a.risk_band == "High"),
         "medium_risk": sum(1 for a in processed if a.risk_band == "Medium"),
     }
+    _log("SUCCESS", f"Scan pipeline complete: {len(processed)} assets analyzed in {metrics['scan_time_s']}s.")
     return processed, metrics
