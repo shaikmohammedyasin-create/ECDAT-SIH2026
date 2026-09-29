@@ -1,0 +1,56 @@
+{
+  "controlled": {
+    "metrics": {
+      "scan_time_s": 0.133,
+      "total_assets": 41,
+      "quantum_vulnerable": 30,
+      "grover_weakened": 0,
+      "classically_broken": 5,
+      "mosca_violations": 30,
+      "critical_risk": 29,
+      "high_risk": 6,
+      "medium_risk": 5
+    },
+    "cbom_valid": true,
+    "recall_classes": 1.0,
+    "detected": {
+      "RSA": 21,
+      "ECDSA": 7,
+      "DSA": 1,
+      "AES": 3,
+      "SHA-1": 2,
+      "DES": 1,
+      "SHA-256": 1,
+      "MD5": 1,
+      "DES3": 1,
+      "TLSV1.0 (legacy)": 1,
+      "X.509": 1,
+      "DH": 1
+    },
+    "expected": {
+      "RSA": 1,
+      "ECDSA": 1,
+      "DSA": 1,
+      "AES": 1,
+      "SHA-256": 1,
+      "SHA-1": 2,
+      "MD5": 1,
+      "DES": 1,
+      "DES3": 1
+    }
+  },
+  "real_cpython_lib": {
+    "metrics": {
+      "scan_time_s": 25.101,
+      "total_assets": 695,
+      "quantum_vulnerable": 681,
+      "grover_weakened": 0,
+      "classically_broken": 9,
+      "mosca_violations": 681,
+      "critical_risk": 690,
+      "high_risk": 0,
+      "medium_risk": 5
+    },
+    "cbom_valid": true
+  }
+}

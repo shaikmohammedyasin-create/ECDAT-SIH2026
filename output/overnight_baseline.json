@@ -1,0 +1,29 @@
+{
+  "timestamp": "2026-09-29T18:40:29Z",
+  "git_initialized": false,
+  "metrics": {
+    "scan_time_s": 0.051,
+    "total_assets": 41,
+    "quantum_vulnerable": 30,
+    "grover_weakened": 0,
+    "classically_broken": 5,
+    "mosca_violations": 30,
+    "critical_risk": 29,
+    "high_risk": 6,
+    "medium_risk": 5
+  },
+  "scan_time_measured_s": 0.0515,
+  "cbom_generation_time_s": 0.0005,
+  "cbom_valid": true,
+  "cbom_error_count": 0,
+  "total_findings": 41,
+  "files_scanned": [
+    "test_corpus\\dependencies\\pom.xml",
+    "test_corpus\\certificates\\test_cert.pem",
+    "test_corpus\\dependencies\\requirements.txt",
+    "test_corpus\\expected_findings.json",
+    "test_corpus\\python\\crypto_sample.py",
+    "test_corpus\\java\\CryptoSample.java",
+    "test_corpus\\configs\\nginx.conf"
+  ]
+}

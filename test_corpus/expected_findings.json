@@ -1,0 +1,34 @@
+{
+  "corpus": "test_corpus",
+  "description": "Controlled ground-truth for ECDAT MVP validation. Algorithms are expected to be detected across the corpus regardless of exact file/line.",
+  "python": {
+    "crypto_sample.py": ["RSA", "ECDSA", "AES", "SHA-256", "SHA-1", "MD5", "DES3"]
+  },
+  "java": {
+    "CryptoSample.java": ["RSA", "DSA", "AES", "SHA-1", "DES"]
+  },
+  "dependencies": {
+    "requirements.txt": ["pycryptodome", "cryptography", "rsa", "ecdsa"],
+    "pom.xml": ["bcprov-jdk15on", "jjwt"]
+  },
+  "certificates": {
+    "test_cert.pem": ["RSA"]
+  },
+  "configs": {
+    "nginx.conf": ["TLSV1.0", "TLSV1.1", "DES", "RSA", "AES"]
+  },
+  "expected_quantum_classes": {
+    "RSA": "SHOR_BROKEN",
+    "ECDSA": "SHOR_BROKEN",
+    "DSA": "SHOR_BROKEN",
+    "ECDH": "SHOR_BROKEN",
+    "X25519": "SHOR_BROKEN",
+    "AES-128": "GROVER_WEAKENED",
+    "AES-256": "QUANTUM_SAFE",
+    "SHA-256": "QUANTUM_SAFE",
+    "SHA-1": "CLASSICALLY_BROKEN",
+    "MD5": "CLASSICALLY_BROKEN",
+    "DES": "CLASSICALLY_BROKEN",
+    "DES3": "CLASSICALLY_BROKEN"
+  }
+}

@@ -1,0 +1,10 @@
+CycloneDX 1.6 Official CBOM Validation
+Timestamp: 2026-09-29 19:01:24 UTC
+Specification: CycloneDX 1.6
+Schema File: app/cbom/schemas/bom-1.6.schema.json
+Validation Status: PASS
+Total Schema Errors: 0
+Validation Engine: jsonschema (Draft 7 / 2020-12 resolver)
+Validated Document: output/final_evidence/final_cbom.json
+Total Components Validated: 32
+Serial Number: urn:uuid:69049731-7add-4241-8a9b-856205368553

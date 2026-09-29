@@ -1,0 +1,82 @@
+{
+  "timestamp": "2026-09-29T18:45:55Z",
+  "controlled_corpus": {
+    "total_findings": 32,
+    "metrics": {
+      "scan_time_s": 0.119,
+      "total_assets": 32,
+      "quantum_vulnerable": 19,
+      "grover_weakened": 0,
+      "classically_broken": 6,
+      "mosca_violations": 19,
+      "critical_risk": 19,
+      "high_risk": 6,
+      "medium_risk": 5
+    },
+    "scan_time_s": 0.119,
+    "cbom_gen_time_s": 0.0009,
+    "cbom_validation_time_s": 0.4331,
+    "total_pipeline_s": 0.5529,
+    "cbom_valid": true,
+    "cbom_error_count": 0,
+    "planted_classes_total": 12,
+    "planted_classes_recalled": 8,
+    "class_recall": 0.67,
+    "false_positives": 0,
+    "detected_algorithms": [
+      "AES",
+      "DES",
+      "DES3",
+      "DH",
+      "DSA",
+      "ECDSA",
+      "MD5",
+      "RSA",
+      "SHA-1",
+      "SHA-256",
+      "TLSV1.0 (legacy)",
+      "X.509"
+    ],
+    "findings_by_file": {
+      "CryptoSample.java": 7,
+      "crypto_sample.py": 13,
+      "nginx.conf": 6,
+      "pom.xml": 2,
+      "requirements.txt": 3,
+      "test_cert.pem": 1
+    }
+  },
+  "sample_project_target": {
+    "total_findings": 42,
+    "metrics": {
+      "scan_time_s": 0.028,
+      "total_assets": 42,
+      "quantum_vulnerable": 25,
+      "grover_weakened": 0,
+      "classically_broken": 8,
+      "mosca_violations": 25,
+      "critical_risk": 26,
+      "high_risk": 7,
+      "medium_risk": 6
+    },
+    "scan_time_s": 0.0282,
+    "cbom_valid": true,
+    "cbom_error_count": 0,
+    "detected_algorithms": [
+      "AES",
+      "DES",
+      "DES3",
+      "DH",
+      "DSA",
+      "ECDH",
+      "ECDSA",
+      "MD5",
+      "RSA",
+      "SHA-1",
+      "SHA-256",
+      "TLS",
+      "TLSV1.0 (legacy)",
+      "X.509"
+    ]
+  }
+}

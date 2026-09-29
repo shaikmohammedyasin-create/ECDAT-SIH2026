@@ -1,0 +1,71 @@
+{
+  "slide_size": "16:9",
+  "slides": [
+    {
+      "layout": "title",
+      "title": "ECDAT",
+      "subtitle": "Enterprise Cryptographic Discovery & Analysis Tool\nProblem Statement 26164 · NTRO · Blockchain & Cybersecurity\nTeam ID: SIH26164",
+      "background": "0F2740"
+    },
+    {
+      "layout": "title_content",
+      "title": "Idea: Discover → Quantify → Migrate",
+      "bullets": [
+        "Unified crypto discovery across source, dependencies, certs & config",
+        "CycloneDX 1.6 CBOM export (validated)",
+        "Quantum-risk scoring with Mosca’s X + Y > Z framework",
+        "HNDL (Harvest Now, Decrypt Later) & TNFL (Trust Now, Forge Later) flags",
+        "Deterministic NIST FIPS 203/204/205 PQC & hybrid recommendations",
+        "100% air-gapped — source never leaves the environment"
+      ]
+    },
+    {
+      "layout": "title_content",
+      "title": "Technical Approach",
+      "bullets": [
+        "Input: local repo / dependencies / X.509 certs / configs",
+        "Discovery: Python-AST & Java API rules + evidence (file, line, rule, confidence)",
+        "Normalise → unified CryptoAsset model",
+        "Classify: SHOR_BROKEN / GROVER_WEAKENED / QUANTUM_SAFE / CLASSICALLY_BROKEN",
+        "Mosca margin = Z − (X+Y), scenario years 2030/2035/2040",
+        "0–100 risk priority → PQC migration → CycloneDX 1.6 CBOM → Streamlit dashboard"
+      ]
+    },
+    {
+      "layout": "title_content",
+      "title": "Feasibility & Viability — Measured",
+      "bullets": [
+        "Working prototype: controlled corpus scan, 41 assets, 10/10 planted classes detected",
+        "Real target: CPython 3.11 stdlib → 695 assets, CBOM validated",
+        "CycloneDX 1.6 CBOM passes official schema validation",
+        "Open-source stack: Python, Streamlit, Plotly, cryptography, jsonschema",
+        "Air-gapped deployable; no external source upload",
+        "MVP vs roadmap boundary enforced (JS/TLS/binary = OPTIONAL; cloud/HSM = ROADMAP)"
+      ]
+    },
+    {
+      "layout": "title_content",
+      "title": "Impact & Benefits",
+      "bullets": [
+        "Complete cryptographic inventory (algorithms, keys, certs, libraries)",
+        "Quantum-risk prioritisation via Mosca & transparent 0–100 score",
+        "HNDL/TNFL protection for long-lived data, signatures & root trust",
+        "Deterministic PQC/hybrid migration planning (ML-KEM-768, ML-DSA-65, SLH-DSA)",
+        "CBOM value for procurement and audit (CycloneDX 1.6)",
+        "Directly applicable to government & critical-infrastructure organisations"
+      ]
+    },
+    {
+      "layout": "title_content",
+      "title": "Research & References (verified)",
+      "bullets": [
+        "NIST FIPS 203 (ML-KEM) · FIPS 204 (ML-DSA) · FIPS 205 (SLH-DSA)",
+        "NIST SP 800-208 (LMS/XMSS) · NIST SP 1800-38B (crypto discovery)",
+        "CycloneDX 1.6 CBOM specification",
+        "Mosca’s quantum-risk framework",
+        "CNSA 2.0 and relevant India PQC/SBOM/CBOM guidance",
+        "All standards claims re-verified against primary sources before submission"
+      ]
+    }
+  ]
+}

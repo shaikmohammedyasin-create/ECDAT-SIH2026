@@ -1,0 +1,1313 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "ECDAT",
+          "version": "1.0.0",
+          "informationUri": "https://sih.gov.in/sih2026PS",
+          "rules": [
+            {
+              "id": "ECDAT-SRC-RSA-GEN",
+              "name": "Cryptographic finding: RSA",
+              "shortDescription": {
+                "text": "Cryptographic primitive RSA (SHOR_BROKEN)"
+              },
+              "fullDescription": {
+                "text": "RSA encryption/key-wrapping is broken by Shor's algorithm."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "SHOR_BROKEN",
+                "hndl_applicable": true,
+                "tnfl_applicable": false
+              }
+            },
+            {
+              "id": "ECDAT-SRC-JAVA-DSA-001",
+              "name": "Cryptographic finding: DSA",
+              "shortDescription": {
+                "text": "Cryptographic primitive DSA (SHOR_BROKEN)"
+              },
+              "fullDescription": {
+                "text": "DSA signatures broken by Shor's algorithm (TNFL risk)."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "SHOR_BROKEN",
+                "hndl_applicable": false,
+                "tnfl_applicable": true
+              }
+            },
+            {
+              "id": "ECDAT-SRC-JAVA-AES-001",
+              "name": "Cryptographic finding: AES",
+              "shortDescription": {
+                "text": "Cryptographic primitive AES (GROVER_WEAKENED)"
+              },
+              "fullDescription": {
+                "text": "AES-128 -> ~64-bit quantum security under Grover's algorithm (advisory)."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "GROVER_WEAKENED",
+                "hndl_applicable": false,
+                "tnfl_applicable": false
+              }
+            },
+            {
+              "id": "ECDAT-SRC-JAVA-SHA1-001",
+              "name": "Cryptographic finding: SHA-1",
+              "shortDescription": {
+                "text": "Cryptographic primitive SHA-1 (CLASSICALLY_BROKEN)"
+              },
+              "fullDescription": {
+                "text": "SHA-1 is classically broken (chosen-prefix collisions)."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "CLASSICALLY_BROKEN",
+                "hndl_applicable": false,
+                "tnfl_applicable": false
+              }
+            },
+            {
+              "id": "ECDAT-SRC-JAVA-DES-001",
+              "name": "Cryptographic finding: DES",
+              "shortDescription": {
+                "text": "Cryptographic primitive DES (CLASSICALLY_BROKEN)"
+              },
+              "fullDescription": {
+                "text": "DES is classically broken (56-bit key)."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "CLASSICALLY_BROKEN",
+                "hndl_applicable": false,
+                "tnfl_applicable": false
+              }
+            },
+            {
+              "id": "ECDAT-SRC-RSA-001",
+              "name": "Cryptographic finding: RSA",
+              "shortDescription": {
+                "text": "Cryptographic primitive RSA (SHOR_BROKEN)"
+              },
+              "fullDescription": {
+                "text": "RSA encryption/key-wrapping is broken by Shor's algorithm."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "SHOR_BROKEN",
+                "hndl_applicable": true,
+                "tnfl_applicable": false
+              }
+            },
+            {
+              "id": "ECDAT-SRC-AES-001",
+              "name": "Cryptographic finding: AES",
+              "shortDescription": {
+                "text": "Cryptographic primitive AES (GROVER_WEAKENED)"
+              },
+              "fullDescription": {
+                "text": "AES-128 -> ~64-bit quantum security under Grover's algorithm (advisory)."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "GROVER_WEAKENED",
+                "hndl_applicable": false,
+                "tnfl_applicable": false
+              }
+            },
+            {
+              "id": "ECDAT-SRC-SHA256-001",
+              "name": "Cryptographic finding: SHA-256",
+              "shortDescription": {
+                "text": "Cryptographic primitive SHA-256 (QUANTUM_SAFE)"
+              },
+              "fullDescription": {
+                "text": "No identified quantum/legacy vulnerability for this primitive."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "QUANTUM_SAFE",
+                "hndl_applicable": false,
+                "tnfl_applicable": false
+              }
+            },
+            {
+              "id": "ECDAT-SRC-SHA1-001",
+              "name": "Cryptographic finding: SHA-1",
+              "shortDescription": {
+                "text": "Cryptographic primitive SHA-1 (CLASSICALLY_BROKEN)"
+              },
+              "fullDescription": {
+                "text": "SHA-1 is classically broken (chosen-prefix collisions)."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "CLASSICALLY_BROKEN",
+                "hndl_applicable": false,
+                "tnfl_applicable": false
+              }
+            },
+            {
+              "id": "ECDAT-SRC-MD5-001",
+              "name": "Cryptographic finding: MD5",
+              "shortDescription": {
+                "text": "Cryptographic primitive MD5 (CLASSICALLY_BROKEN)"
+              },
+              "fullDescription": {
+                "text": "MD5 is classically broken (collisions) and unsuitable."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "CLASSICALLY_BROKEN",
+                "hndl_applicable": false,
+                "tnfl_applicable": false
+              }
+            },
+            {
+              "id": "ECDAT-SRC-ECDSA-GEN",
+              "name": "Cryptographic finding: ECDSA",
+              "shortDescription": {
+                "text": "Cryptographic primitive ECDSA (SHOR_BROKEN)"
+              },
+              "fullDescription": {
+                "text": "ECDSA signatures broken by Shor's algorithm (TNFL risk)."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "SHOR_BROKEN",
+                "hndl_applicable": false,
+                "tnfl_applicable": true
+              }
+            },
+            {
+              "id": "ECDAT-SRC-PY-EC-001",
+              "name": "Cryptographic finding: ECDSA",
+              "shortDescription": {
+                "text": "Cryptographic primitive ECDSA (SHOR_BROKEN)"
+              },
+              "fullDescription": {
+                "text": "ECDSA signatures broken by Shor's algorithm (TNFL risk)."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "SHOR_BROKEN",
+                "hndl_applicable": false,
+                "tnfl_applicable": true
+              }
+            },
+            {
+              "id": "ECDAT-SRC-DES3-001",
+              "name": "Cryptographic finding: DES3",
+              "shortDescription": {
+                "text": "Cryptographic primitive DES3 (CLASSICALLY_BROKEN)"
+              },
+              "fullDescription": {
+                "text": "3DES is weak (112-bit, meet-in-the-middle; deprecated)."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "CLASSICALLY_BROKEN",
+                "hndl_applicable": false,
+                "tnfl_applicable": false
+              }
+            },
+            {
+              "id": "ECDAT-DEP-JAVA-001",
+              "name": "Cryptographic finding: RSA",
+              "shortDescription": {
+                "text": "Cryptographic primitive RSA (SHOR_BROKEN)"
+              },
+              "fullDescription": {
+                "text": "RSA encryption/key-wrapping is broken by Shor's algorithm."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "SHOR_BROKEN",
+                "hndl_applicable": true,
+                "tnfl_applicable": false
+              }
+            },
+            {
+              "id": "ECDAT-DEP-PY-001",
+              "name": "Cryptographic finding: AES",
+              "shortDescription": {
+                "text": "Cryptographic primitive AES (GROVER_WEAKENED)"
+              },
+              "fullDescription": {
+                "text": "AES-128 -> ~64-bit quantum security under Grover's algorithm (advisory)."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "GROVER_WEAKENED",
+                "hndl_applicable": false,
+                "tnfl_applicable": false
+              }
+            },
+            {
+              "id": "ECDAT-CERT-PEM-001",
+              "name": "Cryptographic finding: RSA",
+              "shortDescription": {
+                "text": "Cryptographic primitive RSA (SHOR_BROKEN)"
+              },
+              "fullDescription": {
+                "text": "RSA signatures forgeable once a CRQC exists (TNFL risk)."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "SHOR_BROKEN",
+                "hndl_applicable": false,
+                "tnfl_applicable": true
+              }
+            },
+            {
+              "id": "ECDAT-CFG-TLS-LEGACY",
+              "name": "Cryptographic finding: TLSV1.0 (legacy)",
+              "shortDescription": {
+                "text": "Cryptographic primitive TLSV1.0 (legacy) (QUANTUM_SAFE)"
+              },
+              "fullDescription": {
+                "text": "No identified quantum/legacy vulnerability for this primitive."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "QUANTUM_SAFE",
+                "hndl_applicable": false,
+                "tnfl_applicable": false
+              }
+            },
+            {
+              "id": "ECDAT-CFG-CIPHER-DES",
+              "name": "Cryptographic finding: DES",
+              "shortDescription": {
+                "text": "Cryptographic primitive DES (CLASSICALLY_BROKEN)"
+              },
+              "fullDescription": {
+                "text": "DES is classically broken (56-bit key)."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "CLASSICALLY_BROKEN",
+                "hndl_applicable": false,
+                "tnfl_applicable": false
+              }
+            },
+            {
+              "id": "ECDAT-CFG-CIPHER-RSA",
+              "name": "Cryptographic finding: RSA",
+              "shortDescription": {
+                "text": "Cryptographic primitive RSA (SHOR_BROKEN)"
+              },
+              "fullDescription": {
+                "text": "RSA key exchange is broken by Shor's algorithm (HNDL risk)."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "SHOR_BROKEN",
+                "hndl_applicable": true,
+                "tnfl_applicable": false
+              }
+            },
+            {
+              "id": "ECDAT-CFG-CIPHER-AES",
+              "name": "Cryptographic finding: AES",
+              "shortDescription": {
+                "text": "Cryptographic primitive AES (GROVER_WEAKENED)"
+              },
+              "fullDescription": {
+                "text": "AES-128 -> ~64-bit quantum security under Grover's algorithm (advisory)."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "GROVER_WEAKENED",
+                "hndl_applicable": false,
+                "tnfl_applicable": false
+              }
+            },
+            {
+              "id": "ECDAT-CFG-CERT-001",
+              "name": "Cryptographic finding: X.509",
+              "shortDescription": {
+                "text": "Cryptographic primitive X.509 (QUANTUM_SAFE)"
+              },
+              "fullDescription": {
+                "text": "No identified quantum/legacy vulnerability for this primitive."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "QUANTUM_SAFE",
+                "hndl_applicable": false,
+                "tnfl_applicable": false
+              }
+            },
+            {
+              "id": "ECDAT-CFG-DH-001",
+              "name": "Cryptographic finding: DH",
+              "shortDescription": {
+                "text": "Cryptographic primitive DH (SHOR_BROKEN)"
+              },
+              "fullDescription": {
+                "text": "No identified quantum/legacy vulnerability for this primitive."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "SHOR_BROKEN",
+                "hndl_applicable": true,
+                "tnfl_applicable": false
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "ECDAT-SRC-RSA-GEN",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 87.8. Recommendation: ML-KEM-768 + AES-256 envelope encryption"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/java/CryptoSample.java"
+                },
+                "region": {
+                  "startLine": 11,
+                  "snippet": {
+                    "text": "// P1: RSA 2048 (Shor-broken)"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 87.8,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-RSA-GEN",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 87.8. Recommendation: ML-KEM-768 + AES-256 envelope encryption"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/java/CryptoSample.java"
+                },
+                "region": {
+                  "startLine": 12,
+                  "snippet": {
+                    "text": "public KeyPair genRsa() throws Exception {"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 87.8,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-RSA-GEN",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 87.8. Recommendation: ML-KEM-768 + AES-256 envelope encryption"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/java/CryptoSample.java"
+                },
+                "region": {
+                  "startLine": 13,
+                  "snippet": {
+                    "text": "KeyPairGenerator kpg = KeyPairGenerator.getInstance(\"RSA\");"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 87.8,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-JAVA-DSA-001",
+          "level": "error",
+          "message": {
+            "text": "DSA (Vulnerable) - Risk Score: 87.8. Recommendation: ML-DSA-65"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/java/CryptoSample.java"
+                },
+                "region": {
+                  "startLine": 20,
+                  "snippet": {
+                    "text": "Signature s = Signature.getInstance(\"SHA1withDSA\");"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 87.8,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-JAVA-AES-001",
+          "level": "error",
+          "message": {
+            "text": "AES (Weakened) - Risk Score: 84.2. Recommendation: AES-256-GCM"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/java/CryptoSample.java"
+                },
+                "region": {
+                  "startLine": 28,
+                  "snippet": {
+                    "text": "Cipher c = Cipher.getInstance(\"AES/GCM/NoPadding\");"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 84.2,
+            "risk_band": "Critical",
+            "quantum_status": "Weakened",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-JAVA-SHA1-001",
+          "level": "error",
+          "message": {
+            "text": "SHA-1 (Legacy-broken) - Risk Score: 77.2. Recommendation: SHA-256 / SHA-384 / SHA-3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/java/CryptoSample.java"
+                },
+                "region": {
+                  "startLine": 35,
+                  "snippet": {
+                    "text": "return MessageDigest.getInstance(\"SHA-1\").digest(in);"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-JAVA-DES-001",
+          "level": "error",
+          "message": {
+            "text": "DES (Legacy-broken) - Risk Score: 77.2. Recommendation: AES-256-GCM or ChaCha20-Poly1305"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/java/CryptoSample.java"
+                },
+                "region": {
+                  "startLine": 40,
+                  "snippet": {
+                    "text": "Cipher c = Cipher.getInstance(\"DES/ECB/PKCS5Padding\");"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-RSA-001",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 94.0. Recommendation: ML-KEM-768 + AES-256 envelope encryption"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/python/crypto_sample.py"
+                },
+                "region": {
+                  "startLine": 17,
+                  "snippet": {
+                    "text": "key = RSA.generate(2048)"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 94.0,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-AES-001",
+          "level": "error",
+          "message": {
+            "text": "AES (Weakened) - Risk Score: 84.2. Recommendation: AES-256-GCM"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/python/crypto_sample.py"
+                },
+                "region": {
+                  "startLine": 29,
+                  "snippet": {
+                    "text": "cipher = AES.new(key, AES.MODE_CBC, iv)"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 84.2,
+            "risk_band": "Critical",
+            "quantum_status": "Weakened",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-SHA256-001",
+          "level": "warning",
+          "message": {
+            "text": "SHA-256 (Safe) - Risk Score: 52.8. Recommendation: Maintain current quantum-safe configuration."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/python/crypto_sample.py"
+                },
+                "region": {
+                  "startLine": 35,
+                  "snippet": {
+                    "text": "return hashlib.sha256(data).hexdigest()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 52.8,
+            "risk_band": "Medium",
+            "quantum_status": "Safe",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-SHA1-001",
+          "level": "error",
+          "message": {
+            "text": "SHA-1 (Legacy-broken) - Risk Score: 77.2. Recommendation: SHA-256 / SHA-384 / SHA-3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/python/crypto_sample.py"
+                },
+                "region": {
+                  "startLine": 40,
+                  "snippet": {
+                    "text": "return hashlib.sha1(data).hexdigest()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-MD5-001",
+          "level": "error",
+          "message": {
+            "text": "MD5 (Legacy-broken) - Risk Score: 77.2. Recommendation: SHA-256 / SHA-384 / SHA-3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/python/crypto_sample.py"
+                },
+                "region": {
+                  "startLine": 45,
+                  "snippet": {
+                    "text": "return hashlib.md5(data).hexdigest()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-RSA-GEN",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 87.8. Recommendation: ML-KEM-768 + AES-256 envelope encryption"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/python/crypto_sample.py"
+                },
+                "region": {
+                  "startLine": 4,
+                  "snippet": {
+                    "text": "Planted (expected): RSA-2048, ECDSA P-256, AES-128-CBC, SHA-256, SHA-1, MD5."
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 87.8,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-ECDSA-GEN",
+          "level": "error",
+          "message": {
+            "text": "ECDSA (Vulnerable) - Risk Score: 87.8. Recommendation: ML-DSA-65"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/python/crypto_sample.py"
+                },
+                "region": {
+                  "startLine": 4,
+                  "snippet": {
+                    "text": "Planted (expected): RSA-2048, ECDSA P-256, AES-128-CBC, SHA-256, SHA-1, MD5."
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 87.8,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-RSA-GEN",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 87.8. Recommendation: ML-KEM-768 + AES-256 envelope encryption"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/python/crypto_sample.py"
+                },
+                "region": {
+                  "startLine": 8,
+                  "snippet": {
+                    "text": "from Crypto.PublicKey import RSA"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 87.8,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-RSA-GEN",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 87.8. Recommendation: ML-KEM-768 + AES-256 envelope encryption"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/python/crypto_sample.py"
+                },
+                "region": {
+                  "startLine": 15,
+                  "snippet": {
+                    "text": "# P1: RSA 2048 key generation (Shor-broken)"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 87.8,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-RSA-GEN",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 87.8. Recommendation: ML-KEM-768 + AES-256 envelope encryption"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/python/crypto_sample.py"
+                },
+                "region": {
+                  "startLine": 16,
+                  "snippet": {
+                    "text": "def gen_rsa():"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 87.8,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-ECDSA-GEN",
+          "level": "error",
+          "message": {
+            "text": "ECDSA (Vulnerable) - Risk Score: 87.8. Recommendation: ML-DSA-65"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/python/crypto_sample.py"
+                },
+                "region": {
+                  "startLine": 21,
+                  "snippet": {
+                    "text": "# P2: ECDSA P-256 (Shor-broken)"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 87.8,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-PY-EC-001",
+          "level": "error",
+          "message": {
+            "text": "ECDSA (Vulnerable) - Risk Score: 87.8. Recommendation: ML-DSA-65"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/python/crypto_sample.py"
+                },
+                "region": {
+                  "startLine": 23,
+                  "snippet": {
+                    "text": "priv = ec.generate_private_key(ec.SECP256R1())"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 87.8,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-DES3-001",
+          "level": "error",
+          "message": {
+            "text": "DES3 (Legacy-broken) - Risk Score: 77.2. Recommendation: AES-256-GCM or ChaCha20-Poly1305"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/python/crypto_sample.py"
+                },
+                "region": {
+                  "startLine": 50,
+                  "snippet": {
+                    "text": "return DES3.new(key, DES3.MODE_ECB).encrypt(data)"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-DEP-JAVA-001",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 66.8. Recommendation: ML-KEM-768 + AES-256 envelope encryption"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/dependencies/pom.xml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "snippet": {
+                    "text": "bcprov-jdk15on==1.60"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 66.8,
+            "risk_band": "High",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-DEP-JAVA-001",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 66.8. Recommendation: ML-DSA-65"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/dependencies/pom.xml"
+                },
+                "region": {
+                  "startLine": 1,
+                  "snippet": {
+                    "text": "jjwt==0.9.1"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 66.8,
+            "risk_band": "High",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-DEP-PY-001",
+          "level": "error",
+          "message": {
+            "text": "AES (Weakened) - Risk Score: 63.3. Recommendation: AES-256-GCM"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/dependencies/requirements.txt"
+                },
+                "region": {
+                  "startLine": 1,
+                  "snippet": {
+                    "text": "pycryptodome==3.15.0"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 63.3,
+            "risk_band": "High",
+            "quantum_status": "Weakened",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-DEP-PY-001",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 66.8. Recommendation: ML-KEM-768 + AES-256 envelope encryption"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/dependencies/requirements.txt"
+                },
+                "region": {
+                  "startLine": 1,
+                  "snippet": {
+                    "text": "cryptography==3.4.8"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 66.8,
+            "risk_band": "High",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-DEP-PY-001",
+          "level": "error",
+          "message": {
+            "text": "ECDSA (Vulnerable) - Risk Score: 66.8. Recommendation: ML-DSA-65"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/dependencies/requirements.txt"
+                },
+                "region": {
+                  "startLine": 1,
+                  "snippet": {
+                    "text": "ecdsa==0.18.0"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 66.8,
+            "risk_band": "High",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-CERT-PEM-001",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 93.0. Recommendation: ML-DSA-65"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/certificates/test_cert.pem"
+                },
+                "region": {
+                  "startLine": 1,
+                  "snippet": {
+                    "text": "Format: PEM | Subject: CN=api.enterprise-secure.internal,O=Enterprise Secure Corp,C=IN | Issuer: CN=api.enterprise-secure.internal,O=Enterprise Secure Corp,C=IN | Valid Until: 2030-06-01"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 93.0,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-CFG-TLS-LEGACY",
+          "level": "warning",
+          "message": {
+            "text": "TLSV1.0 (legacy) (Safe) - Risk Score: 43.0. Recommendation: Maintain current quantum-safe configuration."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/configs/nginx.conf"
+                },
+                "region": {
+                  "startLine": 6,
+                  "snippet": {
+                    "text": "ssl_protocols TLSv1.0 TLSv1.1 TLSv1.2 TLSv1.3;"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 43.0,
+            "risk_band": "Medium",
+            "quantum_status": "Safe",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-CFG-CIPHER-DES",
+          "level": "error",
+          "message": {
+            "text": "DES (Legacy-broken) - Risk Score: 67.5. Recommendation: AES-256-GCM or ChaCha20-Poly1305"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/configs/nginx.conf"
+                },
+                "region": {
+                  "startLine": 7,
+                  "snippet": {
+                    "text": "ssl_ciphers 'ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA:AES128-SHA:DES-CBC3-SHA';"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 67.5,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-CFG-CIPHER-RSA",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 78.0. Recommendation: Hybrid X25519 + ML-KEM-768"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/configs/nginx.conf"
+                },
+                "region": {
+                  "startLine": 7,
+                  "snippet": {
+                    "text": "ssl_ciphers 'ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA:AES128-SHA:DES-CBC3-SHA';"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 78.0,
+            "risk_band": "High",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-CFG-CIPHER-AES",
+          "level": "error",
+          "message": {
+            "text": "AES (Weakened) - Risk Score: 68.2. Recommendation: AES-256-GCM"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/configs/nginx.conf"
+                },
+                "region": {
+                  "startLine": 7,
+                  "snippet": {
+                    "text": "ssl_ciphers 'ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA:AES128-SHA:DES-CBC3-SHA';"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 68.2,
+            "risk_band": "High",
+            "quantum_status": "Weakened",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-CFG-CERT-001",
+          "level": "warning",
+          "message": {
+            "text": "X.509 (Safe) - Risk Score: 43.0. Recommendation: Maintain current quantum-safe configuration."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/configs/nginx.conf"
+                },
+                "region": {
+                  "startLine": 10,
+                  "snippet": {
+                    "text": "ssl_certificate /etc/ssl/certs/server.crt;"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 43.0,
+            "risk_band": "Medium",
+            "quantum_status": "Safe",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-CFG-DH-001",
+          "level": "error",
+          "message": {
+            "text": "DH (Vulnerable) - Risk Score: 78.0. Recommendation: Maintain current quantum-safe configuration."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/test_corpus/configs/nginx.conf"
+                },
+                "region": {
+                  "startLine": 12,
+                  "snippet": {
+                    "text": "ssl_dhparam /etc/ssl/certs/dhparam2048.pem;"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 78.0,
+            "risk_band": "High",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        }
+      ],
+      "properties": {
+        "scan_metrics": {
+          "scan_time_s": 0.02,
+          "total_assets": 32,
+          "quantum_vulnerable": 19,
+          "grover_weakened": 4,
+          "classically_broken": 6,
+          "mosca_violations": 23,
+          "critical_risk": 21,
+          "high_risk": 8,
+          "medium_risk": 3
+        },
+        "timestamp": "2026-09-29T19:01:23.943041+00:00"
+      }
+    }
+  ]
+}

@@ -1,0 +1,1840 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:69049731-7add-4241-8a9b-856205368553",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-09-29T19:01:23Z",
+    "component": {
+      "type": "application",
+      "name": "Scanned Target Project"
+    }
+  },
+  "components": [
+    {
+      "type": "cryptographic-asset",
+      "name": "RSA",
+      "bom-ref": "crypto/algorithm/rsa",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\java\\CryptoSample.java",
+            "line": 11,
+            "additionalContext": "// P1: RSA 2048 (Shor-broken)"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "87.8"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "LOW"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-KEM-768 + AES-256 envelope encryption"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "RSA encryption/key-wrapping is broken by Shor's algorithm."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "HNDL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "RSA",
+      "bom-ref": "crypto/algorithm/rsa",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\java\\CryptoSample.java",
+            "line": 12,
+            "additionalContext": "public KeyPair genRsa() throws Exception {"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "87.8"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "LOW"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-KEM-768 + AES-256 envelope encryption"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "RSA encryption/key-wrapping is broken by Shor's algorithm."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "HNDL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "RSA",
+      "bom-ref": "crypto/algorithm/rsa",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\java\\CryptoSample.java",
+            "line": 13,
+            "additionalContext": "KeyPairGenerator kpg = KeyPairGenerator.getInstance(\"RSA\");"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "87.8"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "LOW"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-KEM-768 + AES-256 envelope encryption"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "RSA encryption/key-wrapping is broken by Shor's algorithm."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "HNDL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "DSA",
+      "bom-ref": "crypto/algorithm/dsa",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "signature",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\java\\CryptoSample.java",
+            "line": 20,
+            "additionalContext": "Signature s = Signature.getInstance(\"SHA1withDSA\");"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "87.8"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-DSA-65"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "DSA signatures broken by Shor's algorithm (TNFL risk)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "High \u2014 replace DSA entirely"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "TNFL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "AES",
+      "bom-ref": "crypto/algorithm/aes",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "block-cipher",
+          "parameterSetIdentifier": "unknown",
+          "mode": "gcm",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 1
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\java\\CryptoSample.java",
+            "line": 28,
+            "additionalContext": "Cipher c = Cipher.getInstance(\"AES/GCM/NoPadding\");"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Weakened"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "GROVER_WEAKENED"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "84.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "AES-256-GCM"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "AES-128 -> ~64-bit quantum security under Grover's algorithm (advisory)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 rotate to 256-bit keys"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "SHA-1",
+      "bom-ref": "crypto/algorithm/sha-1",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\java\\CryptoSample.java",
+            "line": 35,
+            "additionalContext": "return MessageDigest.getInstance(\"SHA-1\").digest(in);"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "SHA-256 / SHA-384 / SHA-3"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "SHA-1 is classically broken (chosen-prefix collisions)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace hashing calls + re-hash integrity values"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "DES-56",
+      "bom-ref": "crypto/algorithm/des",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "block-cipher",
+          "parameterSetIdentifier": "56",
+          "classicalSecurityLevel": 112,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\java\\CryptoSample.java",
+            "line": 40,
+            "additionalContext": "Cipher c = Cipher.getInstance(\"DES/ECB/PKCS5Padding\");"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "AES-256-GCM or ChaCha20-Poly1305"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "DES is classically broken (56-bit key)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace cipher"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "RSA-2048",
+      "bom-ref": "crypto/algorithm/rsa",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "2048",
+          "classicalSecurityLevel": 112,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\python\\crypto_sample.py",
+            "line": 17,
+            "additionalContext": "key = RSA.generate(2048)"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "94.0"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-KEM-768 + AES-256 envelope encryption"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "RSA encryption/key-wrapping is broken by Shor's algorithm."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "HNDL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "AES",
+      "bom-ref": "crypto/algorithm/aes",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "block-cipher",
+          "parameterSetIdentifier": "unknown",
+          "mode": "cbc",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 1
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\python\\crypto_sample.py",
+            "line": 29,
+            "additionalContext": "cipher = AES.new(key, AES.MODE_CBC, iv)"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Weakened"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "GROVER_WEAKENED"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "84.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "AES-256-GCM"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "AES-128 -> ~64-bit quantum security under Grover's algorithm (advisory)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 rotate to 256-bit keys"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "SHA-256",
+      "bom-ref": "crypto/algorithm/sha-256",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 3
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\python\\crypto_sample.py",
+            "line": 35,
+            "additionalContext": "return hashlib.sha256(data).hexdigest()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Safe"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "QUANTUM_SAFE"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "52.8"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Medium"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "Maintain current quantum-safe configuration."
+        },
+        {
+          "name": "ecdat:why",
+          "value": "No identified quantum/legacy vulnerability for this primitive."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "None"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "SHA-1",
+      "bom-ref": "crypto/algorithm/sha-1",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\python\\crypto_sample.py",
+            "line": 40,
+            "additionalContext": "return hashlib.sha1(data).hexdigest()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "SHA-256 / SHA-384 / SHA-3"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "SHA-1 is classically broken (chosen-prefix collisions)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace hashing calls + re-hash integrity values"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "MD5",
+      "bom-ref": "crypto/algorithm/md5",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\python\\crypto_sample.py",
+            "line": 45,
+            "additionalContext": "return hashlib.md5(data).hexdigest()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "SHA-256 / SHA-384 / SHA-3"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "MD5 is classically broken (collisions) and unsuitable."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace hashing calls + re-hash integrity values"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "RSA",
+      "bom-ref": "crypto/algorithm/rsa",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\python\\crypto_sample.py",
+            "line": 4,
+            "additionalContext": "Planted (expected): RSA-2048, ECDSA P-256, AES-128-CBC, SHA-256, SHA-1, MD5."
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "87.8"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "LOW"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-KEM-768 + AES-256 envelope encryption"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "RSA encryption/key-wrapping is broken by Shor's algorithm."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "HNDL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "ECDSA",
+      "bom-ref": "crypto/algorithm/ecdsa",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "signature",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\python\\crypto_sample.py",
+            "line": 4,
+            "additionalContext": "Planted (expected): RSA-2048, ECDSA P-256, AES-128-CBC, SHA-256, SHA-1, MD5."
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "87.8"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "MEDIUM"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-DSA-65"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "ECDSA signatures broken by Shor's algorithm (TNFL risk)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium \u2014 update signers/verifiers"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "TNFL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "RSA",
+      "bom-ref": "crypto/algorithm/rsa",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\python\\crypto_sample.py",
+            "line": 8,
+            "additionalContext": "from Crypto.PublicKey import RSA"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "87.8"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "LOW"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-KEM-768 + AES-256 envelope encryption"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "RSA encryption/key-wrapping is broken by Shor's algorithm."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "HNDL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "RSA",
+      "bom-ref": "crypto/algorithm/rsa",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\python\\crypto_sample.py",
+            "line": 15,
+            "additionalContext": "# P1: RSA 2048 key generation (Shor-broken)"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "87.8"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "LOW"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-KEM-768 + AES-256 envelope encryption"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "RSA encryption/key-wrapping is broken by Shor's algorithm."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "HNDL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "RSA",
+      "bom-ref": "crypto/algorithm/rsa",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\python\\crypto_sample.py",
+            "line": 16,
+            "additionalContext": "def gen_rsa():"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "87.8"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "LOW"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-KEM-768 + AES-256 envelope encryption"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "RSA encryption/key-wrapping is broken by Shor's algorithm."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "HNDL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "ECDSA",
+      "bom-ref": "crypto/algorithm/ecdsa",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "signature",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\python\\crypto_sample.py",
+            "line": 21,
+            "additionalContext": "# P2: ECDSA P-256 (Shor-broken)"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "87.8"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "MEDIUM"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-DSA-65"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "ECDSA signatures broken by Shor's algorithm (TNFL risk)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium \u2014 update signers/verifiers"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "TNFL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "ECDSA-256",
+      "bom-ref": "crypto/algorithm/ecdsa",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "signature",
+          "parameterSetIdentifier": "256",
+          "classicalSecurityLevel": 112,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\python\\crypto_sample.py",
+            "line": 23,
+            "additionalContext": "priv = ec.generate_private_key(ec.SECP256R1())"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "87.8"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "MEDIUM"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-DSA-65"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "ECDSA signatures broken by Shor's algorithm (TNFL risk)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium \u2014 update signers/verifiers"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "TNFL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "DES3-112",
+      "bom-ref": "crypto/algorithm/des3",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "block-cipher",
+          "parameterSetIdentifier": "112",
+          "classicalSecurityLevel": 112,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\python\\crypto_sample.py",
+            "line": 50,
+            "additionalContext": "return DES3.new(key, DES3.MODE_ECB).encrypt(data)"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "AES-256-GCM or ChaCha20-Poly1305"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "3DES is weak (112-bit, meet-in-the-middle; deprecated)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace cipher"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "lib/rsa/bcprov-jdk15on",
+      "name": "bcprov-jdk15on",
+      "version": "1.0",
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-KEM-768 + AES-256 envelope encryption"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "lib/rsa/jjwt",
+      "name": "jjwt",
+      "version": "1.0",
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-DSA-65"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "lib/aes/pycryptodome",
+      "name": "pycryptodome",
+      "version": "1.0",
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Weakened"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "AES-256-GCM"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "lib/rsa/cryptography",
+      "name": "cryptography",
+      "version": "1.0",
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-KEM-768 + AES-256 envelope encryption"
+        }
+      ]
+    },
+    {
+      "type": "library",
+      "bom-ref": "lib/ecdsa/ecdsa",
+      "name": "ecdsa",
+      "version": "1.0",
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-DSA-65"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "RSA-2048",
+      "bom-ref": "crypto/certificate/rsa",
+      "cryptoProperties": {
+        "assetType": "certificate",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "2048",
+          "classicalSecurityLevel": 112,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\certificates\\test_cert.pem",
+            "line": 1,
+            "additionalContext": "Format: PEM | Subject: CN=api.enterprise-secure.internal,O=Enterprise Secure Corp,C=IN | Issuer: CN=api.enterprise-secure.internal,O=Enterprise Secure Corp,C=IN | Valid Until: 2030-06-01"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "93.0"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-DSA-65"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "RSA signatures forgeable once a CRQC exists (TNFL risk)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium-High \u2014 re-issue trust chain"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "TNFL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "TLSV1.0 (legacy)",
+      "bom-ref": "crypto/protocol/tlsv1.0 (legacy)",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "algorithmProperties": {
+          "primitive": "other",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 3
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\configs\\nginx.conf",
+            "line": 6,
+            "additionalContext": "ssl_protocols TLSv1.0 TLSv1.1 TLSv1.2 TLSv1.3;"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Safe"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "QUANTUM_SAFE"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "43.0"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Medium"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "Maintain current quantum-safe configuration."
+        },
+        {
+          "name": "ecdat:why",
+          "value": "No identified quantum/legacy vulnerability for this primitive."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "None"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "DES-128",
+      "bom-ref": "crypto/protocol/des",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "algorithmProperties": {
+          "primitive": "block-cipher",
+          "parameterSetIdentifier": "128",
+          "classicalSecurityLevel": 112,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\configs\\nginx.conf",
+            "line": 7,
+            "additionalContext": "ssl_ciphers 'ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA:AES128-SHA:DES-CBC3-SHA';"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "67.5"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "AES-256-GCM or ChaCha20-Poly1305"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "DES is classically broken (56-bit key)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace cipher"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "RSA-2048",
+      "bom-ref": "crypto/protocol/rsa",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "2048",
+          "classicalSecurityLevel": 112,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\configs\\nginx.conf",
+            "line": 7,
+            "additionalContext": "ssl_ciphers 'ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA:AES128-SHA:DES-CBC3-SHA';"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "78.0"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "High"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "MEDIUM"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "Hybrid X25519 + ML-KEM-768"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "RSA key exchange is broken by Shor's algorithm (HNDL risk)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium \u2014 update TLS/servers"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "HNDL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "AES",
+      "bom-ref": "crypto/protocol/aes",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "algorithmProperties": {
+          "primitive": "block-cipher",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 1
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\configs\\nginx.conf",
+            "line": 7,
+            "additionalContext": "ssl_ciphers 'ECDHE-RSA-AES128-GCM-SHA256:DHE-RSA-AES128-SHA:AES128-SHA:DES-CBC3-SHA';"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Weakened"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "GROVER_WEAKENED"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "68.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "High"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "LOW"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "AES-256-GCM"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "AES-128 -> ~64-bit quantum security under Grover's algorithm (advisory)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 rotate to 256-bit keys"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "X.509",
+      "bom-ref": "crypto/protocol/x.509",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "algorithmProperties": {
+          "primitive": "other",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 3
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\configs\\nginx.conf",
+            "line": 10,
+            "additionalContext": "ssl_certificate /etc/ssl/certs/server.crt;"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Safe"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "QUANTUM_SAFE"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "43.0"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Medium"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "MEDIUM"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "Maintain current quantum-safe configuration."
+        },
+        {
+          "name": "ecdat:why",
+          "value": "No identified quantum/legacy vulnerability for this primitive."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "None"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "DH-2048",
+      "bom-ref": "crypto/protocol/dh",
+      "cryptoProperties": {
+        "assetType": "protocol",
+        "algorithmProperties": {
+          "primitive": "key-agree",
+          "parameterSetIdentifier": "2048",
+          "classicalSecurityLevel": 112,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\test_corpus\\configs\\nginx.conf",
+            "line": 12,
+            "additionalContext": "ssl_dhparam /etc/ssl/certs/dhparam2048.pem;"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "78.0"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "High"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "MEDIUM"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "Maintain current quantum-safe configuration."
+        },
+        {
+          "name": "ecdat:why",
+          "value": "No identified quantum/legacy vulnerability for this primitive."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "None"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "HNDL"
+        }
+      ]
+    }
+  ]
+}
