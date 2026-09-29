@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ECDAT // PS-ID: 26164 (NTRO) - New Scan Setup</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=JetBrains+Mono:wght@100..900&display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary": "#6de575",
+            "on-tertiary-fixed-variant": "#005317",
+            "on-surface": "#dee2ec",
+            "surface-container": "#1b2027",
+            "on-secondary": "#00315c",
+            "primary-fixed-dim": "#ffb95f",
+            "error": "#ffb4ab",
+            "tertiary-fixed-dim": "#67df70",
+            "outline-variant": "#534434",
+            "primary": "#ffc174",
+            "surface-container-highest": "#30353d",
+            "inverse-surface": "#dee2ec",
+            "primary-container": "#f59e0b",
+            "surface-tint": "#ffb95f",
+            "inverse-on-surface": "#2c3138",
+            "on-primary": "#472a00",
+            "on-primary-fixed": "#2a1700",
+            "tertiary-fixed": "#83fc89",
+            "secondary-fixed-dim": "#a2c9ff",
+            "outline": "#a08e7a",
+            "on-tertiary": "#00390d",
+            "tertiary-container": "#4fc85d",
+            "surface": "#0f141b",
+            "error-container": "#93000a",
+            "surface-container-low": "#171c23",
+            "on-surface-variant": "#d8c3ad",
+            "on-primary-container": "#613b00",
+            "secondary": "#a2c9ff",
+            "on-tertiary-fixed": "#002105",
+            "primary-fixed": "#ffddb8",
+            "on-secondary-container": "#f0f4ff",
+            "on-error": "#690005",
+            "background": "#0f141b",
+            "secondary-container": "#0071c7",
+            "on-primary-fixed-variant": "#653e00",
+            "surface-container-lowest": "#090f15",
+            "on-secondary-fixed": "#001c38",
+            "secondary-fixed": "#d3e4ff",
+            "on-background": "#dee2ec",
+            "surface-bright": "#343941",
+            "surface-dim": "#0f141b",
+            "on-secondary-fixed-variant": "#004882",
+            "surface-container-high": "#252a32",
+            "surface-variant": "#30353d",
+            "inverse-primary": "#855300",
+            "on-tertiary-container": "#004f16",
+            "on-error-container": "#ffdad6"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-sm": "0.5rem",
+            "margin": "1rem",
+            "space-xs": "0.25rem",
+            "margin-desktop": "1.5rem",
+            "space-xl": "1.5rem",
+            "space-md": "0.75rem",
+            "gutter": "0.75rem",
+            "space-lg": "1rem",
+            "gutter-desktop": "1rem"
+          },
+          "fontFamily": {
+            "label-caps": ["JetBrains Mono"],
+            "code-md": ["JetBrains Mono"],
+            "code-sm": ["JetBrains Mono"],
+            "headline-md": ["Inter"],
+            "headline-xl": ["Inter"],
+            "body-md": ["Inter"],
+            "code-lg": ["JetBrains Mono"],
+            "body-sm": ["Inter"],
+            "headline-lg": ["Inter"]
+          },
+          "fontSize": {
+            "label-caps": ["10px", { "lineHeight": "12px", "letterSpacing": "0.08em", "fontWeight": "600" }],
+            "code-md": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "code-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "headline-md": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "headline-xl": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "body-md": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "code-lg": ["13px", { "lineHeight": "20px", "fontWeight": "500" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-lg": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-size: 16px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+    input[type="range"]::-webkit-slider-thumb {
+      appearance: none;
+      height: 14px;
+      width: 14px;
+      border-radius: 2px;
+      background: #f59e0b;
+      cursor: pointer;
+      border: 1px solid #472a00;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased overflow-hidden select-none flex flex-col h-screen w-screen">
+<!-- TOP APP BAR -->
+<header class="flex justify-between items-center h-10 px-gutter-desktop w-full border-b border-outline-variant bg-surface-container-low shrink-0 select-none z-50">
+<!-- Left: Branding & Core Context -->
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-space-xs text-primary font-code-lg font-bold tracking-tight">
+<span class="material-symbols-outlined text-primary text-base" data-icon="shield">shield</span>
+<span>ECDAT // PS-ID: 26164 (NTRO)</span>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<nav class="hidden md:flex items-center h-10 text-code-sm uppercase tracking-wider">
+<span class="text-on-surface-variant font-code-sm px-space-sm h-full flex items-center hover:text-on-surface cursor-pointer">
+          main:src/crypto-core
+        </span>
+<span class="text-tertiary font-code-sm px-space-sm h-full flex items-center gap-space-xs">
+<span class="inline-block w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+          CycloneDX v1.6 [VALID]
+        </span>
+</nav>
+</div>
+<!-- Right Actions / Controls -->
+<div class="flex items-center gap-space-md">
+<!-- Search Input -->
+<div class="relative flex items-center">
+<input class="bg-surface-container-lowest border border-outline-variant rounded text-on-surface placeholder:text-outline font-code-sm px-space-md py-space-xs text-xs w-60 h-7 focus:outline-none focus:border-secondary transition-colors" placeholder="Filter parameters, rules (⌘K)..." type="text"/>
+<span class="material-symbols-outlined absolute right-2 text-outline text-sm" data-icon="search">search</span>
+</div>
+<!-- Trailing Status & Actions -->
+<div class="hidden sm:flex items-center gap-space-sm">
+<span class="px-2 py-0.5 rounded bg-surface-container-highest border border-outline-variant text-on-surface-variant font-code-sm">
+          Scan Status: Idle
+        </span>
+<button class="bg-primary-container text-on-primary font-headline-md text-xs px-space-md py-1 rounded hover:bg-primary transition-colors flex items-center gap-space-xs font-semibold">
+<span class="material-symbols-outlined" data-icon="play_arrow">play_arrow</span>
+          Run Discovery
+        </button>
+</div>
+<!-- Icon Actions -->
+<div class="flex items-center gap-1 text-on-surface-variant">
+<button class="w-7 h-7 flex items-center justify-center rounded hover:bg-surface-container-high hover:text-on-surface transition-colors" title="Terminal">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+</button>
+<button class="w-7 h-7 flex items-center justify-center rounded hover:bg-surface-container-high hover:text-on-surface transition-colors" title="Engine Tuning">
+<span class="material-symbols-outlined" data-icon="tune">tune</span>
+</button>
+<button class="w-7 h-7 flex items-center justify-center rounded relative hover:bg-surface-container-high hover:text-on-surface transition-colors" title="Notifications">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-1 right-1 w-1.5 h-1.5 bg-primary rounded-full"></span>
+</button>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<!-- Profile Avatar -->
+<div class="flex items-center gap-space-xs">
+<div class="w-6 h-6 rounded bg-surface-container-highest border border-outline-variant flex items-center justify-center text-primary font-code-sm text-xs font-bold" title="Lead Cryptographer SecOps Token">
+          NT
+        </div>
+</div>
+</div>
+</header>
+<!-- WORKSPACE BODY (SIDE NAV + MAIN VIEWPORT) -->
+<div class="flex flex-1 overflow-hidden">
+<!-- SIDE NAV BAR (Shared Component faithfully rendered) -->
+<aside class="w-64 h-[calc(100vh-2.5rem)] flex flex-col justify-between p-space-sm border-r border-outline-variant bg-surface-container-lowest shrink-0 select-none">
+<!-- Top Section -->
+<div class="flex flex-col gap-space-md">
+<!-- Header Unit -->
+<div class="px-space-sm pt-space-xs">
+<div class="flex items-center justify-between">
+<span class="text-primary font-code-lg font-bold uppercase tracking-wide">ECDAT Engine</span>
+<span class="text-tertiary text-label-caps font-label-caps px-1 py-0.5 rounded bg-tertiary-container/10 border border-tertiary/30">ONLINE</span>
+</div>
+<p class="text-outline font-code-sm text-[10px] mt-0.5">SIH 2026 // NTRO SEC</p>
+</div>
+<!-- Primary Quick CTA -->
+<button class="w-full bg-primary-container text-on-primary font-code-md font-semibold py-1.5 px-space-md rounded flex items-center justify-center gap-space-xs hover:bg-primary transition-colors">
+<span class="material-symbols-outlined" data-icon="rocket_launch">rocket_launch</span>
+<span>Initiate AST Scan</span>
+</button>
+<div class="h-px bg-outline-variant"></div>
+<!-- Navigation Tabs List -->
+<nav class="flex flex-col space-y-0.5">
+<!-- 1. Dashboard -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-outline" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- 2. New Scan [ACTIVE ACCORDING TO PROMPT] -->
+<a class="bg-surface-container text-primary font-code-md border-l-2 border-primary-container px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full" href="#">
+<span class="material-symbols-outlined text-primary" data-icon="play_circle">play_circle</span>
+<span class="font-medium">New Scan</span>
+</a>
+<!-- 3. Crypto Inventory -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-outline" data-icon="memory">memory</span>
+<span>Crypto Inventory</span>
+</a>
+<!-- 4. Finding Inspector -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-outline" data-icon="troubleshoot">troubleshoot</span>
+<span>Finding Inspector</span>
+</a>
+<!-- 5. Mosca Simulator -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-outline" data-icon="timeline">timeline</span>
+<span>Mosca Simulator</span>
+</a>
+<!-- 6. Risk Analysis -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-outline" data-icon="analytics">analytics</span>
+<span>Risk Analysis</span>
+</a>
+<!-- 7. Migration Guidance -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-outline" data-icon="swap_calls">swap_calls</span>
+<span>Migration Guidance</span>
+</a>
+<!-- 8. CycloneDX 1.6 CBOM -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-outline" data-icon="verified_user">verified_user</span>
+<span>CycloneDX 1.6 CBOM</span>
+</a>
+<!-- 9. Reports & Evidence -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-outline" data-icon="description">description</span>
+<span>Reports & Evidence</span>
+</a>
+<!-- 10. Terminal / Log -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-outline" data-icon="terminal">terminal</span>
+<span>Terminal / Log</span>
+</a>
+</nav>
+</div>
+<!-- SideNav Footer Info -->
+<div class="flex flex-col gap-1 border-t border-outline-variant pt-space-sm">
+<a class="text-tertiary font-code-sm px-space-md py-1 flex items-center gap-space-sm hover:bg-surface-container-low rounded" href="#">
+<span class="material-symbols-outlined text-tertiary" data-icon="check_circle">check_circle</span>
+<span class="truncate">System Health: Optimal</span>
+</a>
+<a class="text-on-surface-variant font-code-sm px-space-md py-1 flex items-center gap-space-sm hover:text-on-surface hover:bg-surface-container-low rounded" href="#">
+<span class="material-symbols-outlined text-outline" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+<div class="px-space-md py-1 mt-1 bg-surface-container-high/40 rounded flex items-center justify-between text-[10px] font-code-sm text-outline">
+<span>AIR-GAP ID: NTRO-8841</span>
+<span class="text-primary font-bold">SEC-3</span>
+</div>
+</div>
+</aside>
+<!-- MAIN VIEWPORT CANVAS -->
+<main class="flex-1 flex flex-col bg-surface overflow-hidden">
+<!-- Viewport Header -->
+<section class="border-b border-outline-variant bg-surface-container-low/60 px-gutter-desktop py-space-md flex flex-wrap items-center justify-between gap-space-md shrink-0">
+<div>
+<div class="flex items-center gap-space-sm">
+<h1 class="font-headline-xl text-on-surface font-semibold tracking-tight text-xl">New Scan</h1>
+<span class="px-2 py-0.5 rounded bg-primary-container/15 border border-primary-container/40 text-primary font-code-sm text-xs uppercase font-medium">
+              Profile: AST-Crypt-Strict
+            </span>
+</div>
+<p class="font-body-md text-on-surface-variant text-xs mt-0.5">
+            Analyze a local project or authorized source tree for cryptographic discovery and quantum risk.
+          </p>
+</div>
+<div class="flex items-center gap-space-sm">
+<button class="bg-surface-container-high border border-outline-variant text-on-surface font-code-sm px-space-md py-1.5 rounded hover:border-outline hover:text-white transition-colors flex items-center gap-1.5 text-xs">
+<span class="material-symbols-outlined text-outline text-sm" data-icon="folder_open">folder_open</span>
+<span>Load Scan Profile</span>
+</button>
+<button class="bg-surface-container-high border border-outline-variant text-on-surface font-code-sm px-space-md py-1.5 rounded hover:border-outline hover:text-white transition-colors flex items-center gap-1.5 text-xs">
+<span class="material-symbols-outlined text-outline text-sm" data-icon="history">history</span>
+<span>View Recent Scans</span>
+</button>
+</div>
+</section>
+<!-- Scrollable Configuration Viewport -->
+<div class="flex-1 overflow-y-auto p-gutter-desktop space-y-space-lg custom-scrollbar">
+<!-- 1. TARGET SELECTION ZONE -->
+<section class="bg-surface-container-low border border-outline-variant rounded p-space-md">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-space-xs text-primary font-code-sm font-semibold uppercase tracking-wider">
+<span class="material-symbols-outlined text-base" data-icon="folder_special">folder_special</span>
+<span>1. Target Selection Zone</span>
+</div>
+<span class="font-code-sm text-outline text-[11px]">Strict Path Sandbox Activated</span>
+</div>
+<!-- Dropzone Container -->
+<div class="border border-dashed border-outline-variant bg-surface-container-lowest/80 rounded p-space-md hover:border-primary-container/80 transition-colors cursor-pointer group">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-md">
+<div class="flex items-start gap-space-md">
+<div class="w-10 h-10 rounded bg-surface-container border border-outline-variant flex items-center justify-center text-primary group-hover:border-primary-container transition-colors shrink-0">
+<span class="material-symbols-outlined text-xl" data-icon="drive_folder_upload">drive_folder_upload</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<span class="font-code-lg text-primary font-semibold text-sm">local:src/crypto-services/</span>
+<span class="px-1.5 py-0.2 rounded bg-tertiary-container/10 border border-tertiary/40 text-tertiary font-code-sm text-[10px]">
+                      READY
+                    </span>
+</div>
+<p class="font-code-sm text-on-surface-variant text-xs mt-1">
+                    Select or drop project directory to re-target scanner path
+                  </p>
+<!-- Path Metadata -->
+<div class="flex flex-wrap items-center gap-x-space-md gap-y-1 mt-2 text-outline font-code-sm text-[11px]">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="description">description</span>
+                      428 files detected
+                    </span>
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="data_usage">data_usage</span>
+                      ~18.4 MB source footprint
+                    </span>
+<span class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-xs" data-icon="bolt">bolt</span>
+                      Python 3.12 AST & Java Bytecode ready
+                    </span>
+</div>
+</div>
+</div>
+<!-- Primary Path Browse Action -->
+<div class="flex md:flex-col items-end justify-center shrink-0">
+<button class="bg-surface-container-highest border border-outline text-on-surface font-code-sm px-space-md py-1.5 rounded hover:bg-surface-variant hover:text-white transition-colors flex items-center gap-1 text-xs">
+<span class="material-symbols-outlined text-sm" data-icon="manage_search">manage_search</span>
+<span>Browse Directory...</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Quick Selection History Badges -->
+<div class="flex flex-wrap items-center gap-space-xs mt-space-sm pt-space-xs border-t border-outline-variant/40">
+<span class="font-code-sm text-outline text-[11px] mr-1">Quick Select:</span>
+<button class="px-2 py-0.5 rounded bg-surface-container border border-outline-variant font-code-sm text-on-surface-variant hover:border-primary hover:text-primary transition-colors text-[11px] flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="history">history</span>
+              Recent: auth-service
+            </button>
+<button class="px-2 py-0.5 rounded bg-surface-container border border-outline-variant font-code-sm text-on-surface-variant hover:border-primary hover:text-primary transition-colors text-[11px] flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="history">history</span>
+              Recent: payment-gateway
+            </button>
+<button class="px-2 py-0.5 rounded bg-surface-container border border-outline-variant font-code-sm text-on-surface-variant hover:border-primary hover:text-primary transition-colors text-[11px] flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="history">history</span>
+              Recent: core-crypto
+            </button>
+<button class="px-2 py-0.5 rounded bg-surface-container-high/60 border border-outline-variant/60 font-code-sm text-outline hover:text-on-surface transition-colors text-[11px] ml-auto flex items-center gap-1">
+<span class="material-symbols-outlined text-xs" data-icon="refresh">refresh</span>
+              Rescan Git Tree
+            </button>
+</div>
+</section>
+<!-- 2. SCANNER CONFIGURATION GRID (2 COLUMNS) -->
+<section class="grid grid-cols-1 lg:grid-cols-2 gap-space-md">
+<!-- Left Column: Active Collectors -->
+<div class="bg-surface-container-low border border-outline-variant rounded p-space-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-space-xs border-b border-outline-variant mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-base" data-icon="extension">extension</span>
+<h2 class="font-headline-md text-on-surface text-sm font-semibold">Active Collectors (Implemented Engine Modules)</h2>
+</div>
+<span class="font-code-sm text-tertiary text-[11px]">5/5 ENABLED</span>
+</div>
+<p class="font-body-sm text-on-surface-variant text-xs mb-space-sm">
+                Engine parsers with AST extraction and cryptographic parameter synthesis.
+              </p>
+<!-- Checkbox List -->
+<div class="space-y-space-xs font-code-sm">
+<!-- 1. Python Source Scanner -->
+<label class="flex items-start justify-between p-space-xs rounded bg-surface-container-lowest/60 border border-outline-variant/70 hover:border-outline cursor-pointer">
+<div class="flex items-start gap-space-sm">
+<input checked="" class="mt-0.5 w-3.5 h-3.5 rounded bg-surface border-outline-variant text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+<div>
+<div class="text-on-surface text-xs font-medium">Python Source Scanner</div>
+<div class="text-outline text-[11px]">AST visitor, imports, cryptographic calls (cryptography, PyCryptodome, hashlib)</div>
+</div>
+</div>
+<span class="px-1.5 py-0.2 rounded bg-tertiary-container/15 border border-tertiary/40 text-tertiary text-[10px] font-semibold shrink-0">
+                    ACTIVE
+                  </span>
+</label>
+<!-- 2. Java Source Scanner -->
+<label class="flex items-start justify-between p-space-xs rounded bg-surface-container-lowest/60 border border-outline-variant/70 hover:border-outline cursor-pointer">
+<div class="flex items-start gap-space-sm">
+<input checked="" class="mt-0.5 w-3.5 h-3.5 rounded bg-surface border-outline-variant text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+<div>
+<div class="text-on-surface text-xs font-medium">Java Source Scanner</div>
+<div class="text-outline text-[11px]">JDT parser, JCA/JCE provider analysis, KeyPairGenerator inspection</div>
+</div>
+</div>
+<span class="px-1.5 py-0.2 rounded bg-tertiary-container/15 border border-tertiary/40 text-tertiary text-[10px] font-semibold shrink-0">
+                    ACTIVE
+                  </span>
+</label>
+<!-- 3. Dependency Scanner -->
+<label class="flex items-start justify-between p-space-xs rounded bg-surface-container-lowest/60 border border-outline-variant/70 hover:border-outline cursor-pointer">
+<div class="flex items-start gap-space-sm">
+<input checked="" class="mt-0.5 w-3.5 h-3.5 rounded bg-surface border-outline-variant text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+<div>
+<div class="text-on-surface text-xs font-medium">Dependency Scanner</div>
+<div class="text-outline text-[11px]">Manifest evaluation: requirements.txt, Pipfile, pom.xml, build.gradle</div>
+</div>
+</div>
+<span class="px-1.5 py-0.2 rounded bg-tertiary-container/15 border border-tertiary/40 text-tertiary text-[10px] font-semibold shrink-0">
+                    ACTIVE
+                  </span>
+</label>
+<!-- 4. Certificate Scanner -->
+<label class="flex items-start justify-between p-space-xs rounded bg-surface-container-lowest/60 border border-outline-variant/70 hover:border-outline cursor-pointer">
+<div class="flex items-start gap-space-sm">
+<input checked="" class="mt-0.5 w-3.5 h-3.5 rounded bg-surface border-outline-variant text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+<div>
+<div class="text-on-surface text-xs font-medium">Certificate Scanner</div>
+<div class="text-outline text-[11px]">X.509 PEM, DER, key stores, validity & signature algorithms</div>
+</div>
+</div>
+<span class="px-1.5 py-0.2 rounded bg-tertiary-container/15 border border-tertiary/40 text-tertiary text-[10px] font-semibold shrink-0">
+                    ACTIVE
+                  </span>
+</label>
+<!-- 5. Configuration Scanner -->
+<label class="flex items-start justify-between p-space-xs rounded bg-surface-container-lowest/60 border border-outline-variant/70 hover:border-outline cursor-pointer">
+<div class="flex items-start gap-space-sm">
+<input checked="" class="mt-0.5 w-3.5 h-3.5 rounded bg-surface border-outline-variant text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+<div>
+<div class="text-on-surface text-xs font-medium">Configuration Scanner</div>
+<div class="text-outline text-[11px]">TLS configuration, cipher suites, crypto policies, OpenSSL configs</div>
+</div>
+</div>
+<span class="px-1.5 py-0.2 rounded bg-tertiary-container/15 border border-tertiary/40 text-tertiary text-[10px] font-semibold shrink-0">
+                    ACTIVE
+                  </span>
+</label>
+</div>
+</div>
+<div class="mt-space-sm pt-space-xs border-t border-outline-variant/50 flex justify-between items-center text-outline text-[11px] font-code-sm">
+<span>Heuristic level: AST Deep-Walk</span>
+<span class="text-on-surface">5 Parsers Bound</span>
+</div>
+</div>
+<!-- Right Column: Optional & Roadmap Collectors -->
+<div class="bg-surface-container-low border border-outline-variant rounded p-space-md flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between pb-space-xs border-b border-outline-variant mb-space-sm">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-outline text-base" data-icon="alt_route">alt_route</span>
+<h2 class="font-headline-md text-on-surface text-sm font-semibold">Optional & Roadmap Collectors</h2>
+</div>
+<span class="font-code-sm text-outline text-[11px]">3 MODULES STAGED</span>
+</div>
+<p class="font-body-sm text-on-surface-variant text-xs mb-space-sm">
+                Experimental telemetry layers requiring privileged execution flags.
+              </p>
+<!-- Optional Checkbox List -->
+<div class="space-y-space-xs font-code-sm">
+<!-- 1. Native Binary Disassembler -->
+<label class="flex items-start justify-between p-space-xs rounded bg-surface-container-lowest/30 border border-outline-variant/40 hover:border-outline cursor-pointer">
+<div class="flex items-start gap-space-sm">
+<input class="mt-0.5 w-3.5 h-3.5 rounded bg-surface border-outline-variant text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+<div>
+<div class="text-on-surface text-xs font-medium">Native Binary Disassembler</div>
+<div class="text-outline text-[11px]">ELF/PE crypto signatures, constant tables, embedded OpenSSL stubs</div>
+</div>
+</div>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-highest border border-outline text-outline text-[10px] font-semibold shrink-0">
+                    ROADMAP
+                  </span>
+</label>
+<!-- 2. Container Image Scanner -->
+<label class="flex items-start justify-between p-space-xs rounded bg-surface-container-lowest/30 border border-outline-variant/40 hover:border-outline cursor-pointer">
+<div class="flex items-start gap-space-sm">
+<input class="mt-0.5 w-3.5 h-3.5 rounded bg-surface border-outline-variant text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+<div>
+<div class="text-on-surface text-xs font-medium">Container Image Scanner</div>
+<div class="text-outline text-[11px]">OCI layers, static filesystem inspection, rootfs certificate authority trust</div>
+</div>
+</div>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-highest border border-outline text-outline text-[10px] font-semibold shrink-0">
+                    OPTIONAL
+                  </span>
+</label>
+<!-- 3. Live TLS Endpoint Probe -->
+<label class="flex items-start justify-between p-space-xs rounded bg-surface-container-lowest/30 border border-outline-variant/40 hover:border-outline cursor-pointer">
+<div class="flex items-start gap-space-sm">
+<input class="mt-0.5 w-3.5 h-3.5 rounded bg-surface border-outline-variant text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+<div>
+<div class="text-on-surface text-xs font-medium">Live TLS Endpoint Probe</div>
+<div class="text-outline text-[11px]">Handshake cipher negotiation, server preference, OCSP stapling (Authorized only)</div>
+</div>
+</div>
+<span class="px-1.5 py-0.2 rounded bg-error-container/20 border border-error/30 text-error text-[10px] font-semibold shrink-0">
+                    OPTIONAL
+                  </span>
+</label>
+</div>
+</div>
+<!-- Notice Callout -->
+<div class="mt-space-sm p-space-xs bg-surface-container rounded border border-outline-variant flex items-center gap-space-xs text-[11px] font-code-sm text-outline">
+<span class="material-symbols-outlined text-primary-container text-sm" data-icon="lock">lock</span>
+<span>Air-gapped operation restricts live probe outbound sockets automatically.</span>
+</div>
+</div>
+</section>
+<!-- 3. SCAN CONSTRAINTS & PERFORMANCE CONTROLS -->
+<section class="bg-surface-container-low border border-outline-variant rounded p-space-md">
+<div class="flex items-center justify-between pb-space-xs border-b border-outline-variant mb-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-base" data-icon="tune">tune</span>
+<h2 class="font-headline-md text-on-surface text-sm font-semibold">Scan Constraints & Performance Controls</h2>
+</div>
+<span class="font-code-sm text-outline text-[11px]">Target Constraints Profile: Default-NTRO-Balanced</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-md mb-space-md">
+<!-- Slider 1: Maximum File Size -->
+<div class="bg-surface-container-lowest/60 border border-outline-variant p-space-sm rounded">
+<div class="flex items-center justify-between font-code-sm text-xs mb-1">
+<span class="text-on-surface-variant font-medium">Max File Size</span>
+<span class="text-primary font-bold">25 MB</span>
+</div>
+<input class="w-full h-1 bg-surface-container-highest rounded appearance-none cursor-pointer" max="100" min="1" type="range" value="25"/>
+<div class="flex justify-between font-code-sm text-[10px] text-outline mt-1">
+<span>1 MB</span>
+<span>Default: 25 MB</span>
+<span>100 MB</span>
+</div>
+</div>
+<!-- Slider 2: Traversal Depth -->
+<div class="bg-surface-container-lowest/60 border border-outline-variant p-space-sm rounded">
+<div class="flex items-center justify-between font-code-sm text-xs mb-1">
+<span class="text-on-surface-variant font-medium">Max Traversal Depth</span>
+<span class="text-primary font-bold">12 Levels</span>
+</div>
+<input class="w-full h-1 bg-surface-container-highest rounded appearance-none cursor-pointer" max="32" min="2" type="range" value="12"/>
+<div class="flex justify-between font-code-sm text-[10px] text-outline mt-1">
+<span>2</span>
+<span>Default: 12 levels</span>
+<span>32</span>
+</div>
+</div>
+<!-- Slider 3: Worker Threads -->
+<div class="bg-surface-container-lowest/60 border border-outline-variant p-space-sm rounded">
+<div class="flex items-center justify-between font-code-sm text-xs mb-1">
+<span class="text-on-surface-variant font-medium">Worker Threads</span>
+<span class="text-primary font-bold">8 AST Workers</span>
+</div>
+<input class="w-full h-1 bg-surface-container-highest rounded appearance-none cursor-pointer" max="32" min="1" type="range" value="8"/>
+<div class="flex justify-between font-code-sm text-[10px] text-outline mt-1">
+<span>1 Core</span>
+<span>Default: 8</span>
+<span>32 Cores</span>
+</div>
+</div>
+<!-- Slider 4: AST Timeout -->
+<div class="bg-surface-container-lowest/60 border border-outline-variant p-space-sm rounded">
+<div class="flex items-center justify-between font-code-sm text-xs mb-1">
+<span class="text-on-surface-variant font-medium">AST Node Timeout</span>
+<span class="text-primary font-bold">60s</span>
+</div>
+<input class="w-full h-1 bg-surface-container-highest rounded appearance-none cursor-pointer" max="180" min="10" type="range" value="60"/>
+<div class="flex justify-between font-code-sm text-[10px] text-outline mt-1">
+<span>10s</span>
+<span>Default: 60s</span>
+<span>180s</span>
+</div>
+</div>
+</div>
+<!-- Security Guardrails -->
+<div class="pt-space-sm border-t border-outline-variant/60">
+<div class="text-label-caps font-label-caps text-outline uppercase tracking-wider mb-space-xs">
+              Operational Security Guardrails (Mandatory Air-Gap Defaults)
+            </div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-sm font-code-sm">
+<!-- Guardrail 1 -->
+<div class="flex items-center gap-space-sm p-space-xs bg-surface-container-lowest/80 border border-outline-variant rounded">
+<input checked="" class="w-3.5 h-3.5 rounded bg-surface border-outline-variant text-primary-container cursor-not-allowed" disabled="" type="checkbox"/>
+<div>
+<span class="text-xs text-on-surface font-medium block">Safe Path Enforcement</span>
+<span class="text-[10px] text-outline">Strict directory boundary validation & symlink block</span>
+</div>
+</div>
+<!-- Guardrail 2 -->
+<div class="flex items-center gap-space-sm p-space-xs bg-surface-container-lowest/80 border border-outline-variant rounded">
+<input checked="" class="w-3.5 h-3.5 rounded bg-surface border-outline-variant text-primary-container cursor-not-allowed" disabled="" type="checkbox"/>
+<div>
+<span class="text-xs text-on-surface font-medium block">Zero Private Key Retention</span>
+<span class="text-[10px] text-outline">In-memory metadata only, zero disk persistence</span>
+</div>
+</div>
+<!-- Guardrail 3 -->
+<div class="flex items-center gap-space-sm p-space-xs bg-surface-container-lowest/80 border border-outline-variant rounded">
+<input checked="" class="w-3.5 h-3.5 rounded bg-surface border-outline-variant text-primary-container cursor-not-allowed" disabled="" type="checkbox"/>
+<div>
+<span class="text-xs text-on-surface font-medium block">Fully Offline Mode</span>
+<span class="text-[10px] text-outline">Zero telemetry / air-gapped NTRO SEC compliance</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- 4. LIVE PIPELINE PROGRESS PREVIEW BAR & ACTION TRIGGER -->
+<section class="bg-surface-container-low border border-outline-variant rounded p-space-md">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-space-xs text-primary font-code-sm font-semibold uppercase tracking-wider">
+<span class="material-symbols-outlined text-base" data-icon="lan">lan</span>
+<span>4. Execution Pipeline Workflow Preview</span>
+</div>
+<span class="font-code-sm text-outline text-[11px]">8 Sequential Stages Scheduled</span>
+</div>
+<!-- Terminal-style pipeline step pills -->
+<div class="p-space-sm bg-surface-container-lowest rounded border border-outline-variant overflow-x-auto custom-scrollbar">
+<div class="flex items-center gap-2 min-w-max text-code-sm font-code-sm">
+<!-- 1 -->
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container-high border border-primary-container text-primary font-medium">
+<span class="text-[10px] opacity-70">01</span>
+<span>DISCOVERY</span>
+</div>
+<span class="text-outline text-xs">→</span>
+<!-- 2 -->
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container border border-outline-variant text-on-surface-variant">
+<span class="text-[10px] text-outline">02</span>
+<span>DEPENDENCIES</span>
+</div>
+<span class="text-outline text-xs">→</span>
+<!-- 3 -->
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container border border-outline-variant text-on-surface-variant">
+<span class="text-[10px] text-outline">03</span>
+<span>CERTIFICATES</span>
+</div>
+<span class="text-outline text-xs">→</span>
+<!-- 4 -->
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container border border-outline-variant text-on-surface-variant">
+<span class="text-[10px] text-outline">04</span>
+<span>NORMALIZATION</span>
+</div>
+<span class="text-outline text-xs">→</span>
+<!-- 5 -->
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container border border-outline-variant text-on-surface-variant">
+<span class="text-[10px] text-outline">05</span>
+<span>QUANTUM CLASSIFICATION</span>
+</div>
+<span class="text-outline text-xs">→</span>
+<!-- 6 -->
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container border border-outline-variant text-on-surface-variant">
+<span class="text-[10px] text-outline">06</span>
+<span>MOSCA SIMULATION</span>
+</div>
+<span class="text-outline text-xs">→</span>
+<!-- 7 -->
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container border border-outline-variant text-on-surface-variant">
+<span class="text-[10px] text-outline">07</span>
+<span>RISK SCORING</span>
+</div>
+<span class="text-outline text-xs">→</span>
+<!-- 8 -->
+<div class="flex items-center gap-1.5 px-2.5 py-1 rounded bg-surface-container border border-outline-variant text-on-surface-variant">
+<span class="text-[10px] text-outline">08</span>
+<span>CBOM EXPORT</span>
+</div>
+</div>
+</div>
+<!-- Action Trigger Row -->
+<div class="mt-space-md pt-space-sm border-t border-outline-variant flex flex-col sm:flex-row items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-sm text-outline font-code-sm text-xs">
+<span class="material-symbols-outlined text-tertiary text-sm" data-icon="terminal">terminal</span>
+<span>Daemon Ready: IPC Socket /var/run/ecdat-engine.sock [LISTENING]</span>
+</div>
+<div class="flex items-center gap-space-sm w-full sm:w-auto justify-end">
+<button class="bg-surface-container-highest border border-outline text-on-surface font-code-sm px-space-lg py-2 rounded hover:bg-surface-variant transition-colors text-xs flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm" data-icon="save">save</span>
+<span>Save Configuration Profile</span>
+</button>
+<button class="bg-primary-container text-on-primary font-code-lg font-bold px-space-xl py-2 rounded hover:bg-primary transition-colors flex items-center gap-2 text-sm shadow-sm active:translate-y-0.5">
+<span class="material-symbols-outlined text-base" data-icon="play_arrow">play_arrow</span>
+<span>RUN SCAN</span>
+</button>
+</div>
+</div>
+</section>
+</div>
+<!-- BOTTOM DAEMON STATUS LINE -->
+<footer class="h-6 px-gutter-desktop bg-surface-container-lowest border-t border-outline-variant flex items-center justify-between text-[11px] font-code-sm text-outline shrink-0 select-none">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1 text-tertiary">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary inline-block animate-pulse"></span>
+<span>DAEMON: IDLE</span>
+</div>
+<span class="hidden sm:inline text-outline-variant">|</span>
+<span class="hidden sm:inline">WORKSPACE: /home/secops/crypt-audit</span>
+<span class="hidden md:inline text-outline-variant">|</span>
+<span class="hidden md:inline">RAM: 3.2 / 32 GB</span>
+</div>
+<div class="flex items-center gap-space-md font-code-sm">
+<span class="text-on-surface-variant">UTF-8</span>
+<span class="text-outline-variant">|</span>
+<span class="text-primary">CycloneDX v1.6 Spec</span>
+<span class="text-outline-variant">|</span>
+<span>AIR-GAP VALIDATED</span>
+</div>
+</footer>
+</main>
+</div>
+</body></html>

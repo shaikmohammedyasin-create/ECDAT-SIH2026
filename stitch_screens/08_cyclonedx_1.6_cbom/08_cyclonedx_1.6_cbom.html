@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ECDAT // CycloneDX 1.6 CBOM Inspection Suite</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary-fixed-dim": "#ffb95f",
+            "tertiary-container": "#4fc85d",
+            "inverse-primary": "#855300",
+            "on-surface-variant": "#d8c3ad",
+            "tertiary-fixed-dim": "#67df70",
+            "on-surface": "#dee2ec",
+            "on-secondary-fixed": "#001c38",
+            "tertiary-fixed": "#83fc89",
+            "on-primary-fixed": "#2a1700",
+            "inverse-on-surface": "#2c3138",
+            "on-error": "#690005",
+            "background": "#0f141b",
+            "on-tertiary-fixed": "#002105",
+            "on-tertiary-fixed-variant": "#005317",
+            "surface-container-high": "#252a32",
+            "on-primary-fixed-variant": "#653e00",
+            "surface-bright": "#343941",
+            "on-error-container": "#ffdad6",
+            "on-secondary-container": "#f0f4ff",
+            "surface-variant": "#30353d",
+            "outline-variant": "#534434",
+            "on-secondary": "#00315c",
+            "on-primary-container": "#613b00",
+            "on-background": "#dee2ec",
+            "secondary": "#a2c9ff",
+            "primary": "#ffc174",
+            "primary-container": "#f59e0b",
+            "surface-container-highest": "#30353d",
+            "on-tertiary": "#00390d",
+            "surface-dim": "#0f141b",
+            "error-container": "#93000a",
+            "on-primary": "#472a00",
+            "secondary-container": "#0071c7",
+            "surface-tint": "#ffb95f",
+            "inverse-surface": "#dee2ec",
+            "surface-container": "#1b2027",
+            "on-tertiary-container": "#004f16",
+            "secondary-fixed-dim": "#a2c9ff",
+            "primary-fixed": "#ffddb8",
+            "surface-container-lowest": "#090f15",
+            "outline": "#a08e7a",
+            "tertiary": "#6de575",
+            "surface-container-low": "#171c23",
+            "on-secondary-fixed-variant": "#004882",
+            "secondary-fixed": "#d3e4ff",
+            "surface": "#0f141b",
+            "error": "#ffb4ab"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-xl": "1.5rem",
+            "gutter-desktop": "1rem",
+            "margin": "1rem",
+            "gutter": "0.75rem",
+            "space-lg": "1rem",
+            "space-xs": "0.25rem",
+            "space-md": "0.75rem",
+            "space-sm": "0.5rem",
+            "margin-desktop": "1.5rem"
+          },
+          "fontFamily": {
+            "body-sm": ["Inter"],
+            "code-lg": ["JetBrains Mono"],
+            "code-md": ["JetBrains Mono"],
+            "headline-md": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-lg": ["Inter"],
+            "label-caps": ["JetBrains Mono"],
+            "code-sm": ["JetBrains Mono"],
+            "headline-xl": ["Inter"]
+          },
+          "fontSize": {
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "code-lg": ["13px", { "lineHeight": "20px", "fontWeight": "500" }],
+            "code-md": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-md": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "body-md": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "headline-lg": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "label-caps": ["10px", { "lineHeight": "12px", "letterSpacing": "0.08em", "fontWeight": "600" }],
+            "code-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "headline-xl": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    /* Custom terminal scrollbars */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090f15;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #30353d;
+      border-radius: 2px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #534434;
+    }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 16px;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased overflow-hidden h-screen flex flex-col font-body-md select-none">
+<!-- ================= TOP NAV BAR (SHARED COMPONENT) ================= -->
+<header class="flex justify-between items-center h-10 px-gutter-desktop w-full border-b border-outline-variant bg-surface-container-low shrink-0 select-none z-50">
+<!-- Brand / PS-ID & Context Breadcrumb -->
+<div class="flex items-center gap-space-md h-full">
+<div class="flex items-center gap-space-xs text-primary font-code-lg font-bold tracking-tight">
+<span class="material-symbols-outlined text-primary text-base">terminal</span>
+<span>ECDAT // PS-ID: 26164 (NTRO)</span>
+</div>
+<span class="text-outline-variant">/</span>
+<!-- Inactive & Active Navigation Links from JSON -->
+<nav class="flex items-center h-full gap-space-xs">
+<div class="text-on-surface-variant font-code-sm px-space-sm h-full flex items-center hover:text-on-surface cursor-pointer transition-colors duration-150">
+<span class="material-symbols-outlined mr-1 text-[13px] text-outline">account_tree</span>
+<span>main:src/crypto-core</span>
+</div>
+<span class="text-outline-variant">/</span>
+<div class="text-primary font-code-md border-b-2 border-primary px-space-sm h-full flex items-center font-medium bg-surface-container-low">
+<span class="material-symbols-outlined mr-1 text-[14px] text-tertiary">verified_user</span>
+<span>CycloneDX v1.6 [VALID]</span>
+</div>
+</nav>
+</div>
+<!-- Center/Right Search Bar & SecOps Actions -->
+<div class="flex items-center gap-space-md">
+<!-- Search Input -->
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-2 text-outline text-sm">search</span>
+<input class="bg-surface-container-lowest border border-outline-variant text-on-surface text-code-sm font-code-sm rounded-none pl-7 pr-12 py-1 h-7 w-64 focus:outline-none focus:ring-1 focus:ring-primary-container placeholder:text-outline" placeholder="Search CBOM nodes, OIDs, algorithm assets..." type="text"/>
+<div class="absolute right-1 px-1 bg-surface-container-high rounded text-outline text-[10px] font-code-sm border border-outline-variant">
+          ⌘K
+        </div>
+</div>
+<!-- Scan Idle Chip / Actions -->
+<div class="flex items-center gap-1.5 px-2 py-0.5 border border-outline-variant bg-surface-container-lowest text-code-sm font-code-sm text-outline">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary inline-block"></span>
+<span>Scan Status: Idle</span>
+</div>
+<!-- Action Button Primary -->
+<button class="bg-primary-container text-on-primary-container hover:bg-primary transition-colors text-code-sm font-code-sm font-semibold px-space-sm h-7 rounded-none flex items-center gap-1 focus:outline-none">
+<span class="material-symbols-outlined text-[14px]">play_arrow</span>
+<span>Run Discovery</span>
+</button>
+<!-- Trailing Icon Cluster -->
+<div class="flex items-center border-l border-outline-variant pl-space-sm gap-1">
+<button class="p-1 hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors" title="Integrated Terminal">
+<span class="material-symbols-outlined">terminal</span>
+</button>
+<button class="p-1 hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors" title="Scan Tuning">
+<span class="material-symbols-outlined">tune</span>
+</button>
+<button class="p-1 hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors relative" title="Notifications">
+<span class="material-symbols-outlined">notifications</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary absolute top-1 right-1"></span>
+</button>
+</div>
+<!-- Profile Avatar Token -->
+<div class="flex items-center gap-1.5 pl-1 border-l border-outline-variant">
+<div class="w-6 h-6 rounded-none bg-surface-container-high border border-outline-variant flex items-center justify-center text-primary font-code-sm font-bold text-xs" title="Lead Cryptographer SecOps Token">
+          NT
+        </div>
+</div>
+</div>
+</header>
+<!-- ================= MAIN WORKSPACE (SIDEBAR + SPLIT CANVASES) ================= -->
+<div class="flex flex-1 overflow-hidden relative">
+<!-- ================= SIDE NAV BAR (SHARED COMPONENT) ================= -->
+<aside class="w-64 h-[calc(100vh-2.5rem)] flex flex-col justify-between p-space-sm border-r border-outline-variant bg-surface-container-lowest shrink-0 select-none">
+<!-- Top Section: Header & Discovery Trigger -->
+<div class="flex flex-col gap-space-sm">
+<div class="px-space-md py-space-xs border-b border-outline-variant pb-2">
+<div class="text-primary font-code-lg font-bold uppercase tracking-tight flex items-center justify-between">
+<span>ECDAT Engine</span>
+<span class="text-[10px] font-code-sm bg-surface-container text-outline px-1 border border-outline-variant">v2.4</span>
+</div>
+<div class="text-outline text-code-sm font-code-sm">SIH 2026 // NTRO SEC</div>
+</div>
+<button class="w-full bg-surface-container hover:bg-surface-container-high text-primary border border-outline-variant text-code-sm font-code-sm font-medium py-1 px-space-sm flex items-center justify-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[15px] text-primary">play_circle</span>
+<span>Initiate AST Scan</span>
+</button>
+<!-- 10 Navigation Tabs with Tab 8 'CycloneDX 1.6 CBOM' strictly active -->
+<nav class="flex flex-col gap-0.5 mt-1">
+<!-- 1. Dashboard -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- 2. New Scan -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">play_circle</span>
+<span>New Scan</span>
+</a>
+<!-- 3. Crypto Inventory -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">memory</span>
+<span>Crypto Inventory</span>
+</a>
+<!-- 4. Finding Inspector -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">troubleshoot</span>
+<span>Finding Inspector</span>
+</a>
+<!-- 5. Mosca Simulator -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">timeline</span>
+<span>Mosca Simulator</span>
+</a>
+<!-- 6. Risk Analysis -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span>Risk Analysis</span>
+</a>
+<!-- 7. Migration Guidance -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">swap_calls</span>
+<span>Migration Guidance</span>
+</a>
+<!-- 8. CycloneDX 1.6 CBOM (ACTIVE - Exact Mapping) -->
+<a class="bg-surface-container text-primary font-code-md border-l-2 border-primary-container px-space-md py-space-xs rounded-none flex items-center justify-between gap-space-sm w-full" href="#">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary">verified_user</span>
+<span class="font-semibold">CycloneDX 1.6 CBOM</span>
+</div>
+<span class="text-[9px] bg-tertiary-container text-on-tertiary-container font-code-sm px-1 rounded-sm uppercase tracking-wide">VALID</span>
+</a>
+<!-- 9. Reports & Evidence -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">description</span>
+<span>Reports &amp; Evidence</span>
+</a>
+<!-- 10. Terminal / Log -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span>Terminal / Log</span>
+</a>
+</nav>
+</div>
+<!-- Footer Section: Health & Settings -->
+<div class="border-t border-outline-variant pt-space-xs flex flex-col gap-0.5">
+<div class="text-on-surface-variant font-code-sm px-space-md py-1 flex items-center gap-space-sm text-tertiary">
+<span class="material-symbols-outlined text-tertiary text-sm">check_circle</span>
+<span class="text-[11px]">System Health: Optimal</span>
+</div>
+<a class="text-on-surface-variant font-code-sm px-space-md py-1 flex items-center gap-space-sm hover:text-on-surface transition-colors" href="#">
+<span class="material-symbols-outlined text-sm">settings</span>
+<span class="text-[11px]">Settings</span>
+</a>
+</div>
+</aside>
+<!-- ================= DEDICATED CBOM CONTENT CANVAS ================= -->
+<main class="flex-1 flex flex-col overflow-hidden bg-background">
+<!-- Top Title Bar & Schema Metadata -->
+<div class="px-margin-desktop py-space-md border-b border-outline-variant bg-surface-container-low shrink-0">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div>
+<div class="flex items-center gap-2">
+<h1 class="text-headline-lg font-headline-lg text-on-surface tracking-tight">Cryptographic Bill of Materials (CBOM)</h1>
+<span class="px-1.5 py-0.5 bg-surface-container-high border border-outline-variant font-code-sm text-code-sm text-primary">Spec 1.6 Draft-Final</span>
+<span class="px-1.5 py-0.5 bg-tertiary/10 border border-tertiary/40 font-code-sm text-code-sm text-tertiary">CycloneDX Cryptographic Extension</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">CycloneDX v1.6 Cryptographic Extension specification compliance and formal schema verification</p>
+</div>
+<div class="flex items-center gap-2">
+<div class="text-right">
+<span class="text-[10px] font-code-sm text-outline block">TARGET REPOSITORY</span>
+<span class="text-code-sm font-code-sm text-on-surface font-semibold">github.com/ntro-sec/crypto-core</span>
+</div>
+<div class="h-6 w-px bg-outline-variant mx-1"></div>
+<div class="text-right">
+<span class="text-[10px] font-code-sm text-outline block">LAST GENERATED</span>
+<span class="text-code-sm font-code-sm text-primary">2026-03-30 08:42:19 UTC</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Formal Validation Status Banner -->
+<div class="px-margin-desktop py-space-sm border-b border-outline-variant bg-surface-container-lowest shrink-0">
+<div class="bg-surface-container border border-outline-variant p-space-sm flex flex-col xl:flex-row xl:items-center justify-between gap-space-md">
+<!-- Validation Telemetry -->
+<div class="flex items-start sm:items-center gap-3">
+<div class="w-8 h-8 rounded-none bg-tertiary/10 border border-tertiary/50 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-tertiary text-lg">verified_user</span>
+</div>
+<div>
+<div class="flex items-center gap-2 flex-wrap">
+<span class="font-code-md text-code-md font-bold text-tertiary uppercase tracking-wide">
+                  CBOM SCHEMA STATUS: VALID
+                </span>
+<span class="text-outline text-xs">•</span>
+<span class="font-code-sm text-code-sm text-on-surface">NIST SP 800-56C &amp; CycloneDX v1.6 Spec Compliant</span>
+</div>
+<div class="flex items-center gap-space-md text-code-sm font-code-sm text-on-surface-variant mt-0.5 flex-wrap">
+<span class="flex items-center gap-1 text-tertiary">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> 0 Validation Errors
+                </span>
+<span class="flex items-center gap-1 text-outline">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span> 0 Warnings
+                </span>
+<span class="text-outline">|</span>
+<span class="text-outline">URN: <span class="text-secondary font-mono">urn:uuid:ecdat-2026-ntro-cbom-8841</span></span>
+<span class="text-outline">|</span>
+<span class="text-outline">Version: <span class="text-primary font-mono">1</span></span>
+</div>
+</div>
+</div>
+<!-- Utility Action Buttons Group -->
+<div class="flex items-center gap-1.5 flex-wrap">
+<button class="bg-surface-container-high hover:bg-surface-variant text-on-surface border border-outline-variant text-code-sm font-code-sm px-2.5 py-1 flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-sm">refresh</span>
+<span>Re-Validate Schema</span>
+</button>
+<button class="bg-primary-container text-on-primary-container hover:bg-primary font-semibold text-code-sm font-code-sm px-2.5 py-1 flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-sm">download</span>
+<span>Export CBOM JSON</span>
+</button>
+<button class="bg-surface-container-high hover:bg-surface-variant text-on-surface border border-outline-variant text-code-sm font-code-sm px-2.5 py-1 flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-sm">output</span>
+<span>Export SARIF</span>
+</button>
+<button class="bg-surface-container-high hover:bg-surface-variant text-on-surface border border-outline-variant text-code-sm font-code-sm px-2.5 py-1 flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-sm">table_view</span>
+<span>Export CSV</span>
+</button>
+<button class="bg-surface-container-lowest hover:bg-surface-container-high text-primary border border-primary/40 text-code-sm font-code-sm px-2.5 py-1 flex items-center gap-1 transition-colors" title="Copy Raw CBOM to Clipboard">
+<span class="material-symbols-outlined text-sm">content_copy</span>
+<span>Copy Raw JSON</span>
+</button>
+</div>
+</div>
+</div>
+<!-- ================= SPLIT WORKBENCH CANVASES (45% / 55%) ================= -->
+<div class="flex-1 flex overflow-hidden">
+<!-- ================= LEFT PANE (45%): CRYPTOGRAPHIC COMPONENTS TREE ================= -->
+<section class="w-[45%] border-r border-outline-variant flex flex-col bg-surface-container-lowest overflow-hidden">
+<!-- Pane ToolBar & Filter Bar -->
+<div class="h-9 px-space-md border-b border-outline-variant bg-surface-container-low flex items-center justify-between shrink-0">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">account_tree</span>
+<span class="font-code-md text-code-md font-semibold text-on-surface uppercase tracking-wider">Discovered Cryptographic Assets</span>
+<span class="px-1.5 py-0.2 bg-surface-container font-code-sm text-[11px] text-outline border border-outline-variant">14 items</span>
+</div>
+<!-- View / Filter Toggles -->
+<div class="flex items-center gap-1 text-code-sm font-code-sm text-outline">
+<span class="px-1 text-[10px] uppercase font-bold text-on-surface-variant">Class:</span>
+<button class="px-1.5 py-0.5 bg-surface-container text-primary border border-outline-variant text-[11px]">All</button>
+<button class="px-1.5 py-0.5 hover:bg-surface-container text-on-surface-variant text-[11px]">Algorithms (8)</button>
+<button class="px-1.5 py-0.5 hover:bg-surface-container text-on-surface-variant text-[11px]">Certificates (3)</button>
+<button class="px-1.5 py-0.5 hover:bg-surface-container text-on-surface-variant text-[11px]">Libs (3)</button>
+</div>
+</div>
+<!-- Tree & Details Container -->
+<div class="flex-1 overflow-y-auto divide-y divide-outline-variant/60 font-code-sm">
+<!-- SECTION 1: ASSET TYPE 'crypto-asset' (PRIMITIVES & ALGORITHMS) -->
+<div class="bg-surface-container-low/30">
+<div class="px-3 py-1.5 bg-surface-container flex items-center justify-between text-on-surface-variant text-[11px] font-semibold border-b border-outline-variant/40">
+<span class="flex items-center gap-1.5 text-primary">
+<span class="material-symbols-outlined text-xs">folder_open</span>
+<span>CYCLONEDX TYPE: crypto-asset (ALGORITHMS &amp; PRIMITIVES)</span>
+</span>
+<span class="text-outline font-normal">8 components discovered</span>
+</div>
+<!-- Item 1: RSA-2048 PKCS#1 v1.5 (Vulnerable / Legacy) -->
+<div class="p-3 hover:bg-surface-container/60 cursor-pointer border-l-2 border-primary-container bg-surface-container/20 transition-colors">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">key</span>
+<span class="text-on-surface font-semibold text-code-md">RSA-2048-PKCS1v15</span>
+<span class="px-1.5 py-0.2 bg-error-container/40 text-error text-[10px] border border-error/30 font-mono">PQC-VULNERABLE</span>
+</div>
+<span class="text-[11px] text-outline font-mono">OID: 1.2.840.113549.1.1.1</span>
+</div>
+<div class="grid grid-cols-2 gap-x-4 gap-y-1 mt-2 text-[11px] text-on-surface-variant">
+<div><span class="text-outline">Primitive:</span> <span class="text-on-surface font-mono">pke (Public Key Encryption)</span></div>
+<div><span class="text-outline">Key Length:</span> <span class="text-primary font-mono">2048-bit</span></div>
+<div><span class="text-outline">Padding Scheme:</span> <span class="text-error font-mono">PKCS#1 v1.5 (Deterministic)</span></div>
+<div><span class="text-outline">Exec Context:</span> <span class="text-on-surface font-mono">software-plain (Userspace)</span></div>
+<div class="col-span-2 mt-0.5"><span class="text-outline">File Ref:</span> <span class="text-secondary font-mono">src/crypto-core/engine/rsa_signer.c:142</span></div>
+</div>
+<div class="mt-2 pt-2 border-t border-outline-variant/40 flex items-center justify-between text-[10px] text-outline">
+<span>CycloneDX bom-ref: <span class="text-on-surface font-mono">ecdat-ref-algo-rsa-001</span></span>
+<span class="text-tertiary">Schema: Validated</span>
+</div>
+</div>
+<!-- Item 2: ML-KEM-768 (Quantum Resilient) -->
+<div class="p-3 hover:bg-surface-container/60 cursor-pointer border-l-2 border-tertiary transition-colors">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-sm">lock</span>
+<span class="text-on-surface font-semibold text-code-md">ML-KEM-768 (Kyber)</span>
+<span class="px-1.5 py-0.2 bg-tertiary/10 text-tertiary text-[10px] border border-tertiary/30 font-mono">PQC-COMPLIANT</span>
+</div>
+<span class="text-[11px] text-outline font-mono">OID: 2.16.840.1.101.3.4.4.2</span>
+</div>
+<div class="grid grid-cols-2 gap-x-4 gap-y-1 mt-2 text-[11px] text-on-surface-variant">
+<div><span class="text-outline">Primitive:</span> <span class="text-on-surface font-mono">kem (Key Encapsulation)</span></div>
+<div><span class="text-outline">Security Category:</span> <span class="text-tertiary font-mono">NIST Level 3 (AES-192 equiv)</span></div>
+<div><span class="text-outline">Parameter Set:</span> <span class="text-on-surface font-mono">ML-KEM-768 (k=3)</span></div>
+<div><span class="text-outline">Exec Context:</span> <span class="text-on-surface font-mono">hardware-enclave (HSM)</span></div>
+<div class="col-span-2 mt-0.5"><span class="text-outline">File Ref:</span> <span class="text-secondary font-mono">src/crypto-core/pqc/kem_wrapper.rs:88</span></div>
+</div>
+<div class="mt-2 pt-2 border-t border-outline-variant/40 flex items-center justify-between text-[10px] text-outline">
+<span>CycloneDX bom-ref: <span class="text-on-surface font-mono">ecdat-ref-algo-mlkem-768</span></span>
+<span class="text-tertiary">Schema: Validated</span>
+</div>
+</div>
+<!-- Item 3: AES-256-GCM -->
+<div class="p-3 hover:bg-surface-container/60 cursor-pointer border-l-2 border-outline-variant hover:border-secondary transition-colors">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-sm">shield</span>
+<span class="text-on-surface font-semibold text-code-md">AES-256-GCM</span>
+<span class="px-1.5 py-0.2 bg-secondary/10 text-secondary text-[10px] border border-secondary/30 font-mono">SYMMETRIC</span>
+</div>
+<span class="text-[11px] text-outline font-mono">OID: 2.16.840.1.101.3.4.1.46</span>
+</div>
+<div class="grid grid-cols-2 gap-x-4 gap-y-1 mt-2 text-[11px] text-on-surface-variant">
+<div><span class="text-outline">Primitive:</span> <span class="text-on-surface font-mono">ae (Authenticated Encryption)</span></div>
+<div><span class="text-outline">Tag Length:</span> <span class="text-on-surface font-mono">128-bit</span></div>
+<div><span class="text-outline">IV Generation:</span> <span class="text-on-surface font-mono">CSPRNG deterministic 96-bit</span></div>
+<div><span class="text-outline">Implementation:</span> <span class="text-on-surface font-mono">AES-NI Hardware Acceleration</span></div>
+</div>
+</div>
+<!-- Item 4: ECDSA P-384 -->
+<div class="p-3 hover:bg-surface-container/60 cursor-pointer border-l-2 border-outline-variant hover:border-primary-container transition-colors">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">fingerprint</span>
+<span class="text-on-surface font-semibold text-code-md">ECDSA-secp384r1 (NIST P-384)</span>
+<span class="px-1.5 py-0.2 bg-error-container/40 text-error text-[10px] border border-error/30 font-mono">TRANSITION-PHASE</span>
+</div>
+<span class="text-[11px] text-outline font-mono">OID: 1.2.840.10045.2.1</span>
+</div>
+<div class="grid grid-cols-2 gap-x-4 gap-y-1 mt-2 text-[11px] text-on-surface-variant">
+<div><span class="text-outline">Curve:</span> <span class="text-on-surface font-mono">NIST P-384 (FIPS 186-4)</span></div>
+<div><span class="text-outline">Digest:</span> <span class="text-on-surface font-mono">SHA-384</span></div>
+</div>
+</div>
+</div>
+<!-- SECTION 2: ASSET TYPE 'certificate' (X.509 CERTIFICATES) -->
+<div class="bg-surface-container-low/30">
+<div class="px-3 py-1.5 bg-surface-container flex items-center justify-between text-on-surface-variant text-[11px] font-semibold border-b border-outline-variant/40">
+<span class="flex items-center gap-1.5 text-secondary">
+<span class="material-symbols-outlined text-xs">workspace_premium</span>
+<span>CYCLONEDX TYPE: certificate (X.509 PUBLIC IDENTITIES)</span>
+</span>
+<span class="text-outline font-normal">3 discovered</span>
+</div>
+<!-- Certificate Item -->
+<div class="p-3 hover:bg-surface-container/60 cursor-pointer border-l-2 border-outline-variant hover:border-secondary transition-colors">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-secondary text-sm">badge</span>
+<span class="text-on-surface font-semibold text-code-md">internal-ntro-root-ca-g2.crt</span>
+<span class="px-1.5 py-0.2 bg-surface-container-high text-on-surface text-[10px] border border-outline-variant font-mono">CERT-X509-V3</span>
+</div>
+<span class="text-[11px] text-tertiary font-mono">VALID (782 days left)</span>
+</div>
+<div class="grid grid-cols-2 gap-x-4 gap-y-1 mt-2 text-[11px] text-on-surface-variant">
+<div><span class="text-outline">Subject DN:</span> <span class="text-on-surface font-mono truncate block">CN=NTRO Internal Root G2, O=SecOps</span></div>
+<div><span class="text-outline">Signature Algo:</span> <span class="text-error font-mono">sha256WithRSAEncryption</span></div>
+<div><span class="text-outline">Key Spec:</span> <span class="text-on-surface font-mono">RSA 4096 bit</span></div>
+<div><span class="text-outline">SAN Domains:</span> <span class="text-on-surface font-mono">*.secops.ntro.internal</span></div>
+<div class="col-span-2 mt-0.5"><span class="text-outline">Fingerprint (SHA-256):</span> <span class="text-outline font-mono text-[10px]">7B:3F:A9:C1:44:E2:01:...</span></div>
+</div>
+</div>
+</div>
+<!-- SECTION 3: ASSET TYPE 'dependency' (CRYPTOGRAPHIC LIBRARIES) -->
+<div class="bg-surface-container-low/30">
+<div class="px-3 py-1.5 bg-surface-container flex items-center justify-between text-on-surface-variant text-[11px] font-semibold border-b border-outline-variant/40">
+<span class="flex items-center gap-1.5 text-on-surface">
+<span class="material-symbols-outlined text-xs">library_books</span>
+<span>CYCLONEDX TYPE: cryptographic-library (RUNTIMES)</span>
+</span>
+<span class="text-outline font-normal">3 discovered</span>
+</div>
+<!-- Library 1 -->
+<div class="p-3 hover:bg-surface-container/60 cursor-pointer border-l-2 border-outline-variant hover:border-primary transition-colors">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-sm">inventory_2</span>
+<span class="text-on-surface font-semibold text-code-md">pycryptodome</span>
+<span class="px-1.5 py-0.2 bg-surface-container-high text-primary text-[10px] border border-outline-variant font-mono">v3.20.0</span>
+</div>
+<span class="text-[11px] text-outline font-mono">purl: pkg:pypi/pycryptodome@3.20.0</span>
+</div>
+<div class="mt-1 text-[11px] text-on-surface-variant">
+<span class="text-outline">FIPS Certified:</span> <span class="text-error">No</span> | 
+                  <span class="text-outline">CPE:</span> <span class="font-mono text-outline">cpe:2.3:a:pycryptodome:pycryptodome:3.20.0</span>
+</div>
+</div>
+<!-- Library 2 -->
+<div class="p-3 hover:bg-surface-container/60 cursor-pointer border-l-2 border-outline-variant hover:border-primary transition-colors">
+<div class="flex items-start justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-outline text-sm">inventory_2</span>
+<span class="text-on-surface font-semibold text-code-md">liboqs / liboqs-rust</span>
+<span class="px-1.5 py-0.2 bg-surface-container-high text-tertiary text-[10px] border border-outline-variant font-mono">v0.10.1</span>
+</div>
+<span class="text-[11px] text-outline font-mono">purl: pkg:cargo/liboqs-sys@0.10.1</span>
+</div>
+<div class="mt-1 text-[11px] text-on-surface-variant">
+<span class="text-outline">FIPS Certified:</span> <span class="text-tertiary">In Review (NIST Post-Quantum)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Component Details Footer Telemetry Bar -->
+<div class="p-2 border-t border-outline-variant bg-surface-container-low text-[11px] font-code-sm flex items-center justify-between text-outline">
+<span>Active Selection: <span class="text-primary">ecdat-ref-algo-rsa-001</span></span>
+<div class="flex items-center gap-2">
+<span class="text-tertiary">CBOM 1.6 Syntax Conformance: 100%</span>
+</div>
+</div>
+</section>
+<!-- ================= RIGHT PANE (55%): INTERACTIVE SYNTAX-HIGHLIGHTED JSON IDE VIEWER ================= -->
+<section class="w-[55%] flex flex-col bg-[#090f15] overflow-hidden">
+<!-- Editor Titlebar & Tab Strip -->
+<div class="h-9 px-space-md border-b border-outline-variant bg-surface-container-low flex items-center justify-between shrink-0">
+<div class="flex items-center h-full gap-2">
+<!-- Active Editor Tab -->
+<div class="bg-[#090f15] h-full px-3 border-t-2 border-primary text-on-surface font-code-sm text-code-sm flex items-center gap-2 border-r border-outline-variant">
+<span class="material-symbols-outlined text-secondary text-sm">data_object</span>
+<span class="font-medium">cyclonedx-cbom-v1.6.json</span>
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary" title="Buffer Synchronized"></span>
+</div>
+<!-- Secondary Read-only tab -->
+<div class="text-on-surface-variant hover:text-on-surface px-2 h-full font-code-sm text-code-sm flex items-center gap-1.5 cursor-pointer">
+<span class="material-symbols-outlined text-outline text-sm">schema</span>
+<span>bom-1.6.schema.json</span>
+</div>
+</div>
+<!-- Editor Controls -->
+<div class="flex items-center gap-2">
+<span class="text-[10px] font-code-sm text-outline uppercase font-mono">JSON • UTF-8 • 2 Spaces</span>
+<div class="h-4 w-px bg-outline-variant mx-1"></div>
+<button class="p-1 hover:bg-surface-container text-outline hover:text-on-surface" title="Format Document">
+<span class="material-symbols-outlined text-sm">code</span>
+</button>
+<button class="p-1 hover:bg-surface-container text-outline hover:text-on-surface" title="Collapse All Nodes">
+<span class="material-symbols-outlined text-sm">unfold_less</span>
+</button>
+<button class="p-1 hover:bg-surface-container text-outline hover:text-on-surface" title="Copy Document Buffer">
+<span class="material-symbols-outlined text-sm">content_copy</span>
+</button>
+</div>
+</div>
+<!-- Code Viewport: Line Numbers + JSON Tokens -->
+<div class="flex-1 overflow-auto font-code-sm text-code-sm leading-5 flex select-text bg-[#090f15]">
+<!-- Absolute Line Number Gutter -->
+<div class="w-12 py-3 bg-[#090f15] border-r border-outline-variant/40 text-right pr-2 select-none text-outline/50 font-mono text-[11px] shrink-0 space-y-0.5">
+<div>1</div>
+<div>2</div>
+<div>3</div>
+<div>4</div>
+<div>5</div>
+<div>6</div>
+<div>7</div>
+<div>8</div>
+<div>9</div>
+<div>10</div>
+<div>11</div>
+<div>12</div>
+<div>13</div>
+<div>14</div>
+<div>15</div>
+<div>16</div>
+<div>17</div>
+<div>18</div>
+<div>19</div>
+<div>20</div>
+<div>21</div>
+<div>22</div>
+<div>23</div>
+<div>24</div>
+<div>25</div>
+<div>26</div>
+<div>27</div>
+<div>28</div>
+<div>29</div>
+<div>30</div>
+<div>31</div>
+<div>32</div>
+<div>33</div>
+<div>34</div>
+<div>35</div>
+<div>36</div>
+<div>37</div>
+<div>38</div>
+<div>39</div>
+<div>40</div>
+<div>41</div>
+<div>42</div>
+</div>
+<!-- Code Content Pane (Colored Tokens adhering to spec) -->
+<div class="p-3 pl-4 flex-1 whitespace-pre font-mono text-[12px] overflow-x-auto text-on-surface">
+<span>{</span>
+<span class="text-secondary">"$schema"</span>: <span class="text-tertiary">"http://cyclonedx.org/schema/bom-1.6.schema.json"</span>,
+  <span class="text-secondary">"bomFormat"</span>: <span class="text-tertiary">"CycloneDX"</span>,
+  <span class="text-secondary">"specVersion"</span>: <span class="text-tertiary">"1.6"</span>,
+  <span class="text-secondary">"serialNumber"</span>: <span class="text-tertiary">"urn:uuid:ecdat-2026-ntro-01"</span>,
+  <span class="text-secondary">"version"</span>: <span class="text-primary-container font-semibold">1</span>,
+  <span class="text-secondary">"metadata"</span>: {
+    <span class="text-secondary">"timestamp"</span>: <span class="text-tertiary">"2026-03-30T08:42:19Z"</span>,
+    <span class="text-secondary">"tools"</span>: [
+      {
+        <span class="text-secondary">"vendor"</span>: <span class="text-tertiary">"ECDAT Engineering Suite"</span>,
+        <span class="text-secondary">"name"</span>: <span class="text-tertiary">"ECDAT-AST-Scanner"</span>,
+        <span class="text-secondary">"version"</span>: <span class="text-tertiary">"2.4.0-ntro"</span>
+      }
+    ],
+    <span class="text-secondary">"component"</span>: {
+      <span class="text-secondary">"type"</span>: <span class="text-tertiary">"application"</span>,
+      <span class="text-secondary">"name"</span>: <span class="text-tertiary">"crypto-core"</span>,
+      <span class="text-secondary">"version"</span>: <span class="text-tertiary">"2.4.0"</span>
+    }
+  },
+  <span class="text-secondary">"components"</span>: [
+    {
+      <span class="text-secondary">"type"</span>: <span class="text-tertiary">"crypto-asset"</span>,
+      <span class="text-secondary">"bom-ref"</span>: <span class="text-tertiary">"ecdat-ref-algo-rsa-001"</span>,
+      <span class="text-secondary">"name"</span>: <span class="text-tertiary">"RSA-2048-PKCS1v15"</span>,
+      <span class="text-secondary">"cryptoProperties"</span>: {
+        <span class="text-secondary">"assetType"</span>: <span class="text-tertiary">"algorithm"</span>,
+        <span class="text-secondary">"algorithmProperties"</span>: {
+          <span class="text-secondary">"primitive"</span>: <span class="text-tertiary">"pke"</span>,
+          <span class="text-secondary">"parameterSetIdentifier"</span>: <span class="text-primary-container font-semibold">"2048"</span>,
+          <span class="text-secondary">"executionEnvironment"</span>: <span class="text-tertiary">"software-plain"</span>,
+          <span class="text-secondary">"cryptoFunctions"</span>: [
+            <span class="text-tertiary">"encrypt"</span>,
+            <span class="text-tertiary">"decrypt"</span>,
+            <span class="text-tertiary">"sign"</span>
+          ],
+          <span class="text-secondary">"paddingScheme"</span>: <span class="text-error font-medium">"PKCS1-v1_5"</span>
+        },
+        <span class="text-secondary">"oid"</span>: <span class="text-tertiary">"1.2.840.113549.1.1.1"</span>
+      },
+      <span class="text-secondary">"evidence"</span>: {
+        <span class="text-secondary">"occurrences"</span>: [
+          {
+            <span class="text-secondary">"location"</span>: <span class="text-tertiary">"src/crypto-core/engine/rsa_signer.c"</span>,
+            <span class="text-secondary">"line"</span>: <span class="text-primary-container font-semibold">142</span>
+          }
+        ]
+      }
+    },
+    {
+      <span class="text-secondary">"type"</span>: <span class="text-tertiary">"crypto-asset"</span>,
+      <span class="text-secondary">"bom-ref"</span>: <span class="text-tertiary">"ecdat-ref-algo-mlkem-768"</span>,
+      <span class="text-secondary">"name"</span>: <span class="text-tertiary">"ML-KEM-768"</span>,
+      <span class="text-secondary">"cryptoProperties"</span>: {
+        <span class="text-secondary">"assetType"</span>: <span class="text-tertiary">"algorithm"</span>,
+        <span class="text-secondary">"algorithmProperties"</span>: {
+          <span class="text-secondary">"primitive"</span>: <span class="text-tertiary">"kem"</span>,
+          <span class="text-secondary">"parameterSetIdentifier"</span>: <span class="text-primary-container font-semibold">"ML-KEM-768"</span>,
+          <span class="text-secondary">"executionEnvironment"</span>: <span class="text-tertiary">"hardware-enclave"</span>
+        },
+        <span class="text-secondary">"oid"</span>: <span class="text-tertiary">"2.16.840.1.101.3.4.4.2"</span>
+      }
+    }
+  ]
+<span>}</span>
+</div>
+</div>
+<!-- Code Pane Mini Breadcrumb & Status Indicator -->
+<div class="h-6 border-t border-outline-variant bg-surface-container-low px-3 flex items-center justify-between text-[11px] font-code-sm text-outline shrink-0">
+<div class="flex items-center gap-2">
+<span class="text-secondary font-mono">root &gt; components[0] &gt; cryptoProperties &gt; algorithmProperties</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-outline">Ln 22, Col 34</span>
+<span class="text-tertiary flex items-center gap-1 font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span> CycloneDX 1.6 Schema OK
+              </span>
+</div>
+</div>
+</section>
+</div>
+<!-- ================= BOTTOM TERMINAL STATUS STRIP (SHARED WORKSTATION LOGIC) ================= -->
+<footer class="h-6 border-t border-outline-variant bg-surface-container-lowest px-gutter-desktop flex items-center justify-between text-[11px] font-code-sm text-on-surface-variant shrink-0 select-none z-40">
+<!-- Left: Quick diagnostics & environment token -->
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 text-tertiary">
+<span class="material-symbols-outlined text-[12px] text-tertiary">check_circle</span>
+<span class="font-medium">CBOM VALIDATED (0 errors, 0 warnings)</span>
+</div>
+<div class="h-3 w-px bg-outline-variant"></div>
+<div class="flex items-center gap-1 text-outline">
+<span class="material-symbols-outlined text-[12px]">schema</span>
+<span>Schema: draft-cyclonedx-cbom-1.6</span>
+</div>
+<div class="h-3 w-px bg-outline-variant hidden sm:block"></div>
+<div class="flex items-center gap-1 text-outline hidden sm:flex">
+<span class="material-symbols-outlined text-[12px]">vpn_key</span>
+<span>Identified Cryptographic Primitives: 14 Assets</span>
+</div>
+</div>
+<!-- Right: Engine & Node Heartbeat Telemetry -->
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1 text-primary">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span>NTRO AST Daemon: Active</span>
+</div>
+<div class="h-3 w-px bg-outline-variant"></div>
+<div class="text-outline font-mono">MEM: 342MB // CPU: 1.4%</div>
+<div class="h-3 w-px bg-outline-variant"></div>
+<div class="text-outline font-mono">SIH 2026 ECDAT NODE</div>
+</div>
+</footer>
+</main>
+</div>
+</body></html>

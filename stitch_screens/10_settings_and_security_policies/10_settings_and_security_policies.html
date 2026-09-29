@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ECDAT // Workstation Configuration &amp; Security Settings</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-tertiary": "#00390d",
+            "on-primary-fixed": "#2a1700",
+            "on-primary-container": "#613b00",
+            "tertiary-fixed": "#83fc89",
+            "surface-dim": "#0f141b",
+            "secondary-fixed": "#d3e4ff",
+            "surface": "#0f141b",
+            "outline-variant": "#534434",
+            "on-surface": "#dee2ec",
+            "tertiary-fixed-dim": "#67df70",
+            "on-error-container": "#ffdad6",
+            "error": "#ffb4ab",
+            "inverse-surface": "#dee2ec",
+            "on-primary-fixed-variant": "#653e00",
+            "surface-container-high": "#252a32",
+            "on-tertiary-fixed-variant": "#005317",
+            "outline": "#a08e7a",
+            "on-tertiary-fixed": "#002105",
+            "tertiary": "#6de575",
+            "tertiary-container": "#4fc85d",
+            "primary-fixed": "#ffddb8",
+            "primary-fixed-dim": "#ffb95f",
+            "surface-container-highest": "#30353d",
+            "on-primary": "#472a00",
+            "surface-variant": "#30353d",
+            "on-secondary-container": "#f0f4ff",
+            "surface-bright": "#343941",
+            "surface-container-low": "#171c23",
+            "on-secondary-fixed": "#001c38",
+            "error-container": "#93000a",
+            "on-tertiary-container": "#004f16",
+            "on-error": "#690005",
+            "on-surface-variant": "#d8c3ad",
+            "surface-tint": "#ffb95f",
+            "primary": "#ffc174",
+            "primary-container": "#f59e0b",
+            "on-secondary": "#00315c",
+            "on-background": "#dee2ec",
+            "secondary-container": "#0071c7",
+            "surface-container-lowest": "#090f15",
+            "secondary-fixed-dim": "#a2c9ff",
+            "inverse-primary": "#855300",
+            "inverse-on-surface": "#2c3138",
+            "surface-container": "#1b2027",
+            "on-secondary-fixed-variant": "#004882",
+            "secondary": "#a2c9ff",
+            "background": "#0f141b"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-lg": "1rem",
+            "space-sm": "0.5rem",
+            "space-xs": "0.25rem",
+            "space-md": "0.75rem",
+            "margin-desktop": "1.5rem",
+            "margin": "1rem",
+            "gutter": "0.75rem",
+            "space-xl": "1.5rem",
+            "gutter-desktop": "1rem"
+          },
+          "fontFamily": {
+            "headline-md": ["Inter"],
+            "body-sm": ["Inter"],
+            "headline-xl": ["Inter"],
+            "code-sm": ["JetBrains Mono"],
+            "label-caps": ["JetBrains Mono"],
+            "headline-lg": ["Inter"],
+            "body-md": ["Inter"],
+            "code-md": ["JetBrains Mono"],
+            "code-lg": ["JetBrains Mono"]
+          },
+          "fontSize": {
+            "headline-md": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-xl": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "code-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "label-caps": ["10px", { "lineHeight": "12px", "letterSpacing": "0.08em", "fontWeight": "600" }],
+            "headline-lg": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "body-md": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "code-md": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "code-lg": ["13px", { "lineHeight": "20px", "fontWeight": "500" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-size: 16px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      vertical-align: middle;
+    }
+    /* Custom thin scrollbar */
+    ::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090f15;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #30353d;
+      border-radius: 2px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #534434;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased flex flex-col h-screen w-screen overflow-hidden select-none font-body-md text-body-md">
+<!-- TOP APP BAR (from Shared Component JSON: desktop_dense_app_bar) -->
+<header class="flex justify-between items-center h-10 px-gutter-desktop w-full border-b border-outline-variant bg-surface-container-low shrink-0 z-50">
+<!-- Brand Anchor & Navigation Core -->
+<div class="flex items-center gap-space-md h-full">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">security</span>
+<span class="text-code-lg font-code-lg font-bold text-primary tracking-tight">ECDAT // PS-ID: 26164 (NTRO)</span>
+</div>
+<div class="h-4 w-px bg-outline-variant mx-space-xs"></div>
+<nav class="flex items-center gap-space-xs h-full">
+<span class="text-primary font-code-md border-b-2 border-primary px-space-sm h-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">terminal</span>
+          main:src/crypto-core
+        </span>
+<span class="text-on-surface-variant font-code-sm px-space-sm h-full flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-tertiary">verified</span>
+          CycloneDX v1.6 [VALID]
+        </span>
+</nav>
+</div>
+<!-- Search & Trailing Actions -->
+<div class="flex items-center gap-space-md h-full">
+<!-- Search Input -->
+<div class="relative flex items-center">
+<span class="absolute left-2 material-symbols-outlined text-outline text-[14px]">search</span>
+<input class="bg-surface-container-lowest text-on-surface text-code-sm font-code-sm rounded-none border border-outline-variant pl-7 pr-8 py-0.5 h-6 w-64 focus:outline-none focus:border-secondary" placeholder="Search parameters, AST modules, ciphers..." type="text"/>
+<span class="absolute right-1.5 text-label-caps font-label-caps bg-surface-container-high px-1 text-on-surface-variant rounded">⌘K</span>
+</div>
+<!-- Secondary Status Badge -->
+<div class="flex items-center gap-1.5 bg-surface-container-high border border-outline-variant px-space-sm py-0.5 rounded text-code-sm font-code-sm text-on-surface-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span>Scan Status: Idle</span>
+</div>
+<!-- Action Button CTA -->
+<button class="bg-primary-container hover:bg-inverse-primary text-on-primary-fixed text-code-sm font-code-sm font-semibold px-space-md py-1 rounded transition-colors flex items-center gap-1 h-6">
+<span class="material-symbols-outlined text-[14px]">bolt</span>
+        Run Discovery
+      </button>
+<!-- Trailing Icon Cluster -->
+<div class="flex items-center gap-space-xs text-on-surface-variant">
+<button class="p-1 hover:bg-surface-container-high rounded transition-colors" title="Terminal console">
+<span class="material-symbols-outlined">terminal</span>
+</button>
+<button class="p-1 hover:bg-surface-container-high rounded transition-colors" title="Parser Tuning">
+<span class="material-symbols-outlined">tune</span>
+</button>
+<button class="p-1 hover:bg-surface-container-high rounded transition-colors relative" title="Notifications">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-1.5 h-1.5 bg-primary rounded-full"></span>
+</button>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<!-- SecOps Node Token -->
+<div class="flex items-center gap-1.5 pl-1">
+<div class="w-5 h-5 rounded bg-surface-container-highest border border-outline-variant flex items-center justify-center text-primary font-code-sm font-bold text-[10px]" title="Lead Cryptographer SecOps Token">
+          NT
+        </div>
+<span class="text-label-caps font-label-caps text-on-surface-variant">NODE-01</span>
+</div>
+</div>
+</header>
+<!-- WORKSPACE BODY: Sidebar + Main 2-Column Canvas -->
+<div class="flex flex-1 overflow-hidden">
+<!-- LEFT SIDEBAR (Shared Component: SideNavBar) -->
+<aside class="w-64 h-[calc(100vh-2.5rem-1.5rem)] flex flex-col justify-between p-space-sm border-r border-outline-variant bg-surface-container-lowest select-none shrink-0">
+<!-- Upper Section: Node Branding & Nav Cluster -->
+<div class="flex flex-col gap-space-sm">
+<!-- Node Identity Header -->
+<div class="flex items-center gap-space-sm px-space-sm py-1 border-b border-outline-variant pb-2">
+<div class="w-7 h-7 bg-surface-container border border-outline-variant flex items-center justify-center rounded">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">memory</span>
+</div>
+<div class="flex flex-col">
+<span class="text-code-lg font-code-lg font-bold text-primary uppercase leading-tight">ECDAT Engine</span>
+<span class="text-label-caps font-label-caps text-on-surface-variant tracking-wider">SIH 2026 // NTRO SEC</span>
+</div>
+</div>
+<!-- AST Scan CTA -->
+<button class="w-full bg-surface-container border border-primary-container text-primary hover:bg-primary-container hover:text-on-primary-fixed text-code-sm font-code-sm font-semibold py-1.5 px-space-md rounded flex items-center justify-center gap-1.5 transition-colors">
+<span class="material-symbols-outlined text-[15px]">play_circle</span>
+          Initiate AST Scan
+        </button>
+<!-- Navigation Tabs List -->
+<nav class="flex flex-col gap-0.5 mt-1">
+<!-- 1. Dashboard -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined text-[15px]">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- 2. New Scan -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined text-[15px]">play_circle</span>
+<span>New Scan</span>
+</a>
+<!-- 3. Crypto Inventory -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined text-[15px]">memory</span>
+<span>Crypto Inventory</span>
+</a>
+<!-- 4. Finding Inspector -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined text-[15px]">troubleshoot</span>
+<span>Finding Inspector</span>
+</a>
+<!-- 5. Mosca Simulator -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined text-[15px]">timeline</span>
+<span>Mosca Simulator</span>
+</a>
+<!-- 6. Risk Analysis -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined text-[15px]">analytics</span>
+<span>Risk Analysis</span>
+</a>
+<!-- 7. Migration Guidance -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined text-[15px]">swap_calls</span>
+<span>Migration Guidance</span>
+</a>
+<!-- 8. CycloneDX 1.6 CBOM -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined text-[15px]">verified_user</span>
+<span>CycloneDX 1.6 CBOM</span>
+</a>
+<!-- 9. Reports & Evidence -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined text-[15px]">description</span>
+<span>Reports &amp; Evidence</span>
+</a>
+<!-- 10. Terminal / Log -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined text-[15px]">terminal</span>
+<span>Terminal / Log</span>
+</a>
+</nav>
+</div>
+<!-- Lower Footer: System Health & Settings Tab Highlighted -->
+<div class="flex flex-col gap-1 border-t border-outline-variant pt-2">
+<!-- System Health Tab -->
+<div class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center justify-between w-full hover:bg-surface-container-low cursor-default">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-[15px] text-tertiary">check_circle</span>
+<span class="text-code-sm font-code-sm">System Health: Optimal</span>
+</div>
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+</div>
+<!-- Settings Tab: Mandatory Active State -->
+<a class="bg-surface-container text-primary font-code-md border-l-2 border-primary-container px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full" href="#">
+<span class="material-symbols-outlined text-[15px] text-primary" style="font-variation-settings: 'FILL' 1;">settings</span>
+<span class="font-code-md font-semibold text-primary">Settings</span>
+</a>
+</div>
+</aside>
+<!-- MAIN VIEWPORT CANVAS: Two-Column Engineering Settings Layout -->
+<main class="flex-1 flex flex-col overflow-hidden bg-surface">
+<!-- Page Header Banner -->
+<section class="border-b border-outline-variant px-margin-desktop py-space-md bg-surface-container-low flex justify-between items-center shrink-0">
+<div>
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">tune</span>
+<h1 class="text-headline-lg font-headline-lg text-on-surface tracking-tight">Workstation Configuration &amp; Security Settings</h1>
+<span class="bg-surface-container border border-outline-variant text-on-surface-variant px-1.5 py-0.5 rounded text-label-caps font-label-caps">v2.4.0-ntro</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">
+            Cryptographic parser thresholds, quantum threat modeling horizons, CycloneDX 1.6 schema strictness, and air-gapped security guardrails.
+          </p>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-label-caps font-label-caps text-on-surface-variant border border-outline-variant px-2 py-1 rounded bg-surface-container-lowest">
+            AIR-GAP STATE: STRICT ENFORCED
+          </span>
+</div>
+</section>
+<!-- Two-Column Main Configuration Area -->
+<div class="flex-1 grid grid-cols-12 overflow-hidden">
+<!-- LEFT COLUMN: Sub-navigation / Sub-categories (3 Cols) -->
+<div class="col-span-3 border-r border-outline-variant bg-surface-container-lowest p-space-md overflow-y-auto flex flex-col justify-between">
+<div class="flex flex-col gap-1">
+<span class="text-label-caps font-label-caps text-outline uppercase tracking-wider px-space-sm pb-1">
+              Configuration Domains
+            </span>
+<!-- Sub-nav Item 1: Active -->
+<button class="w-full text-left px-space-md py-2 bg-surface-container border-l-2 border-primary-container text-primary font-code-md text-code-md flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">psychology</span>
+<span>1. Scanner Engines &amp; AST Parsers</span>
+</div>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+</button>
+<!-- Sub-nav Item 2 -->
+<button class="w-full text-left px-space-md py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low font-code-sm text-code-sm flex items-center justify-between transition-colors">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">hourglass_top</span>
+<span>2. Quantum Classification &amp; Mosca</span>
+</div>
+</button>
+<!-- Sub-nav Item 3 -->
+<button class="w-full text-left px-space-md py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low font-code-sm text-code-sm flex items-center justify-between transition-colors">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">calculate</span>
+<span>3. Risk Scoring &amp; Weights</span>
+</div>
+</button>
+<!-- Sub-nav Item 4 -->
+<button class="w-full text-left px-space-md py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low font-code-sm text-code-sm flex items-center justify-between transition-colors">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">schema</span>
+<span>4. CycloneDX 1.6 CBOM Schema</span>
+</div>
+</button>
+<!-- Sub-nav Item 5 -->
+<button class="w-full text-left px-space-md py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low font-code-sm text-code-sm flex items-center justify-between transition-colors">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+<span>5. Air-Gapped Security &amp; Privacy</span>
+</div>
+</button>
+<!-- Sub-nav Item 6 -->
+<button class="w-full text-left px-space-md py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low font-code-sm text-code-sm flex items-center justify-between transition-colors">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">terminal</span>
+<span>6. Interface &amp; Diagnostics</span>
+</div>
+</button>
+<!-- Sub-nav Item 7 -->
+<button class="w-full text-left px-space-md py-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low font-code-sm text-code-sm flex items-center justify-between transition-colors">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">info</span>
+<span>7. About Engine &amp; NTRO Specs</span>
+</div>
+</button>
+</div>
+<!-- Left Nav Footnote: Security Clearance Token -->
+<div class="border border-outline-variant bg-surface-container p-2.5 rounded mt-4">
+<div class="flex items-center gap-1.5 text-primary text-code-sm font-code-sm font-semibold mb-1">
+<span class="material-symbols-outlined text-[14px]">verified_user</span>
+<span>NTRO OPERATIONAL SPEC</span>
+</div>
+<p class="text-label-caps font-label-caps text-on-surface-variant leading-tight">
+              Config revisions require cryptographically signed checksum verification prior to runtime injection.
+            </p>
+</div>
+</div>
+<!-- RIGHT COLUMN: Active Configuration View (9 Cols) -->
+<div class="col-span-9 overflow-y-auto p-margin-desktop space-y-space-lg">
+<!-- SECTION 1: AST Collector Engine Controls -->
+<section class="border border-outline-variant bg-surface-container-low rounded-lg p-space-md">
+<div class="flex items-center justify-between border-b border-outline-variant pb-space-sm mb-space-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">terminal</span>
+<h2 class="text-headline-md font-headline-md text-on-surface">1. AST Collector Engine Controls</h2>
+</div>
+<span class="text-label-caps font-label-caps text-tertiary bg-surface-container px-2 py-0.5 rounded border border-outline-variant">
+                ALL COLLECTORS ACTIVE
+              </span>
+</div>
+<!-- Table of Parser Controls -->
+<div class="border border-outline-variant bg-surface-container-lowest rounded overflow-hidden">
+<table class="w-full text-left text-code-sm font-code-sm">
+<thead>
+<tr class="bg-surface-container border-b border-outline-variant text-on-surface-variant text-label-caps font-label-caps">
+<th class="py-1.5 px-3">State</th>
+<th class="py-1.5 px-3">Parser Engine</th>
+<th class="py-1.5 px-3">Heuristic / Rule Depth</th>
+<th class="py-1.5 px-3">Monitored Targets / Namespaces</th>
+<th class="py-1.5 px-3 text-right">Mode</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1: Python AST -->
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="py-2 px-3">
+<input checked="" class="rounded border-outline-variant text-primary-container focus:ring-0 bg-surface h-3.5 w-3.5" type="checkbox"/>
+</td>
+<td class="py-2 px-3 text-on-surface font-semibold">Python 3.12 AST Scanner</td>
+<td class="py-2 px-3 text-on-surface-variant">Deep AST Walk (Call graph + assignments)</td>
+<td class="py-2 px-3 font-code-sm text-primary">cryptography, hashlib, pycryptodome</td>
+<td class="py-2 px-3 text-right">
+<span class="bg-surface-container border border-outline-variant px-1.5 py-0.5 rounded text-tertiary text-[10px]">PARSER ON</span>
+</td>
+</tr>
+<!-- Row 2: Java Bytecode -->
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="py-2 px-3">
+<input checked="" class="rounded border-outline-variant text-primary-container focus:ring-0 bg-surface h-3.5 w-3.5" type="checkbox"/>
+</td>
+<td class="py-2 px-3 text-on-surface font-semibold">Java Bytecode &amp; JCA/JCE Parser</td>
+<td class="py-2 px-3 text-on-surface-variant">Class bytecode decompilation + JCA provider checks</td>
+<td class="py-2 px-3 font-code-sm text-primary">javax.crypto, java.security, org.bouncycastle</td>
+<td class="py-2 px-3 text-right">
+<span class="bg-surface-container border border-outline-variant px-1.5 py-0.5 rounded text-tertiary text-[10px]">PARSER ON</span>
+</td>
+</tr>
+<!-- Row 3: Dependency Manifest -->
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="py-2 px-3">
+<input checked="" class="rounded border-outline-variant text-primary-container focus:ring-0 bg-surface h-3.5 w-3.5" type="checkbox"/>
+</td>
+<td class="py-2 px-3 text-on-surface font-semibold">Dependency Manifest Parser</td>
+<td class="py-2 px-3 text-on-surface-variant">Transitive lockfile resolution + CBOM component mapping</td>
+<td class="py-2 px-3 font-code-sm text-primary">requirements.txt, pom.xml, build.gradle, Pipfile.lock</td>
+<td class="py-2 px-3 text-right">
+<span class="bg-surface-container border border-outline-variant px-1.5 py-0.5 rounded text-tertiary text-[10px]">PARSER ON</span>
+</td>
+</tr>
+<!-- Row 4: X.509 Certificate Scanner -->
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="py-2 px-3">
+<input checked="" class="rounded border-outline-variant text-primary-container focus:ring-0 bg-surface h-3.5 w-3.5" type="checkbox"/>
+</td>
+<td class="py-2 px-3 text-on-surface font-semibold">X.509 Certificate Scanner</td>
+<td class="py-2 px-3 text-on-surface-variant">Strict DER/PEM format checking, certificate path validation</td>
+<td class="py-2 px-3 font-code-sm text-primary">*.pem, *.crt, *.key, *.der, *.p12</td>
+<td class="py-2 px-3 text-right">
+<span class="bg-surface-container border border-outline-variant px-1.5 py-0.5 rounded text-tertiary text-[10px]">PARSER ON</span>
+</td>
+</tr>
+<!-- Row 5: TLS & Crypto Policy -->
+<tr class="hover:bg-surface-container-high transition-colors">
+<td class="py-2 px-3">
+<input checked="" class="rounded border-outline-variant text-primary-container focus:ring-0 bg-surface h-3.5 w-3.5" type="checkbox"/>
+</td>
+<td class="py-2 px-3 text-on-surface font-semibold">TLS &amp; Cryptographic Policy Scanner</td>
+<td class="py-2 px-3 text-on-surface-variant">Cipher suite evaluation, SSL/TLS protocol downgrade checks</td>
+<td class="py-2 px-3 font-code-sm text-primary">OpenSSL configs, nginx/apache crypto suites</td>
+<td class="py-2 px-3 text-right">
+<span class="bg-surface-container border border-outline-variant px-1.5 py-0.5 rounded text-tertiary text-[10px]">PARSER ON</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- SECTION 2: Quantum Threat Model & Mosca Calibration -->
+<section class="border border-outline-variant bg-surface-container-low rounded-lg p-space-md">
+<div class="flex items-center justify-between border-b border-outline-variant pb-space-sm mb-space-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">hourglass_empty</span>
+<h2 class="text-headline-md font-headline-md text-on-surface">2. Quantum Threat Model &amp; Mosca Calibration</h2>
+</div>
+<span class="text-label-caps font-label-caps text-primary bg-surface-container px-2 py-0.5 rounded border border-outline-variant">
+                CRQC FORECAST ENGINE
+              </span>
+</div>
+<div class="grid grid-cols-12 gap-space-md">
+<!-- Baseline Year -->
+<div class="col-span-3 border border-outline-variant bg-surface-container-lowest p-space-md rounded">
+<label class="text-label-caps font-label-caps text-on-surface-variant block mb-1">
+                  PLANNING BASELINE YEAR
+                </label>
+<div class="flex items-center justify-between">
+<span class="text-headline-xl font-headline-xl text-primary font-mono font-bold">2026</span>
+<span class="material-symbols-outlined text-on-surface-variant">lock</span>
+</div>
+<p class="text-code-sm font-code-sm text-outline mt-1">SIH 2026 fixed anchor for migration horizon.</p>
+</div>
+<!-- Mosca Theorem Horizon Radio Group -->
+<div class="col-span-9 border border-outline-variant bg-surface-container-lowest p-space-md rounded">
+<label class="text-label-caps font-label-caps text-on-surface-variant block mb-2">
+                  MOSCA THEOREM DEFAULT HORIZON (Z: COLLAPSE OF RSA/ECC)
+                </label>
+<div class="grid grid-cols-3 gap-space-sm">
+<!-- Option 1: 2030 -->
+<div class="border border-outline-variant bg-surface-container p-space-sm rounded cursor-pointer hover:border-outline">
+<div class="flex items-center gap-2 mb-1">
+<input class="text-primary-container focus:ring-0 bg-surface" id="h2030" name="mosca_horizon" type="radio"/>
+<label class="text-code-md font-code-md text-on-surface font-bold" for="h2030">2030</label>
+</div>
+<span class="text-code-sm font-code-sm text-on-surface-variant block">Aggressive QPU Growth</span>
+<span class="text-[10px] text-error font-code-sm">Immediate Risk Horizon</span>
+</div>
+<!-- Option 2: 2035 Active -->
+<div class="border-2 border-primary-container bg-surface-container-high p-space-sm rounded cursor-pointer">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-2">
+<input checked="" class="text-primary-container focus:ring-0 bg-surface" id="h2035" name="mosca_horizon" type="radio"/>
+<label class="text-code-md font-code-md text-primary font-bold" for="h2035">2035</label>
+</div>
+<span class="bg-primary-container text-on-primary-fixed text-[9px] font-bold px-1 rounded">DEFAULT</span>
+</div>
+<span class="text-code-sm font-code-sm text-on-surface block">NIST Recommended Horizon</span>
+<span class="text-[10px] text-tertiary font-code-sm">Baseline Standard</span>
+</div>
+<!-- Option 3: 2040 -->
+<div class="border border-outline-variant bg-surface-container p-space-sm rounded cursor-pointer hover:border-outline">
+<div class="flex items-center gap-2 mb-1">
+<input class="text-primary-container focus:ring-0 bg-surface" id="h2040" name="mosca_horizon" type="radio"/>
+<label class="text-code-md font-code-md text-on-surface font-bold" for="h2040">2040</label>
+</div>
+<span class="text-code-sm font-code-sm text-on-surface-variant block">Conservative Buffer</span>
+<span class="text-[10px] text-on-surface-variant font-code-sm">Extended Grace Period</span>
+</div>
+</div>
+</div>
+<!-- Parameter Inputs X and Y -->
+<div class="col-span-6 border border-outline-variant bg-surface-container-lowest p-space-md rounded flex items-center justify-between">
+<div>
+<label class="text-code-md font-code-md text-on-surface font-semibold block">
+                    Default Security Lifetime (X) Threshold
+                  </label>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Classified / Sovereign data secrecy requirement duration.</p>
+</div>
+<div class="flex items-center gap-2">
+<input class="bg-surface border border-outline-variant text-primary text-center font-mono font-bold w-16 h-8 rounded focus:border-secondary focus:ring-0" type="number" value="10"/>
+<span class="text-code-sm font-code-sm text-on-surface-variant">years</span>
+</div>
+</div>
+<div class="col-span-6 border border-outline-variant bg-surface-container-lowest p-space-md rounded flex items-center justify-between">
+<div>
+<label class="text-code-md font-code-md text-on-surface font-semibold block">
+                    Default Migration Time (Y) Estimate
+                  </label>
+<p class="text-code-sm font-code-sm text-on-surface-variant">Enterprise PQC library refactoring and deployment estimate.</p>
+</div>
+<div class="flex items-center gap-2">
+<input class="bg-surface border border-outline-variant text-primary text-center font-mono font-bold w-16 h-8 rounded focus:border-secondary focus:ring-0" type="number" value="4"/>
+<span class="text-code-sm font-code-sm text-on-surface-variant">years</span>
+</div>
+</div>
+</div>
+</section>
+<!-- SECTION 3: Mandatory Air-Gapped Operational Guardrails -->
+<section class="border border-outline-variant bg-surface-container-low rounded-lg p-space-md">
+<div class="flex items-center justify-between border-b border-outline-variant pb-space-sm mb-space-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-tertiary text-[18px]">verified_user</span>
+<h2 class="text-headline-md font-headline-md text-on-surface">3. Mandatory Air-Gapped Operational Guardrails</h2>
+</div>
+<span class="text-label-caps font-label-caps text-on-primary-fixed bg-primary-container px-2 py-0.5 rounded font-bold">
+                NTRO SEC MANDATORY POLICY
+              </span>
+</div>
+<div class="space-y-space-sm">
+<!-- Policy 1: Zero Private Key Retention -->
+<div class="border border-outline-variant bg-surface-container-lowest p-space-md rounded flex items-start justify-between">
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-tertiary mt-0.5">check_circle</span>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-code-md font-code-md font-bold text-on-surface">Zero Private Key Retention</span>
+<span class="bg-surface-container-high text-tertiary border border-outline-variant px-1.5 py-0.2 rounded text-label-caps font-label-caps">
+                        ENFORCED BY DESIGN
+                      </span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1">
+                      Cryptographic keys or seed material discovered in source AST are never cached or written to disk; only metadata and key length are recorded.
+                    </p>
+</div>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant text-label-caps font-label-caps bg-surface-container px-2 py-1 rounded border border-outline-variant">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+                  LOCKED
+                </div>
+</div>
+<!-- Policy 2: Strict Path Traversal Sandboxing -->
+<div class="border border-outline-variant bg-surface-container-lowest p-space-md rounded flex items-start justify-between">
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-tertiary mt-0.5">check_circle</span>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-code-md font-code-md font-bold text-on-surface">Strict Path Traversal Sandboxing</span>
+<span class="bg-surface-container-high text-tertiary border border-outline-variant px-1.5 py-0.2 rounded text-label-caps font-label-caps">
+                        ENFORCED BY DESIGN
+                      </span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1">
+                      Prevents directory escapes outside authorized target directory (`main:src/crypto-core`). Symlinks targeting system roots are rejected.
+                    </p>
+</div>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant text-label-caps font-label-caps bg-surface-container px-2 py-1 rounded border border-outline-variant">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+                  LOCKED
+                </div>
+</div>
+<!-- Policy 3: Pure Air-Gapped Mode -->
+<div class="border border-outline-variant bg-surface-container-lowest p-space-md rounded flex items-start justify-between">
+<div class="flex items-start gap-space-sm">
+<span class="material-symbols-outlined text-tertiary mt-0.5">check_circle</span>
+<div>
+<div class="flex items-center gap-2">
+<span class="text-code-md font-code-md font-bold text-on-surface">Pure Air-Gapped Mode (Zero Outbound Sockets)</span>
+<span class="bg-surface-container-high text-tertiary border border-outline-variant px-1.5 py-0.2 rounded text-label-caps font-label-caps">
+                        ENFORCED BY DESIGN
+                      </span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1">
+                      All external telemetry, cloud analytics, and DNS resolution disabled. Socket layer binding restricted to loopback unix pipes only.
+                    </p>
+</div>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant text-label-caps font-label-caps bg-surface-container px-2 py-1 rounded border border-outline-variant">
+<span class="material-symbols-outlined text-[14px]">lock</span>
+                  LOCKED
+                </div>
+</div>
+</div>
+</section>
+<!-- SECTION 4: About ECDAT Engine & Problem Statement Metadata -->
+<section class="border border-outline-variant bg-surface-container-low rounded-lg p-space-md">
+<div class="flex items-center justify-between border-b border-outline-variant pb-space-sm mb-space-md">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">info</span>
+<h2 class="text-headline-md font-headline-md text-on-surface">4. About ECDAT Engine &amp; Problem Statement Metadata</h2>
+</div>
+<span class="text-label-caps font-label-caps text-on-surface-variant">SEC-SPEC DOC // REF 26164</span>
+</div>
+<div class="grid grid-cols-2 gap-space-md">
+<div class="border border-outline-variant bg-surface-container-lowest p-space-md rounded space-y-2">
+<div class="flex justify-between items-center text-code-sm font-code-sm">
+<span class="text-on-surface-variant">Engine Release:</span>
+<span class="text-on-surface font-semibold font-mono">ECDAT v2.4.0-ntro (Air-Gapped Stable Build)</span>
+</div>
+<div class="flex justify-between items-center text-code-sm font-code-sm">
+<span class="text-on-surface-variant">Problem Statement:</span>
+<span class="text-primary font-mono">SIH 2026 — PS ID: 26164</span>
+</div>
+<div class="flex justify-between items-center text-code-sm font-code-sm">
+<span class="text-on-surface-variant">Lead Organization:</span>
+<span class="text-on-surface font-mono">NTRO // Cryptographic Security Evaluation Wing</span>
+</div>
+</div>
+<div class="border border-outline-variant bg-surface-container-lowest p-space-md rounded space-y-2">
+<div class="flex justify-between items-center text-code-sm font-code-sm">
+<span class="text-on-surface-variant">Schema Compliance:</span>
+<span class="text-tertiary font-mono">CycloneDX v1.6 (Draft-02 Schema)</span>
+</div>
+<div class="flex justify-between items-center text-code-sm font-code-sm">
+<span class="text-on-surface-variant">Interchange Formats:</span>
+<span class="text-on-surface font-mono">OASIS SARIF v2.1.0, JSON-CBOM</span>
+</div>
+<div class="flex justify-between items-center text-code-sm font-code-sm">
+<span class="text-on-surface-variant">Standard Guardrails:</span>
+<span class="text-on-surface font-mono">NIST SP 800-56C, FIPS 203/204</span>
+</div>
+</div>
+</div>
+</section>
+<!-- BOTTOM ACTION STRIP -->
+<div class="border-t border-outline-variant pt-space-md flex items-center justify-between pb-space-lg">
+<div class="flex items-center gap-space-sm">
+<button class="bg-surface-container border border-outline-variant hover:border-outline text-on-surface text-code-sm font-code-sm px-space-md py-1.5 rounded transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px]">file_download</span>
+                Export Configuration (.json)
+              </button>
+<button class="bg-surface-container border border-error-container text-error hover:bg-error-container hover:text-on-error-container text-code-sm font-code-sm px-space-md py-1.5 rounded transition-colors flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[15px]">restart_alt</span>
+                Restore Default NTRO Profile
+              </button>
+</div>
+<div class="flex items-center gap-space-sm">
+<span class="text-label-caps font-label-caps text-on-surface-variant">UNSAVED BUFFER: 0 BYTES</span>
+<button class="bg-primary-container hover:bg-inverse-primary text-on-primary-fixed text-code-sm font-code-sm font-bold px-space-xl py-2 rounded transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px]">sync</span>
+                Apply &amp; Synchronize Engine
+              </button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- BOTTOM STATUS TELEMETRY STRIP -->
+<footer class="h-6 bg-surface-container-lowest border-t border-outline-variant flex items-center justify-between px-gutter text-code-sm font-code-sm text-on-surface-variant shrink-0 z-50">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span>DAEMON: LISTENING (127.0.0.1:48110)</span>
+</div>
+<div class="h-3 w-px bg-outline-variant"></div>
+<div class="flex items-center gap-1">
+<span class="text-outline">RAM:</span>
+<span class="text-on-surface font-mono">1.18 GB / 16 GB</span>
+</div>
+<div class="h-3 w-px bg-outline-variant"></div>
+<div class="flex items-center gap-1">
+<span class="text-outline">CPU:</span>
+<span class="text-on-surface font-mono">2.4% (8 THREADS IDLE)</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-tertiary">gavel</span>
+<span>NIST SP-800-131A: STRICT</span>
+</div>
+<div class="h-3 w-px bg-outline-variant"></div>
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">shield</span>
+<span>NTRO AIR-GAP PROTOCOL: VERIFIED</span>
+</div>
+<div class="h-3 w-px bg-outline-variant"></div>
+<span class="text-label-caps font-label-caps text-outline">UTC: 12:44:09</span>
+</div>
+</footer>
+</body></html>

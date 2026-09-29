@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ECDAT // PS-ID: 26164 (NTRO) - Cryptographic Risk Analysis</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary-fixed-dim": "#ffb95f",
+            "tertiary-container": "#4fc85d",
+            "inverse-primary": "#855300",
+            "on-surface-variant": "#d8c3ad",
+            "tertiary-fixed-dim": "#67df70",
+            "on-surface": "#dee2ec",
+            "on-secondary-fixed": "#001c38",
+            "tertiary-fixed": "#83fc89",
+            "on-primary-fixed": "#2a1700",
+            "inverse-on-surface": "#2c3138",
+            "on-error": "#690005",
+            "background": "#0f141b",
+            "on-tertiary-fixed": "#002105",
+            "on-tertiary-fixed-variant": "#005317",
+            "surface-container-high": "#252a32",
+            "on-primary-fixed-variant": "#653e00",
+            "surface-bright": "#343941",
+            "on-error-container": "#ffdad6",
+            "on-secondary-container": "#f0f4ff",
+            "surface-variant": "#30353d",
+            "outline-variant": "#534434",
+            "on-secondary": "#00315c",
+            "on-primary-container": "#613b00",
+            "on-background": "#dee2ec",
+            "secondary": "#a2c9ff",
+            "primary": "#ffc174",
+            "primary-container": "#f59e0b",
+            "surface-container-highest": "#30353d",
+            "on-tertiary": "#00390d",
+            "surface-dim": "#0f141b",
+            "error-container": "#93000a",
+            "on-primary": "#472a00",
+            "secondary-container": "#0071c7",
+            "surface-tint": "#ffb95f",
+            "inverse-surface": "#dee2ec",
+            "surface-container": "#1b2027",
+            "on-tertiary-container": "#004f16",
+            "secondary-fixed-dim": "#a2c9ff",
+            "primary-fixed": "#ffddb8",
+            "surface-container-lowest": "#090f15",
+            "outline": "#a08e7a",
+            "tertiary": "#6de575",
+            "surface-container-low": "#171c23",
+            "on-secondary-fixed-variant": "#004882",
+            "secondary-fixed": "#d3e4ff",
+            "surface": "#0f141b",
+            "error": "#ffb4ab"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-xl": "1.5rem",
+            "gutter-desktop": "1rem",
+            "margin": "1rem",
+            "gutter": "0.75rem",
+            "space-lg": "1rem",
+            "space-xs": "0.25rem",
+            "space-md": "0.75rem",
+            "space-sm": "0.5rem",
+            "margin-desktop": "1.5rem"
+          },
+          "fontFamily": {
+            "body-sm": ["Inter"],
+            "code-lg": ["JetBrains Mono"],
+            "code-md": ["JetBrains Mono"],
+            "headline-md": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-lg": ["Inter"],
+            "label-caps": ["JetBrains Mono"],
+            "code-sm": ["JetBrains Mono"],
+            "headline-xl": ["Inter"]
+          },
+          "fontSize": {
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "code-lg": ["13px", { "lineHeight": "20px", "fontWeight": "500" }],
+            "code-md": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-md": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "body-md": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "headline-lg": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "label-caps": ["10px", { "lineHeight": "12px", "letterSpacing": "0.08em", "fontWeight": "600" }],
+            "code-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "headline-xl": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" }]
+          }
+        }
+      }
+    };
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 16px;
+      line-height: 1;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090f15;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #30353d;
+      border-radius: 2px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #534434;
+    }
+  </style>
+</head>
+<body class="bg-surface-container-lowest text-on-surface antialiased overflow-hidden select-none h-screen flex flex-col font-body-sm text-body-sm">
+<!-- ========================================================================= -->
+<!-- TOP APP BAR (Shared Component Anchor)                                     -->
+<!-- ========================================================================= -->
+<header class="flex justify-between items-center h-10 px-gutter-desktop w-full border-b border-outline-variant bg-surface-container-lowest shrink-0 select-none z-50 text-code-sm font-code-sm uppercase tracking-wider">
+<!-- Brand & Workspace Breadcrumbs -->
+<div class="flex items-center gap-space-md h-full">
+<div class="flex items-center gap-space-xs text-primary font-bold tracking-tight text-code-lg font-code-lg">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">security</span>
+<span>ECDAT // PS-ID: 26164 (NTRO)</span>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<nav class="flex items-center gap-space-xs text-on-surface-variant font-code-sm">
+<span class="text-on-surface-variant px-space-sm h-full flex items-center hover:text-on-surface cursor-pointer">
+<span class="material-symbols-outlined mr-1 text-outline">source</span>
+          main:src/crypto-core
+        </span>
+<span class="text-outline">/</span>
+<span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded bg-surface-container-low text-tertiary border border-outline-variant text-[10px] tracking-normal font-code-sm">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+          CycloneDX v1.6 [VALID]
+        </span>
+</nav>
+</div>
+<!-- Center Search Command Input -->
+<div class="hidden lg:flex items-center relative w-96">
+<span class="material-symbols-outlined absolute left-2 text-outline text-[14px]">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded px-7 py-1 text-code-sm font-code-sm text-on-surface placeholder-outline focus:outline-none focus:border-secondary h-7" placeholder="Search primitives, CVE hashes, risk weights... (⌘K)" type="text"/>
+<span class="absolute right-2 px-1 rounded bg-surface-container-high text-outline text-[10px] font-code-sm">⌘K</span>
+</div>
+<!-- Trailing Actions & Node Telemetry -->
+<div class="flex items-center gap-space-md h-full">
+<div class="flex items-center gap-2">
+<span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-surface-container-low border border-outline-variant text-[11px] font-code-sm text-on-surface-variant">
+<span class="w-2 h-2 rounded-full bg-primary-container animate-pulse"></span>
+          Scan Status: Idle
+        </span>
+<button class="bg-primary-container text-on-primary-container font-headline-md text-headline-md px-3 py-1 rounded hover:bg-primary transition-colors flex items-center gap-1 h-7">
+<span class="material-symbols-outlined text-[14px]">play_arrow</span>
+<span>Run Discovery</span>
+</button>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<!-- Icon Clustered Utilities -->
+<div class="flex items-center gap-1 text-outline">
+<button class="p-1 hover:bg-surface-container-high rounded text-on-surface-variant hover:text-on-surface transition-colors" title="Terminal Log">
+<span class="material-symbols-outlined">terminal</span>
+</button>
+<button class="p-1 hover:bg-surface-container-high rounded text-on-surface-variant hover:text-on-surface transition-colors" title="Engine Tuning">
+<span class="material-symbols-outlined">tune</span>
+</button>
+<button class="p-1 hover:bg-surface-container-high rounded text-on-surface-variant hover:text-on-surface transition-colors relative" title="Alerts &amp; Telemetry">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1 right-1 w-1.5 h-1.5 bg-primary-container rounded-full"></span>
+</button>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<!-- Profile SecOps Token Node -->
+<div class="flex items-center gap-2 cursor-pointer pl-1" title="Lead Cryptographer SecOps Token">
+<div class="w-5 h-5 rounded bg-surface-container-high border border-outline-variant flex items-center justify-center text-primary font-code-sm font-bold text-[10px]">
+          NT
+        </div>
+<span class="hidden xl:inline text-[11px] font-code-sm text-on-surface-variant">NODE-09::VALID</span>
+</div>
+</div>
+</header>
+<!-- ========================================================================= -->
+<!-- MAIN WORKSPACE LAYOUT (Rail + SideNav + Viewport Canvas)                  -->
+<!-- ========================================================================= -->
+<div class="flex flex-1 overflow-hidden h-[calc(100vh-2.5rem-1.75rem)]">
+<!-- SideNavBar (Shared Component Anchor - Risk Analysis ACTIVE) -->
+<aside class="w-64 h-full flex flex-col justify-between p-space-sm border-r border-outline-variant bg-surface-container-lowest select-none shrink-0">
+<!-- Top Rail Identity & AST CTA -->
+<div class="space-y-space-sm">
+<div class="px-space-sm py-1 border-b border-outline-variant flex items-center justify-between">
+<div>
+<div class="text-primary font-bold uppercase text-code-lg font-code-lg tracking-tight">ECDAT Engine</div>
+<div class="text-[10px] text-outline font-code-sm">SIH 2026 // NTRO SEC</div>
+</div>
+<span class="material-symbols-outlined text-outline text-[18px]">verified_user</span>
+</div>
+<button class="w-full bg-surface-container-low border border-outline-variant hover:border-primary-container text-primary font-code-sm py-1.5 px-space-md rounded flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[14px] text-primary-container">troubleshoot</span>
+<span>Initiate AST Scan</span>
+</button>
+<!-- Navigation Tabs (10 tabs, Tab 6 ACTIVE) -->
+<nav class="space-y-0.5 pt-1">
+<!-- Tab 1 -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- Tab 2 -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]">play_circle</span>
+<span>New Scan</span>
+</a>
+<!-- Tab 3 -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]">memory</span>
+<span>Crypto Inventory</span>
+</a>
+<!-- Tab 4 -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]">troubleshoot</span>
+<span>Finding Inspector</span>
+</a>
+<!-- Tab 5 -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]">timeline</span>
+<span>Mosca Simulator</span>
+</a>
+<!-- Tab 6: Risk Analysis (ACTIVE - Exact Style Guidance) -->
+<a class="bg-surface-container-high text-primary font-code-md border-l-2 border-primary-container px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full font-semibold" href="#">
+<span class="material-symbols-outlined text-[16px] text-primary-container" style="font-variation-settings: 'FILL' 1;">analytics</span>
+<span>Risk Analysis</span>
+</a>
+<!-- Tab 7 -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]">swap_calls</span>
+<span>Migration Guidance</span>
+</a>
+<!-- Tab 8 -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]">verified_user</span>
+<span>CycloneDX 1.6 CBOM</span>
+</a>
+<!-- Tab 9 -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]">description</span>
+<span>Reports &amp; Evidence</span>
+</a>
+<!-- Tab 10 -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors" href="#">
+<span class="material-symbols-outlined text-[16px]">terminal</span>
+<span>Terminal / Log</span>
+</a>
+</nav>
+</div>
+<!-- Footer Diagnostics Block -->
+<div class="border-t border-outline-variant pt-space-xs space-y-1">
+<div class="px-space-md py-1 flex items-center justify-between text-on-surface-variant font-code-sm text-[11px]">
+<span class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-tertiary text-[14px]">check_circle</span>
+<span>System Health: Optimal</span>
+</span>
+<span class="text-outline">99.8%</span>
+</div>
+<a class="px-space-md py-1 flex items-center gap-2 text-on-surface-variant font-code-sm hover:text-on-surface text-[11px]" href="#">
+<span class="material-symbols-outlined text-[14px]">settings</span>
+<span>Engine Settings</span>
+</a>
+</div>
+</aside>
+<!-- ========================================================================= -->
+<!-- CONTENT CANVAS: CRYPTOGRAPHIC RISK ANALYSIS                               -->
+<!-- ========================================================================= -->
+<main class="flex-1 bg-surface flex flex-col overflow-y-auto">
+<!-- Sub-header Breadcrumb / Command Bar -->
+<div class="px-margin-desktop py-space-md border-b border-outline-variant bg-surface-container-low flex flex-col md:flex-row md:items-center justify-between gap-space-sm shrink-0">
+<div>
+<div class="flex items-center gap-2">
+<h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Cryptographic Risk Analysis</h1>
+<span class="bg-primary-container/20 text-primary-container border border-primary-container/40 text-[10px] font-code-sm px-1.5 py-0.5 rounded">DETERMINISTIC EVALUATION</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+            Quantitative risk scoring and threat surface exposure engine according to ECDAT deterministic formula
+          </p>
+</div>
+<div class="flex items-center gap-2">
+<div class="flex items-center bg-surface-container-lowest border border-outline-variant rounded p-0.5 text-code-sm font-code-sm">
+<button class="px-2.5 py-1 bg-surface-container-high text-primary rounded font-medium">Aggregated View</button>
+<button class="px-2.5 py-1 text-on-surface-variant hover:text-on-surface">By Primitive</button>
+<button class="px-2.5 py-1 text-on-surface-variant hover:text-on-surface">By Repository</button>
+</div>
+<button class="border border-outline-variant bg-surface-container-low hover:bg-surface-container-high text-on-surface px-2.5 py-1 rounded text-code-sm font-code-sm flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[14px]">file_download</span>
+            Export CBOM Assessment
+          </button>
+</div>
+</div>
+<div class="p-margin-desktop space-y-space-xl">
+<!-- ===================================================================== -->
+<!-- ROW 1: HERO METRIC CARD & DETERMINISTIC MATHEMATICAL FORMULA           -->
+<!-- ===================================================================== -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-space-lg">
+<!-- Overall Risk Hero Metric (5 Columns) -->
+<div class="xl:col-span-4 bg-surface-container-low border border-outline-variant rounded p-space-lg flex flex-col justify-between relative overflow-hidden">
+<div class="flex items-center justify-between border-b border-outline-variant pb-space-sm">
+<span class="font-label-caps text-label-caps text-on-surface-variant uppercase">GLOBAL THREAT EXPOSURE</span>
+<span class="px-1.5 py-0.5 bg-error-container/40 border border-error/40 text-error rounded text-[10px] font-code-sm uppercase tracking-wide">
+                HIGH RISK BAND
+              </span>
+</div>
+<div class="my-space-md flex items-baseline gap-4">
+<div class="font-code-lg text-[56px] leading-none font-bold text-primary tracking-tight">
+                74<span class="text-headline-lg text-outline font-normal"> / 100</span>
+</div>
+<div class="space-y-1">
+<div class="text-[12px] font-code-sm text-error flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+                  +8.4 vs previous sprint
+                </div>
+<div class="text-[11px] font-code-sm text-outline">
+                  18 Critical Cryptographic Vectors
+                </div>
+</div>
+</div>
+<!-- Risk Band Severity Progress Scale -->
+<div class="space-y-1.5">
+<div class="flex justify-between text-[11px] font-code-sm text-on-surface-variant">
+<span>Tolerance Threshold: &lt; 35.0</span>
+<span class="text-primary font-medium">Critical Shift Detected</span>
+</div>
+<div class="h-2 w-full bg-surface-container-lowest rounded-full overflow-hidden flex">
+<div class="bg-tertiary/60" style="width: 35%" title="Safe Band: 0 - 35"></div>
+<div class="bg-primary/50" style="width: 25%" title="Moderate Band: 36 - 60"></div>
+<div class="bg-primary-container" style="width: 25%" title="High Risk: 61 - 85"></div>
+<div class="bg-error-container" style="width: 15%" title="Critical Exposure: 86 - 100"></div>
+</div>
+<div class="flex justify-between text-[10px] font-code-sm text-outline pt-0.5">
+<span>0.00 (PQ-Hardened)</span>
+<span>35.0 (NIST Target)</span>
+<span>74.0 (Current)</span>
+<span>100.0</span>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm border-t border-outline-variant flex items-center justify-between text-code-sm font-code-sm text-on-surface-variant">
+<span>Primary Driver: <strong class="text-on-surface font-mono">Unpadded RSA Keypairs</strong></span>
+<span class="text-primary-container cursor-pointer hover:underline">Inspect Primitive →</span>
+</div>
+</div>
+<!-- Mathematical Formula Panel (7 Columns) -->
+<div class="xl:col-span-8 bg-surface-container-low border border-outline-variant rounded p-space-lg flex flex-col justify-between">
+<div class="flex items-center justify-between border-b border-outline-variant pb-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">functions</span>
+<span class="font-label-caps text-label-caps text-on-surface uppercase">ECDAT Deterministic Risk Formulation</span>
+</div>
+<span class="font-code-sm text-[11px] text-outline">Deterministic Engine Spec: RFC-NTRO-892</span>
+</div>
+<!-- The Equation Card -->
+<div class="my-space-md p-space-md bg-surface-container-lowest border border-outline-variant rounded font-code-md text-code-md overflow-x-auto">
+<div class="text-on-surface font-mono tracking-wide leading-relaxed">
+<span class="text-primary font-bold">Risk</span> = 
+                <span class="text-outline">100 × (</span>
+<span class="text-primary-container font-semibold">0.35</span> × <span class="text-secondary">QuantumExposure</span> + 
+                <span class="text-primary-container font-semibold">0.25</span> × <span class="text-secondary">BusinessCriticality</span> + 
+                <span class="text-primary-container font-semibold">0.15</span> × <span class="text-secondary">ExposureSurface</span> + 
+                <span class="text-primary-container font-semibold">0.15</span> × <span class="text-secondary">DataSensitivity</span> + 
+                <span class="text-primary-container font-semibold">0.10</span> × <span class="text-outline">(1 −</span> <span class="text-tertiary">CryptoAgility</span><span class="text-outline">)</span>
+<span class="text-outline">)</span>
+</div>
+</div>
+<!-- Mathematical Weight Breakdown Tags -->
+<div class="grid grid-cols-2 md:grid-cols-5 gap-2 text-code-sm font-code-sm">
+<div class="p-2 bg-surface-container rounded border border-outline-variant/60">
+<div class="text-[10px] text-outline uppercase font-label-caps">W₁ (35%)</div>
+<div class="text-secondary font-medium text-[11px] truncate">Quantum Exp.</div>
+<div class="text-[10px] text-on-surface-variant mt-0.5">Shor's / Grover factor</div>
+</div>
+<div class="p-2 bg-surface-container rounded border border-outline-variant/60">
+<div class="text-[10px] text-outline uppercase font-label-caps">W₂ (25%)</div>
+<div class="text-secondary font-medium text-[11px] truncate">Biz Criticality</div>
+<div class="text-[10px] text-on-surface-variant mt-0.5">Production blast tier</div>
+</div>
+<div class="p-2 bg-surface-container rounded border border-outline-variant/60">
+<div class="text-[10px] text-outline uppercase font-label-caps">W₃ (15%)</div>
+<div class="text-secondary font-medium text-[11px] truncate">Exposure Surf.</div>
+<div class="text-[10px] text-on-surface-variant mt-0.5">Public API ingress</div>
+</div>
+<div class="p-2 bg-surface-container rounded border border-outline-variant/60">
+<div class="text-[10px] text-outline uppercase font-label-caps">W₄ (15%)</div>
+<div class="text-secondary font-medium text-[11px] truncate">Data Sensitivity</div>
+<div class="text-[10px] text-on-surface-variant mt-0.5">PII / Classified State</div>
+</div>
+<div class="p-2 bg-surface-container rounded border border-outline-variant/60">
+<div class="text-[10px] text-outline uppercase font-label-caps">W₅ (10%)</div>
+<div class="text-tertiary font-medium text-[11px] truncate">Inversed Agility</div>
+<div class="text-[10px] text-on-surface-variant mt-0.5">Hardcoded dependency</div>
+</div>
+</div>
+<div class="mt-space-md pt-space-sm border-t border-outline-variant flex items-center justify-between text-[11px] text-outline">
+<span class="flex items-center gap-1 font-code-sm">
+<span class="material-symbols-outlined text-[13px] text-tertiary">check_circle</span>
+                All continuous coefficients normalized on unit interval [0.00, 1.00]
+              </span>
+<button class="text-primary hover:underline font-code-sm">Calibrate Equation Parameters</button>
+</div>
+</div>
+</div>
+<!-- ===================================================================== -->
+<!-- ROW 2: FACTOR BREAKDOWN GRID (5 METRIC CARDS)                          -->
+<!-- ===================================================================== -->
+<div>
+<div class="flex items-center justify-between mb-space-sm">
+<h2 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[16px]">tune</span>
+              Factor Breakdown // Active Codebase: <span class="font-mono text-primary font-normal">main:src/crypto-core</span>
+</h2>
+<span class="text-outline text-code-sm font-code-sm">Evaluation Timestamp: 2026-03-31T09:41:22Z</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-space-md">
+<!-- Factor 1: Quantum Exposure -->
+<div class="bg-surface-container-low border border-outline-variant rounded p-space-md flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-outline uppercase">Weight 0.35</span>
+<span class="px-1.5 py-0.2 bg-error-container/20 text-error border border-error/30 text-[10px] font-code-sm rounded">CRITICAL</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface mt-1">Quantum Exposure</div>
+<div class="font-code-lg text-[28px] font-bold text-primary my-2 leading-none">0.88</div>
+<p class="text-[11px] text-on-surface-variant font-body-sm leading-tight">
+                  High reliance on Shor-vulnerable factorization (RSA-2048) and discrete log keys.
+                </p>
+</div>
+<div class="mt-space-md pt-2 border-t border-outline-variant space-y-1">
+<div class="h-1.5 w-full bg-surface-container-lowest rounded overflow-hidden">
+<div class="h-full bg-error rounded" style="width: 88%"></div>
+</div>
+<div class="flex justify-between text-[10px] font-code-sm text-outline">
+<span>PQC Target: &lt;0.20</span>
+<span>88%</span>
+</div>
+</div>
+</div>
+<!-- Factor 2: Business Criticality -->
+<div class="bg-surface-container-low border border-outline-variant rounded p-space-md flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-outline uppercase">Weight 0.25</span>
+<span class="px-1.5 py-0.2 bg-error-container/20 text-error border border-error/30 text-[10px] font-code-sm rounded">TIER 1</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface mt-1">Business Criticality</div>
+<div class="font-code-lg text-[28px] font-bold text-primary my-2 leading-none">0.90</div>
+<p class="text-[11px] text-on-surface-variant font-body-sm leading-tight">
+                  Cryptographic core governs authentication certificates and telemetry tokens.
+                </p>
+</div>
+<div class="mt-space-md pt-2 border-t border-outline-variant space-y-1">
+<div class="h-1.5 w-full bg-surface-container-lowest rounded overflow-hidden">
+<div class="h-full bg-primary-container rounded" style="width: 90%"></div>
+</div>
+<div class="flex justify-between text-[10px] font-code-sm text-outline">
+<span>Impact Scope: Global</span>
+<span>90%</span>
+</div>
+</div>
+</div>
+<!-- Factor 3: Exposure Surface -->
+<div class="bg-surface-container-low border border-outline-variant rounded p-space-md flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-outline uppercase">Weight 0.15</span>
+<span class="px-1.5 py-0.2 bg-primary/20 text-primary border border-primary/30 text-[10px] font-code-sm rounded">MODERATE</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface mt-1">Exposure Surface</div>
+<div class="font-code-lg text-[28px] font-bold text-primary my-2 leading-none">0.65</div>
+<p class="text-[11px] text-on-surface-variant font-body-sm leading-tight">
+                  Public mTLS endpoints and edge RPC tunnels accessible from egress interfaces.
+                </p>
+</div>
+<div class="mt-space-md pt-2 border-t border-outline-variant space-y-1">
+<div class="h-1.5 w-full bg-surface-container-lowest rounded overflow-hidden">
+<div class="h-full bg-primary rounded" style="width: 65%"></div>
+</div>
+<div class="flex justify-between text-[10px] font-code-sm text-outline">
+<span>Perimeter Bound</span>
+<span>65%</span>
+</div>
+</div>
+</div>
+<!-- Factor 4: Data Sensitivity -->
+<div class="bg-surface-container-low border border-outline-variant rounded p-space-md flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-outline uppercase">Weight 0.15</span>
+<span class="px-1.5 py-0.2 bg-error-container/20 text-error border border-error/30 text-[10px] font-code-sm rounded">RESTRICTED</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface mt-1">Data Sensitivity</div>
+<div class="font-code-lg text-[28px] font-bold text-primary my-2 leading-none">0.80</div>
+<p class="text-[11px] text-on-surface-variant font-body-sm leading-tight">
+                  Protects sovereign identity payloads and long-term secret key material storage.
+                </p>
+</div>
+<div class="mt-space-md pt-2 border-t border-outline-variant space-y-1">
+<div class="h-1.5 w-full bg-surface-container-lowest rounded overflow-hidden">
+<div class="h-full bg-error-container rounded" style="width: 80%"></div>
+</div>
+<div class="flex justify-between text-[10px] font-code-sm text-outline">
+<span>Class: Top Secret</span>
+<span>80%</span>
+</div>
+</div>
+</div>
+<!-- Factor 5: Crypto Agility (Inversed) -->
+<div class="bg-surface-container-low border border-outline-variant rounded p-space-md flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start">
+<span class="font-label-caps text-label-caps text-outline uppercase">Weight 0.10</span>
+<span class="px-1.5 py-0.2 bg-error-container/20 text-error border border-error/30 text-[10px] font-code-sm rounded">STIFF (LOW)</span>
+</div>
+<div class="font-headline-md text-headline-md text-on-surface mt-1">Crypto Agility</div>
+<div class="font-code-lg text-[28px] font-bold text-error my-2 leading-none">0.25</div>
+<p class="text-[11px] text-on-surface-variant font-body-sm leading-tight">
+                  Tight compiler bindings to legacy primitives; cipher reconfiguration requires rebuild.
+                </p>
+</div>
+<div class="mt-space-md pt-2 border-t border-outline-variant space-y-1">
+<div class="h-1.5 w-full bg-surface-container-lowest rounded overflow-hidden">
+<div class="h-full bg-error rounded" style="width: 25%"></div>
+</div>
+<div class="flex justify-between text-[10px] font-code-sm text-outline">
+<span>(1 - Agility) Penalty: 0.75</span>
+<span>25%</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ===================================================================== -->
+<!-- ROW 3: RISK MATRIX (Impact × Exposure 2D Heatmap / Scatter Canvas)    -->
+<!-- ===================================================================== -->
+<div class="bg-surface-container-low border border-outline-variant rounded p-space-lg">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-outline-variant pb-space-sm gap-2">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">grid_view</span>
+                Risk Matrix // Impact vs. Quantum Exposure Surface
+              </h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">
+                Deterministic coordinate layout mapping algorithmic primitives to architectural blast radii
+              </p>
+</div>
+<div class="flex items-center gap-3 text-code-sm font-code-sm">
+<span class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-error"></span>
+<span>Critical (Score &gt; 70)</span>
+</span>
+<span class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-primary-container"></span>
+<span>High (50-70)</span>
+</span>
+<span class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+<span>Medium (30-50)</span>
+</span>
+<span class="flex items-center gap-1.5">
+<span class="w-2.5 h-2.5 rounded-full bg-tertiary"></span>
+<span>Safe / PQ (&lt; 30)</span>
+</span>
+</div>
+</div>
+<!-- Heatmap Matrix Board -->
+<div class="mt-space-lg relative h-80 bg-surface-container-lowest border border-outline-variant rounded p-4 flex flex-col justify-between overflow-hidden">
+<!-- Background Quadrant Grid Lines & Tonal Bands -->
+<div class="absolute inset-0 grid grid-cols-2 grid-rows-2 opacity-30 pointer-events-none">
+<div class="border-r border-b border-outline-variant bg-surface-container/20"></div>
+<div class="border-b border-outline-variant bg-error-container/10"></div>
+<div class="border-r border-outline-variant bg-tertiary/5"></div>
+<div class="bg-primary-container/10"></div>
+</div>
+<!-- Heatmap Coordinates Scatter Items -->
+<!-- Item 1: RSA-2048 (Critical Top-Right) -->
+<div class="absolute top-10 right-14 z-10 group cursor-pointer">
+<div class="relative flex items-center gap-2">
+<div class="w-4 h-4 rounded-full bg-error border-2 border-surface-container-lowest animate-pulse"></div>
+<div class="bg-surface-container-high/90 border border-error/50 px-2 py-1 rounded text-code-sm font-code-sm text-on-surface shadow-lg group-hover:border-primary transition-all">
+<div class="font-bold text-error flex items-center gap-1">
+<span>RSA-2048</span>
+<span class="text-[9px] bg-error-container/40 text-error px-1 rounded">R: 86.4</span>
+</div>
+<div class="text-[10px] text-outline">x: 0.88, y: 0.92 // auth_srv.rs</div>
+</div>
+</div>
+</div>
+<!-- Item 2: ECDSA P-256 (High Right-Middle) -->
+<div class="absolute top-24 right-36 z-10 group cursor-pointer">
+<div class="relative flex items-center gap-2">
+<div class="w-3.5 h-3.5 rounded-full bg-primary-container border-2 border-surface-container-lowest"></div>
+<div class="bg-surface-container-high/90 border border-primary-container/40 px-2 py-1 rounded text-code-sm font-code-sm text-on-surface shadow-lg group-hover:border-primary transition-all">
+<div class="font-bold text-primary flex items-center gap-1">
+<span>ECDSA-P256</span>
+<span class="text-[9px] bg-primary-container/30 text-primary-container px-1 rounded">R: 68.2</span>
+</div>
+<div class="text-[10px] text-outline">x: 0.72, y: 0.78 // jwt_signer.go</div>
+</div>
+</div>
+</div>
+<!-- Item 3: AES-128-CBC (High-Medium Center) -->
+<div class="absolute top-36 left-1/2 -translate-x-12 z-10 group cursor-pointer">
+<div class="relative flex items-center gap-2">
+<div class="w-3.5 h-3.5 rounded-full bg-primary border-2 border-surface-container-lowest"></div>
+<div class="bg-surface-container-high/90 border border-outline-variant px-2 py-1 rounded text-code-sm font-code-sm text-on-surface shadow-lg group-hover:border-primary transition-all">
+<div class="font-semibold text-primary-fixed-dim flex items-center gap-1">
+<span>AES-128-CBC</span>
+<span class="text-[9px] bg-primary/20 text-primary px-1 rounded">R: 54.1</span>
+</div>
+<div class="text-[10px] text-outline">x: 0.50, y: 0.61 // session_store.c</div>
+</div>
+</div>
+</div>
+<!-- Item 4: SHA-1 (Legacy Trap - Mid-Low) -->
+<div class="absolute bottom-28 left-64 z-10 group cursor-pointer">
+<div class="relative flex items-center gap-2">
+<div class="w-3.5 h-3.5 rounded-full bg-error border-2 border-surface-container-lowest"></div>
+<div class="bg-surface-container-high/90 border border-error/40 px-2 py-1 rounded text-code-sm font-code-sm text-on-surface shadow-lg group-hover:border-primary transition-all">
+<div class="font-bold text-error flex items-center gap-1">
+<span>SHA-1</span>
+<span class="text-[9px] bg-error-container/30 text-error px-1 rounded">R: 62.0</span>
+</div>
+<div class="text-[10px] text-outline">x: 0.40, y: 0.85 // checksum.py</div>
+</div>
+</div>
+</div>
+<!-- Item 5: AES-256-GCM (Low Safe / PQC Compliant - Bottom-Left) -->
+<div class="absolute bottom-12 left-16 z-10 group cursor-pointer">
+<div class="relative flex items-center gap-2">
+<div class="w-3.5 h-3.5 rounded-full bg-tertiary border-2 border-surface-container-lowest"></div>
+<div class="bg-surface-container-high/90 border border-tertiary/40 px-2 py-1 rounded text-code-sm font-code-sm text-on-surface shadow-lg group-hover:border-tertiary transition-all">
+<div class="font-bold text-tertiary flex items-center gap-1">
+<span>AES-256-GCM</span>
+<span class="text-[9px] bg-tertiary/20 text-tertiary px-1 rounded">R: 18.5</span>
+</div>
+<div class="text-[10px] text-outline">x: 0.15, y: 0.22 // vault_store.rs</div>
+</div>
+</div>
+</div>
+<!-- Item 6: ML-KEM-768 (Kyber - Modern PQC Target) -->
+<div class="absolute bottom-6 left-32 z-10 group cursor-pointer">
+<div class="relative flex items-center gap-2">
+<div class="w-3.5 h-3.5 rounded-full bg-tertiary border-2 border-surface-container-lowest"></div>
+<div class="bg-surface-container-high/90 border border-tertiary/40 px-2 py-1 rounded text-code-sm font-code-sm text-on-surface shadow-lg group-hover:border-tertiary transition-all">
+<div class="font-bold text-tertiary flex items-center gap-1">
+<span>ML-KEM-768</span>
+<span class="text-[9px] bg-tertiary/20 text-tertiary px-1 rounded">R: 08.2</span>
+</div>
+<div class="text-[10px] text-outline">x: 0.05, y: 0.11 // pqc_handshake.rs</div>
+</div>
+</div>
+</div>
+<!-- Axis Labels & Overlay Grid Legend -->
+<div class="flex justify-between text-[11px] font-code-sm text-outline z-0">
+<span class="flex items-center gap-1 font-semibold text-error">
+<span class="material-symbols-outlined text-[12px]">north</span>
+                MAX IMPACT / BUSINESS EXPOSURE (1.0)
+              </span>
+<span class="text-error font-semibold uppercase tracking-wider">CRITICAL RISK ZONE</span>
+</div>
+<div class="flex justify-between text-[11px] font-code-sm text-outline z-0">
+<span class="text-tertiary font-semibold uppercase tracking-wider">QUANTUM RESILIENT ZONE</span>
+<span class="flex items-center gap-1 font-semibold text-secondary">
+                SHOR QUANTUM SUSCEPTIBILITY (1.0)
+                <span class="material-symbols-outlined text-[12px]">east</span>
+</span>
+</div>
+</div>
+</div>
+<!-- ===================================================================== -->
+<!-- ROW 4: RANKED CRYPTOGRAPHIC ASSETS BY RISK (Dense Developer Table)    -->
+<!-- ===================================================================== -->
+<div class="bg-surface-container-low border border-outline-variant rounded">
+<div class="px-space-md py-space-sm border-b border-outline-variant flex flex-col md:flex-row md:items-center justify-between gap-space-xs">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">format_list_numbered</span>
+                Ranked Cryptographic Assets by Risk Score
+              </h2>
+<span class="text-code-sm font-code-sm text-outline">Ordered descending by calculated deterministic risk coefficient</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="text-code-sm font-code-sm text-on-surface-variant">Filter Algorithm:</span>
+<select class="bg-surface-container-lowest border border-outline-variant rounded px-2 py-0.5 text-code-sm font-code-sm text-on-surface focus:outline-none">
+<option>All Primitives (24)</option>
+<option>Asymmetric Key Exchange (8)</option>
+<option>Digital Signatures (6)</option>
+<option>Symmetric Ciphers (10)</option>
+</select>
+</div>
+</div>
+<!-- Dense Tabular Layout -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse text-code-sm font-code-sm">
+<thead>
+<tr class="border-b border-outline-variant bg-surface-container-lowest text-outline text-[11px] uppercase tracking-wider">
+<th class="py-2 px-3 w-12 text-center">Rank</th>
+<th class="py-2 px-3">Asset / Identifier</th>
+<th class="py-2 px-3">Algorithm</th>
+<th class="py-2 px-3">Risk Score</th>
+<th class="py-2 px-3">Quantum Class</th>
+<th class="py-2 px-3">Criticality</th>
+<th class="py-2 px-3">Exposure Vector</th>
+<th class="py-2 px-3 text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1: RSA-2048 Critical -->
+<tr class="hover:bg-surface-container-high/60 transition-colors border-l-2 border-l-error">
+<td class="py-2 px-3 text-center text-error font-bold font-mono">01</td>
+<td class="py-2 px-3">
+<div class="font-mono text-on-surface font-semibold">src/auth/rsa_keystore.pem</div>
+<div class="text-[10px] text-outline font-mono">ID: 0x9AF84 // SHA256: e82f...d9a1</div>
+</td>
+<td class="py-2 px-3">
+<span class="px-1.5 py-0.5 rounded bg-error-container/20 text-error border border-error/40 text-[11px]">
+                      RSA-2048-PKCS1v15
+                    </span>
+</td>
+<td class="py-2 px-3">
+<div class="flex items-center gap-2">
+<span class="text-error font-bold text-code-md">86.4</span>
+<div class="w-16 h-1.5 bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="bg-error h-full" style="width: 86.4%"></div>
+</div>
+</div>
+</td>
+<td class="py-2 px-3">
+<span class="text-error font-medium">Shor Vulnerable (Key Exch)</span>
+</td>
+<td class="py-2 px-3">
+<span class="text-on-surface">Tier 1 // Core Auth</span>
+</td>
+<td class="py-2 px-3">
+<span class="text-on-surface-variant font-mono text-[10px]">Public Egress (mTLS)</span>
+</td>
+<td class="py-2 px-3 text-right">
+<button class="px-2 py-1 rounded bg-surface-container border border-outline-variant hover:border-primary text-primary text-[11px] transition-colors inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">visibility</span>
+                      Inspect Finding
+                    </button>
+</td>
+</tr>
+<!-- Row 2: ECDSA P-256 High -->
+<tr class="hover:bg-surface-container-high/60 transition-colors border-l-2 border-l-primary-container">
+<td class="py-2 px-3 text-center text-primary font-bold font-mono">02</td>
+<td class="py-2 px-3">
+<div class="font-mono text-on-surface font-semibold">src/api/token_signer.go:42</div>
+<div class="text-[10px] text-outline font-mono">ID: 0x3BC12 // SHA256: 7f0a...110b</div>
+</td>
+<td class="py-2 px-3">
+<span class="px-1.5 py-0.5 rounded bg-primary-container/20 text-primary border border-primary-container/40 text-[11px]">
+                      ECDSA-SECP256R1
+                    </span>
+</td>
+<td class="py-2 px-3">
+<div class="flex items-center gap-2">
+<span class="text-primary font-bold text-code-md">68.2</span>
+<div class="w-16 h-1.5 bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="bg-primary-container h-full" style="width: 68.2%"></div>
+</div>
+</div>
+</td>
+<td class="py-2 px-3">
+<span class="text-primary-fixed-dim font-medium">Discrete Logarithm Vuln</span>
+</td>
+<td class="py-2 px-3">
+<span class="text-on-surface">Tier 1 // JWT Gate</span>
+</td>
+<td class="py-2 px-3">
+<span class="text-on-surface-variant font-mono text-[10px]">Gateway RPC Ingress</span>
+</td>
+<td class="py-2 px-3 text-right">
+<button class="px-2 py-1 rounded bg-surface-container border border-outline-variant hover:border-primary text-primary text-[11px] transition-colors inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">visibility</span>
+                      Inspect Finding
+                    </button>
+</td>
+</tr>
+<!-- Row 3: SHA-1 Medium-High -->
+<tr class="hover:bg-surface-container-high/60 transition-colors border-l-2 border-l-error">
+<td class="py-2 px-3 text-center text-error font-bold font-mono">03</td>
+<td class="py-2 px-3">
+<div class="font-mono text-on-surface font-semibold">infra/hash_verifier.py:108</div>
+<div class="text-[10px] text-outline font-mono">ID: 0x88D41 // SHA256: 312c...88ee</div>
+</td>
+<td class="py-2 px-3">
+<span class="px-1.5 py-0.5 rounded bg-error-container/20 text-error border border-error/40 text-[11px]">
+                      SHA-1 (Legacy Integrity)
+                    </span>
+</td>
+<td class="py-2 px-3">
+<div class="flex items-center gap-2">
+<span class="text-error font-bold text-code-md">62.0</span>
+<div class="w-16 h-1.5 bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="bg-error h-full" style="width: 62.0%"></div>
+</div>
+</div>
+</td>
+<td class="py-2 px-3">
+<span class="text-error font-medium">Collision Vulnerable</span>
+</td>
+<td class="py-2 px-3">
+<span class="text-on-surface">Tier 2 // Build Pipeline</span>
+</td>
+<td class="py-2 px-3">
+<span class="text-on-surface-variant font-mono text-[10px]">CI Artifact Ingestion</span>
+</td>
+<td class="py-2 px-3 text-right">
+<button class="px-2 py-1 rounded bg-surface-container border border-outline-variant hover:border-primary text-primary text-[11px] transition-colors inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">visibility</span>
+                      Inspect Finding
+                    </button>
+</td>
+</tr>
+<!-- Row 4: AES-128-CBC Medium -->
+<tr class="hover:bg-surface-container-high/60 transition-colors border-l-2 border-l-primary">
+<td class="py-2 px-3 text-center text-primary-fixed-dim font-bold font-mono">04</td>
+<td class="py-2 px-3">
+<div class="font-mono text-on-surface font-semibold">session/crypto_store.c:215</div>
+<div class="text-[10px] text-outline font-mono">ID: 0x44B90 // SHA256: 94bc...1200</div>
+</td>
+<td class="py-2 px-3">
+<span class="px-1.5 py-0.5 rounded bg-surface-container-high text-primary border border-outline-variant text-[11px]">
+                      AES-128-CBC
+                    </span>
+</td>
+<td class="py-2 px-3">
+<div class="flex items-center gap-2">
+<span class="text-primary font-bold text-code-md">54.1</span>
+<div class="w-16 h-1.5 bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="bg-primary h-full" style="width: 54.1%"></div>
+</div>
+</div>
+</td>
+<td class="py-2 px-3">
+<span class="text-outline font-medium">Grover Susceptible (64-bit eff)</span>
+</td>
+<td class="py-2 px-3">
+<span class="text-on-surface">Tier 2 // Session State</span>
+</td>
+<td class="py-2 px-3">
+<span class="text-on-surface-variant font-mono text-[10px]">Local Shared Memory</span>
+</td>
+<td class="py-2 px-3 text-right">
+<button class="px-2 py-1 rounded bg-surface-container border border-outline-variant hover:border-primary text-primary text-[11px] transition-colors inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">visibility</span>
+                      Inspect Finding
+                    </button>
+</td>
+</tr>
+<!-- Row 5: AES-256-GCM Safe -->
+<tr class="hover:bg-surface-container-high/60 transition-colors border-l-2 border-l-tertiary">
+<td class="py-2 px-3 text-center text-tertiary font-bold font-mono">05</td>
+<td class="py-2 px-3">
+<div class="font-mono text-on-surface font-semibold">vault/secret_storage.rs:89</div>
+<div class="text-[10px] text-outline font-mono">ID: 0x11C02 // SHA256: aa41...2399</div>
+</td>
+<td class="py-2 px-3">
+<span class="px-1.5 py-0.5 rounded bg-tertiary/10 text-tertiary border border-tertiary/30 text-[11px]">
+                      AES-256-GCM
+                    </span>
+</td>
+<td class="py-2 px-3">
+<div class="flex items-center gap-2">
+<span class="text-tertiary font-bold text-code-md">18.5</span>
+<div class="w-16 h-1.5 bg-surface-container-lowest rounded-full overflow-hidden">
+<div class="bg-tertiary h-full" style="width: 18.5%"></div>
+</div>
+</div>
+</td>
+<td class="py-2 px-3">
+<span class="text-tertiary font-medium">Quantum Safe (128-bit Grover)</span>
+</td>
+<td class="py-2 px-3">
+<span class="text-on-surface">Tier 1 // Core Vault</span>
+</td>
+<td class="py-2 px-3">
+<span class="text-on-surface-variant font-mono text-[10px]">Encrypted At-Rest Disk</span>
+</td>
+<td class="py-2 px-3 text-right">
+<button class="px-2 py-1 rounded bg-surface-container border border-outline-variant hover:border-tertiary text-on-surface text-[11px] transition-colors inline-flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">visibility</span>
+                      Inspect Finding
+                    </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-space-sm border-t border-outline-variant bg-surface-container-lowest flex items-center justify-between text-code-sm font-code-sm text-outline">
+<span>Showing 5 of 24 Cryptographic Bindings</span>
+<div class="flex items-center gap-1">
+<button class="px-2 py-0.5 border border-outline-variant rounded bg-surface-container disabled:opacity-40" disabled="">&lt; Prev</button>
+<button class="px-2 py-0.5 border border-outline-variant rounded bg-surface-container-high text-primary">1</button>
+<button class="px-2 py-0.5 border border-outline-variant rounded bg-surface-container hover:text-on-surface">2</button>
+<button class="px-2 py-0.5 border border-outline-variant rounded bg-surface-container hover:text-on-surface">3</button>
+<button class="px-2 py-0.5 border border-outline-variant rounded bg-surface-container hover:text-on-surface">Next &gt;</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<!-- ========================================================================= -->
+<!-- BOTTOM TERMINAL STATUS STRIP                                              -->
+<!-- ========================================================================= -->
+<footer class="h-7 bg-surface-container-lowest border-t border-outline-variant px-gutter-desktop flex items-center justify-between text-code-sm font-code-sm shrink-0 select-none z-50">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1.5 text-tertiary">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span class="text-[11px]">ENGINE_ONLINE</span>
+</div>
+<div class="h-3 w-px bg-outline-variant"></div>
+<div class="text-[11px] text-outline font-mono">
+        EXEC: <span class="text-on-surface-variant">ecdat-cli risk-eval --matrix --deterministic-weights</span>
+</div>
+<div class="hidden md:flex items-center gap-1 text-[11px] text-outline">
+<span>MEM: 242MB</span>
+<span>//</span>
+<span>THREADS: 8/8</span>
+</div>
+</div>
+<div class="flex items-center gap-space-md text-[11px]">
+<div class="text-on-surface-variant flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px] text-primary-container">shield</span>
+<span>NTRO SEC-OPS PROTOCOL: LEVEL 4</span>
+</div>
+<div class="h-3 w-px bg-outline-variant"></div>
+<div class="text-outline font-mono">
+        UTC: <span class="text-on-surface" id="clock">09:41:22</span>
+</div>
+</div>
+</footer>
+<script>
+    // Live mini-clock for IDE terminal strip
+    function updateClock() {
+      const now = new Date();
+      const hours = String(now.getUTCHours()).padStart(2, '0');
+      const minutes = String(now.getUTCMinutes()).padStart(2, '0');
+      const seconds = String(now.getUTCSeconds()).padStart(2, '0');
+      const el = document.getElementById('clock');
+      if (el) el.textContent = `${hours}:${minutes}:${seconds}`;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+  </script>
+</body></html>

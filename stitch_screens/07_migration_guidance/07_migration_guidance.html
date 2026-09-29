@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ECDAT // Migration Guidance - NTRO SecOps</title>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Fonts: Inter & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary-fixed-dim": "#ffb95f",
+            "tertiary-container": "#4fc85d",
+            "inverse-primary": "#855300",
+            "on-surface-variant": "#d8c3ad",
+            "tertiary-fixed-dim": "#67df70",
+            "on-surface": "#dee2ec",
+            "on-secondary-fixed": "#001c38",
+            "tertiary-fixed": "#83fc89",
+            "on-primary-fixed": "#2a1700",
+            "inverse-on-surface": "#2c3138",
+            "on-error": "#690005",
+            "background": "#0f141b",
+            "on-tertiary-fixed": "#002105",
+            "on-tertiary-fixed-variant": "#005317",
+            "surface-container-high": "#252a32",
+            "on-primary-fixed-variant": "#653e00",
+            "surface-bright": "#343941",
+            "on-error-container": "#ffdad6",
+            "on-secondary-container": "#f0f4ff",
+            "surface-variant": "#30353d",
+            "outline-variant": "#534434",
+            "on-secondary": "#00315c",
+            "on-primary-container": "#613b00",
+            "on-background": "#dee2ec",
+            "secondary": "#a2c9ff",
+            "primary": "#ffc174",
+            "primary-container": "#f59e0b",
+            "surface-container-highest": "#30353d",
+            "on-tertiary": "#00390d",
+            "surface-dim": "#0f141b",
+            "error-container": "#93000a",
+            "on-primary": "#472a00",
+            "secondary-container": "#0071c7",
+            "surface-tint": "#ffb95f",
+            "inverse-surface": "#dee2ec",
+            "surface-container": "#1b2027",
+            "on-tertiary-container": "#004f16",
+            "secondary-fixed-dim": "#a2c9ff",
+            "primary-fixed": "#ffddb8",
+            "surface-container-lowest": "#090f15",
+            "outline": "#a08e7a",
+            "tertiary": "#6de575",
+            "surface-container-low": "#171c23",
+            "on-secondary-fixed-variant": "#004882",
+            "secondary-fixed": "#d3e4ff",
+            "surface": "#0f141b",
+            "error": "#ffb4ab"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-xl": "1.5rem",
+            "gutter-desktop": "1rem",
+            "margin": "1rem",
+            "gutter": "0.75rem",
+            "space-lg": "1rem",
+            "space-xs": "0.25rem",
+            "space-md": "0.75rem",
+            "space-sm": "0.5rem",
+            "margin-desktop": "1.5rem"
+          },
+          "fontFamily": {
+            "body-sm": ["Inter"],
+            "code-lg": ["JetBrains Mono"],
+            "code-md": ["JetBrains Mono"],
+            "headline-md": ["Inter"],
+            "body-md": ["Inter"],
+            "headline-lg": ["Inter"],
+            "label-caps": ["JetBrains Mono"],
+            "code-sm": ["JetBrains Mono"],
+            "headline-xl": ["Inter"]
+          },
+          "fontSize": {
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "code-lg": ["13px", { "lineHeight": "20px", "fontWeight": "500" }],
+            "code-md": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-md": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "body-md": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "headline-lg": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "label-caps": ["10px", { "lineHeight": "12px", "letterSpacing": "0.08em", "fontWeight": "600" }],
+            "code-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "headline-xl": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" }]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20;
+      font-size: 16px;
+      display: inline-block;
+      vertical-align: middle;
+      line-height: 1;
+    }
+    /* Custom scrollbars for IDE precision */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090f15;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #30353d;
+      border-radius: 2px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #534434;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface antialiased h-screen w-screen overflow-hidden flex flex-col font-body-md select-none">
+<!-- ================= TOP NAV BAR (Shared Component JSON) ================= -->
+<header class="flex justify-between items-center h-10 px-gutter-desktop w-full border-b border-outline-variant bg-surface-container-lowest shrink-0 select-none z-50">
+<!-- Brand & Workspace Breadcrumb -->
+<div class="flex items-center gap-space-md h-full">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary-container" data-icon="terminal">terminal</span>
+<span class="text-code-lg font-code-lg font-bold text-primary tracking-tight">ECDAT // PS-ID: 26164 (NTRO)</span>
+</div>
+<div class="h-4 w-px bg-outline-variant mx-space-xs"></div>
+<!-- Nav Links with Active/Inactive Styles from JSON -->
+<nav class="flex items-center h-full">
+<a class="text-primary font-code-md border-b-2 border-primary px-space-sm h-full flex items-center gap-space-xs" href="#">
+<span class="material-symbols-outlined text-primary" data-icon="folder_code">folder_code</span>
+<span>main:src/crypto-core</span>
+</a>
+<div class="flex items-center text-on-surface-variant font-code-sm px-space-sm h-full gap-space-xs">
+<span class="material-symbols-outlined text-tertiary" data-icon="verified">verified</span>
+<span class="text-tertiary">CycloneDX v1.6 [VALID]</span>
+</div>
+</nav>
+</div>
+<!-- Actions & Controls (Right) -->
+<div class="flex items-center gap-space-md h-full">
+<!-- Search Input -->
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-2 text-outline" data-icon="search">search</span>
+<input class="bg-surface-container-low border border-outline-variant rounded text-on-surface text-code-sm font-code-sm pl-7 pr-8 py-0.5 h-7 w-64 focus:outline-none focus:border-secondary focus:ring-0" placeholder="Filter primitives, FIPS rules..." type="text"/>
+<span class="absolute right-2 text-label-caps font-label-caps text-outline bg-surface-container-high px-1 rounded">⌘K</span>
+</div>
+<!-- Discovery & Idle Indicators -->
+<div class="flex items-center gap-space-xs text-code-sm font-code-sm text-outline">
+<span class="w-2 h-2 rounded-full bg-tertiary animate-pulse"></span>
+<span class="text-on-surface-variant">Scan Status: Idle</span>
+</div>
+<button class="bg-primary-container hover:bg-primary text-on-primary-container font-code-md px-space-sm py-1 rounded text-code-sm font-medium flex items-center gap-space-xs transition-colors">
+<span class="material-symbols-outlined" data-icon="play_arrow">play_arrow</span>
+<span>Run Discovery</span>
+</button>
+<div class="flex items-center gap-1 border-l border-outline-variant pl-space-sm">
+<button class="p-1 hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface rounded" title="Terminal View">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+</button>
+<button class="p-1 hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface rounded" title="Parameters &amp; Tuning">
+<span class="material-symbols-outlined" data-icon="tune">tune</span>
+</button>
+<button class="p-1 hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface rounded relative" title="Notifications">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-0.5 right-0.5 w-1.5 h-1.5 bg-primary-container rounded-full"></span>
+</button>
+</div>
+<!-- Lead SecOps Profile Token -->
+<div class="flex items-center gap-space-xs pl-space-sm border-l border-outline-variant">
+<div class="w-6 h-6 rounded bg-surface-container-high border border-outline-variant flex items-center justify-center text-primary font-code-sm" title="Lead Cryptographer SecOps Token">
+<span class="material-symbols-outlined" data-icon="security">security</span>
+</div>
+<span class="text-code-sm font-code-sm text-on-surface-variant">secops-lead::ntro</span>
+</div>
+</div>
+</header>
+<!-- ================= MAIN LAYOUT (SideNav + Center Viewport) ================= -->
+<div class="flex flex-1 h-[calc(100vh-2.5rem-1.5rem)] overflow-hidden">
+<!-- SIDE NAV BAR (IDE Rail Expanded - 10 Tabs, Tab 7 Active) -->
+<aside class="w-64 h-full flex flex-col justify-between p-space-sm border-r border-outline-variant bg-surface-container-lowest shrink-0 select-none">
+<div class="flex flex-col gap-space-sm">
+<!-- Node Metadata Badge -->
+<div class="px-space-md py-space-sm bg-surface-container-low border border-outline-variant rounded flex items-center gap-space-sm">
+<div class="w-7 h-7 bg-surface-container-high rounded border border-outline-variant flex items-center justify-center text-primary">
+<span class="material-symbols-outlined" data-icon="memory">memory</span>
+</div>
+<div class="flex flex-col">
+<span class="text-code-lg font-code-lg font-bold text-primary uppercase">ECDAT Engine</span>
+<span class="text-code-sm font-code-sm text-outline">SIH 2026 // NTRO SEC</span>
+</div>
+</div>
+<!-- Initiate Scan CTA -->
+<button class="w-full bg-surface-container-high hover:bg-surface-variant border border-outline-variant text-primary font-code-md py-1.5 px-space-sm rounded text-code-sm flex items-center justify-center gap-space-xs transition-colors">
+<span class="material-symbols-outlined text-primary-container" data-icon="bolt">bolt</span>
+<span>Initiate AST Scan</span>
+</button>
+<div class="h-px bg-outline-variant my-1"></div>
+<!-- Navigation Tabs List -->
+<nav class="flex flex-col space-y-0.5">
+<!-- 1. Dashboard -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low" href="#">
+<span class="material-symbols-outlined" data-icon="dashboard">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- 2. New Scan -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low" href="#">
+<span class="material-symbols-outlined" data-icon="play_circle">play_circle</span>
+<span>New Scan</span>
+</a>
+<!-- 3. Crypto Inventory -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low" href="#">
+<span class="material-symbols-outlined" data-icon="memory">memory</span>
+<span>Crypto Inventory</span>
+</a>
+<!-- 4. Finding Inspector -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low" href="#">
+<span class="material-symbols-outlined" data-icon="troubleshoot">troubleshoot</span>
+<span>Finding Inspector</span>
+</a>
+<!-- 5. Mosca Simulator -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low" href="#">
+<span class="material-symbols-outlined" data-icon="timeline">timeline</span>
+<span>Mosca Simulator</span>
+</a>
+<!-- 6. Risk Analysis -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low" href="#">
+<span class="material-symbols-outlined" data-icon="analytics">analytics</span>
+<span>Risk Analysis</span>
+</a>
+<!-- 7. Migration Guidance (ACTIVE PER SHARED COMPONENT SPEC & JSON) -->
+<a class="bg-surface-container text-primary font-code-md border-l-2 border-primary-container px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full" href="#">
+<span class="material-symbols-outlined text-primary-container" data-icon="swap_calls">swap_calls</span>
+<span class="font-semibold text-primary">Migration Guidance</span>
+<span class="ml-auto text-label-caps font-label-caps text-primary-container bg-surface-container-highest px-1 py-0.5 rounded">FIPS-203</span>
+</a>
+<!-- 8. CycloneDX 1.6 CBOM -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low" href="#">
+<span class="material-symbols-outlined" data-icon="verified_user">verified_user</span>
+<span>CycloneDX 1.6 CBOM</span>
+</a>
+<!-- 9. Reports & Evidence -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low" href="#">
+<span class="material-symbols-outlined" data-icon="description">description</span>
+<span>Reports &amp; Evidence</span>
+</a>
+<!-- 10. Terminal / Log -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low" href="#">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+<span>Terminal / Log</span>
+</a>
+</nav>
+</div>
+<!-- SideNav Footers -->
+<div class="flex flex-col border-t border-outline-variant pt-space-xs space-y-1">
+<div class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full">
+<span class="material-symbols-outlined text-tertiary" data-icon="check_circle">check_circle</span>
+<span class="text-tertiary">System Health: Optimal</span>
+</div>
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low" href="#">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+<span>Settings</span>
+</a>
+</div>
+</aside>
+<!-- CENTER ANALYTIC VIEWPORT (Scrollable) -->
+<main class="flex-1 bg-background overflow-y-auto flex flex-col p-space-lg gap-space-lg">
+<!-- HEADER BANNER -->
+<section class="flex flex-col gap-1 border-b border-outline-variant pb-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="p-1.5 bg-surface-container-low border border-outline-variant rounded text-primary-container">
+<span class="material-symbols-outlined" data-icon="alt_route">alt_route</span>
+</div>
+<div>
+<h1 class="text-headline-lg font-headline-lg text-on-surface tracking-tight">Deterministic Post-Quantum Migration Guidance</h1>
+<p class="text-body-sm font-body-sm text-outline">Deterministic transition roadmaps from classical and vulnerable primitives to NIST FIPS 203/204 standardized algorithms</p>
+</div>
+</div>
+<!-- Action Cluster -->
+<div class="flex items-center gap-space-sm">
+<button class="bg-surface-container-high border border-outline-variant text-on-surface hover:bg-surface-variant text-code-sm font-code-sm px-space-md py-1.5 rounded flex items-center gap-space-xs">
+<span class="material-symbols-outlined" data-icon="download">download</span>
+<span>Export Transition Plan (.json)</span>
+</button>
+<button class="bg-primary-container hover:bg-primary text-on-primary-container text-code-sm font-code-sm font-semibold px-space-md py-1.5 rounded flex items-center gap-space-xs shadow-sm">
+<span class="material-symbols-outlined" data-icon="auto_fix">auto_fix</span>
+<span>Execute Batch Patching Engine</span>
+</button>
+</div>
+</div>
+</section>
+<!-- 4 SUMMARY METRIC CARDS (Bento Grid) -->
+<section class="grid grid-cols-1 md:grid-cols-4 gap-space-md">
+<!-- Card 1: Immediate Migration -->
+<div class="bg-surface-container-low border-l-4 border-l-error border border-outline-variant p-space-md rounded flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="text-label-caps font-label-caps text-outline uppercase tracking-wider">Critical Phase</span>
+<span class="material-symbols-outlined text-error" data-icon="warning">warning</span>
+</div>
+<div class="my-space-xs">
+<div class="text-headline-xl font-headline-xl text-error font-bold tracking-tight">28</div>
+<div class="text-body-sm font-body-sm text-on-surface font-medium">Immediate Migration Required</div>
+</div>
+<div class="text-code-sm font-code-sm text-outline flex items-center gap-1">
+<span class="text-error font-medium">Shor vulnerable</span> • RSA ≤ 2048, ECDSA-P256
+          </div>
+</div>
+<!-- Card 2: Scheduled Hybrid Transition -->
+<div class="bg-surface-container-low border-l-4 border-l-primary-container border border-outline-variant p-space-md rounded flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="text-label-caps font-label-caps text-outline uppercase tracking-wider">Transition Phase</span>
+<span class="material-symbols-outlined text-primary-container" data-icon="sync_alt">sync_alt</span>
+</div>
+<div class="my-space-xs">
+<div class="text-headline-xl font-headline-xl text-primary font-bold tracking-tight">42</div>
+<div class="text-body-sm font-body-sm text-on-surface font-medium">Scheduled Hybrid Transition</div>
+</div>
+<div class="text-code-sm font-code-sm text-outline flex items-center gap-1">
+<span class="text-primary font-medium">Dual-Envelope</span> • X25519 + ML-KEM-768
+          </div>
+</div>
+<!-- Card 3: Monitor & Deprecate -->
+<div class="bg-surface-container-low border-l-4 border-l-secondary border border-outline-variant p-space-md rounded flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="text-label-caps font-label-caps text-outline uppercase tracking-wider">Lifecycle Tracking</span>
+<span class="material-symbols-outlined text-secondary" data-icon="hourglass_top">hourglass_top</span>
+</div>
+<div class="my-space-xs">
+<div class="text-headline-xl font-headline-xl text-secondary font-bold tracking-tight">63</div>
+<div class="text-body-sm font-body-sm text-on-surface font-medium">Monitor &amp; Deprecate</div>
+</div>
+<div class="text-code-sm font-code-sm text-outline flex items-center gap-1">
+<span class="text-secondary font-medium">Symmetric / Hashes</span> • AES-128, SHA-1 legacy
+          </div>
+</div>
+<!-- Card 4: FIPS Verified Compliant -->
+<div class="bg-surface-container-low border-l-4 border-l-tertiary border border-outline-variant p-space-md rounded flex flex-col justify-between">
+<div class="flex items-center justify-between">
+<span class="text-label-caps font-label-caps text-outline uppercase tracking-wider">Post-Quantum Valid</span>
+<span class="material-symbols-outlined text-tertiary" data-icon="task_alt">task_alt</span>
+</div>
+<div class="my-space-xs">
+<div class="text-headline-xl font-headline-xl text-tertiary font-bold tracking-tight">09</div>
+<div class="text-body-sm font-body-sm text-on-surface font-medium">FIPS Verified Compliant</div>
+</div>
+<div class="text-code-sm font-code-sm text-outline flex items-center gap-1">
+<span class="text-tertiary font-medium">NIST FIPS 203/204</span> • ML-KEM, ML-DSA
+          </div>
+</div>
+</section>
+<!-- MIGRATION GRAPH PREVIEW (Workflow Diagram) -->
+<section class="bg-surface-container-low border border-outline-variant rounded p-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary" data-icon="schema">schema</span>
+<h2 class="text-headline-md font-headline-md text-on-surface">Architectural Staged Migration Pipeline</h2>
+</div>
+<div class="flex items-center gap-2 text-code-sm font-code-sm text-outline">
+<span>Protocol: IETF Hybrid RFC 9180 + NIST SP 800-227</span>
+</div>
+</div>
+<!-- Graph Pipeline Nodes -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md items-center py-space-sm">
+<!-- Step 1: Classical Vulnerable -->
+<div class="bg-surface-container border border-error/40 p-space-md rounded relative">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="text-label-caps font-label-caps text-error uppercase bg-error/10 px-1.5 py-0.5 rounded border border-error/20">Phase 0: Target Identified</span>
+<span class="text-code-sm font-code-sm text-outline">CRQC Hazard</span>
+</div>
+<h3 class="text-code-lg font-code-lg font-semibold text-on-surface">Legacy Vulnerable Cryptography</h3>
+<p class="text-body-sm font-body-sm text-outline mt-1">Discrete logarithm &amp; integer factorization primitives vulnerable to polynomial-time quantum attacks.</p>
+<div class="mt-space-sm flex flex-wrap gap-1">
+<span class="text-code-sm font-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-error border border-error/20">RSA-2048</span>
+<span class="text-code-sm font-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-error border border-error/20">ECDSA-256</span>
+<span class="text-code-sm font-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-error border border-error/20">Diffie-Hellman</span>
+</div>
+<!-- Arrow connector (desktop) -->
+<div class="hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 z-10 bg-surface-container-high border border-outline-variant w-6 h-6 rounded-full items-center justify-center text-outline">
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+<!-- Step 2: Dual-Key Hybrid Envelope -->
+<div class="bg-surface-container border border-primary-container/40 p-space-md rounded relative">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="text-label-caps font-label-caps text-primary uppercase bg-primary-container/10 px-1.5 py-0.5 rounded border border-primary-container/20">Stage 1: Intermediate</span>
+<span class="text-code-sm font-code-sm text-primary">In-Flight Now</span>
+</div>
+<h3 class="text-code-lg font-code-lg font-semibold text-on-surface">Dual-Key Hybrid Envelope</h3>
+<p class="text-body-sm font-body-sm text-outline mt-1">Simultaneous classical-PQC derivation preserving FIPS 140 compliance while injecting lattice resistance.</p>
+<div class="mt-space-sm flex flex-wrap gap-1">
+<span class="text-code-sm font-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-primary border border-primary-container/20">X25519 + ML-KEM-768</span>
+<span class="text-code-sm font-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-primary border border-primary-container/20">Composite Dual Signatures</span>
+</div>
+<!-- Arrow connector (desktop) -->
+<div class="hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 z-10 bg-surface-container-high border border-outline-variant w-6 h-6 rounded-full items-center justify-center text-outline">
+<span class="material-symbols-outlined" data-icon="arrow_forward">arrow_forward</span>
+</div>
+</div>
+<!-- Step 3: Pure Post-Quantum Lattice Assembly -->
+<div class="bg-surface-container border border-tertiary/40 p-space-md rounded">
+<div class="flex items-center justify-between mb-space-xs">
+<span class="text-label-caps font-label-caps text-tertiary uppercase bg-tertiary/10 px-1.5 py-0.5 rounded border border-tertiary/20">Stage 2: Target Posture</span>
+<span class="text-code-sm font-code-sm text-tertiary">NIST Standardized</span>
+</div>
+<h3 class="text-code-lg font-code-lg font-semibold text-on-surface">Full Post-Quantum Lattice Assembly</h3>
+<p class="text-body-sm font-body-sm text-outline mt-1">Direct deployment of NIST FIPS 203/204/205 parameter sets completely decoupled from classical assumptions.</p>
+<div class="mt-space-sm flex flex-wrap gap-1">
+<span class="text-code-sm font-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-tertiary border border-tertiary/20">ML-KEM-768 / 1024</span>
+<span class="text-code-sm font-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-tertiary border border-tertiary/20">ML-DSA-65 (Dilithium)</span>
+<span class="text-code-sm font-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-tertiary border border-tertiary/20">LMS / XMSS State</span>
+</div>
+</div>
+</div>
+</section>
+<!-- ALGORITHMIC TRANSITION MAPPING GRID (Interactive Matrix) -->
+<section class="bg-surface-container-low border border-outline-variant rounded p-space-md flex flex-col gap-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary-container" data-icon="rule">rule</span>
+<h2 class="text-headline-md font-headline-md text-on-surface">Standard ECDAT Algorithmic Transition Rules</h2>
+</div>
+<span class="text-code-sm font-code-sm text-outline">NIST Special Publication 800-56C Rev. 2 Aligned</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-sm pt-space-xs">
+<!-- Rule 1: Key Agreement -->
+<div class="bg-surface-container border border-outline-variant rounded p-space-md flex flex-col justify-between hover:border-outline transition-colors">
+<div>
+<div class="flex items-center justify-between text-code-sm font-code-sm text-outline mb-1">
+<span class="text-primary font-semibold">RULE-MIG-01</span>
+<span>Key Agreement</span>
+</div>
+<div class="flex items-center gap-2 my-2">
+<span class="text-code-sm font-code-sm bg-surface-container-high px-2 py-0.5 rounded text-error border border-error/20">RSA / ECDH / X25519</span>
+<span class="material-symbols-outlined text-outline" data-icon="trending_flat">trending_flat</span>
+<span class="text-code-sm font-code-sm bg-surface-container-high px-2 py-0.5 rounded text-primary border border-primary-container/20">Hybrid X25519+ML-KEM</span>
+</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant mt-2">
+                Final Target: <strong class="text-tertiary font-code-md">Pure ML-KEM-768 (NIST FIPS 203)</strong>
+</div>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-outline-variant flex items-center justify-between">
+<span class="text-label-caps font-label-caps text-outline">HYBRID WINDOW: Q3 2026</span>
+<button class="text-code-sm font-code-sm text-primary hover:text-primary-fixed-dim flex items-center gap-0.5">
+<span>View Rule</span>
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Rule 2: Signatures -->
+<div class="bg-surface-container border border-outline-variant rounded p-space-md flex flex-col justify-between hover:border-outline transition-colors">
+<div>
+<div class="flex items-center justify-between text-code-sm font-code-sm text-outline mb-1">
+<span class="text-primary font-semibold">RULE-MIG-02</span>
+<span>Digital Signatures</span>
+</div>
+<div class="flex items-center gap-2 my-2">
+<span class="text-code-sm font-code-sm bg-surface-container-high px-2 py-0.5 rounded text-error border border-error/20">RSA / ECDSA</span>
+<span class="material-symbols-outlined text-outline" data-icon="trending_flat">trending_flat</span>
+<span class="text-code-sm font-code-sm bg-surface-container-high px-2 py-0.5 rounded text-tertiary border border-tertiary/20">ML-DSA-65 (FIPS 204)</span>
+</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant mt-2">
+                Algorithm: <strong class="text-on-surface font-code-md">Crystals-Dilithium Level 3</strong> for general PKI and TLS auth.
+              </div>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-outline-variant flex items-center justify-between">
+<span class="text-label-caps font-label-caps text-error">CRITICAL EXPIRATION</span>
+<button class="text-code-sm font-code-sm text-primary hover:text-primary-fixed-dim flex items-center gap-0.5">
+<span>View Rule</span>
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Rule 3: Firmware & Code Signing -->
+<div class="bg-surface-container border border-outline-variant rounded p-space-md flex flex-col justify-between hover:border-outline transition-colors">
+<div>
+<div class="flex items-center justify-between text-code-sm font-code-sm text-outline mb-1">
+<span class="text-primary font-semibold">RULE-MIG-03</span>
+<span>Firmware / Code Sign</span>
+</div>
+<div class="flex items-center gap-2 my-2">
+<span class="text-code-sm font-code-sm bg-surface-container-high px-2 py-0.5 rounded text-error border border-error/20">RSA-4096 / P-384</span>
+<span class="material-symbols-outlined text-outline" data-icon="trending_flat">trending_flat</span>
+<span class="text-code-sm font-code-sm bg-surface-container-high px-2 py-0.5 rounded text-tertiary border border-tertiary/20">LMS / XMSS / ML-DSA-87</span>
+</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant mt-2">
+                Target: <strong class="text-on-surface font-code-md">Stateful Hash-Based (RFC 8554)</strong> or High-Security Dilithium.
+              </div>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-outline-variant flex items-center justify-between">
+<span class="text-label-caps font-label-caps text-outline">HARDWARE EMBEDDED</span>
+<button class="text-code-sm font-code-sm text-primary hover:text-primary-fixed-dim flex items-center gap-0.5">
+<span>View Rule</span>
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Rule 4: Symmetric Ciphers -->
+<div class="bg-surface-container border border-outline-variant rounded p-space-md flex flex-col justify-between hover:border-outline transition-colors">
+<div>
+<div class="flex items-center justify-between text-code-sm font-code-sm text-outline mb-1">
+<span class="text-primary font-semibold">RULE-MIG-04</span>
+<span>Symmetric Encryption</span>
+</div>
+<div class="flex items-center gap-2 my-2">
+<span class="text-code-sm font-code-sm bg-surface-container-high px-2 py-0.5 rounded text-primary-container border border-primary-container/20">AES-128 (Long-lived)</span>
+<span class="material-symbols-outlined text-outline" data-icon="trending_flat">trending_flat</span>
+<span class="text-code-sm font-code-sm bg-surface-container-high px-2 py-0.5 rounded text-tertiary border border-tertiary/20">AES-256 (Grover Resistant)</span>
+</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant mt-2">
+                Mitigation: Halving key search cost via Grover's algorithm necessitates minimum 256-bit symmetric security.
+              </div>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-outline-variant flex items-center justify-between">
+<span class="text-label-caps font-label-caps text-outline">DIRECT UPGRADE</span>
+<button class="text-code-sm font-code-sm text-primary hover:text-primary-fixed-dim flex items-center gap-0.5">
+<span>View Rule</span>
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Rule 5: Legacy Hashes -->
+<div class="bg-surface-container border border-outline-variant rounded p-space-md flex flex-col justify-between hover:border-outline transition-colors">
+<div>
+<div class="flex items-center justify-between text-code-sm font-code-sm text-outline mb-1">
+<span class="text-primary font-semibold">RULE-MIG-05</span>
+<span>Cryptographic Hash</span>
+</div>
+<div class="flex items-center gap-2 my-2">
+<span class="text-code-sm font-code-sm bg-surface-container-high px-2 py-0.5 rounded text-error border border-error/20">MD5 / SHA-1</span>
+<span class="material-symbols-outlined text-outline" data-icon="trending_flat">trending_flat</span>
+<span class="text-code-sm font-code-sm bg-surface-container-high px-2 py-0.5 rounded text-tertiary border border-tertiary/20">SHA-384 / SHA-512 / SHA-3</span>
+</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant mt-2">
+                Mitigation: Complete eradication of collision-weak legacy digests in certificates and signature pipelines.
+              </div>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-outline-variant flex items-center justify-between">
+<span class="text-label-caps font-label-caps text-error">ZERO TOLERANCE</span>
+<button class="text-code-sm font-code-sm text-primary hover:text-primary-fixed-dim flex items-center gap-0.5">
+<span>View Rule</span>
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Rule 6: Legacy Ciphers -->
+<div class="bg-surface-container border border-outline-variant rounded p-space-md flex flex-col justify-between hover:border-outline transition-colors">
+<div>
+<div class="flex items-center justify-between text-code-sm font-code-sm text-outline mb-1">
+<span class="text-primary font-semibold">RULE-MIG-06</span>
+<span>Stream &amp; Block Ciphers</span>
+</div>
+<div class="flex items-center gap-2 my-2">
+<span class="text-code-sm font-code-sm bg-surface-container-high px-2 py-0.5 rounded text-error border border-error/20">3DES / RC4 / CBC-Mode</span>
+<span class="material-symbols-outlined text-outline" data-icon="trending_flat">trending_flat</span>
+<span class="text-code-sm font-code-sm bg-surface-container-high px-2 py-0.5 rounded text-tertiary border border-tertiary/20">AES-256-GCM / ChaCha20</span>
+</div>
+<div class="text-body-sm font-body-sm text-on-surface-variant mt-2">
+                Target: Modern AEAD modes eliminating padding-oracle vectors and small-block Sweet32 vulnerabilities.
+              </div>
+</div>
+<div class="mt-space-md pt-space-xs border-t border-outline-variant flex items-center justify-between">
+<span class="text-label-caps font-label-caps text-outline">AEAD ENFORCEMENT</span>
+<button class="text-code-sm font-code-sm text-primary hover:text-primary-fixed-dim flex items-center gap-0.5">
+<span>View Rule</span>
+<span class="material-symbols-outlined" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- MIGRATION QUEUE TABLE (Dense Tabular View) -->
+<section class="bg-surface-container-low border border-outline-variant rounded flex flex-col">
+<!-- Table Toolbar -->
+<div class="p-space-md flex items-center justify-between border-b border-outline-variant">
+<div class="flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-primary" data-icon="pending_actions">pending_actions</span>
+<h2 class="text-headline-md font-headline-md text-on-surface">Target Migration Execution Queue</h2>
+<span class="text-label-caps font-label-caps bg-surface-container-high px-2 py-0.5 rounded text-outline border border-outline-variant">142 Total Line Items</span>
+</div>
+<!-- Table Filters -->
+<div class="flex items-center gap-space-xs">
+<div class="flex items-center bg-surface-container border border-outline-variant rounded px-2 py-1 text-code-sm font-code-sm text-outline">
+<span>Filter: All Priorities</span>
+<span class="material-symbols-outlined ml-1" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</div>
+<div class="flex items-center bg-surface-container border border-outline-variant rounded px-2 py-1 text-code-sm font-code-sm text-outline">
+<span>Module: src/crypto-core</span>
+<span class="material-symbols-outlined ml-1" data-icon="keyboard_arrow_down">keyboard_arrow_down</span>
+</div>
+</div>
+</div>
+<!-- Table Data -->
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-lowest border-b border-outline-variant text-label-caps font-label-caps text-outline uppercase tracking-wider">
+<th class="py-2 px-space-md">Priority</th>
+<th class="py-2 px-space-md">Source Algorithm</th>
+<th class="py-2 px-space-md">Implementation Location</th>
+<th class="py-2 px-space-md">Current Threat Vector</th>
+<th class="py-2 px-space-md">Recommended NIST Target</th>
+<th class="py-2 px-space-md">Transition Strategy</th>
+<th class="py-2 px-space-md text-right">Action</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/40 font-code-sm text-code-sm">
+<!-- Row 1: P0 RSA TLS -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-2.5 px-space-md">
+<span class="bg-error/15 text-error border border-error/40 px-1.5 py-0.5 rounded font-semibold text-label-caps">P0 IMMEDIATE</span>
+</td>
+<td class="py-2.5 px-space-md font-semibold text-on-surface">
+                  RSA-2048 (PKCS#1 v1.5)
+                </td>
+<td class="py-2.5 px-space-md text-outline">
+                  src/crypto/tls_handshake.c:142
+                </td>
+<td class="py-2.5 px-space-md text-error">
+                  Shor's Algorithm (Integer Factor)
+                </td>
+<td class="py-2.5 px-space-md text-tertiary font-medium">
+                  ML-KEM-768 (FIPS 203)
+                </td>
+<td class="py-2.5 px-space-md">
+<span class="bg-primary-container/15 text-primary border border-primary-container/40 px-1.5 py-0.5 rounded">Hybrid Staged</span>
+</td>
+<td class="py-2.5 px-space-md text-right">
+<button class="bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container border border-outline-variant text-on-surface px-2 py-1 rounded text-code-sm font-medium transition-colors">
+                    Generate Migration Patch
+                  </button>
+</td>
+</tr>
+<!-- Row 2: P0 ECDSA Root -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-2.5 px-space-md">
+<span class="bg-error/15 text-error border border-error/40 px-1.5 py-0.5 rounded font-semibold text-label-caps">P0 IMMEDIATE</span>
+</td>
+<td class="py-2.5 px-space-md font-semibold text-on-surface">
+                  ECDSA-secp256r1
+                </td>
+<td class="py-2.5 px-space-md text-outline">
+                  auth/tokens/jwt_signer.go:88
+                </td>
+<td class="py-2.5 px-space-md text-error">
+                  Shor's Algorithm (ECDLP)
+                </td>
+<td class="py-2.5 px-space-md text-tertiary font-medium">
+                  ML-DSA-65 (FIPS 204)
+                </td>
+<td class="py-2.5 px-space-md">
+<span class="bg-surface-container-high text-on-surface-variant border border-outline-variant px-1.5 py-0.5 rounded">Direct Replacement</span>
+</td>
+<td class="py-2.5 px-space-md text-right">
+<button class="bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container border border-outline-variant text-on-surface px-2 py-1 rounded text-code-sm font-medium transition-colors">
+                    Generate Migration Patch
+                  </button>
+</td>
+</tr>
+<!-- Row 3: P1 High Firmware -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-2.5 px-space-md">
+<span class="bg-primary-container/15 text-primary border border-primary-container/40 px-1.5 py-0.5 rounded font-semibold text-label-caps">P1 HIGH</span>
+</td>
+<td class="py-2.5 px-space-md font-semibold text-on-surface">
+                  RSA-4096 Secure Boot Key
+                </td>
+<td class="py-2.5 px-space-md text-outline">
+                  boot/stage0/verifier.rs:215
+                </td>
+<td class="py-2.5 px-space-md text-primary">
+                  Harvest Now Decrypt Later
+                </td>
+<td class="py-2.5 px-space-md text-tertiary font-medium">
+                  LMS (RFC 8554) + ML-DSA-87
+                </td>
+<td class="py-2.5 px-space-md">
+<span class="bg-primary-container/15 text-primary border border-primary-container/40 px-1.5 py-0.5 rounded">Hybrid Staged</span>
+</td>
+<td class="py-2.5 px-space-md text-right">
+<button class="bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container border border-outline-variant text-on-surface px-2 py-1 rounded text-code-sm font-medium transition-colors">
+                    Generate Migration Patch
+                  </button>
+</td>
+</tr>
+<!-- Row 4: P1 High X25519 -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-2.5 px-space-md">
+<span class="bg-primary-container/15 text-primary border border-primary-container/40 px-1.5 py-0.5 rounded font-semibold text-label-caps">P1 HIGH</span>
+</td>
+<td class="py-2.5 px-space-md font-semibold text-on-surface">
+                  X25519 Ephemeral Key
+                </td>
+<td class="py-2.5 px-space-md text-outline">
+                  mesh/vpn/wireguard_cfg.c:512
+                </td>
+<td class="py-2.5 px-space-md text-primary">
+                  Shor's (Diffie-Hellman)
+                </td>
+<td class="py-2.5 px-space-md text-tertiary font-medium">
+                  X25519 + ML-KEM-768
+                </td>
+<td class="py-2.5 px-space-md">
+<span class="bg-primary-container/15 text-primary border border-primary-container/40 px-1.5 py-0.5 rounded">Hybrid Staged</span>
+</td>
+<td class="py-2.5 px-space-md text-right">
+<button class="bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container border border-outline-variant text-on-surface px-2 py-1 rounded text-code-sm font-medium transition-colors">
+                    Generate Migration Patch
+                  </button>
+</td>
+</tr>
+<!-- Row 5: P2 Scheduled AES -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-2.5 px-space-md">
+<span class="bg-surface-container-high text-outline border border-outline-variant px-1.5 py-0.5 rounded font-semibold text-label-caps">P2 SCHEDULED</span>
+</td>
+<td class="py-2.5 px-space-md font-semibold text-on-surface">
+                  AES-128-CBC
+                </td>
+<td class="py-2.5 px-space-md text-outline">
+                  storage/enc/volume_vault.py:34
+                </td>
+<td class="py-2.5 px-space-md text-secondary">
+                  Grover Effective (64-bit)
+                </td>
+<td class="py-2.5 px-space-md text-tertiary font-medium">
+                  AES-256-GCM
+                </td>
+<td class="py-2.5 px-space-md">
+<span class="bg-surface-container-high text-on-surface-variant border border-outline-variant px-1.5 py-0.5 rounded">Direct Replacement</span>
+</td>
+<td class="py-2.5 px-space-md text-right">
+<button class="bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container border border-outline-variant text-on-surface px-2 py-1 rounded text-code-sm font-medium transition-colors">
+                    Generate Migration Patch
+                  </button>
+</td>
+</tr>
+<!-- Row 6: P2 Scheduled MD5 -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-2.5 px-space-md">
+<span class="bg-surface-container-high text-outline border border-outline-variant px-1.5 py-0.5 rounded font-semibold text-label-caps">P2 SCHEDULED</span>
+</td>
+<td class="py-2.5 px-space-md font-semibold text-on-surface">
+                  MD5 / SHA-1 Checksum
+                </td>
+<td class="py-2.5 px-space-md text-outline">
+                  infra/ci/artifact_verify.sh:19
+                </td>
+<td class="py-2.5 px-space-md text-error">
+                  Weak Collision (Classical)
+                </td>
+<td class="py-2.5 px-space-md text-tertiary font-medium">
+                  SHA-384 / SHA-3-256
+                </td>
+<td class="py-2.5 px-space-md">
+<span class="bg-surface-container-high text-on-surface-variant border border-outline-variant px-1.5 py-0.5 rounded">Direct Replacement</span>
+</td>
+<td class="py-2.5 px-space-md text-right">
+<button class="bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container border border-outline-variant text-on-surface px-2 py-1 rounded text-code-sm font-medium transition-colors">
+                    Generate Migration Patch
+                  </button>
+</td>
+</tr>
+<!-- Row 7: P2 Scheduled RC4 -->
+<tr class="hover:bg-surface-container transition-colors group">
+<td class="py-2.5 px-space-md">
+<span class="bg-surface-container-high text-outline border border-outline-variant px-1.5 py-0.5 rounded font-semibold text-label-caps">P2 SCHEDULED</span>
+</td>
+<td class="py-2.5 px-space-md font-semibold text-on-surface">
+                  RC4 Stream Cipher
+                </td>
+<td class="py-2.5 px-space-md text-outline">
+                  legacy/gateway/ntlm_proxy.c:702
+                </td>
+<td class="py-2.5 px-space-md text-error">
+                  Fluhrer-Mantin-Shamir Bias
+                </td>
+<td class="py-2.5 px-space-md text-tertiary font-medium">
+                  ChaCha20-Poly1305
+                </td>
+<td class="py-2.5 px-space-md">
+<span class="bg-surface-container-high text-on-surface-variant border border-outline-variant px-1.5 py-0.5 rounded">Direct Replacement</span>
+</td>
+<td class="py-2.5 px-space-md text-right">
+<button class="bg-surface-container-high hover:bg-primary-container hover:text-on-primary-container border border-outline-variant text-on-surface px-2 py-1 rounded text-code-sm font-medium transition-colors">
+                    Generate Migration Patch
+                  </button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Table Footer / Pagination -->
+<div class="p-space-sm border-t border-outline-variant flex items-center justify-between text-code-sm font-code-sm text-outline">
+<div>Showing rows 1–7 of 142 items</div>
+<div class="flex items-center gap-1">
+<button class="px-2 py-0.5 rounded border border-outline-variant bg-surface-container hover:bg-surface-variant disabled:opacity-50" disabled="">Previous</button>
+<span class="px-2 py-0.5 text-on-surface">Page 1 of 21</span>
+<button class="px-2 py-0.5 rounded border border-outline-variant bg-surface-container hover:bg-surface-variant">Next</button>
+</div>
+</div>
+</section>
+</main>
+</div>
+<!-- ================= BOTTOM TERMINAL STATUS STRIP ================= -->
+<footer class="h-6 w-full bg-surface-container-lowest border-t border-outline-variant px-space-md flex items-center justify-between text-code-sm font-code-sm text-outline z-50 shrink-0 select-none">
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1 text-tertiary">
+<span class="material-symbols-outlined" data-icon="terminal">terminal</span>
+<span class="font-semibold">ECDAT_MIGRATION_EXEC_DAEMON</span>
+</div>
+<div class="h-3 w-px bg-outline-variant"></div>
+<span class="text-on-surface-variant">Active Rule Profile: <strong class="text-on-surface">NIST_FIPS_203_204_STRICT</strong></span>
+<div class="h-3 w-px bg-outline-variant"></div>
+<span class="text-on-surface-variant">CBOM Target: <strong class="text-primary">CycloneDX v1.6 (crypto:all)</strong></span>
+</div>
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1">
+<span class="text-outline">Queue Memory:</span>
+<span class="text-on-surface">128.4 MB</span>
+</div>
+<div class="flex items-center gap-1">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary"></span>
+<span class="text-tertiary">NTRO SEC CLUSTER // CONNECTED (TLS 1.3 HYBRID)</span>
+</div>
+</div>
+</footer>
+</body></html>

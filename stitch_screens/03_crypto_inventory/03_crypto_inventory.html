@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ECDAT // PS-ID: 26164 (NTRO) - Crypto Inventory</title>
+<!-- Google Fonts: Inter & JetBrains Mono -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols Outlined -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS with Forms & Container Queries -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "tertiary": "#6de575",
+            "on-tertiary-fixed-variant": "#005317",
+            "on-surface": "#dee2ec",
+            "surface-container": "#1b2027",
+            "on-secondary": "#00315c",
+            "primary-fixed-dim": "#ffb95f",
+            "error": "#ffb4ab",
+            "tertiary-fixed-dim": "#67df70",
+            "outline-variant": "#534434",
+            "primary": "#ffc174",
+            "surface-container-highest": "#30353d",
+            "inverse-surface": "#dee2ec",
+            "primary-container": "#f59e0b",
+            "surface-tint": "#ffb95f",
+            "inverse-on-surface": "#2c3138",
+            "on-primary": "#472a00",
+            "on-primary-fixed": "#2a1700",
+            "tertiary-fixed": "#83fc89",
+            "secondary-fixed-dim": "#a2c9ff",
+            "outline": "#a08e7a",
+            "on-tertiary": "#00390d",
+            "tertiary-container": "#4fc85d",
+            "surface": "#0f141b",
+            "error-container": "#93000a",
+            "surface-container-low": "#171c23",
+            "on-surface-variant": "#d8c3ad",
+            "on-primary-container": "#613b00",
+            "secondary": "#a2c9ff",
+            "on-tertiary-fixed": "#002105",
+            "primary-fixed": "#ffddb8",
+            "on-secondary-container": "#f0f4ff",
+            "on-error": "#690005",
+            "background": "#0f141b",
+            "secondary-container": "#0071c7",
+            "on-primary-fixed-variant": "#653e00",
+            "surface-container-lowest": "#090f15",
+            "on-secondary-fixed": "#001c38",
+            "secondary-fixed": "#d3e4ff",
+            "on-background": "#dee2ec",
+            "surface-bright": "#343941",
+            "surface-dim": "#0f141b",
+            "on-secondary-fixed-variant": "#004882",
+            "surface-container-high": "#252a32",
+            "surface-variant": "#30353d",
+            "inverse-primary": "#855300",
+            "on-tertiary-container": "#004f16",
+            "on-error-container": "#ffdad6"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-sm": "0.5rem",
+            "margin": "1rem",
+            "space-xs": "0.25rem",
+            "margin-desktop": "1.5rem",
+            "space-xl": "1.5rem",
+            "space-md": "0.75rem",
+            "gutter": "0.75rem",
+            "space-lg": "1rem",
+            "gutter-desktop": "1rem"
+          },
+          "fontFamily": {
+            "label-caps": ["JetBrains Mono"],
+            "code-md": ["JetBrains Mono"],
+            "code-sm": ["JetBrains Mono"],
+            "headline-md": ["Inter"],
+            "headline-xl": ["Inter"],
+            "body-md": ["Inter"],
+            "code-lg": ["JetBrains Mono"],
+            "body-sm": ["Inter"],
+            "headline-lg": ["Inter"]
+          },
+          "fontSize": {
+            "label-caps": ["10px", { "lineHeight": "12px", "letterSpacing": "0.08em", "fontWeight": "600" }],
+            "code-md": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "code-sm": ["11px", { "lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "400" }],
+            "headline-md": ["14px", { "lineHeight": "20px", "letterSpacing": "-0.005em", "fontWeight": "600" }],
+            "headline-xl": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600" }],
+            "body-md": ["13px", { "lineHeight": "18px", "fontWeight": "400" }],
+            "code-lg": ["13px", { "lineHeight": "20px", "fontWeight": "500" }],
+            "body-sm": ["12px", { "lineHeight": "16px", "fontWeight": "400" }],
+            "headline-lg": ["18px", { "lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600" }]
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-size: 15px;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      user-select: none;
+      vertical-align: middle;
+    }
+    /* Custom scrollbars for high-density IDE panes */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090f15;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #30353d;
+      border-radius: 2px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #534434;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased overflow-hidden flex flex-col h-screen select-none font-body-sm text-body-sm">
+<!-- ================= TOP DENSE APP BAR ================= -->
+<!-- Anchored to Shared Component TopNavBar -->
+<header class="flex justify-between items-center h-10 px-gutter-desktop w-full border-b border-outline-variant bg-surface-container-low shrink-0 select-none z-50">
+<!-- Brand / PS-ID & Context Workspace Links -->
+<div class="flex items-center gap-space-lg h-full">
+<div class="flex items-center gap-space-xs font-code-lg text-code-lg font-bold text-primary tracking-tight">
+<span class="material-symbols-outlined text-primary" style="font-size: 18px;">shield_locked</span>
+<span>ECDAT // PS-ID: 26164 (NTRO)</span>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<!-- Navigation Links from JSON Anchor -->
+<nav class="flex items-center h-full gap-space-xs">
+<a class="text-on-surface-variant font-code-sm text-code-sm px-space-sm h-full flex items-center hover:text-on-surface hover:bg-surface-container-high transition-colors duration-150" href="#">
+<span class="material-symbols-outlined mr-1" style="font-size: 13px;">terminal</span>
+          main:src/crypto-core
+        </a>
+<a class="text-on-surface-variant font-code-sm text-code-sm px-space-sm h-full flex items-center hover:text-on-surface hover:bg-surface-container-high transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-tertiary mr-1" style="font-size: 13px;">verified</span>
+          CycloneDX v1.6 [VALID]
+        </a>
+</nav>
+</div>
+<!-- Search & Trailing Actions -->
+<div class="flex items-center gap-space-md h-full">
+<!-- Trailing Secondary Status -->
+<div class="flex items-center gap-space-xs font-code-sm text-code-sm text-on-surface-variant bg-surface-container-lowest px-space-sm py-0.5 border border-outline-variant">
+<span class="w-1.5 h-1.5 rounded-full bg-tertiary animate-pulse"></span>
+<span>Scan Status: Idle</span>
+</div>
+<!-- Trailing Primary Action -->
+<button class="bg-primary-container text-on-primary font-headline-md text-code-sm px-space-md h-6 flex items-center gap-1 rounded-DEFAULT font-semibold hover:bg-primary-fixed-dim transition-colors">
+<span class="material-symbols-outlined" style="font-size: 14px;">play_arrow</span>
+        Run Discovery
+      </button>
+<div class="h-4 w-px bg-outline-variant"></div>
+<!-- Trailing Icon Actions -->
+<div class="flex items-center gap-1 text-on-surface-variant">
+<button class="w-7 h-7 flex items-center justify-center hover:bg-surface-container-high hover:text-on-surface rounded-DEFAULT transition-colors" title="Terminal CLI">
+<span class="material-symbols-outlined">terminal</span>
+</button>
+<button class="w-7 h-7 flex items-center justify-center hover:bg-surface-container-high hover:text-on-surface rounded-DEFAULT transition-colors" title="Fine-tune Rules">
+<span class="material-symbols-outlined">tune</span>
+</button>
+<button class="w-7 h-7 flex items-center justify-center hover:bg-surface-container-high hover:text-on-surface rounded-DEFAULT transition-colors relative" title="System Notifications">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-1.5 h-1.5 bg-primary rounded-full"></span>
+</button>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<!-- SecOps Identity Avatar Badge -->
+<div class="flex items-center gap-space-xs text-on-surface-variant font-code-sm text-code-sm" title="Lead Cryptographer SecOps Token">
+<div class="w-5 h-5 rounded-DEFAULT bg-surface-container-highest border border-outline-variant flex items-center justify-center text-primary font-bold text-[10px]">
+          NT
+        </div>
+</div>
+</div>
+</header>
+<!-- ================= MAIN WORKSPACE (SIDE NAV + CONTENT VIEWPORT) ================= -->
+<div class="flex flex-1 overflow-hidden">
+<!-- SIDE NAV BAR (Anchored to Shared Component JSON) -->
+<!-- 'Crypto Inventory' is explicitly set to style_active_navigation -->
+<aside class="w-64 h-[calc(100vh-2.5rem)] flex flex-col justify-between p-space-sm border-r border-outline-variant bg-surface-container-lowest select-none shrink-0">
+<!-- Top Section: Header & Navigation Tabs -->
+<div class="flex flex-col gap-space-sm overflow-y-auto">
+<!-- Sub-header brand anchor -->
+<div class="px-space-md py-space-xs border-b border-outline-variant pb-space-sm mb-space-xs">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-base">security</span>
+<div class="font-code-lg text-code-lg font-bold text-primary tracking-tight">ECDAT Engine</div>
+</div>
+<div class="font-code-sm text-code-sm text-on-surface-variant tracking-wider mt-0.5">SIH 2026 // NTRO SEC</div>
+</div>
+<!-- Initiate AST Scan Button -->
+<div class="px-space-xs mb-space-xs">
+<button class="w-full bg-surface-container border border-outline-variant hover:border-primary text-primary hover:bg-surface-container-high transition-all h-7 px-space-sm flex items-center justify-center gap-1.5 font-code-sm text-code-sm font-medium">
+<span class="material-symbols-outlined text-primary text-sm">rocket_launch</span>
+            Initiate AST Scan
+          </button>
+</div>
+<!-- Tab Items from JSON -->
+<nav class="flex flex-col gap-0.5">
+<!-- 1. Dashboard -->
+<a class="text-on-surface-variant font-code-sm text-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- 2. New Scan -->
+<a class="text-on-surface-variant font-code-sm text-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">play_circle</span>
+<span>New Scan</span>
+</a>
+<!-- 3. Crypto Inventory (ACTIVE ACCORDING TO RULES) -->
+<a class="bg-surface-container text-primary font-code-md text-code-md border-l-2 border-primary-container px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full" href="#">
+<span class="material-symbols-outlined text-primary">memory</span>
+<span class="font-semibold">Crypto Inventory</span>
+<span class="ml-auto font-label-caps text-label-caps bg-primary/10 text-primary border border-primary/30 px-1 py-0.5">142</span>
+</a>
+<!-- 4. Finding Inspector -->
+<a class="text-on-surface-variant font-code-sm text-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">troubleshoot</span>
+<span>Finding Inspector</span>
+</a>
+<!-- 5. Mosca Simulator -->
+<a class="text-on-surface-variant font-code-sm text-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">timeline</span>
+<span>Mosca Simulator</span>
+</a>
+<!-- 6. Risk Analysis -->
+<a class="text-on-surface-variant font-code-sm text-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">analytics</span>
+<span>Risk Analysis</span>
+</a>
+<!-- 7. Migration Guidance -->
+<a class="text-on-surface-variant font-code-sm text-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">swap_calls</span>
+<span>Migration Guidance</span>
+</a>
+<!-- 8. CycloneDX 1.6 CBOM -->
+<a class="text-on-surface-variant font-code-sm text-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">verified_user</span>
+<span>CycloneDX 1.6 CBOM</span>
+</a>
+<!-- 9. Reports & Evidence -->
+<a class="text-on-surface-variant font-code-sm text-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">description</span>
+<span>Reports &amp; Evidence</span>
+</a>
+<!-- 10. Terminal / Log -->
+<a class="text-on-surface-variant font-code-sm text-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">terminal</span>
+<span>Terminal / Log</span>
+</a>
+</nav>
+</div>
+<!-- SideNav Footer Tabs from JSON Anchor -->
+<div class="pt-space-sm border-t border-outline-variant flex flex-col gap-0.5">
+<div class="text-tertiary font-code-sm text-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full">
+<span class="material-symbols-outlined text-tertiary">check_circle</span>
+<span>System Health: Optimal</span>
+</div>
+<a class="text-on-surface-variant font-code-sm text-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</div>
+</aside>
+<!-- ================= INVENTORY CONTENT VIEWPORT ================= -->
+<main class="flex-1 flex flex-col overflow-hidden bg-surface">
+<!-- Viewport Header: Title, Telemetry Summary Badges, Action Buttons -->
+<section class="border-b border-outline-variant bg-surface-container-lowest px-gutter-desktop py-space-md shrink-0 flex flex-col gap-space-sm">
+<div class="flex flex-wrap items-center justify-between gap-space-md">
+<!-- Title & Subtitle -->
+<div>
+<div class="flex items-center gap-space-sm">
+<h1 class="font-headline-lg text-headline-lg font-bold text-on-surface tracking-tight">Crypto Inventory</h1>
+<span class="font-label-caps text-label-caps bg-surface-container-highest border border-outline-variant text-on-surface-variant px-1.5 py-0.5">ENGINE_AST_LIVE</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
+              Normalized cryptographic assets discovered during AST and configuration scanning.
+            </p>
+</div>
+<!-- Header Actions -->
+<div class="flex items-center gap-space-xs">
+<button class="bg-surface-container text-on-surface border border-outline-variant hover:border-outline hover:bg-surface-container-high transition-colors font-code-sm text-code-sm px-space-sm h-7 flex items-center gap-1.5">
+<span class="material-symbols-outlined text-secondary" style="font-size: 14px;">download</span>
+              Export CSV
+            </button>
+<button class="bg-surface-container text-on-surface border border-outline-variant hover:border-outline hover:bg-surface-container-high transition-colors font-code-sm text-code-sm px-space-sm h-7 flex items-center gap-1.5">
+<span class="material-symbols-outlined text-tertiary" style="font-size: 14px;">data_object</span>
+              Export JSON
+            </button>
+<button class="bg-surface-container text-on-surface border border-outline-variant hover:border-primary hover:text-primary transition-colors font-code-sm text-code-sm px-space-sm h-7 flex items-center gap-1.5">
+<span class="material-symbols-outlined" style="font-size: 14px;">layers</span>
+              Bulk Action
+            </button>
+</div>
+</div>
+<!-- Telemetry Summary Badges Ribbon -->
+<div class="grid grid-cols-2 md:grid-cols-6 gap-space-xs pt-space-xs">
+<!-- Total Discovered Assets -->
+<div class="bg-surface-container-low border border-outline-variant p-space-xs px-space-sm flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface-variant">TOTAL ASSETS</span>
+<div class="flex items-baseline justify-between mt-0.5">
+<span class="font-code-lg text-code-lg font-bold text-primary">142</span>
+<span class="font-code-sm text-[10px] text-tertiary">+8 new</span>
+</div>
+</div>
+<!-- Python AST -->
+<div class="bg-surface-container-low border border-outline-variant p-space-xs px-space-sm flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface-variant">PYTHON AST</span>
+<div class="flex items-baseline justify-between mt-0.5">
+<span class="font-code-lg text-code-lg font-bold text-on-surface">89</span>
+<span class="font-code-sm text-[10px] text-secondary">62.6%</span>
+</div>
+</div>
+<!-- Java JCA -->
+<div class="bg-surface-container-low border border-outline-variant p-space-xs px-space-sm flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface-variant">JAVA JCA</span>
+<div class="flex items-baseline justify-between mt-0.5">
+<span class="font-code-lg text-code-lg font-bold text-on-surface">53</span>
+<span class="font-code-sm text-[10px] text-secondary">37.4%</span>
+</div>
+</div>
+<!-- Certificates -->
+<div class="bg-surface-container-low border border-outline-variant p-space-xs px-space-sm flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface-variant">CERTIFICATES</span>
+<div class="flex items-baseline justify-between mt-0.5">
+<span class="font-code-lg text-code-lg font-bold text-on-surface">12</span>
+<span class="font-code-sm text-[10px] text-error">3 exp.</span>
+</div>
+</div>
+<!-- Config / TLS -->
+<div class="bg-surface-container-low border border-outline-variant p-space-xs px-space-sm flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface-variant">CONFIG / TLS</span>
+<div class="flex items-baseline justify-between mt-0.5">
+<span class="font-code-lg text-code-lg font-bold text-on-surface">18</span>
+<span class="font-code-sm text-[10px] text-on-surface-variant">Active</span>
+</div>
+</div>
+<!-- Dependencies -->
+<div class="bg-surface-container-low border border-outline-variant p-space-xs px-space-sm flex flex-col">
+<span class="font-label-caps text-label-caps text-on-surface-variant">DEPENDENCIES</span>
+<div class="flex items-baseline justify-between mt-0.5">
+<span class="font-code-lg text-code-lg font-bold text-on-surface">24</span>
+<span class="font-code-sm text-[10px] text-outline">CBOM 1.6</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Advanced Filter Engine Bar -->
+<section class="bg-surface-container-low border-b border-outline-variant px-gutter-desktop py-space-xs shrink-0 flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-space-xs">
+<!-- Search Command Field -->
+<div class="flex-1 relative flex items-center min-w-[320px]">
+<span class="material-symbols-outlined absolute left-2.5 text-on-surface-variant pointer-events-none" style="font-size: 15px;">search</span>
+<input class="w-full h-[30px] pl-8 pr-12 bg-surface-container-lowest border border-outline-variant text-on-surface placeholder:text-on-surface-variant/50 font-code-sm text-code-sm focus:border-secondary focus:ring-0 rounded-DEFAULT" placeholder="Filter by algorithm, symbol, file path, rule ID (e.g. RSA, auth.py, ECDAT-SRC)..." type="text"/>
+<div class="absolute right-2 px-1 py-0.5 bg-surface-container border border-outline-variant text-on-surface-variant font-label-caps text-[9px] pointer-events-none">
+            ⌘K
+          </div>
+</div>
+<!-- Filter Dropdowns / Quick Selectors -->
+<div class="flex items-center gap-space-xs flex-wrap">
+<!-- Severity Filter -->
+<div class="flex items-center bg-surface-container-lowest border border-outline-variant h-[30px] px-2 text-on-surface-variant font-code-sm text-code-sm">
+<span class="text-outline mr-1.5 font-label-caps text-[10px]">SEV:</span>
+<select class="bg-transparent border-0 p-0 pr-4 text-on-surface font-code-sm text-code-sm focus:ring-0 cursor-pointer">
+<option value="all">All Severities</option>
+<option value="critical">Critical (4)</option>
+<option value="high">High (2)</option>
+<option value="med">Medium (0)</option>
+<option value="low">Low (0)</option>
+</select>
+</div>
+<!-- Quantum Class Filter -->
+<div class="flex items-center bg-surface-container-lowest border border-outline-variant h-[30px] px-2 text-on-surface-variant font-code-sm text-code-sm">
+<span class="text-outline mr-1.5 font-label-caps text-[10px]">Q-CLASS:</span>
+<select class="bg-transparent border-0 p-0 pr-4 text-on-surface font-code-sm text-code-sm focus:ring-0 cursor-pointer">
+<option value="all">All Quantum Classes</option>
+<option value="shor">SHOR_BROKEN</option>
+<option value="grover">GROVER_WEAKENED</option>
+<option value="safe">QUANTUM_SAFE</option>
+<option value="classic">CLASSICALLY_BROKEN</option>
+</select>
+</div>
+<!-- Language Filter -->
+<div class="flex items-center bg-surface-container-lowest border border-outline-variant h-[30px] px-2 text-on-surface-variant font-code-sm text-code-sm">
+<span class="text-outline mr-1.5 font-label-caps text-[10px]">LANG:</span>
+<select class="bg-transparent border-0 p-0 pr-4 text-on-surface font-code-sm text-code-sm focus:ring-0 cursor-pointer">
+<option value="all">Python &amp; Java</option>
+<option value="py">Python</option>
+<option value="java">Java</option>
+</select>
+</div>
+<!-- Source Type Filter -->
+<div class="flex items-center bg-surface-container-lowest border border-outline-variant h-[30px] px-2 text-on-surface-variant font-code-sm text-code-sm">
+<span class="text-outline mr-1.5 font-label-caps text-[10px]">SRC:</span>
+<select class="bg-transparent border-0 p-0 pr-4 text-on-surface font-code-sm text-code-sm focus:ring-0 cursor-pointer">
+<option value="all">All Sources</option>
+<option value="src">Source Code</option>
+<option value="dep">Dependency</option>
+<option value="cfg">Config</option>
+<option value="cert">Cert</option>
+</select>
+</div>
+<!-- Confidence Filter -->
+<div class="flex items-center bg-surface-container-lowest border border-outline-variant h-[30px] px-2 text-on-surface-variant font-code-sm text-code-sm">
+<span class="text-outline mr-1.5 font-label-caps text-[10px]">CONF:</span>
+<select class="bg-transparent border-0 p-0 pr-4 text-on-surface font-code-sm text-code-sm focus:ring-0 cursor-pointer">
+<option value="all">All (&gt;=0.0)</option>
+<option selected="" value="high">High (&gt;=0.9)</option>
+<option value="med">Medium (&gt;=0.7)</option>
+</select>
+</div>
+<!-- Reset Filter Button -->
+<button class="h-[30px] px-2 border border-outline-variant hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface transition-colors flex items-center justify-center" title="Clear filters">
+<span class="material-symbols-outlined" style="font-size: 14px;">filter_alt_off</span>
+</button>
+</div>
+</section>
+<!-- ================= MAIN DATA TABLE WORKSPACE ================= -->
+<div class="flex-1 overflow-auto bg-surface-container-lowest">
+<table class="w-full text-left border-collapse font-code-sm text-code-sm whitespace-nowrap">
+<!-- Table Sticky Header -->
+<thead class="sticky top-0 bg-surface-container-low border-b border-outline-variant z-20 text-on-surface-variant select-none">
+<tr class="h-8">
+<th class="w-8 px-2 border-r border-outline-variant text-center font-normal">
+<input class="w-3.5 h-3.5 bg-surface-container-lowest border border-outline-variant rounded-none text-primary-container focus:ring-0 cursor-pointer" type="checkbox"/>
+</th>
+<th class="px-space-sm border-r border-outline-variant font-label-caps text-label-caps text-outline tracking-wider">SEVERITY</th>
+<th class="px-space-sm border-r border-outline-variant font-label-caps text-label-caps text-outline tracking-wider">ALGORITHM</th>
+<th class="px-space-sm border-r border-outline-variant font-label-caps text-label-caps text-outline tracking-wider">PRIMITIVE TYPE</th>
+<th class="px-space-sm border-r border-outline-variant font-label-caps text-label-caps text-outline tracking-wider">PURPOSE / USAGE</th>
+<th class="px-space-sm border-r border-outline-variant font-label-caps text-label-caps text-outline tracking-wider">FILE LOCATION &amp; LINE</th>
+<th class="px-space-sm border-r border-outline-variant font-label-caps text-label-caps text-outline tracking-wider">KEY / CURVE PARAMS</th>
+<th class="px-space-sm border-r border-outline-variant font-label-caps text-label-caps text-outline tracking-wider">QUANTUM THREAT CLASS</th>
+<th class="px-space-sm border-r border-outline-variant font-label-caps text-label-caps text-outline tracking-wider text-right">RISK SCORE</th>
+<th class="px-space-sm border-r border-outline-variant font-label-caps text-label-caps text-outline tracking-wider text-right">CONFIDENCE</th>
+<th class="px-space-sm font-label-caps text-label-caps text-outline tracking-wider text-center">ACTIONS</th>
+</tr>
+</thead>
+<!-- Table Rows Body -->
+<tbody class="divide-y divide-outline-variant/60 font-code-sm">
+<!-- ROW 1: RSA-2048 -->
+<tr class="h-8 bg-surface-container-lowest hover:bg-surface-container transition-colors group cursor-pointer border-l-2 border-l-transparent hover:border-l-error">
+<td class="w-8 px-2 border-r border-outline-variant/60 text-center">
+<input class="w-3.5 h-3.5 bg-surface-container-lowest border border-outline-variant rounded-none text-primary-container focus:ring-0" type="checkbox"/>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60">
+<span class="inline-block px-1.5 py-0.2 bg-error-container/20 text-error border border-error/40 text-[10px] font-semibold tracking-wider">CRITICAL</span>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60 font-medium text-on-surface">
+                RSA-2048
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-on-surface-variant">
+                Public-key Asymmetric
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-on-surface-variant">
+                Token Signing / Auth
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-secondary hover:underline font-mono">
+                src/security/auth.py:42
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-on-surface-variant">
+                e=65537, 2048-bit
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.2 bg-error-container/25 text-error border border-error/50 text-[10px] font-semibold">
+<span class="w-1 h-1 rounded-full bg-error"></span>
+                  SHOR_BROKEN
+                </span>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60 text-right font-bold text-error">
+                86<span class="text-outline font-normal">/100</span>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60 text-right text-tertiary">
+                0.98 <span class="text-[9px] text-outline">HIGH</span>
+</td>
+<td class="px-space-sm text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="px-1.5 py-0.5 text-[10px] bg-surface-container border border-outline-variant hover:border-primary hover:text-primary transition-colors" title="Inspect Finding">
+                    Inspect Finding
+                  </button>
+<button class="px-1.5 py-0.5 text-[10px] bg-surface-container border border-outline-variant hover:border-secondary hover:text-secondary transition-colors" title="Run Mosca">
+                    Run Mosca
+                  </button>
+</div>
+</td>
+</tr>
+<!-- ROW 2: ECDH secp256r1 -->
+<tr class="h-8 bg-surface-container-low hover:bg-surface-container transition-colors group cursor-pointer border-l-2 border-l-transparent hover:border-l-error">
+<td class="w-8 px-2 border-r border-outline-variant/60 text-center">
+<input class="w-3.5 h-3.5 bg-surface-container-lowest border border-outline-variant rounded-none text-primary-container focus:ring-0" type="checkbox"/>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60">
+<span class="inline-block px-1.5 py-0.2 bg-error-container/20 text-error border border-error/40 text-[10px] font-semibold tracking-wider">CRITICAL</span>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60 font-medium text-on-surface">
+                ECDH secp256r1
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-on-surface-variant">
+                Key Agreement
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-on-surface-variant">
+                TLS Session Ephemeral
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-secondary hover:underline font-mono">
+                src/network/tls_tunnel.py:89
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-on-surface-variant">
+                curve=prime256v1
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.2 bg-error-container/25 text-error border border-error/50 text-[10px] font-semibold">
+<span class="w-1 h-1 rounded-full bg-error"></span>
+                  SHOR_BROKEN
+                </span>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60 text-right font-bold text-error">
+                84<span class="text-outline font-normal">/100</span>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60 text-right text-tertiary">
+                0.95 <span class="text-[9px] text-outline">HIGH</span>
+</td>
+<td class="px-space-sm text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="px-1.5 py-0.5 text-[10px] bg-surface-container border border-outline-variant hover:border-primary hover:text-primary transition-colors" title="Inspect Finding">
+                    Inspect Finding
+                  </button>
+<button class="px-1.5 py-0.5 text-[10px] bg-surface-container border border-outline-variant hover:border-secondary hover:text-secondary transition-colors" title="Run Mosca">
+                    Run Mosca
+                  </button>
+</div>
+</td>
+</tr>
+<!-- ROW 3: ECDSA P-256 -->
+<tr class="h-8 bg-surface-container-lowest hover:bg-surface-container transition-colors group cursor-pointer border-l-2 border-l-transparent hover:border-l-error">
+<td class="w-8 px-2 border-r border-outline-variant/60 text-center">
+<input class="w-3.5 h-3.5 bg-surface-container-lowest border border-outline-variant rounded-none text-primary-container focus:ring-0" type="checkbox"/>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60">
+<span class="inline-block px-1.5 py-0.2 bg-error-container/20 text-error border border-error/40 text-[10px] font-semibold tracking-wider">CRITICAL</span>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60 font-medium text-on-surface">
+                ECDSA P-256
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-on-surface-variant">
+                Digital Signature
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-on-surface-variant">
+                API Transaction Auth
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-secondary hover:underline font-mono">
+                src/tokens/signer.py:118
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-on-surface-variant">
+                curve=secp256r1
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.2 bg-error-container/25 text-error border border-error/50 text-[10px] font-semibold">
+<span class="w-1 h-1 rounded-full bg-error"></span>
+                  SHOR_BROKEN
+                </span>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60 text-right font-bold text-error">
+                82<span class="text-outline font-normal">/100</span>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60 text-right text-tertiary">
+                0.96 <span class="text-[9px] text-outline">HIGH</span>
+</td>
+<td class="px-space-sm text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="px-1.5 py-0.5 text-[10px] bg-surface-container border border-outline-variant hover:border-primary hover:text-primary transition-colors" title="Inspect Finding">
+                    Inspect Finding
+                  </button>
+<button class="px-1.5 py-0.5 text-[10px] bg-surface-container border border-outline-variant hover:border-secondary hover:text-secondary transition-colors" title="Run Mosca">
+                    Run Mosca
+                  </button>
+</div>
+</td>
+</tr>
+<!-- ROW 4: AES-128-CBC -->
+<tr class="h-8 bg-surface-container-low hover:bg-surface-container transition-colors group cursor-pointer border-l-2 border-l-transparent hover:border-l-primary">
+<td class="w-8 px-2 border-r border-outline-variant/60 text-center">
+<input class="w-3.5 h-3.5 bg-surface-container-lowest border border-outline-variant rounded-none text-primary-container focus:ring-0" type="checkbox"/>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60">
+<span class="inline-block px-1.5 py-0.2 bg-primary/10 text-primary border border-primary/40 text-[10px] font-semibold tracking-wider">HIGH</span>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60 font-medium text-on-surface">
+                AES-128-CBC
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-on-surface-variant">
+                Symmetric Cipher
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-on-surface-variant">
+                Database At-Rest Encryption
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-secondary hover:underline font-mono">
+                src/db/vault_storage.py:84
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-on-surface-variant">
+                128-bit key, IV=16b
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.2 bg-primary/15 text-primary border border-primary/40 text-[10px] font-semibold">
+<span class="w-1 h-1 rounded-full bg-primary"></span>
+                  GROVER_WEAKENED
+                </span>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60 text-right font-bold text-primary">
+                68<span class="text-outline font-normal">/100</span>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60 text-right text-tertiary">
+                0.92 <span class="text-[9px] text-outline">HIGH</span>
+</td>
+<td class="px-space-sm text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="px-1.5 py-0.5 text-[10px] bg-surface-container border border-outline-variant hover:border-primary hover:text-primary transition-colors" title="Inspect Finding">
+                    Inspect Finding
+                  </button>
+<button class="px-1.5 py-0.5 text-[10px] bg-surface-container border border-outline-variant hover:border-secondary hover:text-secondary transition-colors" title="Run Mosca">
+                    Run Mosca
+                  </button>
+</div>
+</td>
+</tr>
+<!-- ROW 5: 3DES (Triple DES) -->
+<tr class="h-8 bg-surface-container-lowest hover:bg-surface-container transition-colors group cursor-pointer border-l-2 border-l-transparent hover:border-l-error">
+<td class="w-8 px-2 border-r border-outline-variant/60 text-center">
+<input class="w-3.5 h-3.5 bg-surface-container-lowest border border-outline-variant rounded-none text-primary-container focus:ring-0" type="checkbox"/>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60">
+<span class="inline-block px-1.5 py-0.2 bg-error-container/20 text-error border border-error/40 text-[10px] font-semibold tracking-wider">CRITICAL</span>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60 font-medium text-on-surface">
+                3DES (Triple DES)
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-on-surface-variant">
+                Symmetric Cipher
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-on-surface-variant">
+                Legacy Host Sync
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-secondary hover:underline font-mono">
+                src/legacy/sync_job.java:210
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-on-surface-variant">
+                168-bit (112 effective)
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.2 bg-error-container/25 text-error border border-error/50 text-[10px] font-semibold">
+<span class="w-1 h-1 rounded-full bg-error"></span>
+                  CLASSICALLY_BROKEN
+                </span>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60 text-right font-bold text-error">
+                94<span class="text-outline font-normal">/100</span>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60 text-right text-tertiary">
+                0.99 <span class="text-[9px] text-outline">HIGH</span>
+</td>
+<td class="px-space-sm text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="px-1.5 py-0.5 text-[10px] bg-surface-container border border-outline-variant hover:border-primary hover:text-primary transition-colors" title="Inspect Finding">
+                    Inspect Finding
+                  </button>
+<button class="px-1.5 py-0.5 text-[10px] bg-surface-container border border-outline-variant hover:border-secondary hover:text-secondary transition-colors" title="Run Mosca">
+                    Run Mosca
+                  </button>
+</div>
+</td>
+</tr>
+<!-- ROW 6: SHA-1 -->
+<tr class="h-8 bg-surface-container-low hover:bg-surface-container transition-colors group cursor-pointer border-l-2 border-l-transparent hover:border-l-primary">
+<td class="w-8 px-2 border-r border-outline-variant/60 text-center">
+<input class="w-3.5 h-3.5 bg-surface-container-lowest border border-outline-variant rounded-none text-primary-container focus:ring-0" type="checkbox"/>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60">
+<span class="inline-block px-1.5 py-0.2 bg-primary/10 text-primary border border-primary/40 text-[10px] font-semibold tracking-wider">HIGH</span>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60 font-medium text-on-surface">
+                SHA-1
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-on-surface-variant">
+                Cryptographic Hash
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-on-surface-variant">
+                Git Commit Verification
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-secondary hover:underline font-mono">
+                src/crypto/checksum.py:34
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-on-surface-variant">
+                160-bit digest
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.2 bg-error-container/25 text-error border border-error/50 text-[10px] font-semibold">
+<span class="w-1 h-1 rounded-full bg-error"></span>
+                  CLASSICALLY_BROKEN
+                </span>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60 text-right font-bold text-primary">
+                72<span class="text-outline font-normal">/100</span>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60 text-right text-tertiary">
+                0.97 <span class="text-[9px] text-outline">HIGH</span>
+</td>
+<td class="px-space-sm text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="px-1.5 py-0.5 text-[10px] bg-surface-container border border-outline-variant hover:border-primary hover:text-primary transition-colors" title="Inspect Finding">
+                    Inspect Finding
+                  </button>
+<button class="px-1.5 py-0.5 text-[10px] bg-surface-container border border-outline-variant hover:border-secondary hover:text-secondary transition-colors" title="Run Mosca">
+                    Run Mosca
+                  </button>
+</div>
+</td>
+</tr>
+<!-- ROW 7: ML-KEM-768 -->
+<tr class="h-8 bg-surface-container-lowest hover:bg-surface-container transition-colors group cursor-pointer border-l-2 border-l-transparent hover:border-l-tertiary">
+<td class="w-8 px-2 border-r border-outline-variant/60 text-center">
+<input class="w-3.5 h-3.5 bg-surface-container-lowest border border-outline-variant rounded-none text-primary-container focus:ring-0" type="checkbox"/>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60">
+<span class="inline-block px-1.5 py-0.2 bg-tertiary/10 text-tertiary border border-tertiary/40 text-[10px] font-semibold tracking-wider">VERIFIED</span>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60 font-medium text-tertiary">
+                ML-KEM-768
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-on-surface-variant">
+                Post-Quantum KEM
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-on-surface-variant">
+                Experimental PQC Tunnel
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-secondary hover:underline font-mono">
+                src/experimental/pqc_kem.py:15
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-on-surface-variant">
+                FIPS 203 Kyber-768
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.2 bg-tertiary/15 text-tertiary border border-tertiary/40 text-[10px] font-semibold">
+<span class="w-1 h-1 rounded-full bg-tertiary"></span>
+                  QUANTUM_SAFE
+                </span>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60 text-right font-bold text-tertiary">
+                12<span class="text-outline font-normal">/100</span>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60 text-right text-tertiary">
+                0.99 <span class="text-[9px] text-outline">HIGH</span>
+</td>
+<td class="px-space-sm text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="px-1.5 py-0.5 text-[10px] bg-surface-container border border-outline-variant hover:border-primary hover:text-primary transition-colors" title="Inspect Finding">
+                    Inspect Finding
+                  </button>
+<button class="px-1.5 py-0.5 text-[10px] bg-surface-container border border-outline-variant hover:border-secondary hover:text-secondary transition-colors" title="Run Mosca">
+                    Run Mosca
+                  </button>
+</div>
+</td>
+</tr>
+<!-- ROW 8: AES-256-GCM -->
+<tr class="h-8 bg-surface-container-low hover:bg-surface-container transition-colors group cursor-pointer border-l-2 border-l-transparent hover:border-l-tertiary">
+<td class="w-8 px-2 border-r border-outline-variant/60 text-center">
+<input class="w-3.5 h-3.5 bg-surface-container-lowest border border-outline-variant rounded-none text-primary-container focus:ring-0" type="checkbox"/>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60">
+<span class="inline-block px-1.5 py-0.2 bg-tertiary/10 text-tertiary border border-tertiary/40 text-[10px] font-semibold tracking-wider">VERIFIED</span>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60 font-medium text-tertiary">
+                AES-256-GCM
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-on-surface-variant">
+                Authenticated Cipher
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-on-surface-variant">
+                Message Bus Payload
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-secondary hover:underline font-mono">
+                src/messaging/broker.java:144
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60 text-on-surface-variant">
+                256-bit key, 96-bit IV
+              </td>
+<td class="px-space-sm border-r border-outline-variant/60">
+<span class="inline-flex items-center gap-1 px-1.5 py-0.2 bg-tertiary/15 text-tertiary border border-tertiary/40 text-[10px] font-semibold">
+<span class="w-1 h-1 rounded-full bg-tertiary"></span>
+                  QUANTUM_SAFE
+                </span>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60 text-right font-bold text-tertiary">
+                18<span class="text-outline font-normal">/100</span>
+</td>
+<td class="px-space-sm border-r border-outline-variant/60 text-right text-tertiary">
+                0.94 <span class="text-[9px] text-outline">HIGH</span>
+</td>
+<td class="px-space-sm text-center">
+<div class="flex items-center justify-center gap-1">
+<button class="px-1.5 py-0.5 text-[10px] bg-surface-container border border-outline-variant hover:border-primary hover:text-primary transition-colors" title="Inspect Finding">
+                    Inspect Finding
+                  </button>
+<button class="px-1.5 py-0.5 text-[10px] bg-surface-container border border-outline-variant hover:border-secondary hover:text-secondary transition-colors" title="Run Mosca">
+                    Run Mosca
+                  </button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- ================= PAGINATION & SELECTION FOOTER BAR ================= -->
+<footer class="h-9 bg-surface-container-lowest border-t border-outline-variant px-gutter-desktop shrink-0 flex items-center justify-between font-code-sm text-code-sm text-on-surface-variant select-none">
+<!-- Left: Selection Prompt & Status -->
+<div class="flex items-center gap-space-md">
+<div class="flex items-center gap-1.5">
+<span class="w-1.5 h-1.5 rounded-full bg-outline"></span>
+<span class="text-on-surface">0 items selected.</span>
+</div>
+<span class="text-outline hidden sm:inline">|</span>
+<span class="text-on-surface-variant/80 hidden sm:inline">
+            Click row to inspect deep code evidence and AST context.
+          </span>
+</div>
+<!-- Right: Pagination Controls -->
+<div class="flex items-center gap-space-md">
+<!-- Item Count Telemetry -->
+<div class="text-outline hidden md:block">
+            Showing <span class="text-on-surface font-medium">1 - 8</span> of <span class="text-on-surface font-medium">142</span> cryptographic items
+          </div>
+<div class="h-4 w-px bg-outline-variant hidden md:block"></div>
+<!-- Rows per page selector -->
+<div class="flex items-center gap-1">
+<span class="text-outline">Rows:</span>
+<select class="bg-surface-container border border-outline-variant text-on-surface font-code-sm text-code-sm h-6 px-1.5 py-0 focus:ring-0 cursor-pointer">
+<option selected="" value="25">25</option>
+<option value="50">50</option>
+<option value="100">100</option>
+</select>
+</div>
+<!-- Page Switcher -->
+<div class="flex items-center gap-1">
+<button class="h-6 px-2 bg-surface-container border border-outline-variant hover:bg-surface-container-high text-on-surface transition-colors flex items-center disabled:opacity-30" disabled="" title="Previous Page">
+              &lt; Prev
+            </button>
+<span class="px-2 py-0.5 bg-primary-container text-on-primary font-bold text-[11px]">1</span>
+<button class="h-6 px-2 bg-surface-container border border-outline-variant hover:bg-surface-container-high text-on-surface transition-colors">2</button>
+<button class="h-6 px-2 bg-surface-container border border-outline-variant hover:bg-surface-container-high text-on-surface transition-colors">3</button>
+<span class="text-outline px-1">...</span>
+<button class="h-6 px-2 bg-surface-container border border-outline-variant hover:bg-surface-container-high text-on-surface transition-colors">18</button>
+<button class="h-6 px-2 bg-surface-container border border-outline-variant hover:bg-surface-container-high text-on-surface transition-colors flex items-center" title="Next Page">
+              Next &gt;
+            </button>
+</div>
+</div>
+</footer>
+</main>
+</div>
+<script>
+    // Micro-interactions for table row selection and dense keyboard navigation simulation
+    document.addEventListener('DOMContentLoaded', () => {
+      const selectAll = document.querySelector('thead input[type="checkbox"]');
+      const rowCheckboxes = document.querySelectorAll('tbody input[type="checkbox"]');
+      const selectionCounter = document.querySelector('footer span.text-on-surface');
+
+      if (selectAll) {
+        selectAll.addEventListener('change', (e) => {
+          rowCheckboxes.forEach(cb => cb.checked = e.target.checked);
+          updateCount();
+        });
+      }
+
+      rowCheckboxes.forEach(cb => {
+        cb.addEventListener('change', () => {
+          updateCount();
+        });
+      });
+
+      function updateCount() {
+        const count = Array.from(rowCheckboxes).filter(cb => cb.checked).length;
+        if (selectionCounter) {
+          selectionCounter.textContent = `${count} items selected.`;
+        }
+      }
+    });
+  </script>
+</body></html>

@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>ECDAT // Mosca Risk Simulator (SIH 2026 / NTRO PS ID: 26164)</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "on-error-container": "#ffdad6",
+            "surface-container-low": "#171c23",
+            "surface-variant": "#30353d",
+            "on-tertiary-container": "#004f16",
+            "on-secondary-fixed-variant": "#004882",
+            "primary-container": "#f59e0b",
+            "surface-bright": "#343941",
+            "on-primary-container": "#613b00",
+            "secondary-container": "#0071c7",
+            "tertiary-fixed": "#83fc89",
+            "inverse-primary": "#855300",
+            "error-container": "#93000a",
+            "outline-variant": "#534434",
+            "surface-dim": "#0f141b",
+            "on-surface": "#dee2ec",
+            "on-secondary-fixed": "#001c38",
+            "outline": "#a08e7a",
+            "secondary": "#a2c9ff",
+            "inverse-on-surface": "#2c3138",
+            "surface-tint": "#ffb95f",
+            "tertiary-container": "#4fc85d",
+            "on-error": "#690005",
+            "primary": "#ffc174",
+            "on-primary": "#472a00",
+            "tertiary-fixed-dim": "#67df70",
+            "on-secondary": "#00315c",
+            "surface-container-highest": "#30353d",
+            "on-primary-fixed-variant": "#653e00",
+            "secondary-fixed": "#d3e4ff",
+            "on-background": "#dee2ec",
+            "surface-container-high": "#252a32",
+            "primary-fixed": "#ffddb8",
+            "on-tertiary": "#00390d",
+            "on-surface-variant": "#d8c3ad",
+            "error": "#ffb4ab",
+            "inverse-surface": "#dee2ec",
+            "on-tertiary-fixed-variant": "#005317",
+            "on-secondary-container": "#f0f4ff",
+            "secondary-fixed-dim": "#a2c9ff",
+            "on-tertiary-fixed": "#002105",
+            "background": "#0f141b",
+            "surface-container": "#1b2027",
+            "on-primary-fixed": "#2a1700",
+            "tertiary": "#6de575",
+            "surface": "#0f141b",
+            "surface-container-lowest": "#090f15",
+            "primary-fixed-dim": "#ffb95f"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "space-xl": "1.5rem",
+            "space-md": "0.75rem",
+            "space-sm": "0.5rem",
+            "gutter-desktop": "1rem",
+            "margin-desktop": "1.5rem",
+            "gutter": "0.75rem",
+            "margin": "1rem",
+            "space-xs": "0.25rem",
+            "space-lg": "1rem"
+          },
+          "fontFamily": {
+            "body-md": ["Inter"],
+            "code-lg": ["JetBrains Mono"],
+            "headline-xl": ["Inter"],
+            "headline-lg": ["Inter"],
+            "headline-md": ["Inter"],
+            "label-caps": ["JetBrains Mono"],
+            "body-sm": ["Inter"],
+            "code-md": ["JetBrains Mono"],
+            "code-sm": ["JetBrains Mono"]
+          },
+          "fontSize": {
+            "body-md": ["13px", {"lineHeight": "18px", "fontWeight": "400"}],
+            "code-lg": ["13px", {"lineHeight": "20px", "fontWeight": "500"}],
+            "headline-xl": ["24px", {"lineHeight": "32px", "letterSpacing": "-0.015em", "fontWeight": "600"}],
+            "headline-lg": ["18px", {"lineHeight": "24px", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+            "headline-md": ["14px", {"lineHeight": "20px", "letterSpacing": "-0.005em", "fontWeight": "600"}],
+            "label-caps": ["10px", {"lineHeight": "12px", "letterSpacing": "0.08em", "fontWeight": "600"}],
+            "body-sm": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+            "code-md": ["12px", {"lineHeight": "16px", "fontWeight": "400"}],
+            "code-sm": ["11px", {"lineHeight": "14px", "letterSpacing": "0.02em", "fontWeight": "400"}]
+          }
+        },
+      },
+    }
+  </script>
+<style>
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 16px;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+    }
+    input[type=range] {
+      -webkit-appearance: none;
+      width: 100%;
+      background: #171c23;
+      height: 4px;
+      border-radius: 2px;
+      outline: none;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 14px;
+      height: 14px;
+      background: #f59e0b;
+      cursor: pointer;
+      border: 1px solid #090f15;
+      border-radius: 2px;
+    }
+    input[type=range]::-moz-range-thumb {
+      width: 14px;
+      height: 14px;
+      background: #f59e0b;
+      cursor: pointer;
+      border: 1px solid #090f15;
+      border-radius: 2px;
+    }
+    /* Scrollbar minimal styling */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090f15;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #252a32;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #343941;
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface antialiased overflow-hidden select-none font-body-md text-body-md h-screen flex flex-col">
+<!-- TOP NAV BAR (Shared Component Anchor) -->
+<header class="flex justify-between items-center h-10 px-gutter-desktop w-full border-b border-outline-variant bg-surface-container-low shrink-0 select-none z-50">
+<div class="flex items-center space-x-space-md">
+<div class="flex items-center gap-space-xs">
+<span class="material-symbols-outlined text-primary text-base">verified_user</span>
+<span class="text-code-lg font-code-lg font-bold text-primary tracking-tight">ECDAT // PS-ID: 26164 (NTRO)</span>
+</div>
+<div class="h-4 w-px bg-outline-variant"></div>
+<nav class="flex items-center space-x-1 h-full">
+<span class="text-primary font-code-md border-b-2 border-primary px-space-sm h-full flex items-center gap-1">
+<span class="material-symbols-outlined text-xs">folder_open</span> main:src/crypto-core
+        </span>
+<span class="text-on-surface-variant font-code-sm px-space-sm h-full flex items-center gap-1 hover:text-on-surface">
+<span class="material-symbols-outlined text-xs text-tertiary">check_circle</span> CycloneDX v1.6 [VALID]
+        </span>
+</nav>
+</div>
+<!-- Search + Actions -->
+<div class="flex items-center space-x-space-md">
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-2 text-outline text-xs">search</span>
+<input class="bg-surface-container-lowest text-on-surface text-code-sm pl-7 pr-8 py-1 rounded h-6 w-64 border border-outline-variant focus:outline-none focus:border-primary" placeholder="Search parameters, algorithms, ciphers..." type="text"/>
+<span class="absolute right-1.5 px-1 py-0.5 rounded bg-surface-container-high text-outline text-[9px] font-code-sm">⌘K</span>
+</div>
+<div class="flex items-center space-x-space-xs text-code-sm text-on-surface-variant">
+<span class="h-2 w-2 rounded-full bg-tertiary animate-pulse"></span>
+<span>Scan Status: Idle</span>
+</div>
+<button class="bg-primary-container text-on-primary font-code-md font-semibold px-space-md py-1 rounded hover:bg-surface-tint focus:outline-none focus:ring-1 focus:ring-primary-container flex items-center gap-1 h-7">
+<span class="material-symbols-outlined text-xs">play_arrow</span> Run Discovery
+      </button>
+<div class="h-4 w-px bg-outline-variant"></div>
+<div class="flex items-center space-x-1">
+<button class="p-1 hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface rounded" title="Open Integrated Terminal">
+<span class="material-symbols-outlined text-sm">terminal</span>
+</button>
+<button class="p-1 hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface rounded" title="Simulation Fine-tuning">
+<span class="material-symbols-outlined text-sm">tune</span>
+</button>
+<button class="p-1 hover:bg-surface-container-high text-on-surface-variant hover:text-on-surface rounded relative" title="Notifications">
+<span class="material-symbols-outlined text-sm">notifications</span>
+<span class="absolute top-1 right-1 w-1.5 h-1.5 bg-primary rounded-full"></span>
+</button>
+</div>
+<div class="flex items-center gap-1 pl-1">
+<div class="w-5 h-5 rounded bg-surface-variant border border-outline flex items-center justify-center text-[10px] font-code-md text-primary" title="Lead Cryptographer SecOps Token">
+          NT
+        </div>
+</div>
+</div>
+</header>
+<!-- MAIN IDE WORKSPACE SHELL -->
+<div class="flex flex-1 overflow-hidden">
+<!-- LEFT SIDEBAR (Shared Component Anchor) -->
+<aside class="w-64 h-[calc(100vh-2.5rem)] flex flex-col justify-between p-space-sm border-r border-outline-variant bg-surface-container-lowest shrink-0 select-none">
+<div class="space-y-space-md">
+<!-- Node Identity Header -->
+<div class="px-space-xs py-space-xs border-b border-outline-variant pb-space-sm">
+<div class="flex items-center justify-between">
+<span class="text-code-lg font-code-lg font-bold text-primary uppercase">ECDAT Engine</span>
+<span class="px-1 py-0.2 bg-surface-container text-tertiary font-code-sm text-[9px] rounded border border-outline-variant">NODE-01</span>
+</div>
+<p class="text-label-caps font-label-caps text-on-surface-variant text-[10px] mt-0.5">SIH 2026 // NTRO SEC</p>
+</div>
+<!-- Primary AST Action Button -->
+<button class="w-full bg-surface-container hover:bg-surface-container-high border border-outline-variant text-primary font-code-md text-code-md py-1.5 px-space-sm flex items-center justify-center gap-2 rounded transition-colors">
+<span class="material-symbols-outlined text-primary text-sm">bolt</span>
+<span>Initiate AST Scan</span>
+</button>
+<!-- Navigation Tabs (10 Items, Mosca Simulator Active) -->
+<nav class="space-y-0.5">
+<!-- 1. Dashboard -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-sm">dashboard</span>
+<span>Dashboard</span>
+</a>
+<!-- 2. New Scan -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-sm">play_circle</span>
+<span>New Scan</span>
+</a>
+<!-- 3. Crypto Inventory -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-sm">memory</span>
+<span>Crypto Inventory</span>
+</a>
+<!-- 4. Finding Inspector -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-sm">troubleshoot</span>
+<span>Finding Inspector</span>
+</a>
+<!-- 5. Mosca Simulator (ACTIVE) -->
+<a class="bg-surface-container dark:bg-surface-container-high text-primary font-code-md border-l-2 border-primary-container px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full" href="#">
+<span class="material-symbols-outlined text-sm text-primary">timeline</span>
+<span class="font-semibold">Mosca Simulator</span>
+</a>
+<!-- 6. Risk Analysis -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-sm">analytics</span>
+<span>Risk Analysis</span>
+</a>
+<!-- 7. Migration Guidance -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-sm">swap_calls</span>
+<span>Migration Guidance</span>
+</a>
+<!-- 8. CycloneDX 1.6 CBOM -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-sm">verified_user</span>
+<span>CycloneDX 1.6 CBOM</span>
+</a>
+<!-- 9. Reports & Evidence -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-sm">description</span>
+<span>Reports &amp; Evidence</span>
+</a>
+<!-- 10. Terminal / Log -->
+<a class="text-on-surface-variant font-code-sm px-space-md py-space-xs rounded-none flex items-center gap-space-sm w-full hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150" href="#">
+<span class="material-symbols-outlined text-sm">terminal</span>
+<span>Terminal / Log</span>
+</a>
+</nav>
+</div>
+<!-- Footer Actions -->
+<div class="border-t border-outline-variant pt-space-xs space-y-1">
+<div class="text-code-sm text-tertiary px-space-md py-1 flex items-center gap-space-sm">
+<span class="material-symbols-outlined text-sm text-tertiary">check_circle</span>
+<span>System Health: Optimal</span>
+</div>
+<button class="text-on-surface-variant hover:text-on-surface text-code-sm px-space-md py-1 flex items-center gap-space-sm w-full hover:bg-surface-container-low rounded">
+<span class="material-symbols-outlined text-sm">settings</span>
+<span>Settings</span>
+</button>
+</div>
+</aside>
+<!-- CENTER & RIGHT VIEWPORT: MOSCA RISK SIMULATOR -->
+<main class="flex-1 flex flex-col overflow-y-auto bg-background p-space-md space-y-space-md">
+<!-- TOP HEADER / CONTEXT BAR -->
+<section class="flex flex-col lg:flex-row lg:items-center justify-between gap-space-md border-b border-outline-variant pb-space-md">
+<div>
+<div class="flex items-center gap-2">
+<h1 class="text-headline-xl font-headline-xl text-on-surface tracking-tight">Mosca Risk Simulator</h1>
+<span class="px-2 py-0.5 rounded text-code-sm font-code-sm bg-surface-container-highest border border-outline-variant text-primary">Theorem Mode</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-0.5">
+            Evaluate whether migration time overlaps security/data lifetime against planning scenarios (Theorem: X + Y &gt; Z).
+          </p>
+</div>
+<!-- Controls: Asset Selection + Actions -->
+<div class="flex flex-wrap items-center gap-space-sm">
+<div class="relative">
+<div class="flex items-center gap-1.5 bg-surface-container-low border border-outline-variant px-space-sm py-1 rounded text-code-sm text-on-surface cursor-pointer hover:border-primary transition-colors">
+<span class="text-on-surface-variant">Selected Asset:</span>
+<span class="font-semibold text-primary">RSA-2048 (auth.py:42)</span>
+<span class="px-1.5 py-0.2 rounded bg-error-container text-on-error-container text-[10px] font-code-sm">Risk: 86</span>
+<span class="material-symbols-outlined text-xs text-on-surface-variant">arrow_drop_down</span>
+</div>
+</div>
+<button class="h-7 px-space-sm bg-surface-container border border-outline-variant text-on-surface hover:bg-surface-container-high rounded text-code-sm flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-xs">bookmark</span>
+<span>Save Scenario</span>
+</button>
+<button class="h-7 px-space-sm bg-surface-container border border-outline-variant text-on-surface hover:bg-surface-container-high rounded text-code-sm flex items-center gap-1 transition-colors">
+<span class="material-symbols-outlined text-xs">assignment_turned_in</span>
+<span>Apply to Finding</span>
+</button>
+<button class="h-7 px-space-sm bg-primary-container text-on-primary font-semibold rounded text-code-sm flex items-center gap-1 hover:bg-surface-tint transition-colors">
+<span class="material-symbols-outlined text-xs">file_download</span>
+<span>Export Analysis (JSON/PDF)</span>
+</button>
+</div>
+</section>
+<!-- THEOREM CALLOUT BANNER -->
+<section class="bg-surface-container-low border border-outline-variant p-space-md rounded">
+<div class="flex flex-col md:flex-row md:items-center justify-between gap-space-sm">
+<div class="space-y-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-base">functions</span>
+<span class="font-code-md text-code-md font-bold text-primary">Mosca's Theorem Formulation</span>
+<span class="text-code-sm text-on-surface-variant font-code-sm">[Mathematical Risk Boundary]</span>
+</div>
+<div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-code-sm text-on-surface-variant font-code-sm">
+<div class="flex items-center gap-1">
+<span class="text-primary font-semibold">Theorem Condition:</span>
+<span class="text-error font-semibold">If (X + Y &gt; Z) → Compromise / Cryptographic Exposure</span>
+</div>
+<span>•</span>
+<div><strong class="text-secondary">X</strong> = Security / Data Lifetime</div>
+<span>•</span>
+<div><strong class="text-primary">Y</strong> = Migration Time</div>
+<span>•</span>
+<div><strong class="text-tertiary">Z</strong> = Planning Scenario Horizon</div>
+</div>
+</div>
+<div class="bg-surface-container-lowest border border-outline-variant px-space-sm py-1 text-code-sm text-on-surface-variant max-w-sm rounded">
+<span class="text-primary font-semibold">Notice:</span> Planning Scenarios represent threat assessment horizons, not deterministic quantum hardware release predictions.
+          </div>
+</div>
+</section>
+<!-- GRID SECTION: SLIDERS & VERDICT BOX -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-space-md">
+<!-- INTERACTIVE CONTROLS & SLIDERS (7 COLS) -->
+<div class="lg:col-span-7 bg-surface-container-low border border-outline-variant p-space-md rounded flex flex-col justify-between space-y-space-md">
+<div class="space-y-space-md">
+<!-- Scenario Preset Selector -->
+<div>
+<div class="flex items-center justify-between mb-2">
+<label class="text-label-caps font-label-caps text-on-surface-variant uppercase">Quantum Threat Horizon Presets</label>
+<span class="text-code-sm text-on-surface-variant font-code-sm">Base Anchor: 2026</span>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<button class="px-2 py-1.5 border border-outline-variant bg-surface-container hover:bg-surface-container-high rounded text-left transition-colors" id="scenario-btn-2030" onclick="setScenario(2030, 4)">
+<div class="text-code-sm font-semibold text-on-surface">2030 Planning Horizon</div>
+<div class="text-[10px] text-on-surface-variant font-code-sm">Conservative / Fast QPU</div>
+</button>
+<button class="px-2 py-1.5 border-2 border-primary-container bg-surface-container-high rounded text-left transition-colors" id="scenario-btn-2035" onclick="setScenario(2035, 9)">
+<div class="text-code-sm font-semibold text-primary">2035 Planning Horizon</div>
+<div class="text-[10px] text-on-surface-variant font-code-sm">NIST Recommended Target</div>
+</button>
+<button class="px-2 py-1.5 border border-outline-variant bg-surface-container hover:bg-surface-container-high rounded text-left transition-colors" id="scenario-btn-2040" onclick="setScenario(2040, 14)">
+<div class="text-code-sm font-semibold text-on-surface">2040 Planning Horizon</div>
+<div class="text-[10px] text-on-surface-variant font-code-sm">Extended Safe Buffer</div>
+</button>
+</div>
+</div>
+<!-- Param X: Data Lifetime -->
+<div class="bg-surface-container-lowest p-space-sm border border-outline-variant rounded space-y-1.5">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-1.5">
+<span class="px-1.5 py-0.5 rounded bg-surface-variant font-code-sm font-bold text-secondary text-xs">X</span>
+<span class="font-code-md text-code-md font-semibold text-on-surface">Data / Security Lifetime (years)</span>
+</div>
+<div class="flex items-center gap-1">
+<input class="w-16 bg-surface-container border border-outline text-primary text-right font-code-md text-code-md px-1 py-0.5 rounded" id="inputX_val" max="25" min="1" onchange="updateValues()" type="number" value="10"/>
+<span class="text-code-sm text-on-surface-variant">Yrs</span>
+</div>
+</div>
+<input id="inputX" max="25" min="1" oninput="updateValues()" type="range" value="10"/>
+<p class="text-body-sm font-body-sm text-on-surface-variant text-[11px]">
+                Time data must remain confidential (e.g. classified records, health data, root credentials).
+              </p>
+</div>
+<!-- Param Y: Migration Time -->
+<div class="bg-surface-container-lowest p-space-sm border border-outline-variant rounded space-y-1.5">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-1.5">
+<span class="px-1.5 py-0.5 rounded bg-surface-variant font-code-sm font-bold text-primary text-xs">Y</span>
+<span class="font-code-md text-code-md font-semibold text-on-surface">Migration &amp; Deployment Time (years)</span>
+</div>
+<div class="flex items-center gap-1">
+<input class="w-16 bg-surface-container border border-outline text-primary text-right font-code-md text-code-md px-1 py-0.5 rounded" id="inputY_val" max="10" min="1" onchange="updateValues()" type="number" value="4"/>
+<span class="text-code-sm text-on-surface-variant">Yrs</span>
+</div>
+</div>
+<input id="inputY" max="10" min="1" oninput="updateValues()" type="range" value="4"/>
+<p class="text-body-sm font-body-sm text-on-surface-variant text-[11px]">
+                Time to refactor codebase, update protocol stacks, and validate CBOM compliance.
+              </p>
+</div>
+<!-- Param Z: Scenario Horizon -->
+<div class="bg-surface-container-lowest p-space-sm border border-outline-variant rounded space-y-1.5">
+<div class="flex justify-between items-center">
+<div class="flex items-center gap-1.5">
+<span class="px-1.5 py-0.5 rounded bg-surface-variant font-code-sm font-bold text-tertiary text-xs">Z</span>
+<span class="font-code-md text-code-md font-semibold text-on-surface">Threat Scenario Horizon (years to CRQC)</span>
+</div>
+<div class="flex items-center gap-1">
+<input class="w-16 bg-surface-container border border-outline text-primary text-right font-code-md text-code-md px-1 py-0.5 rounded" id="inputZ_val" max="20" min="3" onchange="updateValues()" type="number" value="9"/>
+<span class="text-code-sm text-on-surface-variant">Yrs</span>
+</div>
+</div>
+<input id="inputZ" max="20" min="3" oninput="updateValues()" type="range" value="9"/>
+<p class="text-body-sm font-body-sm text-on-surface-variant text-[11px]">
+                Planning horizon from current baseline year 2026 to target estimated quantum collapse (2035).
+              </p>
+</div>
+</div>
+<div class="flex items-center justify-between text-code-sm text-on-surface-variant pt-2 border-t border-outline-variant">
+<span>Deterministic Matrix Execution</span>
+<span class="text-primary">Recalculating realtime...</span>
+</div>
+</div>
+<!-- CALCULATION RESULT & VERDICT BOX (5 COLS) -->
+<div class="lg:col-span-5 bg-surface-container-low border border-outline-variant p-space-md rounded flex flex-col justify-between space-y-space-md">
+<div class="space-y-space-md">
+<div class="flex justify-between items-center border-b border-outline-variant pb-2">
+<span class="text-label-caps font-label-caps text-on-surface-variant uppercase">Quantum Exposure Verdict</span>
+<span class="px-2 py-0.5 bg-error-container text-on-error-container text-[11px] font-code-sm rounded font-bold" id="verdict-tag">EXPOSURE DETECTED</span>
+</div>
+<!-- Mathematical Equation Render -->
+<div class="bg-surface-container-lowest p-space-md border border-outline-variant rounded text-center">
+<div class="text-label-caps font-label-caps text-on-surface-variant mb-1">EQUATION RESOLUTION</div>
+<div class="font-code-lg text-code-lg text-on-surface font-semibold" id="equation-display">
+                10 yrs (X) + 4 yrs (Y) = 14 yrs &gt; 9 yrs (Z)
+              </div>
+</div>
+<!-- Big Status Box -->
+<div class="p-space-md bg-error-container/20 border-l-4 border-error rounded-r space-y-2" id="verdict-banner">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-error text-xl">dangerous</span>
+<span class="font-code-md text-code-md font-bold text-error tracking-tight" id="verdict-title">CRITICAL: AT RISK OF QUANTUM COLLAPSE</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface">
+                Theorem violated (<span class="font-code-sm font-semibold">X + Y &gt; Z</span>). Migration completion fails to precede estimated cryptanalytic viability.
+              </p>
+<div class="pt-1">
+<span class="text-label-caps font-label-caps text-on-surface-variant block">EXPOSURE DEFICIT</span>
+<span class="text-headline-lg font-headline-lg font-bold text-error" id="deficit-text">-5.0 Years Deficit Window (2031 - 2035)</span>
+</div>
+</div>
+<!-- HNDL Advisory Notice -->
+<div class="bg-surface-container border border-outline-variant p-space-sm rounded space-y-1">
+<div class="flex items-center gap-1.5 text-primary text-code-sm font-semibold">
+<span class="material-symbols-outlined text-sm">security_update_warning</span>
+<span>Harvest Now, Decrypt Later (HNDL) Vulnerable</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant text-[11px] leading-relaxed">
+                Adversaries capturing active ciphertext on this channel today can decrypt it within 9 years, while data confidentiality remains vital through 2036.
+              </p>
+</div>
+</div>
+<div class="flex items-center justify-between text-code-sm text-on-surface-variant pt-2 border-t border-outline-variant">
+<span>Remediation Priority:</span>
+<span class="font-code-sm text-error font-bold">CRITICAL / P0 ASSET</span>
+</div>
+</div>
+</section>
+<!-- VISUAL TIMELINE GRAPH -->
+<section class="bg-surface-container-low border border-outline-variant p-space-md rounded space-y-space-md">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-outline-variant pb-2">
+<div>
+<h2 class="text-headline-md font-headline-md text-on-surface">Cryptographic Exposure Timeline (2026 - 2040)</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant text-[11px]">Real-time visual alignment of migration completion versus quantum vulnerability horizon.</p>
+</div>
+<div class="flex items-center gap-4 text-code-sm font-code-sm">
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-2 bg-primary rounded-xs"></span>
+<span class="text-on-surface-variant">Migration (Y)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-2 bg-secondary rounded-xs"></span>
+<span class="text-on-surface-variant">Data Lifetime (X)</span>
+</div>
+<div class="flex items-center gap-1.5">
+<span class="w-3 h-2 bg-error-container border border-error rounded-xs"></span>
+<span class="text-error">Vulnerable Exposure Zone</span>
+</div>
+</div>
+</div>
+<!-- TIMELINE GRAPH CONTAINER -->
+<div class="relative bg-surface-container-lowest p-space-md border border-outline-variant rounded overflow-x-auto min-w-[700px]">
+<!-- Years Axis Top -->
+<div class="grid grid-cols-14 text-center font-code-sm text-code-sm text-on-surface-variant border-b border-outline-variant pb-1 mb-6">
+<span>2026</span>
+<span>2027</span>
+<span>2028</span>
+<span>2029</span>
+<span>2030</span>
+<span>2031</span>
+<span>2032</span>
+<span>2033</span>
+<span>2034</span>
+<span>2035</span>
+<span>2036</span>
+<span>2037</span>
+<span>2038</span>
+<span>2039</span>
+</div>
+<!-- Timeline Bars & Markers Canvas Area -->
+<div class="relative h-44 w-full">
+<!-- Vertical Gridlines -->
+<div class="absolute inset-0 grid grid-cols-14 pointer-events-none opacity-20">
+<div class="border-r border-outline-variant h-full"></div>
+<div class="border-r border-outline-variant h-full"></div>
+<div class="border-r border-outline-variant h-full"></div>
+<div class="border-r border-outline-variant h-full"></div>
+<div class="border-r border-outline-variant h-full"></div>
+<div class="border-r border-outline-variant h-full"></div>
+<div class="border-r border-outline-variant h-full"></div>
+<div class="border-r border-outline-variant h-full"></div>
+<div class="border-r border-outline-variant h-full"></div>
+<div class="border-r border-outline-variant h-full"></div>
+<div class="border-r border-outline-variant h-full"></div>
+<div class="border-r border-outline-variant h-full"></div>
+<div class="border-r border-outline-variant h-full"></div>
+<div class="border-r border-outline-variant h-full"></div>
+</div>
+<!-- Anchor Line 2026 (NOW) -->
+<div class="absolute left-0 top-0 bottom-0 w-0.5 bg-primary z-20">
+<div class="absolute -top-5 left-0 transform -translate-x-1/2 whitespace-nowrap bg-surface-variant border border-primary px-1 rounded text-[9px] font-code-sm text-primary">
+                2026 [NOW]
+              </div>
+</div>
+<!-- Quantum Horizon Z Marker (Target 2035) -->
+<div class="absolute left-[64.28%] top-0 bottom-0 w-0.5 border-r-2 border-dashed border-primary-container z-20" id="horizon-marker">
+<div class="absolute -top-5 right-0 transform translate-x-1/2 whitespace-nowrap bg-primary-container text-on-primary font-bold px-1.5 rounded text-[9px] font-code-sm">
+                CRQC Horizon Z (2035)
+              </div>
+</div>
+<!-- Exposure Zone Highlight Box (2031 to 2035 or 2036) -->
+<div class="absolute left-[35.71%] width-[28.57%] top-2 bottom-6 bg-error-container/20 border border-error/50 rounded flex flex-col items-center justify-center p-1 z-10" id="vulnerability-box" style="width: 28.57%;">
+<span class="text-error font-code-sm text-[10px] font-bold">Vulnerable Data Exposure Window</span>
+<span class="text-[9px] font-code-sm text-on-error-container">Harvested data exposed before obsolescence</span>
+</div>
+<!-- Bar 1: Migration Duration Y -->
+<div class="absolute top-4 left-0 h-6 bg-primary-container/80 rounded-r border border-primary flex items-center px-2 z-20 text-[10px] font-code-sm text-on-primary font-bold shadow" style="width: 28.57%;">
+              Migration Duration (Y = 4 yrs): 2026 → 2030 [Post-Quantum Deployed]
+            </div>
+<!-- Bar 2: Data Lifetime Window X -->
+<div class="absolute top-14 left-0 h-6 bg-secondary-container/80 rounded-r border border-secondary flex items-center px-2 z-20 text-[10px] font-code-sm text-on-secondary-container font-medium" style="width: 71.42%;">
+              Data Lifetime Window (X = 10 yrs): 2026 → 2036 [Data Becomes Obsolete]
+            </div>
+<!-- Bar 3: Cumulative Total (X + Y = 14 yrs) -->
+<div class="absolute top-24 left-0 h-6 bg-surface-variant rounded-r border border-error border-dashed flex items-center justify-between px-2 z-20 text-[10px] font-code-sm text-error font-bold" style="width: 100%;">
+<span>Cumulative Risk Horizon (X + Y = 14 yrs): 2026 → 2040</span>
+<span class="text-error">Overlap Exceeds CRQC Horizon Z (+5 yrs)</span>
+</div>
+<!-- Bottom Marker Annotations -->
+<div class="absolute bottom-0 inset-x-0 flex justify-between text-[10px] font-code-sm text-on-surface-variant pt-2 border-t border-outline-variant">
+<span>Baseline Audit: Q1 2026</span>
+<span class="text-primary">Migration Target: Dec 2029</span>
+<span class="text-error">Estimated Quantum Feasibility: 2035</span>
+<span>Data Retires: 2036</span>
+</div>
+</div>
+</div>
+</section>
+<!-- SCENARIO COMPARISON MATRIX TABLE -->
+<section class="bg-surface-container-low border border-outline-variant p-space-md rounded space-y-space-sm">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-base">table_chart</span>
+<h3 class="text-headline-md font-headline-md text-on-surface">Scenario Planning Sensitivity Matrix</h3>
+</div>
+<span class="text-code-sm font-code-sm text-on-surface-variant">Evaluated on active asset RSA-2048</span>
+</div>
+<div class="overflow-x-auto border border-outline-variant rounded">
+<table class="w-full text-left font-code-sm text-code-sm divide-y divide-outline-variant">
+<thead class="bg-surface-container-highest text-on-surface-variant uppercase text-[10px] font-label-caps">
+<tr>
+<th class="px-space-md py-2">Scenario Name</th>
+<th class="px-space-md py-2">Horizon Year</th>
+<th class="px-space-md py-2">X (Lifetime)</th>
+<th class="px-space-md py-2">Y (Migration)</th>
+<th class="px-space-md py-2">Z (Horizon)</th>
+<th class="px-space-md py-2">X + Y</th>
+<th class="px-space-md py-2">Mosca Outcome</th>
+<th class="px-space-md py-2">Urgency Level</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant bg-surface-container-lowest">
+<!-- Row 1: Aggressive -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-space-md py-2 font-medium text-on-surface">Aggressive Horizon</td>
+<td class="px-space-md py-2 font-mono text-primary">2030</td>
+<td class="px-space-md py-2">10 yrs</td>
+<td class="px-space-md py-2">4 yrs</td>
+<td class="px-space-md py-2">4 yrs</td>
+<td class="px-space-md py-2 font-semibold">14 yrs</td>
+<td class="px-space-md py-2">
+<span class="px-2 py-0.5 rounded bg-error-container text-on-error-container font-semibold">AT RISK (+10y)</span>
+</td>
+<td class="px-space-md py-2">
+<span class="text-error font-semibold flex items-center gap-1">
+<span class="h-1.5 w-1.5 rounded-full bg-error"></span> Immediate Action (P0)
+                  </span>
+</td>
+</tr>
+<!-- Row 2: NIST Target 2035 -->
+<tr class="bg-surface-container-high/40 hover:bg-surface-container transition-colors border-l-2 border-primary-container">
+<td class="px-space-md py-2 font-medium text-primary flex items-center gap-1">
+<span>NIST Target 2035</span>
+<span class="text-[9px] bg-primary text-on-primary px-1 rounded">ACTIVE</span>
+</td>
+<td class="px-space-md py-2 font-mono text-primary font-bold">2035</td>
+<td class="px-space-md py-2">10 yrs</td>
+<td class="px-space-md py-2">4 yrs</td>
+<td class="px-space-md py-2">9 yrs</td>
+<td class="px-space-md py-2 font-semibold text-error">14 yrs</td>
+<td class="px-space-md py-2">
+<span class="px-2 py-0.5 rounded bg-error-container text-on-error-container font-semibold">AT RISK (+5y)</span>
+</td>
+<td class="px-space-md py-2">
+<span class="text-primary font-semibold flex items-center gap-1">
+<span class="h-1.5 w-1.5 rounded-full bg-primary-container"></span> High Priority (P1)
+                  </span>
+</td>
+</tr>
+<!-- Row 3: Conservative 2040 -->
+<tr class="hover:bg-surface-container transition-colors">
+<td class="px-space-md py-2 font-medium text-on-surface">Conservative 2040</td>
+<td class="px-space-md py-2 font-mono text-tertiary">2040</td>
+<td class="px-space-md py-2">10 yrs</td>
+<td class="px-space-md py-2">4 yrs</td>
+<td class="px-space-md py-2">14 yrs</td>
+<td class="px-space-md py-2 font-semibold">14 yrs</td>
+<td class="px-space-md py-2">
+<span class="px-2 py-0.5 rounded bg-surface-variant text-on-surface font-semibold">BORDERLINE (0y)</span>
+</td>
+<td class="px-space-md py-2">
+<span class="text-on-surface-variant font-medium flex items-center gap-1">
+<span class="h-1.5 w-1.5 rounded-full bg-outline"></span> Scheduled Migration
+                  </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</main>
+</div>
+<!-- BOTTOM DAEMON STATUS BAR -->
+<footer class="h-6 bg-surface-container-lowest border-t border-outline-variant px-space-md flex items-center justify-between text-code-sm text-on-surface-variant shrink-0 select-none">
+<div class="flex items-center space-x-space-md">
+<div class="flex items-center gap-1.5">
+<span class="h-2 w-2 rounded-full bg-tertiary"></span>
+<span class="text-tertiary font-bold">DAEMON: IDLE</span>
+</div>
+<span>WORKSPACE: /home/secops/crypt-audit</span>
+<span>RAM: 3.2 / 32 GB</span>
+<span>UTF-8</span>
+</div>
+<div class="flex items-center space-x-space-md">
+<span class="text-primary font-medium">CycloneDX v1.6 Spec</span>
+<div class="flex items-center gap-1 text-tertiary">
+<span class="material-symbols-outlined text-xs">verified</span>
+<span>AIR-GAP VALIDATED</span>
+</div>
+</div>
+</footer>
+<!-- SCRIPT FOR REALTIME MOSCA FORMULA UPDATES -->
+<script>
+    function updateValues() {
+      const xInput = document.getElementById('inputX');
+      const yInput = document.getElementById('inputY');
+      const zInput = document.getElementById('inputZ');
+
+      const xVal = parseInt(xInput.value);
+      const yVal = parseInt(yInput.value);
+      const zVal = parseInt(zInput.value);
+
+      document.getElementById('inputX_val').value = xVal;
+      document.getElementById('inputY_val').value = yVal;
+      document.getElementById('inputZ_val').value = zVal;
+
+      const sumXY = xVal + yVal;
+      const deficit = zVal - sumXY;
+
+      const eqDisplay = document.getElementById('equation-display');
+      const verdictBanner = document.getElementById('verdict-banner');
+      const verdictTitle = document.getElementById('verdict-title');
+      const deficitText = document.getElementById('deficit-text');
+      const verdictTag = document.getElementById('verdict-tag');
+
+      if (sumXY > zVal) {
+        // EXPOSURE / CRITICAL
+        eqDisplay.innerHTML = `${xVal} yrs (X) + ${yVal} yrs (Y) = <span class="text-error font-bold">${sumXY} yrs</span> &gt; ${zVal} yrs (Z)`;
+        verdictBanner.className = "p-space-md bg-error-container/20 border-l-4 border-error rounded-r space-y-2";
+        verdictTitle.className = "font-code-md text-code-md font-bold text-error tracking-tight";
+        verdictTitle.innerText = "CRITICAL: AT RISK OF QUANTUM COLLAPSE";
+        verdictTag.className = "px-2 py-0.5 bg-error-container text-on-error-container text-[11px] font-code-sm rounded font-bold";
+        verdictTag.innerText = "EXPOSURE DETECTED";
+        deficitText.className = "text-headline-lg font-headline-lg font-bold text-error";
+        deficitText.innerText = `${deficit}.0 Years Deficit Window (2031 - ${2026 + zVal})`;
+      } else if (sumXY === zVal) {
+        // BORDERLINE
+        eqDisplay.innerHTML = `${xVal} yrs (X) + ${yVal} yrs (Y) = <span class="text-primary font-bold">${sumXY} yrs</span> == ${zVal} yrs (Z)`;
+        verdictBanner.className = "p-space-md bg-surface-container-high border-l-4 border-primary rounded-r space-y-2";
+        verdictTitle.className = "font-code-md text-code-md font-bold text-primary tracking-tight";
+        verdictTitle.innerText = "WARNING: BORDERLINE QUANTUM ALIGNMENT";
+        verdictTag.className = "px-2 py-0.5 bg-primary-container text-on-primary text-[11px] font-code-sm rounded font-bold";
+        verdictTag.innerText = "ZERO BUFFER";
+        deficitText.className = "text-headline-lg font-headline-lg font-bold text-primary";
+        deficitText.innerText = "0.0 Years Margin (Synchronized Completion)";
+      } else {
+        // SECURE / COMPLIANT
+        eqDisplay.innerHTML = `${xVal} yrs (X) + ${yVal} yrs (Y) = <span class="text-tertiary font-bold">${sumXY} yrs</span> &lt; ${zVal} yrs (Z)`;
+        verdictBanner.className = "p-space-md bg-tertiary-container/20 border-l-4 border-tertiary rounded-r space-y-2";
+        verdictTitle.className = "font-code-md text-code-md font-bold text-tertiary tracking-tight";
+        verdictTitle.innerText = "SAFE: POST-QUANTUM SAFE MIGRATION SCHEDULE";
+        verdictTag.className = "px-2 py-0.5 bg-tertiary text-on-tertiary text-[11px] font-code-sm rounded font-bold";
+        verdictTag.innerText = "THEORETICALLY SECURE";
+        deficitText.className = "text-headline-lg font-headline-lg font-bold text-tertiary";
+        deficitText.innerText = `+${Math.abs(deficit)}.0 Years Safety Margin Remaining`;
+      }
+    }
+
+    function setScenario(year, zVal) {
+      document.getElementById('inputZ').value = zVal;
+      document.getElementById('inputZ_val').value = zVal;
+
+      // Toggle UI button styles
+      ['2030', '2035', '2040'].forEach(y => {
+        const btn = document.getElementById(`scenario-btn-${y}`);
+        if (y == year) {
+          btn.className = "px-2 py-1.5 border-2 border-primary-container bg-surface-container-high rounded text-left transition-colors";
+          btn.querySelector('.text-code-sm').className = "text-code-sm font-semibold text-primary";
+        } else {
+          btn.className = "px-2 py-1.5 border border-outline-variant bg-surface-container hover:bg-surface-container-high rounded text-left transition-colors";
+          btn.querySelector('.text-code-sm').className = "text-code-sm font-semibold text-on-surface";
+        }
+      });
+
+      updateValues();
+    }
+  </script>
+</body></html>
