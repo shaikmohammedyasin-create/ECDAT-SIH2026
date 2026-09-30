@@ -46,3 +46,7 @@ Thumbs.db
 
 # Scratch temporary directories
 scratch/
+
+# Presentations
+*.ppt
+*.pptx
