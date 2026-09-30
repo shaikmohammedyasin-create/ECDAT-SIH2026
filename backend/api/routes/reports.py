@@ -137,7 +137,7 @@ def preview_report(fmt: str):
 
     fmt = fmt.lower()
     with tempfile.TemporaryDirectory() as tmp_dir:
-        if fmt == "html":
+        if fmt in ("html", "pdf"):
             html_p = os.path.join(tmp_dir, "report.html")
             export_html_report(assets, metrics, val, html_p)
             with open(html_p, "r", encoding="utf-8") as f:

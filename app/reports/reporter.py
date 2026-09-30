@@ -470,10 +470,12 @@ def export_pdf_report(assets: List[CryptoAsset], metrics: Dict, validation_resul
         ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#E2E8F0")),
         ("VALIGN", (0, 0), (-1, -1), "TOP"),
     ]))
-    story.append(ft)
-
-    doc.build(story)
-    return filepath
+    try:
+        doc.build(story)
+        return filepath
+    except Exception as e:
+        print(f"[ERROR] Failed to build ReportLab PDF: {e}")
+        return None
 
 
 def export_summary_md(assets: List[CryptoAsset], metrics: Dict, validation_result: Dict, filepath: str) -> str:
