@@ -13,15 +13,16 @@ import type {
 
 // Dynamic API Base URL supporting:
 // 1. Explicit cloud environment variable (VITE_API_BASE_URL)
-// 2. Same-origin deployment (e.g. Docker or unified cloud host)
-// 3. Local Vite dev server fallback (localhost:8000)
+// 2. Relative /api on cloud deployments (proxied via vercel.json or same domain)
+// 3. Local Vite dev server fallback (http://localhost:8000/api)
 export const API_BASE: string = (() => {
   const envUrl = (import.meta as any).env?.VITE_API_BASE_URL;
-  if (envUrl && typeof envUrl === "string") {
-    return envUrl.replace(/\/+$/, "");
+  if (envUrl && typeof envUrl === "string" && envUrl.trim().length > 0) {
+    const clean = envUrl.trim().replace(/\/+$/, "");
+    return clean.endsWith("/api") ? clean : `${clean}/api`;
   }
   if (typeof window !== "undefined") {
-    // If running in local Vite dev server on port 5173
+    // If running in local Vite dev server on port 5173 or 3000
     if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
       if (window.location.port === "5173" || window.location.port === "3000") {
         return window.location.hostname === "127.0.0.1"
@@ -29,10 +30,10 @@ export const API_BASE: string = (() => {
           : "http://localhost:8000/api";
       }
     }
-    // If served from FastAPI, Nginx, or same domain
-    return `${window.location.origin}/api`;
+    // If served from Vercel (proxied by vercel.json) or same origin
+    return "/api";
   }
-  return "http://localhost:8000/api";
+  return "https://ecdat-sih2026.onrender.com/api";
 })();
 
 export async function fetchDashboard(): Promise<DashboardData> {
