@@ -1,0 +1,140 @@
+import type {
+  DashboardData,
+  InventoryResponse,
+  FindingDetail,
+  MoscaState,
+  RiskAnalysisData,
+  MigrationResponse,
+  CBOMData,
+  ReportsMetadata,
+  TerminalLog,
+  SettingsData,
+} from "../types";
+
+const API_BASE = "http://localhost:8000/api";
+
+export async function fetchDashboard(): Promise<DashboardData> {
+  const res = await fetch(`${API_BASE}/dashboard`);
+  if (!res.ok) throw new Error(`Dashboard API error: ${res.statusText}`);
+  return res.json();
+}
+
+export async function triggerScan(data: {
+  path: string;
+  use_corpus?: boolean;
+  scenario_year?: number;
+  x_lifetime?: number;
+  y_migration?: number;
+}): Promise<any> {
+  const res = await fetch(`${API_BASE}/scans`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) throw new Error(`Scan API error: ${res.statusText}`);
+  return res.json();
+}
+
+export async function fetchScanStatus(): Promise<any> {
+  const res = await fetch(`${API_BASE}/scans/status`);
+  if (!res.ok) throw new Error(`Scan status API error: ${res.statusText}`);
+  return res.json();
+}
+
+export async function fetchInventory(params?: {
+  search?: string;
+  algorithm?: string;
+  quantum_status?: string;
+  threat?: string;
+  risk_band?: string;
+  page?: number;
+  page_size?: number;
+}): Promise<InventoryResponse> {
+  const q = new URLSearchParams();
+  if (params?.search) q.set("search", params.search);
+  if (params?.algorithm && params.algorithm !== "All") q.set("algorithm", params.algorithm);
+  if (params?.quantum_status && params.quantum_status !== "All") q.set("quantum_status", params.quantum_status);
+  if (params?.threat && params.threat !== "All") q.set("threat", params.threat);
+  if (params?.risk_band && params.risk_band !== "All") q.set("risk_band", params.risk_band);
+  if (params?.page) q.set("page", params.page.toString());
+  if (params?.page_size) q.set("page_size", params.page_size.toString());
+
+  const res = await fetch(`${API_BASE}/inventory?${q.toString()}`);
+  if (!res.ok) throw new Error(`Inventory API error: ${res.statusText}`);
+  return res.json();
+}
+
+export async function fetchFindingDetail(id: number | string): Promise<FindingDetail> {
+  const res = await fetch(`${API_BASE}/findings/${id}`);
+  if (!res.ok) throw new Error(`Finding detail error: ${res.statusText}`);
+  return res.json();
+}
+
+export async function fetchMosca(): Promise<MoscaState> {
+  const res = await fetch(`${API_BASE}/mosca`);
+  if (!res.ok) throw new Error(`Mosca API error: ${res.statusText}`);
+  return res.json();
+}
+
+export async function simulateMosca(payload: {
+  scenario_year: number;
+  x_lifetime: number;
+  y_migration: number;
+  recompute_scan?: boolean;
+}): Promise<MoscaState> {
+  const res = await fetch(`${API_BASE}/mosca/simulate`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) throw new Error(`Mosca simulate error: ${res.statusText}`);
+  return res.json();
+}
+
+export async function fetchRiskAnalysis(): Promise<RiskAnalysisData> {
+  const res = await fetch(`${API_BASE}/risk`);
+  if (!res.ok) throw new Error(`Risk API error: ${res.statusText}`);
+  return res.json();
+}
+
+export async function fetchMigration(): Promise<MigrationResponse> {
+  const res = await fetch(`${API_BASE}/migration`);
+  if (!res.ok) throw new Error(`Migration API error: ${res.statusText}`);
+  return res.json();
+}
+
+export async function fetchCBOM(): Promise<CBOMData> {
+  const res = await fetch(`${API_BASE}/cbom`);
+  if (!res.ok) throw new Error(`CBOM API error: ${res.statusText}`);
+  return res.json();
+}
+
+export async function fetchReportsMetadata(): Promise<ReportsMetadata> {
+  const res = await fetch(`${API_BASE}/reports`);
+  if (!res.ok) throw new Error(`Reports metadata API error: ${res.statusText}`);
+  return res.json();
+}
+
+export function getReportDownloadUrl(fmt: string): string {
+  return `${API_BASE}/reports/download/${fmt}`;
+}
+
+export function getCBOMDownloadUrl(): string {
+  return `${API_BASE}/cbom/download`;
+}
+
+export async function fetchTerminalLogs(): Promise<TerminalLog[]> {
+  const res = await fetch(`${API_BASE}/terminal`);
+  if (!res.ok) throw new Error(`Terminal logs API error: ${res.statusText}`);
+  return res.json();
+}
+
+export async function clearTerminalLogs(): Promise<void> {
+  await fetch(`${API_BASE}/terminal`, { method: "DELETE" });
+}
+
+export async function fetchSettings(): Promise<SettingsData> {
+  const res = await fetch(`${API_BASE}/settings`);
+  if (!res.ok) throw new Error(`Settings API error: ${res.statusText}`);
+  return res.json();
+}
