@@ -29,14 +29,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy backend application code and config
+# Copy backend application code and resources
 COPY app ./app
 COPY backend ./backend
-COPY config ./config
 COPY schemas ./schemas
 COPY test_corpus ./test_corpus
-COPY tests/external_targets ./tests/external_targets
+COPY tests ./tests
 COPY run.py .
+RUN mkdir -p config output scratch tests/external_targets
 
 # Copy pre-built frontend distribution into place for FastAPI static serving
 COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
