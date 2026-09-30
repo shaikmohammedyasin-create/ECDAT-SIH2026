@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-30T02:17:36.891759+00:00",
+  "timestamp": "2026-09-30T04:32:49.647519+00:00",
   "total_repositories": 3,
   "repositories": [
     {
@@ -7,7 +7,7 @@
       "url": "https://github.com/openssl/openssl",
       "commit": "4cb31128b5790819dfeea2739fbde265f71a10a2",
       "tag": "openssl-3.3.0",
-      "scanned_at": "2026-09-30T02:16:04.192913+00:00",
+      "scanned_at": "2026-09-30T04:32:20.068199+00:00",
       "inventory": {
         "total_files": 5295,
         "source_files": 2066,
@@ -15,11 +15,11 @@
         "size_mb": 63.26
       },
       "performance": {
-        "scan_duration_s": 76.823,
-        "throughput_files_per_sec": 68.9,
+        "scan_duration_s": 7.983,
+        "throughput_files_per_sec": 663.3,
         "peak_memory_mb": 0.0,
-        "cbom_generation_duration_s": 0.1004,
-        "cbom_validation_duration_s": 17.6814
+        "cbom_generation_duration_s": 0.0182,
+        "cbom_validation_duration_s": 3.9573
       },
       "findings": {
         "total_discovered": 1295,
@@ -98,7 +98,7 @@
       "url": "https://github.com/python/cpython",
       "commit": "f6650f9ad73359051f3e558c2431a109bc016664",
       "tag": "v3.12.3",
-      "scanned_at": "2026-09-30T02:17:33.465796+00:00",
+      "scanned_at": "2026-09-30T04:32:48.168735+00:00",
       "inventory": {
         "total_files": 4636,
         "source_files": 2868,
@@ -106,11 +106,11 @@
         "size_mb": 99.22
       },
       "performance": {
-        "scan_duration_s": 87.679,
-        "throughput_files_per_sec": 52.9,
+        "scan_duration_s": 27.359,
+        "throughput_files_per_sec": 169.5,
         "peak_memory_mb": 0.0,
-        "cbom_generation_duration_s": 0.0008,
-        "cbom_validation_duration_s": 0.0965
+        "cbom_generation_duration_s": 0.0005,
+        "cbom_validation_duration_s": 0.0447
       },
       "findings": {
         "total_discovered": 45,
@@ -172,7 +172,7 @@
       "url": "https://github.com/openssh/openssh-portable",
       "commit": "86bdd3853f4d32c85e295e6216a2fe0953ad93f0",
       "tag": "V_9_7_P1",
-      "scanned_at": "2026-09-30T02:17:36.887648+00:00",
+      "scanned_at": "2026-09-30T04:32:49.644640+00:00",
       "inventory": {
         "total_files": 849,
         "source_files": 411,
@@ -180,11 +180,11 @@
         "size_mb": 6.66
       },
       "performance": {
-        "scan_duration_s": 1.938,
-        "throughput_files_per_sec": 438.1,
+        "scan_duration_s": 0.956,
+        "throughput_files_per_sec": 888.1,
         "peak_memory_mb": 0.0,
-        "cbom_generation_duration_s": 0.0056,
-        "cbom_validation_duration_s": 0.9831
+        "cbom_generation_duration_s": 0.0039,
+        "cbom_validation_duration_s": 0.3327
       },
       "findings": {
         "total_discovered": 205,

@@ -1,0 +1,14 @@
+services:
+  # Option 1: Unified Fullstack Service on Render (Serves both React UI and FastAPI API)
+  - type: web
+    name: ecdat-workstation
+    runtime: python
+    plan: free
+    region: oregon
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn backend.api.main:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: ALLOWED_ORIGINS
+        value: "https://*.vercel.app,http://localhost:5173"

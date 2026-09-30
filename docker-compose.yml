@@ -1,0 +1,12 @@
+services:
+  ecdat:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ecdat-workstation
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - HOST=0.0.0.0
+    restart: unless-stopped

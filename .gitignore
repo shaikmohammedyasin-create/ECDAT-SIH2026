@@ -9,9 +9,9 @@ venv/
 .venv/
 ENV/
 build/
-develop-eggs/
 dist/
-downloads/
+!frontend/dist/
+!frontend/dist/**
 eggs/
 .eggs/
 lib/

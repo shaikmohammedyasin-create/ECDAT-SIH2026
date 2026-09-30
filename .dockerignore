@@ -1,0 +1,12 @@
+.git
+.github
+.pytest_cache
+__pycache__
+*.pyc
+*.pyo
+venv
+.venv
+output
+tests/results/*.png
+frontend/node_modules
+frontend/dist

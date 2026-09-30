@@ -3,7 +3,7 @@
 **Repository:** [https://github.com/python/cpython](https://github.com/python/cpython)  
 **Pinned Tag/Version:** `v3.12.3`  
 **Commit SHA:** `f6650f9ad73359051f3e558c2431a109bc016664`  
-**Scanned At:** `2026-09-30T02:17:33.465796+00:00`  
+**Scanned At:** `2026-09-30T04:32:48.168735+00:00`  
 **Validation Status:** **`PASS`**
 
 ---
@@ -15,11 +15,11 @@
 | **Total Files Traversed** | `4,636` files |
 | **Source Files Scanned** | `2,868` files |
 | **Codebase Footprint** | `99.22 MB` |
-| **Scan Execution Duration** | **`87.679s`** |
-| **Scanner Throughput** | `52.9 files/sec` |
+| **Scan Execution Duration** | **`27.359s`** |
+| **Scanner Throughput** | `169.5 files/sec` |
 | **Peak Memory Allocation** | `0.0 MB` |
-| **CBOM Generation Time** | `0.0008s` |
-| **CycloneDX 1.6 Validation Time** | `0.0965s` |
+| **CBOM Generation Time** | `0.0005s` |
+| **CycloneDX 1.6 Validation Time** | `0.0447s` |
 | **Schema Validation Errors** | **`0`** (Valid: `True`) |
 
 ---

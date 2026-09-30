@@ -6201,7 +6201,7 @@
       ],
       "properties": {
         "scan_metrics": {
-          "scan_time_s": 1.937,
+          "scan_time_s": 0.955,
           "total_assets": 205,
           "quantum_vulnerable": 180,
           "grover_weakened": 11,
@@ -6211,7 +6211,7 @@
           "high_risk": 0,
           "medium_risk": 12
         },
-        "timestamp": "2026-09-30T02:17:36.792583+00:00"
+        "timestamp": "2026-09-30T04:32:49.620188+00:00"
       }
     }
   ]

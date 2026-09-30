@@ -1,10 +1,10 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.6",
-  "serialNumber": "urn:uuid:eb2ff0e3-69b0-41e7-8fa0-aeb68e327dd4",
+  "serialNumber": "urn:uuid:5dec6554-f7d3-496d-a9eb-de12e8dcfe70",
   "version": 1,
   "metadata": {
-    "timestamp": "2026-09-30T02:17:33Z",
+    "timestamp": "2026-09-30T04:32:48Z",
     "component": {
       "type": "application",
       "name": "Scanned Target Project"

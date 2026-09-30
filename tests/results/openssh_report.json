@@ -3,7 +3,7 @@
   "url": "https://github.com/openssh/openssh-portable",
   "commit": "86bdd3853f4d32c85e295e6216a2fe0953ad93f0",
   "tag": "V_9_7_P1",
-  "scanned_at": "2026-09-30T02:17:36.887648+00:00",
+  "scanned_at": "2026-09-30T04:32:49.644640+00:00",
   "inventory": {
     "total_files": 849,
     "source_files": 411,
@@ -11,11 +11,11 @@
     "size_mb": 6.66
   },
   "performance": {
-    "scan_duration_s": 1.938,
-    "throughput_files_per_sec": 438.1,
+    "scan_duration_s": 0.956,
+    "throughput_files_per_sec": 888.1,
     "peak_memory_mb": 0.0,
-    "cbom_generation_duration_s": 0.0056,
-    "cbom_validation_duration_s": 0.9831
+    "cbom_generation_duration_s": 0.0039,
+    "cbom_validation_duration_s": 0.3327
   },
   "findings": {
     "total_discovered": 205,

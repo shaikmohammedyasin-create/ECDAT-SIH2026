@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-09-30T02:17:48.222675+00:00",
+  "timestamp": "2026-09-30T04:32:50.298333+00:00",
   "total_endpoints_tested": 15,
   "passed": 15,
   "failed": 0,
@@ -10,7 +10,7 @@
       "endpoint": "/health",
       "expected_status": 200,
       "actual_status": 200,
-      "response_time_ms": 244.63,
+      "response_time_ms": 19.36,
       "status": "PASS"
     },
     {
@@ -18,7 +18,7 @@
       "endpoint": "/api/scans",
       "expected_status": 200,
       "actual_status": 200,
-      "response_time_ms": 276.58,
+      "response_time_ms": 15.19,
       "status": "PASS"
     },
     {
@@ -26,7 +26,7 @@
       "endpoint": "/api/scans/status",
       "expected_status": 200,
       "actual_status": 200,
-      "response_time_ms": 232.86,
+      "response_time_ms": 5.91,
       "status": "PASS"
     },
     {
@@ -34,7 +34,7 @@
       "endpoint": "/api/dashboard",
       "expected_status": 200,
       "actual_status": 200,
-      "response_time_ms": 313.95,
+      "response_time_ms": 29.5,
       "status": "PASS"
     },
     {
@@ -42,7 +42,7 @@
       "endpoint": "/api/inventory",
       "expected_status": 200,
       "actual_status": 200,
-      "response_time_ms": 240.04,
+      "response_time_ms": 7.36,
       "status": "PASS"
     },
     {
@@ -50,7 +50,7 @@
       "endpoint": "/api/findings/0",
       "expected_status": 200,
       "actual_status": 200,
-      "response_time_ms": 109.55,
+      "response_time_ms": 6.45,
       "status": "PASS"
     },
     {
@@ -58,7 +58,7 @@
       "endpoint": "/api/mosca",
       "expected_status": 200,
       "actual_status": 200,
-      "response_time_ms": 67.13,
+      "response_time_ms": 5.13,
       "status": "PASS"
     },
     {
@@ -66,7 +66,7 @@
       "endpoint": "/api/mosca/simulate",
       "expected_status": 200,
       "actual_status": 200,
-      "response_time_ms": 68.31,
+      "response_time_ms": 5.6,
       "status": "PASS"
     },
     {
@@ -74,7 +74,7 @@
       "endpoint": "/api/risk",
       "expected_status": 200,
       "actual_status": 200,
-      "response_time_ms": 145.59,
+      "response_time_ms": 7.62,
       "status": "PASS"
     },
     {
@@ -82,7 +82,7 @@
       "endpoint": "/api/migration",
       "expected_status": 200,
       "actual_status": 200,
-      "response_time_ms": 149.38,
+      "response_time_ms": 9.58,
       "status": "PASS"
     },
     {
@@ -90,7 +90,7 @@
       "endpoint": "/api/cbom",
       "expected_status": 200,
       "actual_status": 200,
-      "response_time_ms": 104.89,
+      "response_time_ms": 8.44,
       "status": "PASS"
     },
     {
@@ -98,7 +98,7 @@
       "endpoint": "/api/cbom/download",
       "expected_status": 200,
       "actual_status": 200,
-      "response_time_ms": 135.26,
+      "response_time_ms": 22.06,
       "status": "PASS"
     },
     {
@@ -106,7 +106,7 @@
       "endpoint": "/api/reports",
       "expected_status": 200,
       "actual_status": 200,
-      "response_time_ms": 201.26,
+      "response_time_ms": 59.46,
       "status": "PASS"
     },
     {
@@ -114,7 +114,7 @@
       "endpoint": "/api/terminal",
       "expected_status": 200,
       "actual_status": 200,
-      "response_time_ms": 123.36,
+      "response_time_ms": 53.93,
       "status": "PASS"
     },
     {
@@ -122,7 +122,7 @@
       "endpoint": "/api/settings",
       "expected_status": 200,
       "actual_status": 200,
-      "response_time_ms": 124.55,
+      "response_time_ms": 96.29,
       "status": "PASS"
     }
   ]

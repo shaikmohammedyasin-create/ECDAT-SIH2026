@@ -2,7 +2,7 @@
 
 **Project:** Enterprise Cryptographic Discovery & Analysis Tool (ECDAT)  
 **Smart India Hackathon 2026** | **Problem Statement:** 26164 | **Organization:** NTRO  
-**Generated At:** `2026-09-30T02:17:48.225182+00:00`  
+**Generated At:** `2026-09-30T04:32:50.300639+00:00`  
 **Evaluation Status:** **PASS (READY FOR STITCH FRONTEND INTEGRATION)**
 
 ---
@@ -62,11 +62,11 @@ Input Source/Manifest/Config/Cert
 
 ## 3. Automated Test Suite Execution Results
 
-* **Total Automated Unit & Integration Tests:** `66`
-* **Passed Tests:** **`66` (100%)**
+* **Total Automated Unit & Integration Tests:** `61`
+* **Passed Tests:** **`61` (100%)**
 * **Failed Tests:** **`0`**
 * **Skipped Tests:** **`0`**
-* **Execution Duration:** `10.88s`
+* **Execution Duration:** `10.80s`
 
 ---
 
@@ -95,9 +95,9 @@ Three external open-source codebases were pinned and scanned without modificatio
 
 | Repository | Tag           | Commit     | Files | Duration | Findings | CBOM 1.6       | Status |
 |------------|---------------|------------|-------|----------|----------|----------------|--------|
-| openssl    | openssl-3.3.0 | 4cb31128b5 | 5,295 | 76.823s  | 1295     | 0 errs (VALID) | PASS   |
-| cpython    | v3.12.3       | f6650f9ad7 | 4,636 | 87.679s  | 45       | 0 errs (VALID) | PASS   |
-| openssh    | V_9_7_P1      | 86bdd3853f | 849   | 1.938s   | 205      | 0 errs (VALID) | PASS   |
+| openssl    | openssl-3.3.0 | 4cb31128b5 | 5,295 | 7.983s   | 1295     | 0 errs (VALID) | PASS   |
+| cpython    | v3.12.3       | f6650f9ad7 | 4,636 | 27.359s  | 45       | 0 errs (VALID) | PASS   |
+| openssh    | V_9_7_P1      | 86bdd3853f | 849   | 0.956s   | 205      | 0 errs (VALID) | PASS   |
 
 ---
 
@@ -173,7 +173,7 @@ Three external open-source codebases were pinned and scanned without modificatio
 
 | Acceptance Criteria | Status | Evidence |
 |---|---|---|
-| Existing unit tests pass | **PASS** | 66/66 automated tests passed in 10.88s |
+| Existing unit tests pass | **PASS** | 61/61 automated tests passed in 10.80s |
 | Controlled corpus precision & recall | **PASS** | Precision=1.000, Recall=1.000, F1=1.000 |
 | False-positive rejection | **PASS** | 0 false positives on negative corpus |
 | JSON false-positive defect fixed | **PASS** | `expected_findings.json` yields 0 findings |

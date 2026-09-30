@@ -3,7 +3,7 @@
   "url": "https://github.com/openssl/openssl",
   "commit": "4cb31128b5790819dfeea2739fbde265f71a10a2",
   "tag": "openssl-3.3.0",
-  "scanned_at": "2026-09-30T02:16:04.192913+00:00",
+  "scanned_at": "2026-09-30T04:32:20.068199+00:00",
   "inventory": {
     "total_files": 5295,
     "source_files": 2066,
@@ -11,11 +11,11 @@
     "size_mb": 63.26
   },
   "performance": {
-    "scan_duration_s": 76.823,
-    "throughput_files_per_sec": 68.9,
+    "scan_duration_s": 7.983,
+    "throughput_files_per_sec": 663.3,
     "peak_memory_mb": 0.0,
-    "cbom_generation_duration_s": 0.1004,
-    "cbom_validation_duration_s": 17.6814
+    "cbom_generation_duration_s": 0.0182,
+    "cbom_validation_duration_s": 3.9573
   },
   "findings": {
     "total_discovered": 1295,

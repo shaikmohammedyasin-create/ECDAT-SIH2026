@@ -3,7 +3,7 @@
   "url": "https://github.com/python/cpython",
   "commit": "f6650f9ad73359051f3e558c2431a109bc016664",
   "tag": "v3.12.3",
-  "scanned_at": "2026-09-30T02:17:33.465796+00:00",
+  "scanned_at": "2026-09-30T04:32:48.168735+00:00",
   "inventory": {
     "total_files": 4636,
     "source_files": 2868,
@@ -11,11 +11,11 @@
     "size_mb": 99.22
   },
   "performance": {
-    "scan_duration_s": 87.679,
-    "throughput_files_per_sec": 52.9,
+    "scan_duration_s": 27.359,
+    "throughput_files_per_sec": 169.5,
     "peak_memory_mb": 0.0,
-    "cbom_generation_duration_s": 0.0008,
-    "cbom_validation_duration_s": 0.0965
+    "cbom_generation_duration_s": 0.0005,
+    "cbom_validation_duration_s": 0.0447
   },
   "findings": {
     "total_discovered": 45,

@@ -3,7 +3,7 @@
 **Repository:** [https://github.com/openssh/openssh-portable](https://github.com/openssh/openssh-portable)  
 **Pinned Tag/Version:** `V_9_7_P1`  
 **Commit SHA:** `86bdd3853f4d32c85e295e6216a2fe0953ad93f0`  
-**Scanned At:** `2026-09-30T02:17:36.887648+00:00`  
+**Scanned At:** `2026-09-30T04:32:49.644640+00:00`  
 **Validation Status:** **`PASS`**
 
 ---
@@ -15,11 +15,11 @@
 | **Total Files Traversed** | `849` files |
 | **Source Files Scanned** | `411` files |
 | **Codebase Footprint** | `6.66 MB` |
-| **Scan Execution Duration** | **`1.938s`** |
-| **Scanner Throughput** | `438.1 files/sec` |
+| **Scan Execution Duration** | **`0.956s`** |
+| **Scanner Throughput** | `888.1 files/sec` |
 | **Peak Memory Allocation** | `0.0 MB` |
-| **CBOM Generation Time** | `0.0056s` |
-| **CycloneDX 1.6 Validation Time** | `0.9831s` |
+| **CBOM Generation Time** | `0.0039s` |
+| **CycloneDX 1.6 Validation Time** | `0.3327s` |
 | **Schema Validation Errors** | **`0`** (Valid: `True`) |
 
 ---

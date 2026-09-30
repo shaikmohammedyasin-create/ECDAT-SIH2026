@@ -1,6 +1,6 @@
 # ECDAT Security Audit & Backend Hardening Report
 
-**Audit Date:** `2026-09-30T02:19:31.278107+00:00`  
+**Audit Date:** `2026-09-30T04:32:49.649736+00:00`  
 **Standard:** NTRO Cryptographic Discovery Security & Air-Gap Compliance Baseline
 
 ---

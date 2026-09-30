@@ -1,6 +1,6 @@
 # ECDAT Controlled Ground-Truth Corpus Validation Report
 
-**Generated:** 2026-09-30T02:14:26.051174+00:00  
+**Generated:** 2026-09-30T04:32:07.115272+00:00  
 **Corpus Version:** 2.0-comprehensive (Deterministic Ground Truth)
 
 ---
@@ -50,8 +50,8 @@ The negative corpus (`tests/controlled_corpus/negative/`) evaluated parser behav
 
 ## 4. Benchmark Timings (3 Independent Repetitions)
 
-* **Mean Scan Time:** `0.0306s`
-* **Min Scan Time:** `0.0127s`
-* **Max Scan Time:** `0.0615s`
-* **CBOM Generation Duration:** `0.0007s`
-* **CycloneDX 1.6 Schema Validation Duration:** `0.4028s`
+* **Mean Scan Time:** `0.0075s`
+* **Min Scan Time:** `0.0054s`
+* **Max Scan Time:** `0.0086s`
+* **CBOM Generation Duration:** `0.0006s`
+* **CycloneDX 1.6 Schema Validation Duration:** `0.0713s`

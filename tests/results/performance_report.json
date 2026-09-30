@@ -1,38 +1,38 @@
 {
-  "timestamp": "2026-09-30T02:17:48.224575+00:00",
+  "timestamp": "2026-09-30T04:32:50.300166+00:00",
   "targets": [
     {
       "target": "Controlled Corpus",
       "files": 10,
-      "scan_time_s": 0.0306,
-      "cbom_gen_time_s": 0.0007,
-      "cbom_val_time_s": 0.4028
+      "scan_time_s": 0.0075,
+      "cbom_gen_time_s": 0.0006,
+      "cbom_val_time_s": 0.0713
     },
     {
       "target": "openssl",
       "files": 5295,
-      "scan_time_s": 76.823,
-      "throughput_files_per_sec": 68.9,
-      "cbom_gen_time_s": 0.1004,
-      "cbom_val_time_s": 17.6814,
+      "scan_time_s": 7.983,
+      "throughput_files_per_sec": 663.3,
+      "cbom_gen_time_s": 0.0182,
+      "cbom_val_time_s": 3.9573,
       "peak_memory_mb": 0.0
     },
     {
       "target": "cpython",
       "files": 4636,
-      "scan_time_s": 87.679,
-      "throughput_files_per_sec": 52.9,
-      "cbom_gen_time_s": 0.0008,
-      "cbom_val_time_s": 0.0965,
+      "scan_time_s": 27.359,
+      "throughput_files_per_sec": 169.5,
+      "cbom_gen_time_s": 0.0005,
+      "cbom_val_time_s": 0.0447,
       "peak_memory_mb": 0.0
     },
     {
       "target": "openssh",
       "files": 849,
-      "scan_time_s": 1.938,
-      "throughput_files_per_sec": 438.1,
-      "cbom_gen_time_s": 0.0056,
-      "cbom_val_time_s": 0.9831,
+      "scan_time_s": 0.956,
+      "throughput_files_per_sec": 888.1,
+      "cbom_gen_time_s": 0.0039,
+      "cbom_val_time_s": 0.3327,
       "peak_memory_mb": 0.0
     }
   ]

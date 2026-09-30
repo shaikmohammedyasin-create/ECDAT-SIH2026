@@ -1,11 +1,16 @@
 """
 Scans Route Handler.
-POST /api/scans - Triggers a new scan on the given path or test corpus.
-GET  /api/scans/status - Returns current scan execution state and stages.
+POST /api/scans         - Triggers a new scan on the given path or test corpus.
+POST /api/scans/upload  - Accepts a ZIP, single source file, or any file for scanning.
+POST /api/scans/paste   - Accepts raw pasted code text for scanning.
+GET  /api/scans/status  - Returns current scan execution state and stages.
 """
 import os
+import shutil
+import tempfile
+import zipfile
 from typing import Optional
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, UploadFile, File, Form
 from backend.api.state import state, DEFAULT_CORPUS
 from backend.api.schemas import (
     ScanRequest,
@@ -85,6 +90,105 @@ def trigger_scan(req: ScanRequest):
         target_path=state.scan_path,
         total_assets=len(state.assets),
         metrics=state.metrics
+    )
+
+
+@router.post("/upload", response_model=ScanStatusResponse)
+async def upload_scan(
+    file: UploadFile = File(...),
+    scenario_year: int = Form(2035),
+    x_lifetime: float = Form(10.0),
+    y_migration: float = Form(3.0),
+):
+    """Accept a file (ZIP archive or single source file) and run the full ECDAT pipeline."""
+    filename = file.filename or "uploaded_file"
+    # Sanitize filename
+    safe_name = os.path.basename(filename.replace("\\", "/"))
+    if not safe_name:
+        raise HTTPException(status_code=400, detail="Invalid filename.")
+
+    tmp_dir = tempfile.mkdtemp(prefix="ecdat_upload_")
+    try:
+        dest_path = os.path.join(tmp_dir, safe_name)
+        contents = await file.read()
+        if len(contents) > 500 * 1024 * 1024:  # 500 MB cap
+            raise HTTPException(status_code=413, detail="Uploaded file exceeds 500 MB limit.")
+        with open(dest_path, "wb") as f:
+            f.write(contents)
+
+        # If ZIP, extract into a subdirectory and scan that
+        if safe_name.lower().endswith(".zip"):
+            extract_dir = os.path.join(tmp_dir, "extracted")
+            os.makedirs(extract_dir, exist_ok=True)
+            try:
+                with zipfile.ZipFile(dest_path, "r") as zf:
+                    # Zip-slip protection
+                    for member in zf.infolist():
+                        member_path = os.path.realpath(os.path.join(extract_dir, member.filename))
+                        if not member_path.startswith(os.path.realpath(extract_dir)):
+                            raise HTTPException(status_code=400, detail="ZIP contains path traversal entry.")
+                    zf.extractall(extract_dir)
+            except zipfile.BadZipFile:
+                raise HTTPException(status_code=400, detail="Uploaded file is not a valid ZIP archive.")
+            scan_target = extract_dir
+        else:
+            # Single file — scan the temp dir containing the file
+            scan_target = tmp_dir
+
+        state.run_scan(
+            directory=scan_target,
+            scenario_year=scenario_year,
+            x_lifetime=x_lifetime,
+            y_migration=y_migration,
+        )
+    finally:
+        shutil.rmtree(tmp_dir, ignore_errors=True)
+
+    return ScanStatusResponse(
+        scan_id=state.scan_id,
+        scan_in_progress=False,
+        current_stage="COMPLETE",
+        target_path=f"<uploaded: {safe_name}>",
+        total_assets=len(state.assets),
+        metrics=state.metrics,
+    )
+
+
+@router.post("/paste", response_model=ScanStatusResponse)
+async def paste_scan(
+    code: str = Form(...),
+    filename: str = Form("snippet.py"),
+    scenario_year: int = Form(2035),
+    x_lifetime: float = Form(10.0),
+    y_migration: float = Form(3.0),
+):
+    """Accept pasted source code text and run the full ECDAT pipeline."""
+    safe_name = os.path.basename(filename.replace("\\", "/")) or "snippet.py"
+    if len(code) > 10 * 1024 * 1024:  # 10 MB text cap
+        raise HTTPException(status_code=413, detail="Pasted code exceeds 10 MB limit.")
+
+    tmp_dir = tempfile.mkdtemp(prefix="ecdat_paste_")
+    try:
+        dest_path = os.path.join(tmp_dir, safe_name)
+        with open(dest_path, "w", encoding="utf-8", errors="replace") as f:
+            f.write(code)
+
+        state.run_scan(
+            directory=tmp_dir,
+            scenario_year=scenario_year,
+            x_lifetime=x_lifetime,
+            y_migration=y_migration,
+        )
+    finally:
+        shutil.rmtree(tmp_dir, ignore_errors=True)
+
+    return ScanStatusResponse(
+        scan_id=state.scan_id,
+        scan_in_progress=False,
+        current_stage="COMPLETE",
+        target_path=f"<pasted: {safe_name}>",
+        total_assets=len(state.assets),
+        metrics=state.metrics,
     )
 
 

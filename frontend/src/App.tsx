@@ -21,6 +21,7 @@ export const App: React.FC = () => {
         <Route path="/" element={<Layout />}>
           <Route index element={<Navigate to="/dashboard" replace />} />
           <Route path="dashboard" element={<Dashboard />} />
+          <Route path="scan" element={<NewScan />} />
           <Route path="scan/new" element={<NewScan />} />
           <Route path="inventory" element={<Inventory />} />
           <Route path="findings/:id" element={<FindingInspector />} />

@@ -11,10 +11,29 @@ import type {
   SettingsData,
 } from "../types";
 
-export const API_BASE =
-  typeof window !== "undefined" && window.location.hostname === "127.0.0.1"
-    ? "http://127.0.0.1:8000/api"
-    : "http://localhost:8000/api";
+// Dynamic API Base URL supporting:
+// 1. Explicit cloud environment variable (VITE_API_BASE_URL)
+// 2. Same-origin deployment (e.g. Docker or unified cloud host)
+// 3. Local Vite dev server fallback (localhost:8000)
+export const API_BASE: string = (() => {
+  const envUrl = (import.meta as any).env?.VITE_API_BASE_URL;
+  if (envUrl && typeof envUrl === "string") {
+    return envUrl.replace(/\/+$/, "");
+  }
+  if (typeof window !== "undefined") {
+    // If running in local Vite dev server on port 5173
+    if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+      if (window.location.port === "5173" || window.location.port === "3000") {
+        return window.location.hostname === "127.0.0.1"
+          ? "http://127.0.0.1:8000/api"
+          : "http://localhost:8000/api";
+      }
+    }
+    // If served from FastAPI, Nginx, or same domain
+    return `${window.location.origin}/api`;
+  }
+  return "http://localhost:8000/api";
+})();
 
 export async function fetchDashboard(): Promise<DashboardData> {
   const res = await fetch(`${API_BASE}/dashboard`);
@@ -35,6 +54,42 @@ export async function triggerScan(data: {
     body: JSON.stringify(data),
   });
   if (!res.ok) throw new Error(`Scan API error: ${res.statusText}`);
+  return res.json();
+}
+
+export async function triggerUploadScan(
+  file: File,
+  opts?: { scenario_year?: number; x_lifetime?: number; y_migration?: number }
+): Promise<any> {
+  const fd = new FormData();
+  fd.append("file", file);
+  fd.append("scenario_year", String(opts?.scenario_year ?? 2035));
+  fd.append("x_lifetime", String(opts?.x_lifetime ?? 10.0));
+  fd.append("y_migration", String(opts?.y_migration ?? 3.0));
+  const res = await fetch(`${API_BASE}/scans/upload`, { method: "POST", body: fd });
+  if (!res.ok) {
+    const detail = await res.json().catch(() => ({ detail: res.statusText }));
+    throw new Error(detail?.detail ?? `Upload scan error: ${res.statusText}`);
+  }
+  return res.json();
+}
+
+export async function triggerPasteScan(
+  code: string,
+  filename: string,
+  opts?: { scenario_year?: number; x_lifetime?: number; y_migration?: number }
+): Promise<any> {
+  const fd = new FormData();
+  fd.append("code", code);
+  fd.append("filename", filename);
+  fd.append("scenario_year", String(opts?.scenario_year ?? 2035));
+  fd.append("x_lifetime", String(opts?.x_lifetime ?? 10.0));
+  fd.append("y_migration", String(opts?.y_migration ?? 3.0));
+  const res = await fetch(`${API_BASE}/scans/paste`, { method: "POST", body: fd });
+  if (!res.ok) {
+    const detail = await res.json().catch(() => ({ detail: res.statusText }));
+    throw new Error(detail?.detail ?? `Paste scan error: ${res.statusText}`);
+  }
   return res.json();
 }
 
