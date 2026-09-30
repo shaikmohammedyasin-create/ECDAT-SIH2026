@@ -6,7 +6,7 @@ import type { FindingDetail } from "../../types";
 export const FindingInspector: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const findingId = id !== undefined && !isNaN(parseInt(id, 10)) ? parseInt(id, 10) : 0;
+  const findingId = id !== undefined && /^\d+$/.test(id) ? parseInt(id, 10) : 0;
 
   const [finding, setFinding] = useState<FindingDetail | null>(null);
   const [loading, setLoading] = useState(true);
