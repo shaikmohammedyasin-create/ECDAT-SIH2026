@@ -19,7 +19,7 @@ export const App: React.FC = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route index element={<Navigate to="/dashboard" replace />} />
+          <Route index element={<Navigate to="/scan/new" replace />} />
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="scan" element={<NewScan />} />
           <Route path="scan/new" element={<NewScan />} />
@@ -33,7 +33,7 @@ export const App: React.FC = () => {
           <Route path="terminal" element={<TerminalPage />} />
           <Route path="settings" element={<SettingsPage />} />
           <Route path="reports" element={<ReportsPage />} />
-          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+          <Route path="*" element={<Navigate to="/scan/new" replace />} />
         </Route>
       </Routes>
     </BrowserRouter>

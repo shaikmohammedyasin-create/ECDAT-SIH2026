@@ -19,7 +19,7 @@ export const TopBar: React.FC<TopBarProps> = ({
     <header className="flex justify-between items-center h-10 px-4 w-full border-b border-outline-variant bg-surface-container-lowest shrink-0 select-none z-50">
       {/* Brand / ID & Working Branch */}
       <div className="flex items-center gap-3">
-        <Link to="/dashboard" className="flex items-center gap-1.5 text-primary font-mono text-xs font-bold tracking-tight hover:opacity-90">
+        <Link to="/scan/new" className="flex items-center gap-1.5 text-primary font-mono text-xs font-bold tracking-tight hover:opacity-90">
           <span className="material-symbols-outlined text-primary-container text-sm">shield</span>
           <span>ECDAT // PS-ID: 26164 (NTRO)</span>
         </Link>
