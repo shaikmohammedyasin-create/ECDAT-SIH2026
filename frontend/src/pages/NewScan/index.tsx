@@ -25,24 +25,38 @@ export const NewScanPage: React.FC = () => {
   const handleStartScan = async () => {
     setScanning(true);
     setError(null);
-
-    // Deterministic visual progress through actual stages
-    for (let i = 0; i < stages.length; i++) {
-      setCurrentStage(stages[i].name);
-      setStageProgress(Math.round(((i + 1) / stages.length) * 100));
-      await new Promise((r) => setTimeout(r, 120));
-    }
+    setCurrentStage(stages[0].name);
+    setStageProgress(12);
 
     try {
-      await triggerScan({
+      // Start real scan API call
+      const scanPromise = triggerScan({
         path: path,
         use_corpus: useCorpus,
       });
+
+      // Advance visual stages during scan execution
+      let stageIdx = 0;
+      const progressTimer = setInterval(() => {
+        if (stageIdx < stages.length - 2) {
+          stageIdx += 1;
+          setCurrentStage(stages[stageIdx].name);
+          setStageProgress(Math.round(((stageIdx + 1) / stages.length) * 90));
+        }
+      }, 1500);
+
+      // Await real backend discovery & validation
+      await scanPromise;
+
+      clearInterval(progressTimer);
+      setCurrentStage(stages[stages.length - 1].name);
+      setStageProgress(100);
+
       setTimeout(() => {
         navigate("/dashboard");
-      }, 300);
+      }, 500);
     } catch (err: any) {
-      setError(err.message);
+      setError(err.message || "Cryptographic scan failed.");
       setScanning(false);
     }
   };
@@ -86,9 +100,69 @@ export const NewScanPage: React.FC = () => {
               value={path}
               onChange={(e) => setPath(e.target.value)}
               disabled={useCorpus}
-              placeholder="e.g. C:\Projects\MyRepo or test_corpus"
+              placeholder="e.g. https://github.com/python/cpython or C:\Projects\MyRepo"
               className="w-full bg-surface-container-lowest border border-outline-variant rounded px-3 py-2 text-xs font-mono text-on-surface focus:outline-none focus:border-primary disabled:opacity-60"
             />
+            {/* Quick Presets */}
+            <div className="flex items-center gap-1.5 flex-wrap pt-1">
+              <span className="text-[10px] font-mono text-outline">Quick Presets:</span>
+              <button
+                type="button"
+                onClick={() => {
+                  setUseCorpus(false);
+                  setPath("https://github.com/python/cpython");
+                }}
+                className={`px-2 py-0.5 rounded text-[10px] font-mono border transition-colors ${
+                  !useCorpus && path === "https://github.com/python/cpython"
+                    ? "bg-primary/20 text-primary border-primary font-bold"
+                    : "bg-surface-container border-outline-variant text-on-surface-variant hover:text-on-surface hover:border-primary/50"
+                }`}
+              >
+                cpython (GitHub)
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setUseCorpus(false);
+                  setPath("https://github.com/openssl/openssl");
+                }}
+                className={`px-2 py-0.5 rounded text-[10px] font-mono border transition-colors ${
+                  !useCorpus && path === "https://github.com/openssl/openssl"
+                    ? "bg-primary/20 text-primary border-primary font-bold"
+                    : "bg-surface-container border-outline-variant text-on-surface-variant hover:text-on-surface hover:border-primary/50"
+                }`}
+              >
+                openssl (GitHub)
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setUseCorpus(false);
+                  setPath("https://github.com/openssh/openssh-portable");
+                }}
+                className={`px-2 py-0.5 rounded text-[10px] font-mono border transition-colors ${
+                  !useCorpus && path === "https://github.com/openssh/openssh-portable"
+                    ? "bg-primary/20 text-primary border-primary font-bold"
+                    : "bg-surface-container border-outline-variant text-on-surface-variant hover:text-on-surface hover:border-primary/50"
+                }`}
+              >
+                openssh (GitHub)
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setUseCorpus(true);
+                  setPath("test_corpus");
+                }}
+                className={`px-2 py-0.5 rounded text-[10px] font-mono border transition-colors ${
+                  useCorpus
+                    ? "bg-tertiary/20 text-tertiary border-tertiary font-bold"
+                    : "bg-surface-container border-outline-variant text-on-surface-variant hover:text-on-surface"
+                }`}
+              >
+                controlled test_corpus
+              </button>
+            </div>
           </div>
 
           <div className="flex flex-col justify-end">
