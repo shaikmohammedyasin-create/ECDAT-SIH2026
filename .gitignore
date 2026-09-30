@@ -38,6 +38,10 @@ htmlcov/
 *.swo
 *~
 .DS_Store
+
+# External test targets
+tests/external_targets/*
+!tests/external_targets/manifest.json
 Thumbs.db
 
 # Scratch temporary directories

@@ -1,0 +1,91 @@
+{
+  "repository": "openssh",
+  "url": "https://github.com/openssh/openssh-portable",
+  "commit": "86bdd3853f4d32c85e295e6216a2fe0953ad93f0",
+  "tag": "V_9_7_P1",
+  "scanned_at": "2026-09-30T02:17:36.887648+00:00",
+  "inventory": {
+    "total_files": 849,
+    "source_files": 411,
+    "config_files": 3,
+    "size_mb": 6.66
+  },
+  "performance": {
+    "scan_duration_s": 1.938,
+    "throughput_files_per_sec": 438.1,
+    "peak_memory_mb": 0.0,
+    "cbom_generation_duration_s": 0.0056,
+    "cbom_validation_duration_s": 0.9831
+  },
+  "findings": {
+    "total_discovered": 205,
+    "confidence_distribution": {
+      "HIGH": 204,
+      "MEDIUM": 1,
+      "LOW": 0
+    },
+    "top_algorithms": [
+      [
+        "RSA",
+        90
+      ],
+      [
+        "ECDSA",
+        38
+      ],
+      [
+        "Ed25519",
+        34
+      ],
+      [
+        "AES",
+        16
+      ],
+      [
+        "DSA",
+        12
+      ],
+      [
+        "X25519",
+        6
+      ],
+      [
+        "ChaCha20",
+        2
+      ],
+      [
+        "SHA-256",
+        2
+      ],
+      [
+        "SHA-512",
+        2
+      ],
+      [
+        "MD5",
+        1
+      ]
+    ],
+    "quantum_distribution": {
+      "Vulnerable": 180,
+      "Weakened": 11,
+      "Safe": 12,
+      "Legacy-broken": 2
+    },
+    "mosca_violations": 191,
+    "risk_distribution": {
+      "Critical": 193,
+      "High": 0,
+      "Medium": 12,
+      "Low": 0,
+      "Info": 0
+    }
+  },
+  "cbom": {
+    "cyclonedx_version": "1.6",
+    "component_count": 205,
+    "schema_valid": true,
+    "validation_errors": 0
+  },
+  "status": "PASS"
+}

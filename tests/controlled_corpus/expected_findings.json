@@ -1,0 +1,63 @@
+{
+  "corpus_version": "2.0-comprehensive",
+  "description": "Controlled Ground-Truth for ECDAT Backend Validation",
+  "expected_positive_counts": {
+    "symmetric.py": [
+      {"algorithm": "AES", "mode": "CBC", "usage": "encryption", "quantum_status": "GROVER_WEAKENED"},
+      {"algorithm": "AES", "mode": "GCM", "usage": "encryption", "quantum_status": "GROVER_WEAKENED"},
+      {"algorithm": "DES", "mode": "ECB", "usage": "encryption", "quantum_status": "CLASSICALLY_BROKEN"},
+      {"algorithm": "DES3", "mode": "CBC", "usage": "encryption", "quantum_status": "CLASSICALLY_BROKEN"},
+      {"algorithm": "RC4", "usage": "encryption", "quantum_status": "CLASSICALLY_BROKEN"},
+      {"algorithm": "ChaCha20", "usage": "encryption", "quantum_status": "QUANTUM_SAFE"},
+      {"algorithm": "ChaCha20", "usage": "encryption", "quantum_status": "QUANTUM_SAFE"}
+    ],
+    "hashes.py": [
+      {"algorithm": "MD5", "usage": "hash", "quantum_status": "CLASSICALLY_BROKEN"},
+      {"algorithm": "SHA-1", "usage": "hash", "quantum_status": "CLASSICALLY_BROKEN"},
+      {"algorithm": "SHA-256", "usage": "hash", "quantum_status": "QUANTUM_SAFE"},
+      {"algorithm": "SHA-384", "usage": "hash", "quantum_status": "QUANTUM_SAFE"},
+      {"algorithm": "SHA-512", "usage": "hash", "quantum_status": "QUANTUM_SAFE"},
+      {"algorithm": "SHA-3", "usage": "hash", "quantum_status": "QUANTUM_SAFE"}
+    ],
+    "rsa.py": [
+      {"algorithm": "RSA", "key_size": 1024, "usage": "encryption", "quantum_status": "SHOR_BROKEN"},
+      {"algorithm": "RSA", "key_size": 2048, "usage": "encryption", "quantum_status": "SHOR_BROKEN"},
+      {"algorithm": "RSA", "key_size": 3072, "usage": "encryption", "quantum_status": "SHOR_BROKEN"},
+      {"algorithm": "RSA", "key_size": 4096, "usage": "encryption", "quantum_status": "SHOR_BROKEN"}
+    ],
+    "ecc.py": [
+      {"algorithm": "ECDSA", "curve": "SECP256R1", "key_size": 256, "usage": "signature", "quantum_status": "SHOR_BROKEN"},
+      {"algorithm": "ECDSA", "curve": "SECP256K1", "key_size": 256, "usage": "signature", "quantum_status": "SHOR_BROKEN"},
+      {"algorithm": "X25519", "usage": "key_exchange", "quantum_status": "SHOR_BROKEN"},
+      {"algorithm": "Ed25519", "usage": "signature", "quantum_status": "SHOR_BROKEN"}
+    ],
+    "CryptoSamples.java": [
+      {"algorithm": "RSA", "usage": "encryption", "quantum_status": "SHOR_BROKEN"},
+      {"algorithm": "DSA", "usage": "signature", "quantum_status": "SHOR_BROKEN"},
+      {"algorithm": "ECDSA", "usage": "signature", "quantum_status": "SHOR_BROKEN"},
+      {"algorithm": "AES", "usage": "encryption", "quantum_status": "GROVER_WEAKENED"},
+      {"algorithm": "DES", "usage": "encryption", "quantum_status": "CLASSICALLY_BROKEN"},
+      {"algorithm": "DES3", "usage": "encryption", "quantum_status": "CLASSICALLY_BROKEN"},
+      {"algorithm": "RC4", "usage": "encryption", "quantum_status": "CLASSICALLY_BROKEN"},
+      {"algorithm": "SHA-256", "usage": "hash", "quantum_status": "QUANTUM_SAFE"},
+      {"algorithm": "SHA-1", "usage": "hash", "quantum_status": "CLASSICALLY_BROKEN"},
+      {"algorithm": "MD5", "usage": "hash", "quantum_status": "CLASSICALLY_BROKEN"},
+      {"algorithm": "ECDH", "usage": "key_exchange", "quantum_status": "SHOR_BROKEN"}
+    ],
+    "nginx.conf": [
+      {"algorithm": "TLSV1.0", "usage": "key_exchange", "quantum_status": "CLASSICALLY_BROKEN"},
+      {"algorithm": "TLSV1.1", "usage": "key_exchange", "quantum_status": "CLASSICALLY_BROKEN"},
+      {"algorithm": "DES", "usage": "encryption", "quantum_status": "CLASSICALLY_BROKEN"},
+      {"algorithm": "RSA", "usage": "key_exchange", "quantum_status": "SHOR_BROKEN"},
+      {"algorithm": "AES", "usage": "encryption", "quantum_status": "GROVER_WEAKENED"},
+      {"algorithm": "DH", "usage": "key_exchange", "quantum_status": "SHOR_BROKEN"}
+    ]
+  },
+  "expected_negative_counts": {
+    "false_positives.py": 0,
+    "false_positives.java": 0,
+    "README.md": 0,
+    "metadata.json": 0
+  },
+  "unsupported_pqc_note": "ML-KEM and ML-DSA are verified as target recommendations and in CBOM export; direct source AST detection requires liboqs or post-quantum native C-bindings."
+}

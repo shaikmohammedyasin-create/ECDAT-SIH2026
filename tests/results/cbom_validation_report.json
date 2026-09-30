@@ -1,0 +1,33 @@
+{
+  "timestamp": "2026-09-30T02:17:48.223863+00:00",
+  "schema": "CycloneDX 1.6 JSON Schema (official schemas/bom-1.6.schema.json)",
+  "evaluations": [
+    {
+      "target": "Controlled Ground-Truth Corpus",
+      "components": 40,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "target": "openssl",
+      "components": 1295,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "target": "cpython",
+      "components": 45,
+      "valid": true,
+      "errors": []
+    },
+    {
+      "target": "openssh",
+      "components": 205,
+      "valid": true,
+      "errors": []
+    }
+  ],
+  "total_targets_evaluated": 4,
+  "all_valid": true,
+  "total_schema_errors": 0
+}

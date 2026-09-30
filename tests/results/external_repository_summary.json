@@ -1,0 +1,262 @@
+{
+  "timestamp": "2026-09-30T02:17:36.891759+00:00",
+  "total_repositories": 3,
+  "repositories": [
+    {
+      "repository": "openssl",
+      "url": "https://github.com/openssl/openssl",
+      "commit": "4cb31128b5790819dfeea2739fbde265f71a10a2",
+      "tag": "openssl-3.3.0",
+      "scanned_at": "2026-09-30T02:16:04.192913+00:00",
+      "inventory": {
+        "total_files": 5295,
+        "source_files": 2066,
+        "config_files": 93,
+        "size_mb": 63.26
+      },
+      "performance": {
+        "scan_duration_s": 76.823,
+        "throughput_files_per_sec": 68.9,
+        "peak_memory_mb": 0.0,
+        "cbom_generation_duration_s": 0.1004,
+        "cbom_validation_duration_s": 17.6814
+      },
+      "findings": {
+        "total_discovered": 1295,
+        "confidence_distribution": {
+          "HIGH": 766,
+          "MEDIUM": 512,
+          "LOW": 17
+        },
+        "top_algorithms": [
+          [
+            "RSA",
+            387
+          ],
+          [
+            "TLSV1.3",
+            289
+          ],
+          [
+            "AES",
+            212
+          ],
+          [
+            "TLSV1.2",
+            195
+          ],
+          [
+            "ECDSA",
+            56
+          ],
+          [
+            "SHA-1",
+            37
+          ],
+          [
+            "SHA-256",
+            36
+          ],
+          [
+            "TLSV1.0 (legacy)",
+            16
+          ],
+          [
+            "MD5",
+            15
+          ],
+          [
+            "ChaCha20",
+            11
+          ]
+        ],
+        "quantum_distribution": {
+          "Legacy-broken": 56,
+          "Safe": 649,
+          "Vulnerable": 454,
+          "Weakened": 136
+        },
+        "mosca_violations": 590,
+        "risk_distribution": {
+          "Critical": 629,
+          "High": 17,
+          "Medium": 165,
+          "Low": 484,
+          "Info": 0
+        }
+      },
+      "cbom": {
+        "cyclonedx_version": "1.6",
+        "component_count": 1295,
+        "schema_valid": true,
+        "validation_errors": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "repository": "cpython",
+      "url": "https://github.com/python/cpython",
+      "commit": "f6650f9ad73359051f3e558c2431a109bc016664",
+      "tag": "v3.12.3",
+      "scanned_at": "2026-09-30T02:17:33.465796+00:00",
+      "inventory": {
+        "total_files": 4636,
+        "source_files": 2868,
+        "config_files": 1,
+        "size_mb": 99.22
+      },
+      "performance": {
+        "scan_duration_s": 87.679,
+        "throughput_files_per_sec": 52.9,
+        "peak_memory_mb": 0.0,
+        "cbom_generation_duration_s": 0.0008,
+        "cbom_validation_duration_s": 0.0965
+      },
+      "findings": {
+        "total_discovered": 45,
+        "confidence_distribution": {
+          "HIGH": 45,
+          "MEDIUM": 0,
+          "LOW": 0
+        },
+        "top_algorithms": [
+          [
+            "RSA",
+            14
+          ],
+          [
+            "MD5",
+            11
+          ],
+          [
+            "SHA-256",
+            9
+          ],
+          [
+            "SHA-1",
+            9
+          ],
+          [
+            "SHA-3",
+            1
+          ],
+          [
+            "ECDSA",
+            1
+          ]
+        ],
+        "quantum_distribution": {
+          "Legacy-broken": 20,
+          "Safe": 10,
+          "Vulnerable": 15
+        },
+        "mosca_violations": 15,
+        "risk_distribution": {
+          "Critical": 35,
+          "High": 0,
+          "Medium": 10,
+          "Low": 0,
+          "Info": 0
+        }
+      },
+      "cbom": {
+        "cyclonedx_version": "1.6",
+        "component_count": 45,
+        "schema_valid": true,
+        "validation_errors": 0
+      },
+      "status": "PASS"
+    },
+    {
+      "repository": "openssh",
+      "url": "https://github.com/openssh/openssh-portable",
+      "commit": "86bdd3853f4d32c85e295e6216a2fe0953ad93f0",
+      "tag": "V_9_7_P1",
+      "scanned_at": "2026-09-30T02:17:36.887648+00:00",
+      "inventory": {
+        "total_files": 849,
+        "source_files": 411,
+        "config_files": 3,
+        "size_mb": 6.66
+      },
+      "performance": {
+        "scan_duration_s": 1.938,
+        "throughput_files_per_sec": 438.1,
+        "peak_memory_mb": 0.0,
+        "cbom_generation_duration_s": 0.0056,
+        "cbom_validation_duration_s": 0.9831
+      },
+      "findings": {
+        "total_discovered": 205,
+        "confidence_distribution": {
+          "HIGH": 204,
+          "MEDIUM": 1,
+          "LOW": 0
+        },
+        "top_algorithms": [
+          [
+            "RSA",
+            90
+          ],
+          [
+            "ECDSA",
+            38
+          ],
+          [
+            "Ed25519",
+            34
+          ],
+          [
+            "AES",
+            16
+          ],
+          [
+            "DSA",
+            12
+          ],
+          [
+            "X25519",
+            6
+          ],
+          [
+            "ChaCha20",
+            2
+          ],
+          [
+            "SHA-256",
+            2
+          ],
+          [
+            "SHA-512",
+            2
+          ],
+          [
+            "MD5",
+            1
+          ]
+        ],
+        "quantum_distribution": {
+          "Vulnerable": 180,
+          "Weakened": 11,
+          "Safe": 12,
+          "Legacy-broken": 2
+        },
+        "mosca_violations": 191,
+        "risk_distribution": {
+          "Critical": 193,
+          "High": 0,
+          "Medium": 12,
+          "Low": 0,
+          "Info": 0
+        }
+      },
+      "cbom": {
+        "cyclonedx_version": "1.6",
+        "component_count": 205,
+        "schema_valid": true,
+        "validation_errors": 0
+      },
+      "status": "PASS"
+    }
+  ]
+}

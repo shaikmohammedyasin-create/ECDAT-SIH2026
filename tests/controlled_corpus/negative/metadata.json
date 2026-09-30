@@ -1,0 +1,13 @@
+{
+  "project": "ECDAT",
+  "comment": "RSA, AES, and SHA-256 are cited here as data schema tokens.",
+  "algorithms_evaluated": [
+    "RSA-2048",
+    "ECDSA-P256",
+    "AES-GCM",
+    "SHA-256",
+    "MD5"
+  ],
+  "author": "SecOps Evaluator",
+  "status": "DRAFT"
+}

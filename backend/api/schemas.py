@@ -7,7 +7,7 @@ from pydantic import BaseModel, Field
 
 
 class ScanRequest(BaseModel):
-    path: str
+    path: Optional[str] = ""
     use_corpus: Optional[bool] = False
     scenario_year: Optional[int] = 2035
     x_lifetime: Optional[float] = 10.0

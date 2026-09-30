@@ -1,0 +1,29 @@
+{
+  "timestamp": "2026-09-30T02:14:26.051174+00:00",
+  "total_test_runs": 3,
+  "true_positives": 37,
+  "false_positives": 0,
+  "false_negatives": 1,
+  "true_negatives": 15,
+  "precision": 1.0,
+  "recall": 0.9737,
+  "f1_score": 0.9867,
+  "algorithm_class_recall": {
+    "Symmetric": "13/13 (100.0%)",
+    "Hashing": "9/9 (100.0%)",
+    "Asymmetric": "14/14 (100.0%)",
+    "Protocol": "1/2 (50.0%)"
+  },
+  "performance": {
+    "mean_scan_time_s": 0.0306,
+    "min_scan_time_s": 0.0127,
+    "max_scan_time_s": 0.0615,
+    "mean_cbom_gen_time_s": 0.0007,
+    "mean_cbom_val_time_s": 0.4028
+  },
+  "cbom_validation": {
+    "valid": true,
+    "errors": [],
+    "component_count": 40
+  }
+}

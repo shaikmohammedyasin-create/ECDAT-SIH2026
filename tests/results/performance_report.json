@@ -1,0 +1,39 @@
+{
+  "timestamp": "2026-09-30T02:17:48.224575+00:00",
+  "targets": [
+    {
+      "target": "Controlled Corpus",
+      "files": 10,
+      "scan_time_s": 0.0306,
+      "cbom_gen_time_s": 0.0007,
+      "cbom_val_time_s": 0.4028
+    },
+    {
+      "target": "openssl",
+      "files": 5295,
+      "scan_time_s": 76.823,
+      "throughput_files_per_sec": 68.9,
+      "cbom_gen_time_s": 0.1004,
+      "cbom_val_time_s": 17.6814,
+      "peak_memory_mb": 0.0
+    },
+    {
+      "target": "cpython",
+      "files": 4636,
+      "scan_time_s": 87.679,
+      "throughput_files_per_sec": 52.9,
+      "cbom_gen_time_s": 0.0008,
+      "cbom_val_time_s": 0.0965,
+      "peak_memory_mb": 0.0
+    },
+    {
+      "target": "openssh",
+      "files": 849,
+      "scan_time_s": 1.938,
+      "throughput_files_per_sec": 438.1,
+      "cbom_gen_time_s": 0.0056,
+      "cbom_val_time_s": 0.9831,
+      "peak_memory_mb": 0.0
+    }
+  ]
+}

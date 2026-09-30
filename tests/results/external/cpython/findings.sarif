@@ -1,0 +1,1418 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "ECDAT",
+          "version": "1.0.0",
+          "informationUri": "https://sih.gov.in/sih2026PS",
+          "rules": [
+            {
+              "id": "ECDAT-SRC-MD5-001",
+              "name": "Cryptographic finding: MD5",
+              "shortDescription": {
+                "text": "Cryptographic primitive MD5 (CLASSICALLY_BROKEN)"
+              },
+              "fullDescription": {
+                "text": "MD5 is classically broken (collisions) and unsuitable."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "CLASSICALLY_BROKEN",
+                "hndl_applicable": false,
+                "tnfl_applicable": false
+              }
+            },
+            {
+              "id": "ECDAT-SRC-SHA256-001",
+              "name": "Cryptographic finding: SHA-256",
+              "shortDescription": {
+                "text": "Cryptographic primitive SHA-256 (QUANTUM_SAFE)"
+              },
+              "fullDescription": {
+                "text": "No identified quantum/legacy vulnerability for this primitive."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "QUANTUM_SAFE",
+                "hndl_applicable": false,
+                "tnfl_applicable": false
+              }
+            },
+            {
+              "id": "ECDAT-SRC-SHA3-001",
+              "name": "Cryptographic finding: SHA-3",
+              "shortDescription": {
+                "text": "Cryptographic primitive SHA-3 (QUANTUM_SAFE)"
+              },
+              "fullDescription": {
+                "text": "No identified quantum/legacy vulnerability for this primitive."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "QUANTUM_SAFE",
+                "hndl_applicable": false,
+                "tnfl_applicable": false
+              }
+            },
+            {
+              "id": "ECDAT-SRC-SHA1-001",
+              "name": "Cryptographic finding: SHA-1",
+              "shortDescription": {
+                "text": "Cryptographic primitive SHA-1 (CLASSICALLY_BROKEN)"
+              },
+              "fullDescription": {
+                "text": "SHA-1 is classically broken (chosen-prefix collisions)."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "CLASSICALLY_BROKEN",
+                "hndl_applicable": false,
+                "tnfl_applicable": false
+              }
+            },
+            {
+              "id": "ECDAT-CERT-PEM-001",
+              "name": "Cryptographic finding: RSA",
+              "shortDescription": {
+                "text": "Cryptographic primitive RSA (SHOR_BROKEN)"
+              },
+              "fullDescription": {
+                "text": "RSA signatures forgeable once a CRQC exists (TNFL risk)."
+              },
+              "helpUri": "https://cyclonedx.org/capabilities/cbom/",
+              "properties": {
+                "quantum_class": "SHOR_BROKEN",
+                "hndl_applicable": false,
+                "tnfl_applicable": true
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "ECDAT-SRC-MD5-001",
+          "level": "error",
+          "message": {
+            "text": "MD5 (Legacy-broken) - Risk Score: 77.2. Recommendation: SHA-256 / SHA-384 / SHA-3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/antigravity.py"
+                },
+                "region": {
+                  "startLine": 15,
+                  "snippet": {
+                    "text": "h = hashlib.md5(datedow, usedforsecurity=False).hexdigest()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-MD5-001",
+          "level": "error",
+          "message": {
+            "text": "MD5 (Legacy-broken) - Risk Score: 77.2. Recommendation: SHA-256 / SHA-384 / SHA-3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/poplib.py"
+                },
+                "region": {
+                  "startLine": 335,
+                  "snippet": {
+                    "text": "digest = hashlib.md5(digest).hexdigest()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-MD5-001",
+          "level": "error",
+          "message": {
+            "text": "MD5 (Legacy-broken) - Risk Score: 77.2. Recommendation: SHA-256 / SHA-384 / SHA-3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/test_hashlib.py"
+                },
+                "region": {
+                  "startLine": 233,
+                  "snippet": {
+                    "text": "hashlib.md5(usedforsecurity=True)"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-MD5-001",
+          "level": "error",
+          "message": {
+            "text": "MD5 (Legacy-broken) - Risk Score: 77.2. Recommendation: SHA-256 / SHA-384 / SHA-3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/test_hashlib.py"
+                },
+                "region": {
+                  "startLine": 244,
+                  "snippet": {
+                    "text": "hashlib.md5(usedforsecurity=False)"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-SHA256-001",
+          "level": "warning",
+          "message": {
+            "text": "SHA-256 (Safe) - Risk Score: 52.8. Recommendation: Maintain current quantum-safe configuration."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/test_hashlib.py"
+                },
+                "region": {
+                  "startLine": 356,
+                  "snippet": {
+                    "text": "h = hashlib.sha256()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 52.8,
+            "risk_band": "Medium",
+            "quantum_status": "Safe",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-SHA3-001",
+          "level": "warning",
+          "message": {
+            "text": "SHA-3 (Safe) - Risk Score: 52.8. Recommendation: Maintain current quantum-safe configuration."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/test_hashlib.py"
+                },
+                "region": {
+                  "startLine": 365,
+                  "snippet": {
+                    "text": "h = hashlib.sha3_256()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 52.8,
+            "risk_band": "Medium",
+            "quantum_status": "Safe",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-SHA256-001",
+          "level": "warning",
+          "message": {
+            "text": "SHA-256 (Safe) - Risk Score: 52.8. Recommendation: Maintain current quantum-safe configuration."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/test_hashlib.py"
+                },
+                "region": {
+                  "startLine": 914,
+                  "snippet": {
+                    "text": "m = hashlib.sha256()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 52.8,
+            "risk_band": "Medium",
+            "quantum_status": "Safe",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-SHA256-001",
+          "level": "warning",
+          "message": {
+            "text": "SHA-256 (Safe) - Risk Score: 52.8. Recommendation: Maintain current quantum-safe configuration."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/test_hashlib.py"
+                },
+                "region": {
+                  "startLine": 923,
+                  "snippet": {
+                    "text": "m = hashlib.sha256(b'1' + b'#' * gil_minsize + b'1')"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 52.8,
+            "risk_band": "Medium",
+            "quantum_status": "Safe",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-SHA1-001",
+          "level": "error",
+          "message": {
+            "text": "SHA-1 (Legacy-broken) - Risk Score: 77.2. Recommendation: SHA-256 / SHA-384 / SHA-3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/test_hashlib.py"
+                },
+                "region": {
+                  "startLine": 938,
+                  "snippet": {
+                    "text": "hasher = hashlib.sha1()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-SHA1-001",
+          "level": "error",
+          "message": {
+            "text": "SHA-1 (Legacy-broken) - Risk Score: 77.2. Recommendation: SHA-256 / SHA-384 / SHA-3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/test_hashlib.py"
+                },
+                "region": {
+                  "startLine": 942,
+                  "snippet": {
+                    "text": "expected_hash = hashlib.sha1(data*num_threads).hexdigest()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-SHA256-001",
+          "level": "warning",
+          "message": {
+            "text": "SHA-256 (Safe) - Risk Score: 52.8. Recommendation: Maintain current quantum-safe configuration."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/test_hashlib.py"
+                },
+                "region": {
+                  "startLine": 1163,
+                  "snippet": {
+                    "text": "d1 = hashlib.sha256()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 52.8,
+            "risk_band": "Medium",
+            "quantum_status": "Safe",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-SHA256-001",
+          "level": "warning",
+          "message": {
+            "text": "SHA-256 (Safe) - Risk Score: 52.8. Recommendation: Maintain current quantum-safe configuration."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/test_hmac.py"
+                },
+                "region": {
+                  "startLine": 347,
+                  "snippet": {
+                    "text": "self._x = hashlib.sha256(*args)"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 52.8,
+            "risk_band": "Medium",
+            "quantum_status": "Safe",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-MD5-001",
+          "level": "error",
+          "message": {
+            "text": "MD5 (Legacy-broken) - Risk Score: 77.2. Recommendation: SHA-256 / SHA-384 / SHA-3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/test_smtplib.py"
+                },
+                "region": {
+                  "startLine": 1195,
+                  "snippet": {
+                    "text": "hashlib.md5()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-SHA1-001",
+          "level": "error",
+          "message": {
+            "text": "SHA-1 (Legacy-broken) - Risk Score: 77.2. Recommendation: SHA-256 / SHA-384 / SHA-3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/test_unicodedata.py"
+                },
+                "region": {
+                  "startLine": 25,
+                  "snippet": {
+                    "text": "h = hashlib.sha1()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-SHA1-001",
+          "level": "error",
+          "message": {
+            "text": "SHA-1 (Legacy-broken) - Risk Score: 77.2. Recommendation: SHA-256 / SHA-384 / SHA-3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/test_unicodedata.py"
+                },
+                "region": {
+                  "startLine": 79,
+                  "snippet": {
+                    "text": "h = hashlib.sha1()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-MD5-001",
+          "level": "error",
+          "message": {
+            "text": "MD5 (Legacy-broken) - Risk Score: 77.2. Recommendation: SHA-256 / SHA-384 / SHA-3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/test_urllib2_localnet.py"
+                },
+                "region": {
+                  "startLine": 107,
+                  "snippet": {
+                    "text": "nonce = hashlib.md5(str(self._request_num).encode(\"ascii\")).hexdigest()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-MD5-001",
+          "level": "error",
+          "message": {
+            "text": "MD5 (Legacy-broken) - Risk Score: 77.2. Recommendation: SHA-256 / SHA-384 / SHA-3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/test_urllib2_localnet.py"
+                },
+                "region": {
+                  "startLine": 135,
+                  "snippet": {
+                    "text": "HA1 = hashlib.md5(HA1_str.encode(\"ascii\")).hexdigest()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-MD5-001",
+          "level": "error",
+          "message": {
+            "text": "MD5 (Legacy-broken) - Risk Score: 77.2. Recommendation: SHA-256 / SHA-384 / SHA-3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/test_urllib2_localnet.py"
+                },
+                "region": {
+                  "startLine": 137,
+                  "snippet": {
+                    "text": "HA2 = hashlib.md5(HA2_str.encode(\"ascii\")).hexdigest()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-MD5-001",
+          "level": "error",
+          "message": {
+            "text": "MD5 (Legacy-broken) - Risk Score: 77.2. Recommendation: SHA-256 / SHA-384 / SHA-3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/test_urllib2_localnet.py"
+                },
+                "region": {
+                  "startLine": 142,
+                  "snippet": {
+                    "text": "response = hashlib.md5(response_str.encode(\"ascii\")).hexdigest()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-SHA1-001",
+          "level": "error",
+          "message": {
+            "text": "SHA-1 (Legacy-broken) - Risk Score: 77.2. Recommendation: SHA-256 / SHA-384 / SHA-3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/urllib/request.py"
+                },
+                "region": {
+                  "startLine": 1139,
+                  "snippet": {
+                    "text": "dig = hashlib.sha1(b).hexdigest()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-MD5-001",
+          "level": "error",
+          "message": {
+            "text": "MD5 (Legacy-broken) - Risk Score: 77.2. Recommendation: SHA-256 / SHA-384 / SHA-3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/urllib/request.py"
+                },
+                "region": {
+                  "startLine": 1207,
+                  "snippet": {
+                    "text": "H = lambda x: hashlib.md5(x.encode(\"ascii\")).hexdigest()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-SHA1-001",
+          "level": "error",
+          "message": {
+            "text": "SHA-1 (Legacy-broken) - Risk Score: 77.2. Recommendation: SHA-256 / SHA-384 / SHA-3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/urllib/request.py"
+                },
+                "region": {
+                  "startLine": 1209,
+                  "snippet": {
+                    "text": "H = lambda x: hashlib.sha1(x.encode(\"ascii\")).hexdigest()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-SHA256-001",
+          "level": "warning",
+          "message": {
+            "text": "SHA-256 (Safe) - Risk Score: 52.8. Recommendation: Maintain current quantum-safe configuration."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Tools/build/freeze_modules.py"
+                },
+                "region": {
+                  "startLine": 346,
+                  "snippet": {
+                    "text": "m = hashlib.sha256()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 52.8,
+            "risk_band": "Medium",
+            "quantum_status": "Safe",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-SHA256-001",
+          "level": "warning",
+          "message": {
+            "text": "SHA-256 (Safe) - Risk Score: 52.8. Recommendation: Maintain current quantum-safe configuration."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Tools/build/generate_sbom.py"
+                },
+                "region": {
+                  "startLine": 159,
+                  "snippet": {
+                    "text": "\"checksumValue\": hashlib.sha256(resp.read()).hexdigest()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 52.8,
+            "risk_band": "Medium",
+            "quantum_status": "Safe",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-SHA1-001",
+          "level": "error",
+          "message": {
+            "text": "SHA-1 (Legacy-broken) - Risk Score: 77.2. Recommendation: SHA-256 / SHA-384 / SHA-3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Tools/build/generate_sbom.py"
+                },
+                "region": {
+                  "startLine": 247,
+                  "snippet": {
+                    "text": "checksum_sha1 = hashlib.sha1(data).hexdigest()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-SHA256-001",
+          "level": "warning",
+          "message": {
+            "text": "SHA-256 (Safe) - Risk Score: 52.8. Recommendation: Maintain current quantum-safe configuration."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Tools/build/generate_sbom.py"
+                },
+                "region": {
+                  "startLine": 248,
+                  "snippet": {
+                    "text": "checksum_sha256 = hashlib.sha256(data).hexdigest()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 52.8,
+            "risk_band": "Medium",
+            "quantum_status": "Safe",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-SHA256-001",
+          "level": "warning",
+          "message": {
+            "text": "SHA-256 (Safe) - Risk Score: 52.8. Recommendation: Maintain current quantum-safe configuration."
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Tools/build/verify_ensurepip_wheels.py"
+                },
+                "region": {
+                  "startLine": 81,
+                  "snippet": {
+                    "text": "actual_digest = hashlib.sha256(package_path.read_bytes()).hexdigest()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 52.8,
+            "risk_band": "Medium",
+            "quantum_status": "Safe",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-SHA1-001",
+          "level": "error",
+          "message": {
+            "text": "SHA-1 (Legacy-broken) - Risk Score: 77.2. Recommendation: SHA-256 / SHA-384 / SHA-3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Tools/ccbench/ccbench.py"
+                },
+                "region": {
+                  "startLine": 124,
+                  "snippet": {
+                    "text": "hashlib.sha1(s).digest()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-SHA1-001",
+          "level": "error",
+          "message": {
+            "text": "SHA-1 (Legacy-broken) - Risk Score: 77.2. Recommendation: SHA-256 / SHA-384 / SHA-3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Tools/clinic/clinic.py"
+                },
+                "region": {
+                  "startLine": 2273,
+                  "snippet": {
+                    "text": "s = hashlib.sha1(input.encode('utf-8')).hexdigest()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-SRC-MD5-001",
+          "level": "error",
+          "message": {
+            "text": "MD5 (Legacy-broken) - Risk Score: 77.2. Recommendation: SHA-256 / SHA-384 / SHA-3"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Tools/msi/generate_md5.py"
+                },
+                "region": {
+                  "startLine": 14,
+                  "snippet": {
+                    "text": "md5 = hashlib.md5()"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 77.2,
+            "risk_band": "Critical",
+            "quantum_status": "Legacy-broken",
+            "mosca_at_risk": false,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-CERT-PEM-001",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 93.0. Recommendation: ML-DSA-65"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/certdata/allsans.pem"
+                },
+                "region": {
+                  "startLine": 1,
+                  "snippet": {
+                    "text": "Format: PEM | Subject: CN=allsans,O=Python Software Foundation,L=Castle Anthrax,C=XY | Issuer: CN=our-ca-server,O=Python Software Foundation CA,C=XY | Valid Until: 2037-10-28"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 93.0,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-CERT-PEM-001",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 93.0. Recommendation: ML-DSA-65"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/certdata/idnsans.pem"
+                },
+                "region": {
+                  "startLine": 1,
+                  "snippet": {
+                    "text": "Format: PEM | Subject: CN=idnsans,O=Python Software Foundation,L=Castle Anthrax,C=XY | Issuer: CN=our-ca-server,O=Python Software Foundation CA,C=XY | Valid Until: 2037-10-28"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 93.0,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-CERT-PEM-001",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 93.0. Recommendation: ML-DSA-65"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/certdata/keycert.passwd.pem"
+                },
+                "region": {
+                  "startLine": 1,
+                  "snippet": {
+                    "text": "Format: PEM | Subject: CN=localhost,O=Python Software Foundation,L=Castle Anthrax,C=XY | Issuer: CN=localhost,O=Python Software Foundation,L=Castle Anthrax,C=XY | Valid Until: 2028-08-26"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 93.0,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-CERT-PEM-001",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 93.0. Recommendation: ML-DSA-65"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/certdata/keycert.pem"
+                },
+                "region": {
+                  "startLine": 1,
+                  "snippet": {
+                    "text": "Format: PEM | Subject: CN=localhost,O=Python Software Foundation,L=Castle Anthrax,C=XY | Issuer: CN=localhost,O=Python Software Foundation,L=Castle Anthrax,C=XY | Valid Until: 2028-08-26"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 93.0,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-CERT-PEM-001",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 93.0. Recommendation: ML-DSA-65"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/certdata/keycert2.pem"
+                },
+                "region": {
+                  "startLine": 1,
+                  "snippet": {
+                    "text": "Format: PEM | Subject: CN=fakehostname,O=Python Software Foundation,L=Castle Anthrax,C=XY | Issuer: CN=fakehostname,O=Python Software Foundation,L=Castle Anthrax,C=XY | Valid Until: 2040-05-16"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 93.0,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-CERT-PEM-001",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 93.0. Recommendation: ML-DSA-65"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/certdata/keycert3.pem"
+                },
+                "region": {
+                  "startLine": 1,
+                  "snippet": {
+                    "text": "Format: PEM | Subject: CN=localhost,O=Python Software Foundation,L=Castle Anthrax,C=XY | Issuer: CN=our-ca-server,O=Python Software Foundation CA,C=XY | Valid Until: 2037-10-28"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 93.0,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-CERT-PEM-001",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 93.0. Recommendation: ML-DSA-65"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/certdata/keycert4.pem"
+                },
+                "region": {
+                  "startLine": 1,
+                  "snippet": {
+                    "text": "Format: PEM | Subject: CN=fakehostname,O=Python Software Foundation,L=Castle Anthrax,C=XY | Issuer: CN=our-ca-server,O=Python Software Foundation CA,C=XY | Valid Until: 2037-10-28"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 93.0,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-CERT-PEM-001",
+          "level": "error",
+          "message": {
+            "text": "ECDSA (Vulnerable) - Risk Score: 93.0. Recommendation: ML-DSA-65"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/certdata/keycertecc.pem"
+                },
+                "region": {
+                  "startLine": 1,
+                  "snippet": {
+                    "text": "Format: PEM | Subject: CN=localhost-ecc,O=Python Software Foundation,L=Castle Anthrax,C=XY | Issuer: CN=our-ca-server,O=Python Software Foundation CA,C=XY | Valid Until: 2037-10-28"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 93.0,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-CERT-PEM-001",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 93.0. Recommendation: ML-DSA-65"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/certdata/nokia.pem"
+                },
+                "region": {
+                  "startLine": 1,
+                  "snippet": {
+                    "text": "Format: PEM | Subject: CN=projects.developer.nokia.com,OU=BI,O=Nokia,L=Espoo,ST=Espoo,C=FI | Issuer: CN=VeriSign Class 3 International Server CA - G3,OU=Terms of use at https://www.verisign.com/rpa (c"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 93.0,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-CERT-PEM-001",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 93.0. Recommendation: ML-DSA-65"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/certdata/nosan.pem"
+                },
+                "region": {
+                  "startLine": 1,
+                  "snippet": {
+                    "text": "Format: PEM | Subject: CN=nosan,O=Python Software Foundation,L=Castle Anthrax,C=XY | Issuer: CN=our-ca-server,O=Python Software Foundation CA,C=XY | Valid Until: 2037-10-28"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 93.0,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-CERT-PEM-001",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 93.0. Recommendation: ML-DSA-65"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/certdata/nullbytecert.pem"
+                },
+                "region": {
+                  "startLine": 1,
+                  "snippet": {
+                    "text": "Format: PEM | Subject: 1.2.840.113549.1.9.1=python-dev@python.org,CN=null.python.org\\00example.org,OU=Python Core Development,O=Python Software Foundation,L=Beaverton,ST=Oregon,C=US | Issuer: 1.2.840."
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 93.0,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-CERT-PEM-001",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 93.0. Recommendation: ML-DSA-65"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/certdata/pycacert.pem"
+                },
+                "region": {
+                  "startLine": 1,
+                  "snippet": {
+                    "text": "Format: PEM | Subject: CN=our-ca-server,O=Python Software Foundation CA,C=XY | Issuer: CN=our-ca-server,O=Python Software Foundation CA,C=XY | Valid Until: 2037-10-28"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 93.0,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-CERT-PEM-001",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 93.0. Recommendation: ML-DSA-65"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/certdata/selfsigned_pythontestdotnet.pem"
+                },
+                "region": {
+                  "startLine": 1,
+                  "snippet": {
+                    "text": "Format: PEM | Subject: CN=self-signed.pythontest.net,O=Python Software Foundation,L=Argument Clinic,ST=Castle Anthrax,C=XY | Issuer: CN=self-signed.pythontest.net,O=Python Software Foundation,L=Argume"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 93.0,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-CERT-PEM-001",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 93.0. Recommendation: ML-DSA-65"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/certdata/ssl_cert.pem"
+                },
+                "region": {
+                  "startLine": 1,
+                  "snippet": {
+                    "text": "Format: PEM | Subject: CN=localhost,O=Python Software Foundation,L=Castle Anthrax,C=XY | Issuer: CN=localhost,O=Python Software Foundation,L=Castle Anthrax,C=XY | Valid Until: 2028-08-26"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 93.0,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        },
+        {
+          "ruleId": "ECDAT-CERT-PEM-001",
+          "level": "error",
+          "message": {
+            "text": "RSA (Vulnerable) - Risk Score: 93.0. Recommendation: ML-DSA-65"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "C:/Users/ghi26/Downloads/SIH26164/tests/external_targets/cpython/Lib/test/certdata/talos-2019-0758.pem"
+                },
+                "region": {
+                  "startLine": 1,
+                  "snippet": {
+                    "text": "Format: PEM | Subject: CN=codenomicon-vm-2.test.lal.cisco.com,C=UK | Issuer: CN=cody-ca,C=UK | Valid Until: 2028-06-14"
+                  }
+                }
+              }
+            }
+          ],
+          "properties": {
+            "risk_score": 93.0,
+            "risk_band": "Critical",
+            "quantum_status": "Vulnerable",
+            "mosca_at_risk": true,
+            "provenance": "OBSERVED"
+          }
+        }
+      ],
+      "properties": {
+        "scan_metrics": {
+          "scan_time_s": 87.678,
+          "total_assets": 45,
+          "quantum_vulnerable": 15,
+          "grover_weakened": 0,
+          "classically_broken": 20,
+          "mosca_violations": 15,
+          "critical_risk": 35,
+          "high_risk": 0,
+          "medium_risk": 10
+        },
+        "timestamp": "2026-09-30T02:17:33.456125+00:00"
+      }
+    }
+  ]
+}

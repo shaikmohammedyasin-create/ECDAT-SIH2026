@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECDAT Cryptographic Security & Post-Quantum Risk Report</title>
+    <style>
+        :root {
+            --bg-main: #0B1120;
+            --bg-card: #1E293B;
+            --bg-card-alt: #0F172A;
+            --text-main: #F1F5F9;
+            --text-muted: #94A3B8;
+            --border: #334155;
+            --accent: #38BDF8;
+            --danger: #EF4444;
+            --warning: #F59E0B;
+            --success: #10B981;
+            --info: #0284C7;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            margin: 0;
+            padding: 30px;
+            line-height: 1.5;
+        }
+        .header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            margin: 0 0 10px 0;
+            color: var(--accent);
+            font-size: 26px;
+            letter-spacing: -0.5px;
+        }
+        .meta-bar {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+        }
+        .card-num {
+            font-size: 28px;
+            font-weight: 700;
+            margin-top: 5px;
+            color: var(--text-main);
+        }
+        .card-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+        .badge {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .badge-danger { background: rgba(239, 68, 68, 0.2); color: #F87171; border: 1px solid #EF4444; }
+        .badge-warning { background: rgba(245, 158, 11, 0.2); color: #FBBF24; border: 1px solid #F59E0B; }
+        .badge-success { background: rgba(16, 185, 129, 0.2); color: #34D399; border: 1px solid #10B981; }
+        .badge-info { background: rgba(2, 132, 199, 0.2); color: #38BDF8; border: 1px solid #0284C7; }
+        .badge-secondary { background: rgba(148, 163, 184, 0.2); color: #CBD5E1; border: 1px solid #64748B; }
+        .tag {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 700;
+        }
+        .tag-hndl { background: #7F1D1D; color: #FECACA; }
+        .tag-tnfl { background: #78350F; color: #FDE68A; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            font-size: 13px;
+        }
+        th, td {
+            padding: 12px 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            background: var(--bg-card-alt);
+            color: var(--text-muted);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 12px;
+            color: #E2E8F0;
+        }
+        .section-title {
+            font-size: 18px;
+            margin: 25px 0 15px 0;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>ECDAT Cryptographic Risk & Post-Quantum Analysis Report</h1>
+        <div class="meta-bar">
+            Generated: <strong>2026-09-30 02:17:33 UTC</strong> | Tool: <strong>ECDAT v1.0 (SIH 2026 PS ID: 26164)</strong> | CycloneDX 1.6 CBOM: <span class="badge badge-success">VALID (0 Errors)</span>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <div class="card-label">Total Crypto Assets</div>
+            <div class="card-num">45</div>
+        </div>
+        <div class="card">
+            <div class="card-label">Shor-Broken (CRQC Vulnerable)</div>
+            <div class="card-num" style="color: var(--danger);">15</div>
+        </div>
+        <div class="card">
+            <div class="card-label">Grover-Weakened</div>
+            <div class="card-num" style="color: var(--warning);">0</div>
+        </div>
+        <div class="card">
+            <div class="card-label">Classically Broken</div>
+            <div class="card-num" style="color: var(--danger);">20</div>
+        </div>
+        <div class="card">
+            <div class="card-label">Harvest-Now-Decrypt-Later (HNDL)</div>
+            <div class="card-num" style="color: #F87171;">0</div>
+        </div>
+        <div class="card">
+            <div class="card-label">Mosca Violations (X + Y &gt; Z)</div>
+            <div class="card-num" style="color: var(--danger);">15</div>
+        </div>
+    </div>
+
+    <div class="section-title">Cryptographic Asset Inventory & Migration Guidance</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Rule ID</th>
+                <th>Algorithm</th>
+                <th>Quantum Vulnerability</th>
+                <th>Threat Surface</th>
+                <th>Risk Band</th>
+                <th>Source Location</th>
+                <th>PQC Recommendation (NIST FIPS)</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        <tr>
+            <td><code>ECDAT-CERT-PEM-001</code></td>
+            <td><strong>RSA</strong> (3072-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (93.0)</span></td>
+            <td><code>allsans.pem:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-PEM-001</code></td>
+            <td><strong>RSA</strong> (3072-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (93.0)</span></td>
+            <td><code>idnsans.pem:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-PEM-001</code></td>
+            <td><strong>RSA</strong> (3072-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (93.0)</span></td>
+            <td><code>keycert.passwd.pem:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-PEM-001</code></td>
+            <td><strong>RSA</strong> (3072-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (93.0)</span></td>
+            <td><code>keycert.pem:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-PEM-001</code></td>
+            <td><strong>RSA</strong> (3072-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (93.0)</span></td>
+            <td><code>keycert2.pem:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-PEM-001</code></td>
+            <td><strong>RSA</strong> (3072-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (93.0)</span></td>
+            <td><code>keycert3.pem:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-PEM-001</code></td>
+            <td><strong>RSA</strong> (3072-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (93.0)</span></td>
+            <td><code>keycert4.pem:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-PEM-001</code></td>
+            <td><strong>ECDSA</strong> (384-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (93.0)</span></td>
+            <td><code>keycertecc.pem:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-PEM-001</code></td>
+            <td><strong>RSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (93.0)</span></td>
+            <td><code>nokia.pem:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-PEM-001</code></td>
+            <td><strong>RSA</strong> (3072-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (93.0)</span></td>
+            <td><code>nosan.pem:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-PEM-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (93.0)</span></td>
+            <td><code>nullbytecert.pem:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-PEM-001</code></td>
+            <td><strong>RSA</strong> (3072-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (93.0)</span></td>
+            <td><code>pycacert.pem:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-PEM-001</code></td>
+            <td><strong>RSA</strong> (4096-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (93.0)</span></td>
+            <td><code>selfsigned_pythontestdotnet.pem:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-PEM-001</code></td>
+            <td><strong>RSA</strong> (3072-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (93.0)</span></td>
+            <td><code>ssl_cert.pem:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-PEM-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (93.0)</span></td>
+            <td><code>talos-2019-0758.pem:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-MD5-001</code></td>
+            <td><strong>MD5</strong> </td>
+            <td><span class="badge badge-danger">CLASSICALLY_BROKEN</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (77.2)</span></td>
+            <td><code>antigravity.py:15</code></td>
+            <td>SHA-256 / SHA-384 / SHA-3</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-MD5-001</code></td>
+            <td><strong>MD5</strong> </td>
+            <td><span class="badge badge-danger">CLASSICALLY_BROKEN</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (77.2)</span></td>
+            <td><code>poplib.py:335</code></td>
+            <td>SHA-256 / SHA-384 / SHA-3</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-MD5-001</code></td>
+            <td><strong>MD5</strong> </td>
+            <td><span class="badge badge-danger">CLASSICALLY_BROKEN</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (77.2)</span></td>
+            <td><code>test_hashlib.py:233</code></td>
+            <td>SHA-256 / SHA-384 / SHA-3</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-MD5-001</code></td>
+            <td><strong>MD5</strong> </td>
+            <td><span class="badge badge-danger">CLASSICALLY_BROKEN</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (77.2)</span></td>
+            <td><code>test_hashlib.py:244</code></td>
+            <td>SHA-256 / SHA-384 / SHA-3</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SHA1-001</code></td>
+            <td><strong>SHA-1</strong> </td>
+            <td><span class="badge badge-danger">CLASSICALLY_BROKEN</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (77.2)</span></td>
+            <td><code>test_hashlib.py:938</code></td>
+            <td>SHA-256 / SHA-384 / SHA-3</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SHA1-001</code></td>
+            <td><strong>SHA-1</strong> </td>
+            <td><span class="badge badge-danger">CLASSICALLY_BROKEN</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (77.2)</span></td>
+            <td><code>test_hashlib.py:942</code></td>
+            <td>SHA-256 / SHA-384 / SHA-3</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-MD5-001</code></td>
+            <td><strong>MD5</strong> </td>
+            <td><span class="badge badge-danger">CLASSICALLY_BROKEN</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (77.2)</span></td>
+            <td><code>test_smtplib.py:1195</code></td>
+            <td>SHA-256 / SHA-384 / SHA-3</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SHA1-001</code></td>
+            <td><strong>SHA-1</strong> </td>
+            <td><span class="badge badge-danger">CLASSICALLY_BROKEN</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (77.2)</span></td>
+            <td><code>test_unicodedata.py:25</code></td>
+            <td>SHA-256 / SHA-384 / SHA-3</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SHA1-001</code></td>
+            <td><strong>SHA-1</strong> </td>
+            <td><span class="badge badge-danger">CLASSICALLY_BROKEN</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (77.2)</span></td>
+            <td><code>test_unicodedata.py:79</code></td>
+            <td>SHA-256 / SHA-384 / SHA-3</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-MD5-001</code></td>
+            <td><strong>MD5</strong> </td>
+            <td><span class="badge badge-danger">CLASSICALLY_BROKEN</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (77.2)</span></td>
+            <td><code>test_urllib2_localnet.py:107</code></td>
+            <td>SHA-256 / SHA-384 / SHA-3</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-MD5-001</code></td>
+            <td><strong>MD5</strong> </td>
+            <td><span class="badge badge-danger">CLASSICALLY_BROKEN</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (77.2)</span></td>
+            <td><code>test_urllib2_localnet.py:135</code></td>
+            <td>SHA-256 / SHA-384 / SHA-3</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-MD5-001</code></td>
+            <td><strong>MD5</strong> </td>
+            <td><span class="badge badge-danger">CLASSICALLY_BROKEN</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (77.2)</span></td>
+            <td><code>test_urllib2_localnet.py:137</code></td>
+            <td>SHA-256 / SHA-384 / SHA-3</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-MD5-001</code></td>
+            <td><strong>MD5</strong> </td>
+            <td><span class="badge badge-danger">CLASSICALLY_BROKEN</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (77.2)</span></td>
+            <td><code>test_urllib2_localnet.py:142</code></td>
+            <td>SHA-256 / SHA-384 / SHA-3</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SHA1-001</code></td>
+            <td><strong>SHA-1</strong> </td>
+            <td><span class="badge badge-danger">CLASSICALLY_BROKEN</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (77.2)</span></td>
+            <td><code>request.py:1139</code></td>
+            <td>SHA-256 / SHA-384 / SHA-3</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-MD5-001</code></td>
+            <td><strong>MD5</strong> </td>
+            <td><span class="badge badge-danger">CLASSICALLY_BROKEN</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (77.2)</span></td>
+            <td><code>request.py:1207</code></td>
+            <td>SHA-256 / SHA-384 / SHA-3</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SHA1-001</code></td>
+            <td><strong>SHA-1</strong> </td>
+            <td><span class="badge badge-danger">CLASSICALLY_BROKEN</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (77.2)</span></td>
+            <td><code>request.py:1209</code></td>
+            <td>SHA-256 / SHA-384 / SHA-3</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SHA1-001</code></td>
+            <td><strong>SHA-1</strong> </td>
+            <td><span class="badge badge-danger">CLASSICALLY_BROKEN</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (77.2)</span></td>
+            <td><code>generate_sbom.py:247</code></td>
+            <td>SHA-256 / SHA-384 / SHA-3</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SHA1-001</code></td>
+            <td><strong>SHA-1</strong> </td>
+            <td><span class="badge badge-danger">CLASSICALLY_BROKEN</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (77.2)</span></td>
+            <td><code>ccbench.py:124</code></td>
+            <td>SHA-256 / SHA-384 / SHA-3</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SHA1-001</code></td>
+            <td><strong>SHA-1</strong> </td>
+            <td><span class="badge badge-danger">CLASSICALLY_BROKEN</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (77.2)</span></td>
+            <td><code>clinic.py:2273</code></td>
+            <td>SHA-256 / SHA-384 / SHA-3</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-MD5-001</code></td>
+            <td><strong>MD5</strong> </td>
+            <td><span class="badge badge-danger">CLASSICALLY_BROKEN</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (77.2)</span></td>
+            <td><code>generate_md5.py:14</code></td>
+            <td>SHA-256 / SHA-384 / SHA-3</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SHA256-001</code></td>
+            <td><strong>SHA-256</strong> </td>
+            <td><span class="badge badge-success">QUANTUM_SAFE</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-info">Medium (52.8)</span></td>
+            <td><code>test_hashlib.py:356</code></td>
+            <td>Maintain current quantum-safe configuration.</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SHA3-001</code></td>
+            <td><strong>SHA-3</strong> </td>
+            <td><span class="badge badge-success">QUANTUM_SAFE</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-info">Medium (52.8)</span></td>
+            <td><code>test_hashlib.py:365</code></td>
+            <td>Maintain current quantum-safe configuration.</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SHA256-001</code></td>
+            <td><strong>SHA-256</strong> </td>
+            <td><span class="badge badge-success">QUANTUM_SAFE</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-info">Medium (52.8)</span></td>
+            <td><code>test_hashlib.py:914</code></td>
+            <td>Maintain current quantum-safe configuration.</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SHA256-001</code></td>
+            <td><strong>SHA-256</strong> </td>
+            <td><span class="badge badge-success">QUANTUM_SAFE</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-info">Medium (52.8)</span></td>
+            <td><code>test_hashlib.py:923</code></td>
+            <td>Maintain current quantum-safe configuration.</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SHA256-001</code></td>
+            <td><strong>SHA-256</strong> </td>
+            <td><span class="badge badge-success">QUANTUM_SAFE</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-info">Medium (52.8)</span></td>
+            <td><code>test_hashlib.py:1163</code></td>
+            <td>Maintain current quantum-safe configuration.</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SHA256-001</code></td>
+            <td><strong>SHA-256</strong> </td>
+            <td><span class="badge badge-success">QUANTUM_SAFE</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-info">Medium (52.8)</span></td>
+            <td><code>test_hmac.py:347</code></td>
+            <td>Maintain current quantum-safe configuration.</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SHA256-001</code></td>
+            <td><strong>SHA-256</strong> </td>
+            <td><span class="badge badge-success">QUANTUM_SAFE</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-info">Medium (52.8)</span></td>
+            <td><code>freeze_modules.py:346</code></td>
+            <td>Maintain current quantum-safe configuration.</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SHA256-001</code></td>
+            <td><strong>SHA-256</strong> </td>
+            <td><span class="badge badge-success">QUANTUM_SAFE</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-info">Medium (52.8)</span></td>
+            <td><code>generate_sbom.py:159</code></td>
+            <td>Maintain current quantum-safe configuration.</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SHA256-001</code></td>
+            <td><strong>SHA-256</strong> </td>
+            <td><span class="badge badge-success">QUANTUM_SAFE</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-info">Medium (52.8)</span></td>
+            <td><code>generate_sbom.py:248</code></td>
+            <td>Maintain current quantum-safe configuration.</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SHA256-001</code></td>
+            <td><strong>SHA-256</strong> </td>
+            <td><span class="badge badge-success">QUANTUM_SAFE</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-info">Medium (52.8)</span></td>
+            <td><code>verify_ensurepip_wheels.py:81</code></td>
+            <td>Maintain current quantum-safe configuration.</td>
+        </tr>
+        
+        </tbody>
+    </table>
+
+    <div class="section-title" style="margin-top: 40px;">Methodology & Verification Controls</div>
+    <div class="card" style="font-size: 13px; color: var(--text-muted);">
+        <p><strong>Risk Engine Formulation:</strong> Explaining risk via NTRO formula: <code>100 × (0.35×QuantumExposure + 0.25×BusinessCriticality + 0.15×ExposureSurface + 0.15×DataSensitivity + 0.10×(1 - CryptoAgility))</code>.</p>
+        <p><strong>Mosca Condition:</strong> Evaluates <code>X (Data Lifetime) + Y (Migration Time) &gt; Z (CRQC Horizon)</code> where Z is an explicitly parameterized scenario horizon (default: 2035).</p>
+        <p><strong>CBOM Specification:</strong> CycloneDX 1.6 Cryptographic Bill of Materials (CBOM) with strict schema validation against official specifications.</p>
+    </div>
+</body>
+</html>

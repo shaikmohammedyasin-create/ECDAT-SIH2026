@@ -1,0 +1,37 @@
+{
+  "manifest_version": "1.0",
+  "generated_at": "2026-09-30T07:20:00Z",
+  "scanner_version": "2.4.0-ntro",
+  "repositories": [
+    {
+      "repository": "openssl",
+      "url": "https://github.com/openssl/openssl",
+      "commit": "4cb31128b5790819dfeea2739fbde265f71a10a2",
+      "tag": "openssl-3.3.0",
+      "downloaded_at": "2026-09-30T07:18:48Z",
+      "path": "tests/external_targets/openssl",
+      "purpose": "Large cryptography-heavy C/TLS codebase (RSA, ECC, ECDSA, ECDH, AES, SHA, TLS, certificates, cryptographic APIs, configuration)",
+      "status": "PINNED"
+    },
+    {
+      "repository": "cpython",
+      "url": "https://github.com/python/cpython",
+      "commit": "f6650f9ad73359051f3e558c2431a109bc016664",
+      "tag": "v3.12.3",
+      "downloaded_at": "2026-09-30T07:20:07Z",
+      "path": "tests/external_targets/cpython",
+      "purpose": "Large Python codebase (hashlib, ssl, crypto primitives, TLS configuration, certificate handling, false-positive pressure)",
+      "status": "PINNED"
+    },
+    {
+      "repository": "openssh",
+      "url": "https://github.com/openssh/openssh-portable",
+      "commit": "86bdd3853f4d32c85e295e6216a2fe0953ad93f0",
+      "tag": "V_9_7_P1",
+      "downloaded_at": "2026-09-30T07:18:07Z",
+      "path": "tests/external_targets/openssh",
+      "purpose": "SSH security implementation (RSA, ECDSA, Ed25519, Diffie-Hellman, host keys, public keys, crypto configuration)",
+      "status": "PINNED"
+    }
+  ]
+}

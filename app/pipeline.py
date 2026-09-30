@@ -12,7 +12,7 @@ import time
 from typing import List, Tuple
 
 from app.models.crypto_asset import CryptoAsset
-from app.scanners.source_scanner import run_project_scan
+from app.scanners.source_scanner import run_project_scan, scan_file
 from app.scanners.dependency_scanner import scan_dependency_file
 from app.scanners.certificate_scanner import scan_certificate_file
 from app.scanners.config_scanner import scan_config_file
@@ -104,32 +104,32 @@ def run_full_scan(
     t0 = time.time()
     _log("INFO", f"Initializing ECDAT engine. Target directory: {directory}")
     _log("INFO", f"Active Mosca planning horizon: Z={scenario_year}, X={x_lifetime}y, Y={y_migration}y")
-    raw = []
+    _log("INFO", "Executing unified discovery pass across source, manifest, certificate, config, and binary assets...")
+    source_exts = ('.py', '.js', '.java', '.ts', '.jsx', '.tsx', '.c', '.h', '.cpp', '.cc')
+    cert_exts = tuple(CERT_EXTS)
+    binary_exts = tuple(BINARY_EXTS)
 
-    _log("INFO", "Executing source scanner (AST call-site visitor & regex fallback)...")
-    src = _scan_source(directory)
-    raw += src
-    _log("INFO", f"Source scan complete: discovered {len(src)} cryptographic instances.")
+    src, deps, certs, cfgs, bins = [], [], [], [], []
+    for root, dirs, files in os.walk(directory):
+        # Prune ignored directories in-place for maximum speed
+        dirs[:] = [d for d in dirs if d not in (".git", "node_modules", "venv", "__pycache__", ".pytest_cache", ".hg", ".svn")]
+        for f in files:
+            fp = os.path.join(root, f)
+            f_lower = f.lower()
 
-    _log("INFO", "Executing dependency scanner (multi-manifest parser)...")
-    deps = _scan_dependencies(directory)
-    raw += deps
-    _log("INFO", f"Dependency scan complete: discovered {len(deps)} cryptographic libraries.")
+            if f_lower in DEP_FILENAMES:
+                deps.extend(scan_dependency_file(fp))
+            elif f_lower.endswith(cert_exts) or ".crt" in f_lower:
+                certs.extend(scan_certificate_file(fp))
+            elif f_lower.endswith(tuple(CONFIG_EXTS)) or f_lower in CONFIG_NAMES or "tls" in f_lower:
+                cfgs.extend(scan_config_file(fp))
+            elif f_lower.endswith(binary_exts):
+                bins.extend(scan_binary_file(fp))
+            elif f_lower.endswith(source_exts):
+                src.extend(scan_file(fp))
 
-    _log("INFO", "Executing certificate scanner (X.509, PKCS#12, OpenSSH)...")
-    certs = _scan_certificates(directory)
-    raw += certs
-    _log("INFO", f"Certificate scan complete: discovered {len(certs)} certificates & public keys.")
-
-    _log("INFO", "Executing configuration scanner (cipher suites & protocols)...")
-    cfgs = _scan_configs(directory)
-    raw += cfgs
-    _log("INFO", f"Configuration scan complete: discovered {len(cfgs)} configuration rules.")
-
-    _log("INFO", "Executing binary constant pool scanner (JVM bytecode)...")
-    bins = _scan_binaries(directory)
-    raw += bins
-    _log("INFO", f"Binary scan complete: discovered {len(bins)} compiled cryptographic references.")
+    raw = src + deps + certs + cfgs + bins
+    _log("INFO", f"Discovery complete: {len(src)} source, {len(deps)} deps, {len(certs)} certs, {len(cfgs)} configs, {len(bins)} binaries.")
 
     # Cross-scanner deduplication using deterministic identity
     _log("INFO", f"Deduplicating {len(raw)} raw cryptographic instances...")

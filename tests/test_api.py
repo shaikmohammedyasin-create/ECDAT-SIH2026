@@ -135,3 +135,73 @@ def test_settings_endpoint():
     data = resp.json()
     assert data["air_gap_enforced"] is True
     assert data["zero_key_persistence"] is True
+
+
+def test_scan_endpoints_and_readiness():
+    # 1. Trigger scan via POST /api/scans
+    post_resp = client.post("/api/scans", json={"use_corpus": True, "scenario_year": 2035})
+    assert post_resp.status_code == 200
+    scan_info = post_resp.json()
+    assert "scan_id" in scan_info
+    scan_id = scan_info["scan_id"]
+    assert scan_info["total_assets"] > 0
+
+    # 2. GET /api/scans/status
+    st_resp = client.get("/api/scans/status")
+    assert st_resp.status_code == 200
+    assert st_resp.json()["scan_id"] == scan_id
+
+    # 3. GET /api/scans/{id}
+    id_resp = client.get(f"/api/scans/{scan_id}")
+    assert id_resp.status_code == 200
+    assert id_resp.json()["total_assets"] > 0
+
+    # 4. GET /api/scans/{id}/findings
+    f_resp = client.get(f"/api/scans/{scan_id}/findings")
+    assert f_resp.status_code == 200
+    assert f_resp.json()["total"] > 0
+
+    # 5. GET /api/scans/{id}/inventory
+    inv_resp = client.get(f"/api/scans/{scan_id}/inventory")
+    assert inv_resp.status_code == 200
+    assert inv_resp.json()["total"] > 0
+
+    # 6. GET /api/scans/{id}/risk
+    r_resp = client.get(f"/api/scans/{scan_id}/risk")
+    assert r_resp.status_code == 200
+    assert "formula" in r_resp.json()
+
+    # 7. GET /api/scans/{id}/mosca
+    m_resp = client.get(f"/api/scans/{scan_id}/mosca")
+    assert m_resp.status_code == 200
+    assert "scenario_year" in m_resp.json()
+
+    # 8. GET /api/scans/{id}/migration
+    mig_resp = client.get(f"/api/scans/{scan_id}/migration")
+    assert mig_resp.status_code == 200
+    assert len(mig_resp.json()["matrix"]) > 0
+
+    # 9. GET /api/scans/{id}/cbom
+    cbom_resp = client.get(f"/api/scans/{scan_id}/cbom")
+    assert cbom_resp.status_code == 200
+    assert cbom_resp.json()["validation"]["valid"] is True
+
+    # 10. GET /api/scans/{id}/reports
+    rep_resp = client.get(f"/api/scans/{scan_id}/reports")
+    assert rep_resp.status_code == 200
+    assert rep_resp.json()["total_deliverables"] == 6
+
+
+def test_path_traversal_protection():
+    # Attempting path traversal with '..' is rejected with 400 Bad Request
+    resp = client.post("/api/scans", json={"use_corpus": False, "path": "../../../some_folder"})
+    assert resp.status_code == 400
+
+    # Non-existent path without traversal returns 404 Not Found
+    resp_404 = client.post("/api/scans", json={"use_corpus": False, "path": "non_existent_folder_xyz_999"})
+    assert resp_404.status_code == 404
+
+    # Attempting to scan system root is rejected with 400 Bad Request
+    resp_root = client.post("/api/scans", json={"use_corpus": False, "path": "C:\\Windows"})
+    assert resp_root.status_code == 400
+

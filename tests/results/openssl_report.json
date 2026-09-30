@@ -1,0 +1,91 @@
+{
+  "repository": "openssl",
+  "url": "https://github.com/openssl/openssl",
+  "commit": "4cb31128b5790819dfeea2739fbde265f71a10a2",
+  "tag": "openssl-3.3.0",
+  "scanned_at": "2026-09-30T02:16:04.192913+00:00",
+  "inventory": {
+    "total_files": 5295,
+    "source_files": 2066,
+    "config_files": 93,
+    "size_mb": 63.26
+  },
+  "performance": {
+    "scan_duration_s": 76.823,
+    "throughput_files_per_sec": 68.9,
+    "peak_memory_mb": 0.0,
+    "cbom_generation_duration_s": 0.1004,
+    "cbom_validation_duration_s": 17.6814
+  },
+  "findings": {
+    "total_discovered": 1295,
+    "confidence_distribution": {
+      "HIGH": 766,
+      "MEDIUM": 512,
+      "LOW": 17
+    },
+    "top_algorithms": [
+      [
+        "RSA",
+        387
+      ],
+      [
+        "TLSV1.3",
+        289
+      ],
+      [
+        "AES",
+        212
+      ],
+      [
+        "TLSV1.2",
+        195
+      ],
+      [
+        "ECDSA",
+        56
+      ],
+      [
+        "SHA-1",
+        37
+      ],
+      [
+        "SHA-256",
+        36
+      ],
+      [
+        "TLSV1.0 (legacy)",
+        16
+      ],
+      [
+        "MD5",
+        15
+      ],
+      [
+        "ChaCha20",
+        11
+      ]
+    ],
+    "quantum_distribution": {
+      "Legacy-broken": 56,
+      "Safe": 649,
+      "Vulnerable": 454,
+      "Weakened": 136
+    },
+    "mosca_violations": 590,
+    "risk_distribution": {
+      "Critical": 629,
+      "High": 17,
+      "Medium": 165,
+      "Low": 484,
+      "Info": 0
+    }
+  },
+  "cbom": {
+    "cyclonedx_version": "1.6",
+    "component_count": 1295,
+    "schema_valid": true,
+    "validation_errors": 0
+  },
+  "status": "PASS"
+}

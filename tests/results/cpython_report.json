@@ -1,0 +1,74 @@
+{
+  "repository": "cpython",
+  "url": "https://github.com/python/cpython",
+  "commit": "f6650f9ad73359051f3e558c2431a109bc016664",
+  "tag": "v3.12.3",
+  "scanned_at": "2026-09-30T02:17:33.465796+00:00",
+  "inventory": {
+    "total_files": 4636,
+    "source_files": 2868,
+    "config_files": 1,
+    "size_mb": 99.22
+  },
+  "performance": {
+    "scan_duration_s": 87.679,
+    "throughput_files_per_sec": 52.9,
+    "peak_memory_mb": 0.0,
+    "cbom_generation_duration_s": 0.0008,
+    "cbom_validation_duration_s": 0.0965
+  },
+  "findings": {
+    "total_discovered": 45,
+    "confidence_distribution": {
+      "HIGH": 45,
+      "MEDIUM": 0,
+      "LOW": 0
+    },
+    "top_algorithms": [
+      [
+        "RSA",
+        14
+      ],
+      [
+        "MD5",
+        11
+      ],
+      [
+        "SHA-256",
+        9
+      ],
+      [
+        "SHA-1",
+        9
+      ],
+      [
+        "SHA-3",
+        1
+      ],
+      [
+        "ECDSA",
+        1
+      ]
+    ],
+    "quantum_distribution": {
+      "Legacy-broken": 20,
+      "Safe": 10,
+      "Vulnerable": 15
+    },
+    "mosca_violations": 15,
+    "risk_distribution": {
+      "Critical": 35,
+      "High": 0,
+      "Medium": 10,
+      "Low": 0,
+      "Info": 0
+    }
+  },
+  "cbom": {
+    "cyclonedx_version": "1.6",
+    "component_count": 45,
+    "schema_valid": true,
+    "validation_errors": 0
+  },
+  "status": "PASS"
+}

@@ -1,0 +1,2239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ECDAT Cryptographic Security & Post-Quantum Risk Report</title>
+    <style>
+        :root {
+            --bg-main: #0B1120;
+            --bg-card: #1E293B;
+            --bg-card-alt: #0F172A;
+            --text-main: #F1F5F9;
+            --text-muted: #94A3B8;
+            --border: #334155;
+            --accent: #38BDF8;
+            --danger: #EF4444;
+            --warning: #F59E0B;
+            --success: #10B981;
+            --info: #0284C7;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            margin: 0;
+            padding: 30px;
+            line-height: 1.5;
+        }
+        .header {
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            margin: 0 0 10px 0;
+            color: var(--accent);
+            font-size: 26px;
+            letter-spacing: -0.5px;
+        }
+        .meta-bar {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px;
+        }
+        .card-num {
+            font-size: 28px;
+            font-weight: 700;
+            margin-top: 5px;
+            color: var(--text-main);
+        }
+        .card-label {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-muted);
+        }
+        .badge {
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .badge-danger { background: rgba(239, 68, 68, 0.2); color: #F87171; border: 1px solid #EF4444; }
+        .badge-warning { background: rgba(245, 158, 11, 0.2); color: #FBBF24; border: 1px solid #F59E0B; }
+        .badge-success { background: rgba(16, 185, 129, 0.2); color: #34D399; border: 1px solid #10B981; }
+        .badge-info { background: rgba(2, 132, 199, 0.2); color: #38BDF8; border: 1px solid #0284C7; }
+        .badge-secondary { background: rgba(148, 163, 184, 0.2); color: #CBD5E1; border: 1px solid #64748B; }
+        .tag {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 700;
+        }
+        .tag-hndl { background: #7F1D1D; color: #FECACA; }
+        .tag-tnfl { background: #78350F; color: #FDE68A; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            font-size: 13px;
+        }
+        th, td {
+            padding: 12px 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+        th {
+            background: var(--bg-card-alt);
+            color: var(--text-muted);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 12px;
+            color: #E2E8F0;
+        }
+        .section-title {
+            font-size: 18px;
+            margin: 25px 0 15px 0;
+            color: var(--text-main);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>ECDAT Cryptographic Risk & Post-Quantum Analysis Report</h1>
+        <div class="meta-bar">
+            Generated: <strong>2026-09-30 02:17:36 UTC</strong> | Tool: <strong>ECDAT v1.0 (SIH 2026 PS ID: 26164)</strong> | CycloneDX 1.6 CBOM: <span class="badge badge-success">VALID (0 Errors)</span>
+        </div>
+    </div>
+
+    <div class="grid">
+        <div class="card">
+            <div class="card-label">Total Crypto Assets</div>
+            <div class="card-num">205</div>
+        </div>
+        <div class="card">
+            <div class="card-label">Shor-Broken (CRQC Vulnerable)</div>
+            <div class="card-num" style="color: var(--danger);">180</div>
+        </div>
+        <div class="card">
+            <div class="card-label">Grover-Weakened</div>
+            <div class="card-num" style="color: var(--warning);">11</div>
+        </div>
+        <div class="card">
+            <div class="card-label">Classically Broken</div>
+            <div class="card-num" style="color: var(--danger);">2</div>
+        </div>
+        <div class="card">
+            <div class="card-label">Harvest-Now-Decrypt-Later (HNDL)</div>
+            <div class="card-num" style="color: #F87171;">13</div>
+        </div>
+        <div class="card">
+            <div class="card-label">Mosca Violations (X + Y &gt; Z)</div>
+            <div class="card-num" style="color: var(--danger);">191</div>
+        </div>
+    </div>
+
+    <div class="section-title">Cryptographic Asset Inventory & Migration Guidance</div>
+    <table>
+        <thead>
+            <tr>
+                <th>Rule ID</th>
+                <th>Algorithm</th>
+                <th>Quantum Vulnerability</th>
+                <th>Threat Surface</th>
+                <th>Risk Band</th>
+                <th>Source Location</th>
+                <th>PQC Recommendation (NIST FIPS)</th>
+            </tr>
+        </thead>
+        <tbody>
+            
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>authfd.c:392</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>authfd.c:393</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>authfd.c:395</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>authfd.c:396</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>clientloop.c:2457</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>clientloop.c:2458</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-X25519-001</code></td>
+            <td><strong>X25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-hndl">HNDL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>compat.c:151</code></td>
+            <td>Hybrid X25519 + ML-KEM-768</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>kex.c:1226</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>kex.c:1229</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-X25519-001</code></td>
+            <td><strong>X25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-hndl">HNDL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>myproposal.h:29</code></td>
+            <td>Hybrid X25519 + ML-KEM-768</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-X25519-001</code></td>
+            <td><strong>X25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-hndl">HNDL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>myproposal.h:30</code></td>
+            <td>Hybrid X25519 + ML-KEM-768</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ED25519-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>myproposal.h:42</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ECDSA-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>myproposal.h:43</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ECDSA-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>myproposal.h:44</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ED25519-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>myproposal.h:46</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ECDSA-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>myproposal.h:47</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>myproposal.h:48</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>myproposal.h:49</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ED25519-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>myproposal.h:50</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ECDSA-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>myproposal.h:51</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ECDSA-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>myproposal.h:52</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ED25519-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>myproposal.h:54</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ECDSA-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>myproposal.h:55</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>myproposal.h:56</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>myproposal.h:57</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ED25519-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>myproposal.h:82</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ECDSA-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>myproposal.h:83</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ECDSA-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>myproposal.h:84</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ED25519-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>myproposal.h:86</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ECDSA-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>myproposal.h:87</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>myproposal.h:88</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>myproposal.h:89</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>serverloop.c:731</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>serverloop.c:733</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-add.c:511</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-agent.c:668</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-agent.c:670</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-agent.c:673</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-agent.c:675</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ECDSA-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-ecdsa-sk.c:274</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ECDSA-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-ecdsa-sk.c:276</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ED25519-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-ed25519.c:181</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ED25519-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-ed25519.c:230</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-keygen.c:596</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-C-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-hndl">HNDL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-keygen.c:711</code></td>
+            <td>ML-KEM-768 + AES-256 envelope encryption</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-keygen.c:1830</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-keyscan.c:253</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-keyscan.c:254</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-keyscan.c:255</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-keyscan.c:256</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-keyscan.c:257</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-keyscan.c:258</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ED25519-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-keyscan.c:262</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ECDSA-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-keyscan.c:270</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ECDSA-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-keyscan.c:271</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ECDSA-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-keyscan.c:273</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ECDSA-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-keyscan.c:274</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ECDSA-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-keyscan.c:279</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ECDSA-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-keyscan.c:280</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ED25519-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-keyscan.c:284</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ED25519-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-keyscan.c:285</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-C-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-hndl">HNDL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-pkcs11.c:877</code></td>
+            <td>ML-KEM-768 + AES-256 envelope encryption</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-C-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-hndl">HNDL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-pkcs11.c:879</code></td>
+            <td>ML-KEM-768 + AES-256 envelope encryption</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-C-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-hndl">HNDL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-pkcs11.c:998</code></td>
+            <td>ML-KEM-768 + AES-256 envelope encryption</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-PY-EC-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-pkcs11.c:1426</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-C-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-hndl">HNDL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-rsa.c:55</code></td>
+            <td>ML-KEM-768 + AES-256 envelope encryption</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-C-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-hndl">HNDL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-rsa.c:141</code></td>
+            <td>ML-KEM-768 + AES-256 envelope encryption</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-rsa.c:274</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-rsa.c:276</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-rsa.c:278</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-rsa.c:290</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-rsa.c:292</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-rsa.c:294</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-rsa.c:311</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-rsa.c:313</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-rsa.c:315</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>ssh-rsa.c:508</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>sshconnect2.c:1178</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>sshconnect2.c:1608</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>sshconnect2.c:1611</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>sshconnect2.c:1616</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>sshconnect2.c:1619</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>sshd.c:620</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>sshd.c:621</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>sshd.c:640</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>sshd.c:642</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>sshkey.c:304</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>sshkey.c:305</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>sshkey.c:306</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>sshkey.c:308</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>sshkey.c:310</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>sshkey.c:312</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>sshkey.c:2210</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-C-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-hndl">HNDL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>sshkey.c:3458</code></td>
+            <td>ML-KEM-768 + AES-256 envelope encryption</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ED25519-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>authkeys_fuzz.cc:17</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ED25519-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>authkeys_fuzz.cc:18</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>fixed-keys.h:34</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>fixed-keys.h:36</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ECDSA-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>fixed-keys.h:73</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ECDSA-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>fixed-keys.h:75</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ED25519-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>fixed-keys.h:85</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ED25519-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>fixed-keys.h:87</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ECDSA-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>fixed-keys.h:104</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ECDSA-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>fixed-keys.h:106</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ED25519-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>fixed-keys.h:117</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-ED25519-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>fixed-keys.h:119</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-X25519-001</code></td>
+            <td><strong>X25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-hndl">HNDL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>kex_fuzz.cc:331</code></td>
+            <td>Hybrid X25519 + ML-KEM-768</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-X25519-001</code></td>
+            <td><strong>X25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-hndl">HNDL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>kex_fuzz.cc:411</code></td>
+            <td>Hybrid X25519 + ML-KEM-768</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-X25519-001</code></td>
+            <td><strong>X25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-hndl">HNDL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>test_kex.c:195</code></td>
+            <td>Hybrid X25519 + ML-KEM-768</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>test_file.c:117</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>test_file.c:126</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>test_fuzz.c:345</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>test_fuzz.c:353</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>test_fuzz.c:361</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>test_sshkey.c:464</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>test_sshkey.c:473</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>test_sshkey.c:482</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-RSA-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (87.8)</span></td>
+            <td><code>test_sshkey.c:525</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-C-AES-001</code></td>
+            <td><strong>AES</strong> (128-bit)</td>
+            <td><span class="badge badge-warning">GROVER_WEAKENED</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (84.2)</span></td>
+            <td><code>cipher.c:91</code></td>
+            <td>AES-256-GCM</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-C-AES-001</code></td>
+            <td><strong>AES</strong> (192-bit)</td>
+            <td><span class="badge badge-warning">GROVER_WEAKENED</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (84.2)</span></td>
+            <td><code>cipher.c:92</code></td>
+            <td>AES-256-GCM</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-C-AES-001</code></td>
+            <td><strong>AES</strong> (128-bit)</td>
+            <td><span class="badge badge-warning">GROVER_WEAKENED</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (84.2)</span></td>
+            <td><code>cipher.c:94</code></td>
+            <td>AES-256-GCM</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-C-AES-001</code></td>
+            <td><strong>AES</strong> (192-bit)</td>
+            <td><span class="badge badge-warning">GROVER_WEAKENED</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (84.2)</span></td>
+            <td><code>cipher.c:95</code></td>
+            <td>AES-256-GCM</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-AES-001</code></td>
+            <td><strong>AES</strong> (128-bit)</td>
+            <td><span class="badge badge-warning">GROVER_WEAKENED</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (84.2)</span></td>
+            <td><code>cipher.c:97</code></td>
+            <td>AES-256-GCM</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-C-AES-001</code></td>
+            <td><strong>AES</strong> (128-bit)</td>
+            <td><span class="badge badge-warning">GROVER_WEAKENED</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (84.2)</span></td>
+            <td><code>cipher.c:98</code></td>
+            <td>AES-256-GCM</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-AES-001</code></td>
+            <td><strong>AES</strong> (128-bit)</td>
+            <td><span class="badge badge-warning">GROVER_WEAKENED</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (84.2)</span></td>
+            <td><code>cipher.c:102</code></td>
+            <td>AES-256-GCM</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-AES-001</code></td>
+            <td><strong>AES</strong> (128-bit)</td>
+            <td><span class="badge badge-warning">GROVER_WEAKENED</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (84.2)</span></td>
+            <td><code>myproposal.h:61</code></td>
+            <td>AES-256-GCM</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-AES-001</code></td>
+            <td><strong>AES</strong> (128-bit)</td>
+            <td><span class="badge badge-warning">GROVER_WEAKENED</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (84.2)</span></td>
+            <td><code>myproposal.h:62</code></td>
+            <td>AES-256-GCM</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-AES-001</code></td>
+            <td><strong>AES</strong> (128-bit)</td>
+            <td><span class="badge badge-warning">GROVER_WEAKENED</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (84.2)</span></td>
+            <td><code>readconf.c:115</code></td>
+            <td>AES-256-GCM</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-C-AES-001</code></td>
+            <td><strong>AES</strong> (128-bit)</td>
+            <td><span class="badge badge-warning">GROVER_WEAKENED</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (84.2)</span></td>
+            <td><code>sshkey.c:3215</code></td>
+            <td>AES-256-GCM</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ed25519_openssh.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>RSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>rsa_openssh.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>DSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>id_dsa-cert.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>DSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>id_dsa.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>id_ecdsa-cert.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>id_ecdsa.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>id_ecdsa_sk.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>id_ed25519-cert.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>id_ed25519.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>id_ed25519_sk.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>id_rsa-cert.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>id_rsa.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>DSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>dsa_1.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>DSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>dsa_2.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>DSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>dsa_3.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>DSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>dsa_4.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>DSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>dsa_5.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>DSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>dsa_6.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>ECDSA</strong> (384-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ecdsa_1.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>ECDSA</strong> (521-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ecdsa_2.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ecdsa_3.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ecdsa_4.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ecdsa_5.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ecdsa_6.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ed25519_1.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ed25519_2.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ed25519_3.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ed25519_4.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ed25519_5.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ed25519_6.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>RSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>rsa_1.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>RSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>rsa_2.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>RSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>rsa_3.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>RSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>rsa_4.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>RSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>rsa_5.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>RSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>rsa_6.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>DSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>dsa_1-cert.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>DSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>dsa_1.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>DSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>dsa_2.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ecdsa_1-cert.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ecdsa_1.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>ECDSA</strong> (521-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ecdsa_2.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ecdsa_sk1.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ecdsa_sk2.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ed25519_1-cert.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ed25519_1.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ed25519_2.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ed25519_sk1.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ed25519_sk2.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>RSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>rsa_1-cert.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>RSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>rsa_1.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>RSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>rsa_1_sha1-cert.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>RSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>rsa_1_sha1.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>RSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>rsa_1_sha512-cert.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>RSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>rsa_1_sha512.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>RSA</strong> (2048-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>rsa_2.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>DSA</strong> (1024-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>dsa.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ecdsa.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>ECDSA</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ecdsa_sk.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ed25519.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>Ed25519</strong> (256-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>ed25519_sk.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-CERT-SSH-001</code></td>
+            <td><strong>RSA</strong> (3072-bit)</td>
+            <td><span class="badge badge-danger">SHOR_BROKEN</span></td>
+            <td><span class="tag tag-tnfl">TNFL</span> </td>
+            <td><span class="badge badge-danger">Critical (82.8)</span></td>
+            <td><code>rsa.pub:1</code></td>
+            <td>ML-DSA-65</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-C-MD5-001</code></td>
+            <td><strong>MD5</strong> </td>
+            <td><span class="badge badge-danger">CLASSICALLY_BROKEN</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (77.2)</span></td>
+            <td><code>digest-openssl.c:59</code></td>
+            <td>SHA-256 / SHA-384 / SHA-3</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-C-SHA1-001</code></td>
+            <td><strong>SHA-1</strong> </td>
+            <td><span class="badge badge-danger">CLASSICALLY_BROKEN</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-danger">Critical (77.2)</span></td>
+            <td><code>digest-openssl.c:60</code></td>
+            <td>SHA-256 / SHA-384 / SHA-3</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-C-AES-001</code></td>
+            <td><strong>AES</strong> (256-bit)</td>
+            <td><span class="badge badge-success">QUANTUM_SAFE</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-info">Medium (52.8)</span></td>
+            <td><code>cipher.c:93</code></td>
+            <td>AES-256-GCM</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-C-AES-001</code></td>
+            <td><strong>AES</strong> (256-bit)</td>
+            <td><span class="badge badge-success">QUANTUM_SAFE</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-info">Medium (52.8)</span></td>
+            <td><code>cipher.c:96</code></td>
+            <td>AES-256-GCM</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-AES-001</code></td>
+            <td><strong>AES</strong> (256-bit)</td>
+            <td><span class="badge badge-success">QUANTUM_SAFE</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-info">Medium (52.8)</span></td>
+            <td><code>cipher.c:99</code></td>
+            <td>AES-256-GCM</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-C-AES-001</code></td>
+            <td><strong>AES</strong> (256-bit)</td>
+            <td><span class="badge badge-success">QUANTUM_SAFE</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-info">Medium (52.8)</span></td>
+            <td><code>cipher.c:100</code></td>
+            <td>AES-256-GCM</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-AES-001</code></td>
+            <td><strong>AES</strong> (256-bit)</td>
+            <td><span class="badge badge-success">QUANTUM_SAFE</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-info">Medium (52.8)</span></td>
+            <td><code>cipher.c:104</code></td>
+            <td>AES-256-GCM</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-CHACHA-001</code></td>
+            <td><strong>ChaCha20</strong> (256-bit)</td>
+            <td><span class="badge badge-success">QUANTUM_SAFE</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-info">Medium (52.8)</span></td>
+            <td><code>cipher.c:106</code></td>
+            <td>Maintain current quantum-safe configuration.</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-C-SHA256-001</code></td>
+            <td><strong>SHA-256</strong> </td>
+            <td><span class="badge badge-success">QUANTUM_SAFE</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-info">Medium (52.8)</span></td>
+            <td><code>digest-openssl.c:61</code></td>
+            <td>Maintain current quantum-safe configuration.</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-C-SHA384-001</code></td>
+            <td><strong>SHA-384</strong> </td>
+            <td><span class="badge badge-success">QUANTUM_SAFE</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-info">Medium (52.8)</span></td>
+            <td><code>digest-openssl.c:62</code></td>
+            <td>Maintain current quantum-safe configuration.</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-C-SHA512-001</code></td>
+            <td><strong>SHA-512</strong> </td>
+            <td><span class="badge badge-success">QUANTUM_SAFE</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-info">Medium (52.8)</span></td>
+            <td><code>digest-openssl.c:63</code></td>
+            <td>Maintain current quantum-safe configuration.</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-C-SHA512-001</code></td>
+            <td><strong>SHA-512</strong> </td>
+            <td><span class="badge badge-success">QUANTUM_SAFE</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-info">Medium (52.8)</span></td>
+            <td><code>hash.c:21</code></td>
+            <td>Maintain current quantum-safe configuration.</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-SSH-CHACHA-001</code></td>
+            <td><strong>ChaCha20</strong> (256-bit)</td>
+            <td><span class="badge badge-success">QUANTUM_SAFE</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-info">Medium (52.8)</span></td>
+            <td><code>myproposal.h:60</code></td>
+            <td>Maintain current quantum-safe configuration.</td>
+        </tr>
+        
+        <tr>
+            <td><code>ECDAT-SRC-C-SHA256-001</code></td>
+            <td><strong>SHA-256</strong> </td>
+            <td><span class="badge badge-success">QUANTUM_SAFE</span></td>
+            <td><span class="text-muted">None</span></td>
+            <td><span class="badge badge-info">Medium (52.8)</span></td>
+            <td><code>sk-usbhid.c:325</code></td>
+            <td>Maintain current quantum-safe configuration.</td>
+        </tr>
+        
+        </tbody>
+    </table>
+
+    <div class="section-title" style="margin-top: 40px;">Methodology & Verification Controls</div>
+    <div class="card" style="font-size: 13px; color: var(--text-muted);">
+        <p><strong>Risk Engine Formulation:</strong> Explaining risk via NTRO formula: <code>100 × (0.35×QuantumExposure + 0.25×BusinessCriticality + 0.15×ExposureSurface + 0.15×DataSensitivity + 0.10×(1 - CryptoAgility))</code>.</p>
+        <p><strong>Mosca Condition:</strong> Evaluates <code>X (Data Lifetime) + Y (Migration Time) &gt; Z (CRQC Horizon)</code> where Z is an explicitly parameterized scenario horizon (default: 2035).</p>
+        <p><strong>CBOM Specification:</strong> CycloneDX 1.6 Cryptographic Bill of Materials (CBOM) with strict schema validation against official specifications.</p>
+    </div>
+</body>
+</html>

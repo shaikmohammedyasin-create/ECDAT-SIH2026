@@ -131,8 +131,6 @@ def scan_config_file(filepath: str) -> List[CryptoAsset]:
                                   clean_line, "LOW", QuantumStatus.WEAKENED,
                                   rule_id="ECDAT-CFG-CIPHER-AES"))
                 found_any = True
-            if found_any:
-                break  # successfully captured cipher configuration directive
 
     # --- Certificate references ---
     for idx, line in enumerate(lines, start=1):

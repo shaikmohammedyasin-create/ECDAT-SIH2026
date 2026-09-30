@@ -1,0 +1,2760 @@
+{
+  "bomFormat": "CycloneDX",
+  "specVersion": "1.6",
+  "serialNumber": "urn:uuid:eb2ff0e3-69b0-41e7-8fa0-aeb68e327dd4",
+  "version": 1,
+  "metadata": {
+    "timestamp": "2026-09-30T02:17:33Z",
+    "component": {
+      "type": "application",
+      "name": "Scanned Target Project"
+    }
+  },
+  "components": [
+    {
+      "type": "cryptographic-asset",
+      "name": "MD5",
+      "bom-ref": "crypto/algorithm/md5",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\antigravity.py",
+            "line": 15,
+            "additionalContext": "h = hashlib.md5(datedow, usedforsecurity=False).hexdigest()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "SHA-256 / SHA-384 / SHA-3"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "MD5 is classically broken (collisions) and unsuitable."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace hashing calls + re-hash integrity values"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "MD5",
+      "bom-ref": "crypto/algorithm/md5",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\poplib.py",
+            "line": 335,
+            "additionalContext": "digest = hashlib.md5(digest).hexdigest()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "SHA-256 / SHA-384 / SHA-3"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "MD5 is classically broken (collisions) and unsuitable."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace hashing calls + re-hash integrity values"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "MD5",
+      "bom-ref": "crypto/algorithm/md5",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\test_hashlib.py",
+            "line": 233,
+            "additionalContext": "hashlib.md5(usedforsecurity=True)"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "SHA-256 / SHA-384 / SHA-3"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "MD5 is classically broken (collisions) and unsuitable."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace hashing calls + re-hash integrity values"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "MD5",
+      "bom-ref": "crypto/algorithm/md5",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\test_hashlib.py",
+            "line": 244,
+            "additionalContext": "hashlib.md5(usedforsecurity=False)"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "SHA-256 / SHA-384 / SHA-3"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "MD5 is classically broken (collisions) and unsuitable."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace hashing calls + re-hash integrity values"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "SHA-256",
+      "bom-ref": "crypto/algorithm/sha-256",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 3
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\test_hashlib.py",
+            "line": 356,
+            "additionalContext": "h = hashlib.sha256()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Safe"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "QUANTUM_SAFE"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "52.8"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Medium"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "Maintain current quantum-safe configuration."
+        },
+        {
+          "name": "ecdat:why",
+          "value": "No identified quantum/legacy vulnerability for this primitive."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "None"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "SHA-3",
+      "bom-ref": "crypto/algorithm/sha-3",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "other",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 3
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\test_hashlib.py",
+            "line": 365,
+            "additionalContext": "h = hashlib.sha3_256()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Safe"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "QUANTUM_SAFE"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "52.8"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Medium"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "Maintain current quantum-safe configuration."
+        },
+        {
+          "name": "ecdat:why",
+          "value": "No identified quantum/legacy vulnerability for this primitive."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "None"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "SHA-256",
+      "bom-ref": "crypto/algorithm/sha-256",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 3
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\test_hashlib.py",
+            "line": 914,
+            "additionalContext": "m = hashlib.sha256()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Safe"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "QUANTUM_SAFE"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "52.8"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Medium"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "Maintain current quantum-safe configuration."
+        },
+        {
+          "name": "ecdat:why",
+          "value": "No identified quantum/legacy vulnerability for this primitive."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "None"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "SHA-256",
+      "bom-ref": "crypto/algorithm/sha-256",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 3
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\test_hashlib.py",
+            "line": 923,
+            "additionalContext": "m = hashlib.sha256(b'1' + b'#' * gil_minsize + b'1')"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Safe"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "QUANTUM_SAFE"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "52.8"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Medium"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "Maintain current quantum-safe configuration."
+        },
+        {
+          "name": "ecdat:why",
+          "value": "No identified quantum/legacy vulnerability for this primitive."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "None"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "SHA-1",
+      "bom-ref": "crypto/algorithm/sha-1",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\test_hashlib.py",
+            "line": 938,
+            "additionalContext": "hasher = hashlib.sha1()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "SHA-256 / SHA-384 / SHA-3"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "SHA-1 is classically broken (chosen-prefix collisions)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace hashing calls + re-hash integrity values"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "SHA-1",
+      "bom-ref": "crypto/algorithm/sha-1",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\test_hashlib.py",
+            "line": 942,
+            "additionalContext": "expected_hash = hashlib.sha1(data*num_threads).hexdigest()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "SHA-256 / SHA-384 / SHA-3"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "SHA-1 is classically broken (chosen-prefix collisions)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace hashing calls + re-hash integrity values"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "SHA-256",
+      "bom-ref": "crypto/algorithm/sha-256",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 3
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\test_hashlib.py",
+            "line": 1163,
+            "additionalContext": "d1 = hashlib.sha256()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Safe"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "QUANTUM_SAFE"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "52.8"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Medium"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "Maintain current quantum-safe configuration."
+        },
+        {
+          "name": "ecdat:why",
+          "value": "No identified quantum/legacy vulnerability for this primitive."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "None"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "SHA-256",
+      "bom-ref": "crypto/algorithm/sha-256",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 3
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\test_hmac.py",
+            "line": 347,
+            "additionalContext": "self._x = hashlib.sha256(*args)"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Safe"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "QUANTUM_SAFE"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "52.8"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Medium"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "Maintain current quantum-safe configuration."
+        },
+        {
+          "name": "ecdat:why",
+          "value": "No identified quantum/legacy vulnerability for this primitive."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "None"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "MD5",
+      "bom-ref": "crypto/algorithm/md5",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\test_smtplib.py",
+            "line": 1195,
+            "additionalContext": "hashlib.md5()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "SHA-256 / SHA-384 / SHA-3"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "MD5 is classically broken (collisions) and unsuitable."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace hashing calls + re-hash integrity values"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "SHA-1",
+      "bom-ref": "crypto/algorithm/sha-1",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\test_unicodedata.py",
+            "line": 25,
+            "additionalContext": "h = hashlib.sha1()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "SHA-256 / SHA-384 / SHA-3"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "SHA-1 is classically broken (chosen-prefix collisions)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace hashing calls + re-hash integrity values"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "SHA-1",
+      "bom-ref": "crypto/algorithm/sha-1",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\test_unicodedata.py",
+            "line": 79,
+            "additionalContext": "h = hashlib.sha1()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "SHA-256 / SHA-384 / SHA-3"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "SHA-1 is classically broken (chosen-prefix collisions)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace hashing calls + re-hash integrity values"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "MD5",
+      "bom-ref": "crypto/algorithm/md5",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\test_urllib2_localnet.py",
+            "line": 107,
+            "additionalContext": "nonce = hashlib.md5(str(self._request_num).encode(\"ascii\")).hexdigest()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "SHA-256 / SHA-384 / SHA-3"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "MD5 is classically broken (collisions) and unsuitable."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace hashing calls + re-hash integrity values"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "MD5",
+      "bom-ref": "crypto/algorithm/md5",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\test_urllib2_localnet.py",
+            "line": 135,
+            "additionalContext": "HA1 = hashlib.md5(HA1_str.encode(\"ascii\")).hexdigest()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "SHA-256 / SHA-384 / SHA-3"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "MD5 is classically broken (collisions) and unsuitable."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace hashing calls + re-hash integrity values"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "MD5",
+      "bom-ref": "crypto/algorithm/md5",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\test_urllib2_localnet.py",
+            "line": 137,
+            "additionalContext": "HA2 = hashlib.md5(HA2_str.encode(\"ascii\")).hexdigest()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "SHA-256 / SHA-384 / SHA-3"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "MD5 is classically broken (collisions) and unsuitable."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace hashing calls + re-hash integrity values"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "MD5",
+      "bom-ref": "crypto/algorithm/md5",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\test_urllib2_localnet.py",
+            "line": 142,
+            "additionalContext": "response = hashlib.md5(response_str.encode(\"ascii\")).hexdigest()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "SHA-256 / SHA-384 / SHA-3"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "MD5 is classically broken (collisions) and unsuitable."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace hashing calls + re-hash integrity values"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "SHA-1",
+      "bom-ref": "crypto/algorithm/sha-1",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\urllib\\request.py",
+            "line": 1139,
+            "additionalContext": "dig = hashlib.sha1(b).hexdigest()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "SHA-256 / SHA-384 / SHA-3"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "SHA-1 is classically broken (chosen-prefix collisions)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace hashing calls + re-hash integrity values"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "MD5",
+      "bom-ref": "crypto/algorithm/md5",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\urllib\\request.py",
+            "line": 1207,
+            "additionalContext": "H = lambda x: hashlib.md5(x.encode(\"ascii\")).hexdigest()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "SHA-256 / SHA-384 / SHA-3"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "MD5 is classically broken (collisions) and unsuitable."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace hashing calls + re-hash integrity values"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "SHA-1",
+      "bom-ref": "crypto/algorithm/sha-1",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\urllib\\request.py",
+            "line": 1209,
+            "additionalContext": "H = lambda x: hashlib.sha1(x.encode(\"ascii\")).hexdigest()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "SHA-256 / SHA-384 / SHA-3"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "SHA-1 is classically broken (chosen-prefix collisions)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace hashing calls + re-hash integrity values"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "SHA-256",
+      "bom-ref": "crypto/algorithm/sha-256",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 3
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Tools\\build\\freeze_modules.py",
+            "line": 346,
+            "additionalContext": "m = hashlib.sha256()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Safe"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "QUANTUM_SAFE"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "52.8"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Medium"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "Maintain current quantum-safe configuration."
+        },
+        {
+          "name": "ecdat:why",
+          "value": "No identified quantum/legacy vulnerability for this primitive."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "None"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "SHA-256",
+      "bom-ref": "crypto/algorithm/sha-256",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 3
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Tools\\build\\generate_sbom.py",
+            "line": 159,
+            "additionalContext": "\"checksumValue\": hashlib.sha256(resp.read()).hexdigest()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Safe"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "QUANTUM_SAFE"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "52.8"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Medium"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "Maintain current quantum-safe configuration."
+        },
+        {
+          "name": "ecdat:why",
+          "value": "No identified quantum/legacy vulnerability for this primitive."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "None"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "SHA-1",
+      "bom-ref": "crypto/algorithm/sha-1",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Tools\\build\\generate_sbom.py",
+            "line": 247,
+            "additionalContext": "checksum_sha1 = hashlib.sha1(data).hexdigest()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "SHA-256 / SHA-384 / SHA-3"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "SHA-1 is classically broken (chosen-prefix collisions)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace hashing calls + re-hash integrity values"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "SHA-256",
+      "bom-ref": "crypto/algorithm/sha-256",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 3
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Tools\\build\\generate_sbom.py",
+            "line": 248,
+            "additionalContext": "checksum_sha256 = hashlib.sha256(data).hexdigest()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Safe"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "QUANTUM_SAFE"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "52.8"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Medium"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "Maintain current quantum-safe configuration."
+        },
+        {
+          "name": "ecdat:why",
+          "value": "No identified quantum/legacy vulnerability for this primitive."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "None"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "SHA-256",
+      "bom-ref": "crypto/algorithm/sha-256",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 3
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Tools\\build\\verify_ensurepip_wheels.py",
+            "line": 81,
+            "additionalContext": "actual_digest = hashlib.sha256(package_path.read_bytes()).hexdigest()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Safe"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "QUANTUM_SAFE"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "52.8"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Medium"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "Maintain current quantum-safe configuration."
+        },
+        {
+          "name": "ecdat:why",
+          "value": "No identified quantum/legacy vulnerability for this primitive."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "None"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "SHA-1",
+      "bom-ref": "crypto/algorithm/sha-1",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Tools\\ccbench\\ccbench.py",
+            "line": 124,
+            "additionalContext": "hashlib.sha1(s).digest()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "SHA-256 / SHA-384 / SHA-3"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "SHA-1 is classically broken (chosen-prefix collisions)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace hashing calls + re-hash integrity values"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "SHA-1",
+      "bom-ref": "crypto/algorithm/sha-1",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Tools\\clinic\\clinic.py",
+            "line": 2273,
+            "additionalContext": "s = hashlib.sha1(input.encode('utf-8')).hexdigest()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "SHA-256 / SHA-384 / SHA-3"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "SHA-1 is classically broken (chosen-prefix collisions)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace hashing calls + re-hash integrity values"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "MD5",
+      "bom-ref": "crypto/algorithm/md5",
+      "cryptoProperties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "unknown",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Tools\\msi\\generate_md5.py",
+            "line": 14,
+            "additionalContext": "md5 = hashlib.md5()"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Legacy-broken"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "CLASSICALLY_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "77.2"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "SHA-256 / SHA-384 / SHA-3"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "MD5 is classically broken (collisions) and unsuitable."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Low \u2014 replace hashing calls + re-hash integrity values"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "RSA-3072",
+      "bom-ref": "crypto/certificate/rsa",
+      "cryptoProperties": {
+        "assetType": "certificate",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "3072",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\certdata\\allsans.pem",
+            "line": 1,
+            "additionalContext": "Format: PEM | Subject: CN=allsans,O=Python Software Foundation,L=Castle Anthrax,C=XY | Issuer: CN=our-ca-server,O=Python Software Foundation CA,C=XY | Valid Until: 2037-10-28"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "93.0"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-DSA-65"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "RSA signatures forgeable once a CRQC exists (TNFL risk)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium-High \u2014 re-issue trust chain"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "TNFL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "RSA-3072",
+      "bom-ref": "crypto/certificate/rsa",
+      "cryptoProperties": {
+        "assetType": "certificate",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "3072",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\certdata\\idnsans.pem",
+            "line": 1,
+            "additionalContext": "Format: PEM | Subject: CN=idnsans,O=Python Software Foundation,L=Castle Anthrax,C=XY | Issuer: CN=our-ca-server,O=Python Software Foundation CA,C=XY | Valid Until: 2037-10-28"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "93.0"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-DSA-65"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "RSA signatures forgeable once a CRQC exists (TNFL risk)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium-High \u2014 re-issue trust chain"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "TNFL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "RSA-3072",
+      "bom-ref": "crypto/certificate/rsa",
+      "cryptoProperties": {
+        "assetType": "certificate",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "3072",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\certdata\\keycert.passwd.pem",
+            "line": 1,
+            "additionalContext": "Format: PEM | Subject: CN=localhost,O=Python Software Foundation,L=Castle Anthrax,C=XY | Issuer: CN=localhost,O=Python Software Foundation,L=Castle Anthrax,C=XY | Valid Until: 2028-08-26"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "93.0"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-DSA-65"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "RSA signatures forgeable once a CRQC exists (TNFL risk)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium-High \u2014 re-issue trust chain"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "TNFL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "RSA-3072",
+      "bom-ref": "crypto/certificate/rsa",
+      "cryptoProperties": {
+        "assetType": "certificate",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "3072",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\certdata\\keycert.pem",
+            "line": 1,
+            "additionalContext": "Format: PEM | Subject: CN=localhost,O=Python Software Foundation,L=Castle Anthrax,C=XY | Issuer: CN=localhost,O=Python Software Foundation,L=Castle Anthrax,C=XY | Valid Until: 2028-08-26"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "93.0"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-DSA-65"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "RSA signatures forgeable once a CRQC exists (TNFL risk)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium-High \u2014 re-issue trust chain"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "TNFL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "RSA-3072",
+      "bom-ref": "crypto/certificate/rsa",
+      "cryptoProperties": {
+        "assetType": "certificate",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "3072",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\certdata\\keycert2.pem",
+            "line": 1,
+            "additionalContext": "Format: PEM | Subject: CN=fakehostname,O=Python Software Foundation,L=Castle Anthrax,C=XY | Issuer: CN=fakehostname,O=Python Software Foundation,L=Castle Anthrax,C=XY | Valid Until: 2040-05-16"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "93.0"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-DSA-65"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "RSA signatures forgeable once a CRQC exists (TNFL risk)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium-High \u2014 re-issue trust chain"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "TNFL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "RSA-3072",
+      "bom-ref": "crypto/certificate/rsa",
+      "cryptoProperties": {
+        "assetType": "certificate",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "3072",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\certdata\\keycert3.pem",
+            "line": 1,
+            "additionalContext": "Format: PEM | Subject: CN=localhost,O=Python Software Foundation,L=Castle Anthrax,C=XY | Issuer: CN=our-ca-server,O=Python Software Foundation CA,C=XY | Valid Until: 2037-10-28"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "93.0"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-DSA-65"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "RSA signatures forgeable once a CRQC exists (TNFL risk)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium-High \u2014 re-issue trust chain"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "TNFL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "RSA-3072",
+      "bom-ref": "crypto/certificate/rsa",
+      "cryptoProperties": {
+        "assetType": "certificate",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "3072",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\certdata\\keycert4.pem",
+            "line": 1,
+            "additionalContext": "Format: PEM | Subject: CN=fakehostname,O=Python Software Foundation,L=Castle Anthrax,C=XY | Issuer: CN=our-ca-server,O=Python Software Foundation CA,C=XY | Valid Until: 2037-10-28"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "93.0"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-DSA-65"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "RSA signatures forgeable once a CRQC exists (TNFL risk)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium-High \u2014 re-issue trust chain"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "TNFL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "ECDSA-384",
+      "bom-ref": "crypto/certificate/ecdsa",
+      "cryptoProperties": {
+        "assetType": "certificate",
+        "algorithmProperties": {
+          "primitive": "signature",
+          "parameterSetIdentifier": "384",
+          "classicalSecurityLevel": 112,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\certdata\\keycertecc.pem",
+            "line": 1,
+            "additionalContext": "Format: PEM | Subject: CN=localhost-ecc,O=Python Software Foundation,L=Castle Anthrax,C=XY | Issuer: CN=our-ca-server,O=Python Software Foundation CA,C=XY | Valid Until: 2037-10-28"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "93.0"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-DSA-65"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "ECDSA signatures broken by Shor's algorithm (TNFL risk)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium \u2014 update signers/verifiers"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "TNFL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "RSA-1024",
+      "bom-ref": "crypto/certificate/rsa",
+      "cryptoProperties": {
+        "assetType": "certificate",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "1024",
+          "classicalSecurityLevel": 112,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\certdata\\nokia.pem",
+            "line": 1,
+            "additionalContext": "Format: PEM | Subject: CN=projects.developer.nokia.com,OU=BI,O=Nokia,L=Espoo,ST=Espoo,C=FI | Issuer: CN=VeriSign Class 3 International Server CA - G3,OU=Terms of use at https://www.verisign.com/rpa (c)10,OU=VeriSign Trust Network,O=VeriSign\\, Inc.,C=US | Valid Until: 2012-09-20"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "93.0"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-DSA-65"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "RSA signatures forgeable once a CRQC exists (TNFL risk)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium-High \u2014 re-issue trust chain"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "TNFL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "RSA-3072",
+      "bom-ref": "crypto/certificate/rsa",
+      "cryptoProperties": {
+        "assetType": "certificate",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "3072",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\certdata\\nosan.pem",
+            "line": 1,
+            "additionalContext": "Format: PEM | Subject: CN=nosan,O=Python Software Foundation,L=Castle Anthrax,C=XY | Issuer: CN=our-ca-server,O=Python Software Foundation CA,C=XY | Valid Until: 2037-10-28"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "93.0"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-DSA-65"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "RSA signatures forgeable once a CRQC exists (TNFL risk)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium-High \u2014 re-issue trust chain"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "TNFL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "RSA-2048",
+      "bom-ref": "crypto/certificate/rsa",
+      "cryptoProperties": {
+        "assetType": "certificate",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "2048",
+          "classicalSecurityLevel": 112,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\certdata\\nullbytecert.pem",
+            "line": 1,
+            "additionalContext": "Format: PEM | Subject: 1.2.840.113549.1.9.1=python-dev@python.org,CN=null.python.org\\00example.org,OU=Python Core Development,O=Python Software Foundation,L=Beaverton,ST=Oregon,C=US | Issuer: 1.2.840.113549.1.9.1=python-dev@python.org,CN=null.python.org\\00example.org,OU=Python Core Development,O=Python Software Foundation,L=Beaverton,ST=Oregon,C=US | Valid Until: 2013-08-07"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "93.0"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-DSA-65"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "RSA signatures forgeable once a CRQC exists (TNFL risk)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium-High \u2014 re-issue trust chain"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "TNFL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "RSA-3072",
+      "bom-ref": "crypto/certificate/rsa",
+      "cryptoProperties": {
+        "assetType": "certificate",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "3072",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\certdata\\pycacert.pem",
+            "line": 1,
+            "additionalContext": "Format: PEM | Subject: CN=our-ca-server,O=Python Software Foundation CA,C=XY | Issuer: CN=our-ca-server,O=Python Software Foundation CA,C=XY | Valid Until: 2037-10-28"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "93.0"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-DSA-65"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "RSA signatures forgeable once a CRQC exists (TNFL risk)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium-High \u2014 re-issue trust chain"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "TNFL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "RSA-4096",
+      "bom-ref": "crypto/certificate/rsa",
+      "cryptoProperties": {
+        "assetType": "certificate",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "4096",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\certdata\\selfsigned_pythontestdotnet.pem",
+            "line": 1,
+            "additionalContext": "Format: PEM | Subject: CN=self-signed.pythontest.net,O=Python Software Foundation,L=Argument Clinic,ST=Castle Anthrax,C=XY | Issuer: CN=self-signed.pythontest.net,O=Python Software Foundation,L=Argument Clinic,ST=Castle Anthrax,C=XY | Valid Until: 2027-07-24"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "93.0"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-DSA-65"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "RSA signatures forgeable once a CRQC exists (TNFL risk)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium-High \u2014 re-issue trust chain"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "TNFL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "RSA-3072",
+      "bom-ref": "crypto/certificate/rsa",
+      "cryptoProperties": {
+        "assetType": "certificate",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "3072",
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\certdata\\ssl_cert.pem",
+            "line": 1,
+            "additionalContext": "Format: PEM | Subject: CN=localhost,O=Python Software Foundation,L=Castle Anthrax,C=XY | Issuer: CN=localhost,O=Python Software Foundation,L=Castle Anthrax,C=XY | Valid Until: 2028-08-26"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "93.0"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-DSA-65"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "RSA signatures forgeable once a CRQC exists (TNFL risk)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium-High \u2014 re-issue trust chain"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "TNFL"
+        }
+      ]
+    },
+    {
+      "type": "cryptographic-asset",
+      "name": "RSA-2048",
+      "bom-ref": "crypto/certificate/rsa",
+      "cryptoProperties": {
+        "assetType": "certificate",
+        "algorithmProperties": {
+          "primitive": "pke",
+          "parameterSetIdentifier": "2048",
+          "classicalSecurityLevel": 112,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence": {
+        "occurrences": [
+          {
+            "location": "C:\\Users\\ghi26\\Downloads\\SIH26164\\tests/external_targets/cpython\\Lib\\test\\certdata\\talos-2019-0758.pem",
+            "line": 1,
+            "additionalContext": "Format: PEM | Subject: CN=codenomicon-vm-2.test.lal.cisco.com,C=UK | Issuer: CN=cody-ca,C=UK | Valid Until: 2028-06-14"
+          }
+        ]
+      },
+      "properties": [
+        {
+          "name": "ecdat:quantum-status",
+          "value": "Vulnerable"
+        },
+        {
+          "name": "ecdat:quantum-class",
+          "value": "SHOR_BROKEN"
+        },
+        {
+          "name": "ecdat:risk-score",
+          "value": "93.0"
+        },
+        {
+          "name": "ecdat:risk-band",
+          "value": "Critical"
+        },
+        {
+          "name": "ecdat:confidence",
+          "value": "HIGH"
+        },
+        {
+          "name": "ecdat:mosca-margin-years",
+          "value": "-4.0"
+        },
+        {
+          "name": "ecdat:mosca-at-risk",
+          "value": "true"
+        },
+        {
+          "name": "ecdat:recommendation",
+          "value": "ML-DSA-65"
+        },
+        {
+          "name": "ecdat:why",
+          "value": "RSA signatures forgeable once a CRQC exists (TNFL risk)."
+        },
+        {
+          "name": "ecdat:effort",
+          "value": "Medium-High \u2014 re-issue trust chain"
+        },
+        {
+          "name": "ecdat:threat",
+          "value": "TNFL"
+        }
+      ]
+    }
+  ]
+}
