@@ -24,7 +24,7 @@ export const App: React.FC = () => {
           <Route path="scan/new" element={<NewScan />} />
           <Route path="inventory" element={<Inventory />} />
           <Route path="findings/:id" element={<FindingInspector />} />
-          <Route path="findings" element={<Navigate to="/findings/1" replace />} />
+          <Route path="findings" element={<Navigate to="/findings/0" replace />} />
           <Route path="mosca" element={<MoscaSimulator />} />
           <Route path="risk" element={<RiskAnalysis />} />
           <Route path="migration" element={<MigrationGuidance />} />

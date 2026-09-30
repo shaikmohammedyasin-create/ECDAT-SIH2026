@@ -8,7 +8,7 @@ export const Sidebar: React.FC = () => {
     { label: "Dashboard", path: "/dashboard", icon: "dashboard" },
     { label: "New Scan", path: "/scan/new", icon: "play_circle" },
     { label: "Crypto Inventory", path: "/inventory", icon: "memory" },
-    { label: "Finding Inspector", path: "/findings/1", icon: "troubleshoot" },
+    { label: "Finding Inspector", path: "/findings/0", icon: "troubleshoot" },
     { label: "Mosca Simulator", path: "/mosca", icon: "timeline" },
     { label: "Risk Analysis", path: "/risk", icon: "analytics" },
     { label: "Migration Guidance", path: "/migration", icon: "swap_calls" },

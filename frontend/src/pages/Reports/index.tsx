@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { fetchReportsMetadata, getReportDownloadUrl } from "../../services/api";
+import { fetchReportsMetadata, getReportDownloadUrl, API_BASE } from "../../services/api";
 import type { ReportsMetadata, ReportDeliverable } from "../../types";
-
-const API_BASE = "http://localhost:8000/api";
 
 export const ReportsPage: React.FC = () => {
   const [metadata, setMetadata] = useState<ReportsMetadata | null>(null);

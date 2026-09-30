@@ -6,7 +6,7 @@ import type { FindingDetail } from "../../types";
 export const FindingInspector: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const findingId = id ? parseInt(id, 10) : 1;
+  const findingId = id !== undefined && !isNaN(parseInt(id, 10)) ? parseInt(id, 10) : 0;
 
   const [finding, setFinding] = useState<FindingDetail | null>(null);
   const [loading, setLoading] = useState(true);
@@ -68,8 +68,8 @@ export const FindingInspector: React.FC = () => {
             <Link to="/inventory" className="px-3 py-1.5 bg-surface-container-high border border-outline-variant text-primary rounded text-code-sm">
               Return to Inventory
             </Link>
-            <Link to="/findings/1" className="px-3 py-1.5 bg-primary-container text-on-primary-container font-semibold rounded text-code-sm">
-              Load Finding #1
+            <Link to="/findings/0" className="px-3 py-1.5 bg-primary-container text-on-primary-container font-semibold rounded text-code-sm">
+              Load Finding #0
             </Link>
           </div>
         </div>
@@ -144,8 +144,8 @@ export const FindingInspector: React.FC = () => {
           </button>
           <div className="h-4 w-px bg-outline-variant mx-1"></div>
           <button
-            onClick={() => navigate(`/findings/${findingId > 1 ? findingId - 1 : 1}`)}
-            disabled={findingId <= 1}
+            onClick={() => navigate(`/findings/${findingId > 0 ? findingId - 1 : 0}`)}
+            disabled={findingId <= 0}
             className="bg-surface-container-high border border-outline-variant hover:border-primary disabled:opacity-40 text-on-surface px-2 py-1 rounded text-code-sm flex items-center gap-1"
           >
             <span className="material-symbols-outlined text-[14px]">navigate_before</span>

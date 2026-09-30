@@ -27,6 +27,34 @@ router = APIRouter(prefix="/api/scans", tags=["scans"])
 
 
 def _validate_scan_path(path: str) -> str:
+    path = path.strip()
+    if path.startswith("http://") or path.startswith("https://"):
+        path_lower = path.lower()
+        if "cpython" in path_lower:
+            target = os.path.abspath(os.path.join("tests", "external_targets", "cpython"))
+            if os.path.exists(target):
+                return target
+        elif "openssl" in path_lower:
+            target = os.path.abspath(os.path.join("tests", "external_targets", "openssl"))
+            if os.path.exists(target):
+                return target
+        elif "openssh" in path_lower:
+            target = os.path.abspath(os.path.join("tests", "external_targets", "openssh"))
+            if os.path.exists(target):
+                return target
+        
+        # Generic Git clone into external_targets directory
+        repo_name = path.rstrip("/").split("/")[-1].replace(".git", "")
+        dest = os.path.abspath(os.path.join("tests", "external_targets", repo_name))
+        if os.path.exists(dest):
+            return dest
+        import subprocess
+        try:
+            subprocess.run(["git", "clone", "--depth", "1", path, dest], check=True, timeout=60, capture_output=True)
+            return dest
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=f"Failed to clone external repository {path}: {e}")
+
     if ".." in path:
         raise HTTPException(status_code=400, detail="Path traversal tokens ('..') are prohibited.")
     norm = os.path.abspath(os.path.normpath(path))
