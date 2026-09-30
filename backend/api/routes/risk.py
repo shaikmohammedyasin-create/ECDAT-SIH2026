@@ -46,6 +46,34 @@ def get_risk_analysis():
             line=a.line_number
         ))
 
+    # Calculate actual 5-factor averages across active scanned codebase
+    q_sum, c_sum, e_sum, d_sum, ag_sum = 0.0, 0.0, 0.0, 0.0, 0.0
+    n = len(assets) if assets else 1
+    crit_map = {"Critical": 1.0, "High": 0.75, "Med": 0.5, "Medium": 0.5, "Low": 0.25}
+    exp_map = {"External": 1.0, "Internal": 0.6, "Air-gapped": 0.3, "Offline": 0.3}
+    sens_map = {"Archival": 1.0, "VL": 1.0, "L": 0.8, "M": 0.55, "S": 0.3}
+
+    for a in assets:
+        q_val = a.quantum_status.value
+        qv = 1.0 if q_val == "Vulnerable" else (0.7 if q_val == "Legacy-broken" else (0.5 if q_val == "Weakened" else 0.0))
+        if a.mosca_at_risk and q_val in ("Vulnerable", "Weakened"):
+            qv = max(qv, 0.9)
+        q_sum += qv
+        c_sum += crit_map.get(a.criticality, 0.5)
+        e_sum += exp_map.get(a.exposure, 0.6)
+        d_sum += sens_map.get(a.lifetime, 0.55)
+        ag = 0.4 if a.asset_type.value == "Certificate" else (0.3 if a.asset_type.value in ("Algorithm", "Protocol") else 0.8)
+        ag_sum += ag
+
+    factor_bd = {
+        "quantum_exposure": round(q_sum / n, 2),
+        "business_criticality": round(c_sum / n, 2),
+        "exposure_surface": round(e_sum / n, 2),
+        "data_sensitivity": round(d_sum / n, 2),
+        "crypto_agility": round(ag_sum / n, 2),
+        "inversed_agility": round(1.0 - (ag_sum / n), 2),
+    }
+
     return RiskAnalysisResponse(
         formula="RiskScore = 100 * (0.35 * QuantumExposure + 0.25 * BusinessCriticality + 0.15 * ExposureSurface + 0.15 * DataSensitivity + 0.10 * (1 - CryptoAgility))",
         weights={
@@ -63,5 +91,6 @@ def get_risk_analysis():
             "Low": low
         },
         hygiene_critical_count=hygiene,
+        factor_breakdown=factor_bd,
         top_findings=top_items
     )

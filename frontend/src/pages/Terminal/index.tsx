@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
-import { fetchTerminalLogs, clearTerminalLogs } from "../../services/api";
+import { fetchTerminalLogs, clearTerminalLogs, fetchScanStatus } from "../../services/api";
 import type { TerminalLog } from "../../types";
 
 export const TerminalPage: React.FC = () => {
   const [logs, setLogs] = useState<TerminalLog[]>([]);
+  const [scanId, setScanId] = useState<string>("live-scan");
   const [loading, setLoading] = useState(true);
   const [selectedLevel, setSelectedLevel] = useState<string>("ALL");
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -21,6 +22,12 @@ export const TerminalPage: React.FC = () => {
         console.error("Failed to load terminal logs:", err);
         setLoading(false);
       });
+
+    fetchScanStatus()
+      .then((status) => {
+        if (status.scan_id) setScanId(status.scan_id);
+      })
+      .catch(() => {});
   };
 
   useEffect(() => {
@@ -97,7 +104,9 @@ export const TerminalPage: React.FC = () => {
         <div className="flex items-center gap-2 text-code-sm">
           <div className="px-2.5 py-1 bg-surface-container-lowest border border-outline-variant rounded flex items-center gap-2 text-on-surface-variant text-xs">
             <span className="text-outline">EXEC ID:</span>
-            <span className="text-primary font-mono font-semibold">AST-NTRO-9941</span>
+            <span className="text-primary font-mono font-semibold" title={scanId}>
+              {scanId.length > 18 ? scanId.substring(0, 15) + "..." : scanId}
+            </span>
           </div>
           <div className="px-2.5 py-1 bg-surface-container-lowest border border-outline-variant rounded flex items-center gap-2 text-on-surface-variant text-xs">
             <span className="text-outline">PARSER:</span>
@@ -113,7 +122,7 @@ export const TerminalPage: React.FC = () => {
           <div className="flex items-center gap-1.5 px-2 py-1 rounded bg-surface-container-lowest border border-outline-variant text-code-sm text-on-surface text-xs">
             <span className="material-symbols-outlined text-primary text-[14px]">fingerprint</span>
             <span className="text-outline">Scan ID:</span>
-            <span className="font-mono text-primary font-medium">ecdat-scan-live</span>
+            <span className="font-mono text-primary font-medium" title={scanId}>{scanId}</span>
           </div>
 
           <div className="h-4 w-px bg-outline-variant hidden sm:block"></div>

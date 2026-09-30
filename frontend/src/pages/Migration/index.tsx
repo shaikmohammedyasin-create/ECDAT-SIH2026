@@ -41,6 +41,7 @@ export const MigrationGuidance: React.FC = () => {
   }
 
   const matrix = data?.matrix || [];
+  const summary = data?.summary;
 
   return (
     <div className="flex-1 flex flex-col overflow-y-auto bg-background p-4 space-y-4">
@@ -82,13 +83,15 @@ export const MigrationGuidance: React.FC = () => {
             <span className="material-symbols-outlined text-error text-[18px]">warning</span>
           </div>
           <div className="my-2">
-            <div className="text-2xl font-code-lg text-error font-bold tracking-tight">Immediate</div>
+            <div className="text-2xl font-code-lg text-error font-bold tracking-tight">
+              {summary ? `${summary.immediate_count} Immediate` : "Immediate"}
+            </div>
             <div className="text-body-sm font-body-sm text-on-surface font-medium text-xs">
               Shor-Vulnerable Asymmetric Primitives
             </div>
           </div>
           <div className="text-code-sm text-outline text-[11px] flex items-center gap-1">
-            <span className="text-error font-medium">Shor broken</span> • RSA ≤ 2048, ECDSA-P256
+            <span className="text-error font-medium">Shor broken</span> • {summary?.immediate_algos?.length ? summary.immediate_algos.join(", ") : "RSA ≤ 2048, ECDSA-P256"}
           </div>
         </div>
 
@@ -101,13 +104,15 @@ export const MigrationGuidance: React.FC = () => {
             <span className="material-symbols-outlined text-primary text-[18px]">sync_alt</span>
           </div>
           <div className="my-2">
-            <div className="text-2xl font-code-lg text-primary font-bold tracking-tight">Hybrid</div>
+            <div className="text-2xl font-code-lg text-primary font-bold tracking-tight">
+              {summary ? `${summary.hybrid_count} Hybrid` : "Hybrid"}
+            </div>
             <div className="text-body-sm font-body-sm text-on-surface font-medium text-xs">
               Dual-Key Hybrid Encapsulation
             </div>
           </div>
           <div className="text-code-sm text-outline text-[11px] flex items-center gap-1">
-            <span className="text-primary font-medium">Dual-Envelope</span> • X25519 + ML-KEM-768
+            <span className="text-primary font-medium">Dual-Envelope</span> • {summary?.hybrid_algos?.length ? summary.hybrid_algos.join(", ") : "X25519 + ML-KEM-768"}
           </div>
         </div>
 
@@ -120,13 +125,15 @@ export const MigrationGuidance: React.FC = () => {
             <span className="material-symbols-outlined text-secondary text-[18px]">hourglass_top</span>
           </div>
           <div className="my-2">
-            <div className="text-2xl font-code-lg text-secondary font-bold tracking-tight">Deprecate</div>
+            <div className="text-2xl font-code-lg text-secondary font-bold tracking-tight">
+              {summary ? `${summary.deprecate_count} Deprecate` : "Deprecate"}
+            </div>
             <div className="text-body-sm font-body-sm text-on-surface font-medium text-xs">
               Legacy Symmetric & Hashes
             </div>
           </div>
           <div className="text-code-sm text-outline text-[11px] flex items-center gap-1">
-            <span className="text-secondary font-medium">Upgrade</span> • MD5, SHA-1 → SHA-256 / SHA-3
+            <span className="text-secondary font-medium">Upgrade</span> • {summary?.deprecate_algos?.length ? summary.deprecate_algos.join(", ") : "MD5, SHA-1 → SHA-256 / SHA-3"}
           </div>
         </div>
 
@@ -139,13 +146,15 @@ export const MigrationGuidance: React.FC = () => {
             <span className="material-symbols-outlined text-tertiary text-[18px]">task_alt</span>
           </div>
           <div className="my-2">
-            <div className="text-2xl font-code-lg text-tertiary font-bold tracking-tight">Compliant</div>
+            <div className="text-2xl font-code-lg text-tertiary font-bold tracking-tight">
+              {summary ? `${summary.compliant_count} Compliant` : "Compliant"}
+            </div>
             <div className="text-body-sm font-body-sm text-on-surface font-medium text-xs">
               NIST Standardized Lattice Target
             </div>
           </div>
           <div className="text-code-sm text-outline text-[11px] flex items-center gap-1">
-            <span className="text-tertiary font-medium">Standard</span> • ML-KEM-768, ML-DSA-65
+            <span className="text-tertiary font-medium">Standard</span> • {summary?.compliant_algos?.length ? summary.compliant_algos.join(", ") : "ML-KEM-768, ML-DSA-65"}
           </div>
         </div>
       </section>
@@ -168,7 +177,7 @@ export const MigrationGuidance: React.FC = () => {
           <div className="bg-surface-container border border-error/40 p-3 rounded relative">
             <div className="flex items-center justify-between mb-1">
               <span className="text-[10px] font-mono text-error uppercase bg-error/10 px-1.5 py-0.5 rounded border border-error/20 font-bold">
-                Phase 0: Identified
+                Phase 0: Identified ({summary?.immediate_count ?? 0})
               </span>
               <span className="text-code-sm text-outline text-[11px]">CRQC Hazard</span>
             </div>
@@ -177,15 +186,11 @@ export const MigrationGuidance: React.FC = () => {
               Discrete logarithm & integer factorization primitives vulnerable to Shor polynomial quantum attacks.
             </p>
             <div className="mt-2 flex flex-wrap gap-1">
-              <span className="text-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-error border border-error/20 text-xs font-mono">
-                RSA-2048
-              </span>
-              <span className="text-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-error border border-error/20 text-xs font-mono">
-                ECDSA-P256
-              </span>
-              <span className="text-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-error border border-error/20 text-xs font-mono">
-                Diffie-Hellman
-              </span>
+              {(summary?.immediate_algos?.length ? summary.immediate_algos : ["RSA-2048", "ECDSA-P256", "Diffie-Hellman"]).map((algo) => (
+                <span key={algo} className="text-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-error border border-error/20 text-xs font-mono">
+                  {algo}
+                </span>
+              ))}
             </div>
           </div>
 
@@ -202,12 +207,11 @@ export const MigrationGuidance: React.FC = () => {
               Simultaneous classical-PQC derivation preserving legacy compatibility while injecting lattice resistance.
             </p>
             <div className="mt-2 flex flex-wrap gap-1">
-              <span className="text-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-primary border border-primary/20 text-xs font-mono">
-                X25519 + ML-KEM-768
-              </span>
-              <span className="text-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-primary border border-primary/20 text-xs font-mono">
-                Composite Dual Signatures
-              </span>
+              {(summary?.hybrid_algos?.length ? summary.hybrid_algos : ["X25519 + ML-KEM-768", "Composite Dual Signatures"]).map((algo) => (
+                <span key={algo} className="text-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-primary border border-primary/20 text-xs font-mono">
+                  {algo}
+                </span>
+              ))}
             </div>
           </div>
 
@@ -224,15 +228,11 @@ export const MigrationGuidance: React.FC = () => {
               Direct deployment of NIST FIPS 203/204/205 parameter sets completely decoupled from classical assumptions.
             </p>
             <div className="mt-2 flex flex-wrap gap-1">
-              <span className="text-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-tertiary border border-tertiary/20 text-xs font-mono">
-                ML-KEM-768 / 1024
-              </span>
-              <span className="text-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-tertiary border border-tertiary/20 text-xs font-mono">
-                ML-DSA-65 (Dilithium)
-              </span>
-              <span className="text-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-tertiary border border-tertiary/20 text-xs font-mono">
-                SLH-DSA-128
-              </span>
+              {(summary?.compliant_algos?.length ? summary.compliant_algos : ["ML-KEM-768 / 1024", "ML-DSA-65", "SLH-DSA-128"]).map((algo) => (
+                <span key={algo} className="text-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-tertiary border border-tertiary/20 text-xs font-mono">
+                  {algo}
+                </span>
+              ))}
             </div>
           </div>
         </div>
@@ -261,7 +261,7 @@ export const MigrationGuidance: React.FC = () => {
                   <span className="text-primary font-mono font-bold text-xs">RULE-MIG-0{idx + 1}</span>
                   <span
                     className={`px-1.5 py-0.2 rounded text-[10px] font-bold ${
-                      item.risk_band === "CRITICAL"
+                      item.risk_band?.toUpperCase() === "CRITICAL"
                         ? "bg-error-container text-on-error-container"
                         : "bg-primary-container/20 text-primary border border-primary/30"
                     }`}

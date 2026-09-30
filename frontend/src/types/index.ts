@@ -133,12 +133,22 @@ export interface MoscaState {
   total_assets: number;
 }
 
+export interface FactorBreakdown {
+  quantum_exposure: number;
+  business_criticality: number;
+  exposure_surface: number;
+  data_sensitivity: number;
+  crypto_agility: number;
+  inversed_agility: number;
+}
+
 export interface RiskAnalysisData {
   formula: string;
   weights: Record<string, number>;
   average_score: number;
   risk_distribution: Record<string, number>;
   hygiene_critical_count: number;
+  factor_breakdown?: FactorBreakdown;
   top_findings: InventoryItem[];
 }
 
@@ -154,9 +164,21 @@ export interface MigrationItem {
   migration_path: string[];
 }
 
+export interface MigrationSummary {
+  immediate_count: number;
+  immediate_algos: string[];
+  hybrid_count: number;
+  hybrid_algos: string[];
+  deprecate_count: number;
+  deprecate_algos: string[];
+  compliant_count: number;
+  compliant_algos: string[];
+}
+
 export interface MigrationResponse {
   matrix: MigrationItem[];
   standards: Record<string, string>;
+  summary?: MigrationSummary;
 }
 
 export interface CBOMData {
@@ -178,6 +200,8 @@ export interface ReportDeliverable {
 }
 
 export interface ReportsMetadata {
+  scan_id?: string;
+  target_path?: string;
   total_deliverables: number;
   available_formats: ReportDeliverable[];
   validation_status: string;
@@ -192,11 +216,21 @@ export interface TerminalLog {
 
 export interface SettingsData {
   profile: string;
+  target_path?: string;
+  scenario_year?: number;
+  x_lifetime?: number;
+  y_migration?: number;
   ast_enabled: boolean;
   bytecode_scanner_enabled: boolean;
+  dependency_manifest_parser?: boolean;
+  cert_scanner_enabled?: boolean;
   comment_filtering: boolean;
   ignore_paths: string[];
+  risk_weights?: Record<string, number>;
   risk_thresholds: Record<string, number>;
+  cyclonedx_version?: string;
+  strict_validation?: boolean;
+  deterministic_bom_ref?: boolean;
   air_gap_enforced: boolean;
   zero_key_persistence: boolean;
   strict_sandbox: boolean;

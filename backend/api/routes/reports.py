@@ -30,6 +30,8 @@ def get_reports_metadata():
     val = state.get_validation()
 
     return {
+        "scan_id": state.scan_id,
+        "target_path": state.scan_path,
         "total_deliverables": 6,
         "available_formats": [
             {"id": "json", "name": "CycloneDX 1.6 CBOM (JSON)", "filename": "cbom.json", "mime": "application/json", "available": True},

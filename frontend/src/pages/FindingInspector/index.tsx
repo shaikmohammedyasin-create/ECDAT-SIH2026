@@ -348,7 +348,7 @@ export const FindingInspector: React.FC = () => {
               </span>
               <span
                 className={`font-code-sm text-xs font-bold ${
-                  finding.risk_band === "CRITICAL" ? "text-error" : "text-primary"
+                  finding.risk_band?.toUpperCase() === "CRITICAL" ? "text-error" : "text-primary"
                 }`}
               >
                 {finding.risk_band} Band
@@ -357,7 +357,7 @@ export const FindingInspector: React.FC = () => {
             <div className="flex items-center gap-3 pt-1">
               <div
                 className={`bg-surface-container-lowest border p-3 rounded flex flex-col items-center justify-center shrink-0 w-20 ${
-                  finding.risk_band === "CRITICAL" ? "border-error text-error" : "border-primary text-primary"
+                  finding.risk_band?.toUpperCase() === "CRITICAL" ? "border-error text-error" : "border-primary text-primary"
                 }`}
               >
                 <span className="text-2xl font-code-lg font-extrabold leading-none">{Math.round(finding.risk_score)}</span>
@@ -370,13 +370,13 @@ export const FindingInspector: React.FC = () => {
                 </div>
                 <div className="w-full bg-surface-container-high h-1.5 rounded-full overflow-hidden">
                   <div
-                    className={`h-full ${finding.risk_band === "CRITICAL" ? "bg-error" : "bg-primary"}`}
+                    className={`h-full ${finding.risk_band?.toUpperCase() === "CRITICAL" ? "bg-error" : "bg-primary"}`}
                     style={{ width: `${Math.min(100, Math.max(10, finding.risk_score))}%` }}
                   ></div>
                 </div>
                 <div className="flex justify-between text-[10px] text-outline">
                   <span>Classical Hygiene: {finding.hygiene_critical ? "FLAGGED" : "NOMINAL"}</span>
-                  <span>Agility: 0.20</span>
+                  <span>Agility: {(finding.asset_type === "Certificate" ? 0.4 : (finding.asset_type === "Algorithm" || finding.asset_type === "Protocol" ? 0.3 : 0.8)).toFixed(2)}</span>
                 </div>
               </div>
             </div>

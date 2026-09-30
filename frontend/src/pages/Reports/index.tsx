@@ -89,7 +89,9 @@ export const ReportsPage: React.FC = () => {
           </label>
           <div className="flex items-center bg-surface-container-lowest border border-outline-variant px-2.5 py-1 rounded text-xs">
             <span className="material-symbols-outlined text-outline text-[14px] mr-1.5">fingerprint</span>
-            <span className="font-mono text-primary font-semibold">ecdat-scan-current</span>
+            <span className="font-mono text-primary font-semibold truncate" title={metadata?.scan_id || "live-scan"}>
+              {metadata?.scan_id ? metadata.scan_id.substring(0, 16) + "..." : "live-scan"}
+            </span>
           </div>
         </div>
 
@@ -98,7 +100,9 @@ export const ReportsPage: React.FC = () => {
           <label className="text-[10px] font-mono text-on-surface-variant uppercase mb-1">Target Analysis Scope</label>
           <div className="flex items-center bg-surface-container-lowest border border-outline-variant px-2.5 py-1 rounded text-xs">
             <span className="material-symbols-outlined text-secondary text-[14px] mr-1.5">folder</span>
-            <span className="font-mono text-on-surface truncate">Full Project + Dependencies</span>
+            <span className="font-mono text-on-surface truncate" title={metadata?.target_path || "Full Project"}>
+              {metadata?.target_path ? metadata.target_path.split(/[\\/]/).pop() || metadata.target_path : "Full Project"}
+            </span>
           </div>
         </div>
 

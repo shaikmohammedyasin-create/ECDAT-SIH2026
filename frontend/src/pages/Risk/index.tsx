@@ -30,8 +30,9 @@ export const RiskAnalysis: React.FC = () => {
     );
   }
 
-  const avg = riskData ? Math.round(riskData.average_score) : 74;
-  const dist = riskData?.risk_distribution || { CRITICAL: 0, HIGH: 0, MEDIUM: 0, LOW: 0 };
+  const avg = riskData ? Math.round(riskData.average_score) : 0;
+  const dist = riskData?.risk_distribution || {};
+  const criticalCount = dist.Critical ?? dist.CRITICAL ?? 0;
   const topFindings = riskData?.top_findings || [];
 
   return (
@@ -97,7 +98,7 @@ export const RiskAnalysis: React.FC = () => {
             <div className="space-y-1 text-code-sm">
               <div className="text-xs text-error flex items-center gap-1 font-semibold">
                 <span className="material-symbols-outlined text-[14px]">warning</span>
-                {dist.CRITICAL || 0} Critical Vectors
+                {criticalCount} Critical Vectors
               </div>
               <div className="text-[11px] text-on-surface-variant">
                 {riskData?.hygiene_critical_count || 0} Flagged for Classical Hygiene
@@ -126,7 +127,7 @@ export const RiskAnalysis: React.FC = () => {
           </div>
 
           <div className="mt-4 pt-2 border-t border-outline-variant flex items-center justify-between text-code-sm font-code-sm text-on-surface-variant">
-            <span>Primary Driver: <strong className="text-on-surface font-mono">Shor-vulnerable Asymmetric Keys</strong></span>
+            <span>Primary Driver: <strong className="text-on-surface font-mono">{topFindings.length > 0 ? `Shor-vulnerable Primitives (${topFindings[0].algorithm})` : "Cryptographic Primitives"}</strong></span>
             <Link to="/inventory" className="text-primary hover:underline text-xs">Inspect Inventory →</Link>
           </div>
         </div>
@@ -214,12 +215,18 @@ export const RiskAnalysis: React.FC = () => {
             <div>
               <div className="flex justify-between items-start">
                 <span className="text-[10px] text-outline uppercase font-mono">Weight 0.35</span>
-                <span className="px-1.5 py-0.2 bg-error-container/20 text-error border border-error/30 text-[10px] font-mono rounded">
-                  CRITICAL
+                <span className={`px-1.5 py-0.2 border text-[10px] font-mono rounded ${
+                  (riskData?.factor_breakdown?.quantum_exposure ?? 0) >= 0.7
+                    ? "bg-error-container/20 text-error border-error/30"
+                    : "bg-tertiary/10 text-tertiary border-tertiary/30"
+                }`}>
+                  {(riskData?.factor_breakdown?.quantum_exposure ?? 0) >= 0.7 ? "CRITICAL" : "CONTROLLED"}
                 </span>
               </div>
               <div className="font-semibold text-on-surface mt-1 text-sm">Quantum Exposure</div>
-              <div className="font-code-lg text-2xl font-bold text-primary my-1 font-mono">0.88</div>
+              <div className="font-code-lg text-2xl font-bold text-primary my-1 font-mono">
+                {riskData?.factor_breakdown?.quantum_exposure?.toFixed(2) ?? "0.00"}
+              </div>
               <p className="text-[11px] text-on-surface-variant leading-tight">
                 Reliance on Shor-vulnerable factorization (RSA) and discrete log curves.
               </p>
@@ -232,11 +239,13 @@ export const RiskAnalysis: React.FC = () => {
               <div className="flex justify-between items-start">
                 <span className="text-[10px] text-outline uppercase font-mono">Weight 0.25</span>
                 <span className="px-1.5 py-0.2 bg-primary-container/20 text-primary border border-primary/30 text-[10px] font-mono rounded">
-                  HIGH
+                  {(riskData?.factor_breakdown?.business_criticality ?? 0) >= 0.7 ? "HIGH" : "MODERATE"}
                 </span>
               </div>
               <div className="font-semibold text-on-surface mt-1 text-sm">Business Criticality</div>
-              <div className="font-code-lg text-2xl font-bold text-primary my-1 font-mono">0.80</div>
+              <div className="font-code-lg text-2xl font-bold text-primary my-1 font-mono">
+                {riskData?.factor_breakdown?.business_criticality?.toFixed(2) ?? "0.00"}
+              </div>
               <p className="text-[11px] text-on-surface-variant leading-tight">
                 Core authentication and security tokens guarding production transactions.
               </p>
@@ -249,11 +258,13 @@ export const RiskAnalysis: React.FC = () => {
               <div className="flex justify-between items-start">
                 <span className="text-[10px] text-outline uppercase font-mono">Weight 0.15</span>
                 <span className="px-1.5 py-0.2 bg-surface-container-high text-secondary border border-outline-variant text-[10px] font-mono rounded">
-                  ELEVATED
+                  {(riskData?.factor_breakdown?.exposure_surface ?? 0) >= 0.7 ? "EXTERNAL" : "ELEVATED"}
                 </span>
               </div>
               <div className="font-semibold text-on-surface mt-1 text-sm">Exposure Surface</div>
-              <div className="font-code-lg text-2xl font-bold text-primary my-1 font-mono">0.65</div>
+              <div className="font-code-lg text-2xl font-bold text-primary my-1 font-mono">
+                {riskData?.factor_breakdown?.exposure_surface?.toFixed(2) ?? "0.00"}
+              </div>
               <p className="text-[11px] text-on-surface-variant leading-tight">
                 Externally exposed endpoint certificates and public handshake handoffs.
               </p>
@@ -266,11 +277,13 @@ export const RiskAnalysis: React.FC = () => {
               <div className="flex justify-between items-start">
                 <span className="text-[10px] text-outline uppercase font-mono">Weight 0.15</span>
                 <span className="px-1.5 py-0.2 bg-primary-container/20 text-primary border border-primary/30 text-[10px] font-mono rounded">
-                  CONFIDENTIAL
+                  {(riskData?.factor_breakdown?.data_sensitivity ?? 0) >= 0.7 ? "CONFIDENTIAL" : "STANDARD"}
                 </span>
               </div>
               <div className="font-semibold text-on-surface mt-1 text-sm">Data Sensitivity</div>
-              <div className="font-code-lg text-2xl font-bold text-primary my-1 font-mono">0.75</div>
+              <div className="font-code-lg text-2xl font-bold text-primary my-1 font-mono">
+                {riskData?.factor_breakdown?.data_sensitivity?.toFixed(2) ?? "0.00"}
+              </div>
               <p className="text-[11px] text-on-surface-variant leading-tight">
                 Long-lived credentials and encrypted data requiring 10+ years confidentiality.
               </p>
@@ -283,11 +296,13 @@ export const RiskAnalysis: React.FC = () => {
               <div className="flex justify-between items-start">
                 <span className="text-[10px] text-outline uppercase font-mono">Weight 0.10</span>
                 <span className="px-1.5 py-0.2 bg-error-container/20 text-error border border-error/30 text-[10px] font-mono rounded">
-                  RIGID
+                  {(riskData?.factor_breakdown?.inversed_agility ?? 0) >= 0.5 ? "RIGID" : "AGILE"}
                 </span>
               </div>
               <div className="font-semibold text-on-surface mt-1 text-sm">Inversed Agility</div>
-              <div className="font-code-lg text-2xl font-bold text-primary my-1 font-mono">0.80</div>
+              <div className="font-code-lg text-2xl font-bold text-primary my-1 font-mono">
+                {riskData?.factor_breakdown?.inversed_agility?.toFixed(2) ?? "0.00"}
+              </div>
               <p className="text-[11px] text-on-surface-variant leading-tight">
                 Hardcoded primitives with tight dependency coupling requiring refactor.
               </p>
@@ -335,9 +350,9 @@ export const RiskAnalysis: React.FC = () => {
                   <td className="py-2 px-3">
                     <span
                       className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
-                        item.risk_band === "CRITICAL"
+                        item.risk_band?.toUpperCase() === "CRITICAL"
                           ? "bg-error-container text-on-error-container"
-                          : item.risk_band === "HIGH"
+                          : item.risk_band?.toUpperCase() === "HIGH"
                           ? "bg-primary-container/20 text-primary border border-primary/30"
                           : "bg-surface-container-high text-secondary"
                       }`}

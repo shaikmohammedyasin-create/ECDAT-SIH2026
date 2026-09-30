@@ -40,4 +40,21 @@ def get_migration_guidance():
         "SP_800_56C": "NIST SP 800-56C Rev 2: Recommendation for Key-Derivation Methods in Key-Establishment Schemes",
     }
 
-    return MigrationResponse(matrix=items, standards=standards_dict)
+    # Calculate actual summary metrics across active scanned codebase
+    imm_assets = [a for a in assets if a.quantum_status.value == "Vulnerable"]
+    hyb_assets = [a for a in assets if a.hybrid_option]
+    dep_assets = [a for a in assets if a.quantum_status.value == "Legacy-broken"]
+    comp_assets = [a for a in assets if a.quantum_status.value == "Safe"]
+
+    summary = {
+        "immediate_count": len(imm_assets),
+        "immediate_algos": sorted(list(set(a.algorithm for a in imm_assets))),
+        "hybrid_count": len(hyb_assets),
+        "hybrid_algos": sorted(list(set(a.algorithm for a in hyb_assets))),
+        "deprecate_count": len(dep_assets),
+        "deprecate_algos": sorted(list(set(a.algorithm for a in dep_assets))),
+        "compliant_count": len(comp_assets),
+        "compliant_algos": sorted(list(set(a.algorithm for a in comp_assets))),
+    }
+
+    return MigrationResponse(matrix=items, standards=standards_dict, summary=summary)

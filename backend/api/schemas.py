@@ -159,12 +159,22 @@ class MoscaSimulateResponse(BaseModel):
     total_assets: int
 
 
+class FactorBreakdown(BaseModel):
+    quantum_exposure: float
+    business_criticality: float
+    exposure_surface: float
+    data_sensitivity: float
+    crypto_agility: float
+    inversed_agility: float
+
+
 class RiskAnalysisResponse(BaseModel):
     formula: str
     weights: Dict[str, float]
     average_score: float
     risk_distribution: Dict[str, int]
     hygiene_critical_count: int
+    factor_breakdown: FactorBreakdown
     top_findings: List[InventoryItem]
 
 
@@ -180,9 +190,21 @@ class MigrationItem(BaseModel):
     migration_path: List[str]
 
 
+class MigrationSummary(BaseModel):
+    immediate_count: int
+    immediate_algos: List[str]
+    hybrid_count: int
+    hybrid_algos: List[str]
+    deprecate_count: int
+    deprecate_algos: List[str]
+    compliant_count: int
+    compliant_algos: List[str]
+
+
 class MigrationResponse(BaseModel):
     matrix: List[MigrationItem]
     standards: Dict[str, str]
+    summary: MigrationSummary
 
 
 class CBOMResponse(BaseModel):
@@ -199,11 +221,21 @@ class TerminalLogItem(BaseModel):
 
 class SettingsResponse(BaseModel):
     profile: str
-    ast_enabled: bool
-    bytecode_scanner_enabled: bool
-    comment_filtering: bool
-    ignore_paths: List[str]
-    risk_thresholds: Dict[str, float]
-    air_gap_enforced: bool
-    zero_key_persistence: bool
-    strict_sandbox: bool
+    target_path: str = ""
+    scenario_year: int = 2035
+    x_lifetime: float = 10.0
+    y_migration: float = 3.0
+    ast_enabled: bool = True
+    bytecode_scanner_enabled: bool = True
+    dependency_manifest_parser: bool = True
+    cert_scanner_enabled: bool = True
+    comment_filtering: bool = True
+    ignore_paths: List[str] = []
+    risk_weights: Dict[str, float] = {}
+    risk_thresholds: Dict[str, float] = {}
+    cyclonedx_version: str = "1.6"
+    strict_validation: bool = True
+    deterministic_bom_ref: bool = True
+    air_gap_enforced: bool = True
+    zero_key_persistence: bool = True
+    strict_sandbox: bool = True
