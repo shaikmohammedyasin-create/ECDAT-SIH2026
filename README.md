@@ -1,23 +1,22 @@
 # Enterprise Cryptographic Discovery & Analysis Tool (ECDAT)
 **SIH 2026 | PS ID: 26164 | NTRO**  
-**Theme:** Blockchain & Cybersecurity | **Software Edition**  
-**Version:** 2.0 (FastAPI Engine + Stitch React Workstation Build)  
+**Software Edition**  
 
 ---
 
 ## 🛡️ 1. What ECDAT Does
 
-ECDAT is an air-gapped, zero-telemetry cybersecurity and Post-Quantum Cryptography (PQC) readiness tool designed for critical enterprise infrastructure. It enables defense and intelligence organizations to:
+ECDAT is a cybersecurity and Post-Quantum Cryptography (PQC) readiness prototype for discovering cryptographic assets, analyzing quantum risk, generating PQC guidance, and producing CycloneDX CBOM evidence. It enables defense and intelligence organizations to:
 
-1. **Discover Cryptographic Assets:** Automatically scan multi-language source code (Python, Java, JS/TS), package manifests, X.509 digital certificates, keystores, network server configurations, and compiled Java bytecode.
-2. **Standardize into a Cryptographic Bill of Materials (CBOM):** Generate an official CycloneDX 1.6 CBOM and validate it in-memory against the official JSON schema with **0 errors**.
-3. **Classify Post-Quantum Vulnerability:** Accurately categorize assets into Shor-broken (CRQC vulnerable), Grover-weakened (symmetric security halved), Classically-broken (legacy algorithms like MD5/SHA-1/DES), and Quantum-safe.
+1. **Discover Cryptographic Assets:** Scan supported source code, manifests, certificates, keystores, configuration files, and Java bytecode using the implemented offline scanners.
+2. **Standardize into a Cryptographic Bill of Materials (CBOM):** Generate CycloneDX 1.6 CBOM output and validate it against the project schema.
+3. **Classify Post-Quantum Vulnerability:** Classify findings into the project's quantum-status categories, including Vulnerable, Weakened, Legacy-broken, and Safe.
 4. **Evaluate Threat Surface (HNDL / TNFL):** Distinguish between Harvest-Now-Decrypt-Later (confidentiality) and Trust-Now-Forge-Later (authenticity/signatures).
 5. **Simulate Mosca's Inequality:** Interactively model $X + Y > Z$ (Data Lifetime + Migration Time vs CRQC Arrival Horizon).
-6. **Prioritize Explainable Risk:** Calculate deterministic 0–100 risk scores based on the NTRO 5-factor model without black-box metrics.
-7. **Deliver Actionable Migration Guidance:** Map vulnerable primitives to NIST FIPS 203 (ML-KEM), FIPS 204 (ML-DSA), FIPS 205 (SLH-DSA), and hybrid transitional standards.
+6. **Prioritize Explainable Risk:** Present explainable risk results using the project's configured risk model.
+7. **Deliver Actionable Migration Guidance:** Provide PQC migration recommendations based on the finding and configured guidance rules.
 8. **Export Multi-Format Deliverables:** Produce CBOM JSON, SARIF 2.1.0 (for GitHub / IDE code scanning), Executive HTML Reports, ReportLab A4 PDF reports, CSV inventories, and Markdown summaries.
-9. **Dedicated Stitch Cyber-Workstation:** 100% Streamlit-free user interface built with React, TypeScript, Vite, Tailwind CSS, and Stitch-designed cybersecurity workstation aesthetics.
+9. **Dedicated React Workstation:** Provide a React, TypeScript, Vite, and Tailwind-based interface for scan results and evidence.
 
 ---
 
@@ -101,7 +100,7 @@ The user interface completely replaces Streamlit with 11 custom-crafted workstat
 | **4** | `/findings/:id` | **Finding Inspector** | Dual-column workbench: Asset Parameters, Shor/Grover impact, Mosca theorem check, Quantitative risk card, and IDE code viewer with syntax highlighting and highlighted vulnerable lines. |
 | **5** | `/mosca` | **Mosca Simulator** | Interactive sliders for Data Lifetime ($X$), Migration Duration ($Y$), and CRQC Horizon ($Z$), presets (2030, 2035, 2040), real-time equation solving ($X + Y > Z$), HNDL verdict, and visual exposure timeline (2026–2040). |
 | **6** | `/risk` | **Cryptographic Risk Analysis** | Global threat exposure gauge, full RFC-NTRO-892 mathematical formula breakdown, 5 weighted factor cards, top risk-ranked findings table. |
-| **7** | `/migration` | **Post-Quantum Migration Guidance** | Bento metric cards, 3-stage architectural pipeline (Classical Vulnerable $\to$ Dual-Key Hybrid $\to$ Pure Post-Quantum Lattice), deterministic NIST FIPS 203/204 transition rules. |
+| **7** | `/migration` | **Post-Quantum Migration Guidance** | Bento metric cards, 3-stage architectural pipeline (Classical Vulnerable $\to$ Dual-Key Hybrid $\to$ Pure Post-Quantum Lattice), deterministic configured PQC transition rules. |
 | **8** | `/cbom` | **CycloneDX 1.6 CBOM** | Real-time CycloneDX 1.6 schema verification banner, discovered components tree, live syntax-highlighted raw CBOM JSON viewer, export actions. |
 | **9** | `/terminal` | **Terminal & Scan Log** | Live daemon telemetry stream, execution ID, log level filtering (ALL, INFO, SUCCESS, WARNING, CRITICAL), auto-scroll, regex filter, copy buffer, raw log export. |
 | **10** | `/settings` | **Settings & Security Policies** | 7 configuration domains: AST parsers, quantum classification defaults, risk weights, CBOM schema strictness, air-gapped security guardrails. |
@@ -198,22 +197,21 @@ Every scan produces 6 standard deliverables in `output/`:
 ## 🧪 8. Automated Testing & Verification
 
 Run the full automated test suite:
-```bash
-.\venv\Scripts\python.exe -m pytest tests/ -v
-```
 
-### Verified Test Results:
-- **59 passed, 0 failed** across all test suites:
-  - **48 Core Cryptographic Tests:** AST detection, X.509 parsing, constant pool reading, quantum classification, HNDL/TNFL, Mosca inequality, risk scoring, PQC recommendations, CycloneDX 1.6 serialization & schema validation.
-  - **11 FastAPI Endpoint Tests:** Dashboard, New Scan, Inventory, Finding Inspector, Mosca Simulator, Risk Analysis, Migration Guidance, CBOM, Reports, Terminal, and Settings.
-- **Frontend Build Verification:**
-  - `cd frontend && npm run build` completes with **0 TypeScript errors**.
+    .\\venv\\Scripts\\python.exe -m pytest tests/ -v
+
+### Verified Results
+- **66 tests total:** 48 core, 13 API, and 5 hardening tests.
+- **Ground-truth evaluation:** 37 true positives, 0 false positives, 1 false negative, and 15 true negatives; precision **1.0000**, recall **0.9737**, F1 **0.9867**.
+- **Demo scan (`test_corpus`):** 25 assets, 11 Shor-vulnerable, 5 Grover-weakened, 6 legacy-broken, 16 Mosca violations, with 14 Critical, 8 High, and 3 Medium findings.
+- **CycloneDX 1.6 CBOM:** 25 components and 0 schema errors on the verified demo scan.
+- **External scans:** OpenSSL 3.3.0 (5,295 files, 1,295 findings), CPython 3.12.3 (4,636 files, 45 findings), and OpenSSH 9.7p1 (849 files, 205 findings); all recorded 0 CBOM schema errors.
 
 ---
 
 ## 🔒 9. Security Controls & Air-Gap Guarantee
 
-- **100% Air-Gapped Operation:** Zero external network calls, tracking beacons, or telemetry.
+- **Air-Gapped Operation:** Zero external network calls, tracking beacons, or telemetry.
 - **Zero Private Key Persistence:** Scanners inspect algorithms and parameters only; never persist or log private keys.
 - **Path Traversal Protection:** Target scan paths are sandboxed and validated against directory escape attacks.
 - **Zip Slip & Archive Bomb Guard:** JAR and archive readers cap entry extraction and enforce safe path canonicalization.
@@ -223,19 +221,28 @@ Run the full automated test suite:
 
 ## 🎬 10. Reproducible Demonstration Workflow
 
-To demonstrate ECDAT for evaluators in 60 seconds:
-1. Run `python run.py` (opens React Workstation at `http://localhost:5173`).
-2. Show the **Dashboard**: observe Shor-broken assets, HNDL confidentiality risks, and Mosca violations.
-3. Go to **New Scan** (`/scan/new`): select `test_corpus` and click **Initiate AST Cryptographic Scan** to watch the real-time pipeline execute.
-4. Go to **Crypto Inventory** (`/inventory`): filter by algorithm or risk band, and click **Inspect** on any finding (e.g. `RSA-2048`).
-5. In **Finding Inspector** (`/findings/1`): examine the AST parameters, Shor/Grover impact, and IDE source code viewer with highlighted vulnerable lines.
-6. Go to **Mosca Simulator** (`/mosca`): drag the slider from 2035 to 2030 to demonstrate live re-calculation of the theorem deficit window ($X + Y > Z$).
-7. Go to **Risk Analysis** (`/risk`): show the explainable 5-factor deterministic formulation.
-8. Go to **Migration Guidance** (`/migration`): review the 3-stage hybrid and NIST lattice roadmap.
-9. Go to **CycloneDX 1.6 CBOM** (`/cbom`): demonstrate **CBOM Schema Status: VALID ✓ (0 Errors)** and inspect the raw JSON.
-10. Go to **Terminal / Log** (`/terminal`): observe live stream telemetry and filter by log level.
-11. Go to **Reports & Evidence** (`/reports`): preview executive reports in-app and download deliverables.
+For a reproducible evaluator walkthrough:
+1. Run `python run.py` and open the React workstation.
+2. Scan `test_corpus` and review the dashboard and inventory.
+3. Open a finding in **Finding Inspector** to inspect source evidence and quantum classification.
+4. Review the **Mosca Simulator**, **Risk Analysis**, **Migration Guidance**, and **CycloneDX 1.6 CBOM** views.
+5. Inspect the generated evidence and reports.
 
+### Verified Demo Evidence
+
+The verified `test_corpus` demonstration contains **25 assets**, **11 Shor-vulnerable**, **5 Grover-weakened**, **6 legacy-broken**, **16 Mosca violations**, **14 Critical**, **8 High**, and **3 Medium** findings. The resulting CycloneDX 1.6 CBOM contains **25 components** with **0 schema errors**.
+
+![ECDAT Dashboard](tests/results/e2e_01_dashboard.png)
+
+**Live demo:** https://ecdat-sih-2026.vercel.app/
+
+**Demo/video evidence:** https://drive.google.com/drive/folders/1Wmq3nGff2P4qEbl23E3n-kWzY5ClIipb
+
+## Known Limitations
+
+- True AST analysis is currently implemented for Python source; other source-language scanners use their implemented static pattern/parsing approaches.
+- TLS and configuration analysis is the weakest scanner area and should be treated accordingly.
+- Non-quantum risk factors use project defaults unless the user supplies different values.
 
 ## License
 
