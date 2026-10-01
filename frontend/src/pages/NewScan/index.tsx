@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import JSZip from "jszip";
 import { triggerScan, triggerUploadScan, triggerPasteScan } from "../../services/api";
 
-type InputMode = "url" | "path" | "upload" | "paste";
+type InputMode = "path" | "upload" | "url" | "paste";
 type LangExt = "py" | "java" | "js" | "ts" | "c" | "cpp" | "go" | "rs" | "txt";
 
 const LANG_EXTS: { label: string; ext: LangExt }[] = [
@@ -43,10 +43,11 @@ export const NewScanPage: React.FC = () => {
   const [urlVal, setUrlVal] = useState("https://github.com/python/cpython");
   const [pathVal, setPathVal] = useState("test_corpus");
 
-  // Single file or folder upload state
+  // Selection state
   const [uploadedFile, setUploadedFile] = useState<File | null>(null);
   const [selectedFolderFiles, setSelectedFolderFiles] = useState<File[] | null>(null);
   const [selectedFolderName, setSelectedFolderName] = useState<string | null>(null);
+  const [showFileList, setShowFileList] = useState(false);
 
   const [dragOver, setDragOver] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -56,7 +57,12 @@ export const NewScanPage: React.FC = () => {
   const [pasteLang, setPasteLang] = useState<LangExt>("py");
   const [pasteFilename, setPasteFilename] = useState("snippet");
 
+  // Real-time execution and progress tracking
   const [scanning, setScanning] = useState(false);
+  const [activeStep, setActiveStep] = useState<"compressing" | "uploading" | "analyzing" | "idle">("idle");
+  const [stepDetail, setStepDetail] = useState<string>("");
+  const [compressPercent, setCompressPercent] = useState<number>(0);
+  const [uploadPercent, setUploadPercent] = useState<number>(0);
   const [currentStage, setCurrentStage] = useState("IDLE");
   const [stageProgress, setStageProgress] = useState(0);
   const [error, setError] = useState<string | null>(null);
@@ -82,11 +88,15 @@ export const NewScanPage: React.FC = () => {
     setError(null);
   };
 
-  const bundleFolderToZip = async (files: File[], folderName: string): Promise<File> => {
+  const bundleFolderToZip = async (
+    files: File[],
+    folderName: string,
+    onProgress: (percent: number) => void
+  ): Promise<File> => {
     const zip = new JSZip();
+    let fileCount = 0;
     for (const f of files) {
       const rel = f.webkitRelativePath || f.name;
-      // Skip heavy build / cache / vendor directories
       if (
         rel.includes("/node_modules/") ||
         rel.includes("/.git/") ||
@@ -101,12 +111,24 @@ export const NewScanPage: React.FC = () => {
         continue;
       }
       zip.file(rel, f);
+      fileCount++;
     }
-    const blob = await zip.generateAsync({
-      type: "blob",
-      compression: "DEFLATE",
-      compressionOptions: { level: 6 },
-    });
+
+    setStepDetail(`Compressing ${fileCount} source files...`);
+
+    const blob = await zip.generateAsync(
+      {
+        type: "blob",
+        compression: "DEFLATE",
+        compressionOptions: { level: 6 },
+      },
+      (metadata) => {
+        const pct = Math.round(metadata.percent);
+        setCompressPercent(pct);
+        onProgress(pct);
+      }
+    );
+
     return new File([blob], `${folderName || "scan_target"}.zip`, { type: "application/zip" });
   };
 
@@ -179,12 +201,12 @@ export const NewScanPage: React.FC = () => {
   const runPipelineAnimation = () => {
     let idx = 0;
     setCurrentStage(STAGES[0].name);
-    setStageProgress(12);
+    setStageProgress(15);
     const timer = setInterval(() => {
       if (idx < STAGES.length - 2) {
         idx += 1;
         setCurrentStage(STAGES[idx].name);
-        setStageProgress(Math.round(((idx + 1) / STAGES.length) * 90));
+        setStageProgress(Math.round(((idx + 1) / STAGES.length) * 92));
       }
     }, 1400);
     return timer;
@@ -193,37 +215,83 @@ export const NewScanPage: React.FC = () => {
   const handleStartScan = async () => {
     setScanning(true);
     setError(null);
-    const timer = runPipelineAnimation();
+    setActiveStep("idle");
 
     try {
       let promise: Promise<any>;
 
-      // Priority 1: If user picked an entire folder via folder picker
-      if (selectedFolderFiles && selectedFolderFiles.length > 0 && (mode === "path" || mode === "upload")) {
-        setCurrentStage("PREPARING FOLDER");
-        setStageProgress(8);
-        const zipFile = await bundleFolderToZip(selectedFolderFiles, selectedFolderName || "project");
-        promise = triggerUploadScan(zipFile);
+      // Priority 1: User selected a local folder
+      if (selectedFolderFiles && selectedFolderFiles.length > 0) {
+        setActiveStep("compressing");
+        setStepDetail("Step 1/3: Compressing folder in browser memory...");
+        setCompressPercent(0);
+
+        const zipFile = await bundleFolderToZip(
+          selectedFolderFiles,
+          selectedFolderName || "project",
+          (pct) => setStepDetail(`Step 1/3: In-Memory Compression (${pct}%)`)
+        );
+
+        setActiveStep("uploading");
+        setStepDetail("Step 2/3: Uploading archive to container sandbox (0%)...");
+        setUploadPercent(0);
+
+        const timer = runPipelineAnimation();
+        promise = triggerUploadScan(
+          zipFile,
+          { scenario_year: 2035, x_lifetime: 10.0, y_migration: 3.0 },
+          (pct) => {
+            setUploadPercent(pct);
+            setStepDetail(`Step 2/3: Uploading archive to container sandbox (${pct}%)...`);
+            if (pct >= 100) {
+              setActiveStep("analyzing");
+              setStepDetail("Step 3/3: Running AST discovery & CycloneDX CBOM validation...");
+            }
+          }
+        ).finally(() => clearInterval(timer));
+      } else if (mode === "upload" && uploadedFile) {
+        setActiveStep("uploading");
+        setStepDetail(`Step 1/2: Uploading ${uploadedFile.name} (0%)...`);
+        const timer = runPipelineAnimation();
+        promise = triggerUploadScan(
+          uploadedFile,
+          { scenario_year: 2035, x_lifetime: 10.0, y_migration: 3.0 },
+          (pct) => {
+            setUploadPercent(pct);
+            setStepDetail(`Step 1/2: Uploading ${uploadedFile.name} (${pct}%)...`);
+            if (pct >= 100) {
+              setActiveStep("analyzing");
+              setStepDetail("Step 2/2: Running AST discovery & quantum classification...");
+            }
+          }
+        ).finally(() => clearInterval(timer));
       } else if (mode === "url") {
-        promise = triggerScan({ path: urlVal, use_corpus: false });
+        setActiveStep("analyzing");
+        setStepDetail(`Cloning repository from ${urlVal} and analyzing...`);
+        const timer = runPipelineAnimation();
+        promise = triggerScan({ path: urlVal, use_corpus: false }).finally(() => clearInterval(timer));
       } else if (mode === "path") {
+        setActiveStep("analyzing");
+        setStepDetail(`Scanning directory path: ${pathVal}...`);
         const useCorpus = pathVal.trim() === "test_corpus";
-        promise = triggerScan({ path: pathVal, use_corpus: useCorpus });
-      } else if (mode === "upload") {
-        if (!uploadedFile) throw new Error("No file or folder selected. Please select a file or folder to scan.");
-        promise = triggerUploadScan(uploadedFile);
+        const timer = runPipelineAnimation();
+        promise = triggerScan({ path: pathVal, use_corpus: useCorpus }).finally(() => clearInterval(timer));
       } else {
         if (!pasteCode.trim()) throw new Error("Code area is empty. Please paste some source code.");
-        promise = triggerPasteScan(pasteCode, `${pasteFilename}.${pasteLang}`);
+        setActiveStep("analyzing");
+        setStepDetail("Scanning pasted code snippet...");
+        const timer = runPipelineAnimation();
+        promise = triggerPasteScan(pasteCode, `${pasteFilename}.${pasteLang}`).finally(() => clearInterval(timer));
       }
 
       await promise;
-      clearInterval(timer);
+      setActiveStep("idle");
       setCurrentStage(STAGES[STAGES.length - 1].name);
       setStageProgress(100);
-      setTimeout(() => navigate("/dashboard"), 600);
+      setStepDetail("Complete! Navigating to dashboard...");
+      setTimeout(() => navigate("/dashboard"), 700);
     } catch (err: any) {
-      clearInterval(timer);
+      setActiveStep("idle");
       setError(err.message || "Cryptographic scan failed.");
       setScanning(false);
     }
@@ -231,9 +299,10 @@ export const NewScanPage: React.FC = () => {
 
   const isReady = () => {
     if (scanning) return false;
+    if (selectedFolderFiles !== null && selectedFolderFiles.length > 0) return true;
     if (mode === "url") return urlVal.trim().length > 0;
-    if (mode === "path") return (selectedFolderFiles !== null && selectedFolderFiles.length > 0) || pathVal.trim().length > 0;
-    if (mode === "upload") return uploadedFile !== null || (selectedFolderFiles !== null && selectedFolderFiles.length > 0);
+    if (mode === "path") return pathVal.trim().length > 0;
+    if (mode === "upload") return uploadedFile !== null;
     return pasteCode.trim().length > 0;
   };
 
@@ -256,7 +325,7 @@ export const NewScanPage: React.FC = () => {
 
   return (
     <div className="flex-1 p-6 space-y-5 max-w-4xl mx-auto">
-      {/* Hidden Native Folder Input */}
+      {/* Hidden Native Directory Picker */}
       <input
         ref={folderInputRef}
         type="file"
@@ -270,6 +339,7 @@ export const NewScanPage: React.FC = () => {
         }}
       />
 
+      {/* Header */}
       <section className="flex flex-col md:flex-row md:items-end justify-between border-b border-outline-variant pb-3 gap-2">
         <div>
           <div className="flex items-center gap-2">
@@ -279,7 +349,7 @@ export const NewScanPage: React.FC = () => {
             </span>
           </div>
           <p className="text-xs text-on-surface-variant mt-1 font-sans">
-            Choose any input type — the full cryptographic discovery and quantum risk pipeline runs on all of them.
+            Cryptographic discovery, Mosca (X+Y&gt;Z) risk modeling, and CycloneDX 1.6 CBOM generation.
           </p>
         </div>
         <div className="text-xs font-mono text-tertiary flex items-center gap-1.5">
@@ -288,16 +358,108 @@ export const NewScanPage: React.FC = () => {
         </div>
       </section>
 
+      {/* PROMINENT ALERT WHEN FOLDER IS SELECTED */}
+      {selectedFolderFiles && selectedFolderFiles.length > 0 && (
+        <section className="p-4 bg-tertiary/10 border-2 border-tertiary rounded-lg space-y-3 shadow-md animate-fadeIn">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="flex items-start gap-3">
+              <span className="material-symbols-outlined text-tertiary text-3xl shrink-0 mt-0.5">folder_zip</span>
+              <div>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h2 className="text-sm font-bold font-mono text-tertiary uppercase tracking-wide">
+                    Folder Selected & Ready to Scan
+                  </h2>
+                  <span className="px-2 py-0.5 rounded bg-tertiary text-surface font-mono text-[10px] font-bold">
+                    DETECTED ON YOUR PC
+                  </span>
+                </div>
+                <p className="text-sm font-semibold font-mono text-on-surface mt-1">
+                  {selectedFolderName}
+                </p>
+                <p className="text-xs text-on-surface-variant font-mono mt-0.5">
+                  Contains <strong>{selectedFolderFiles.length} files</strong> ({formatBytes(folderTotalSize)}) • Ready to be analyzed in container sandbox
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 shrink-0">
+              <button
+                type="button"
+                id="btn-scan-selected-folder"
+                onClick={handleStartScan}
+                disabled={scanning}
+                className="bg-primary hover:bg-primary/90 text-on-primary font-mono text-xs font-bold py-2.5 px-4 rounded flex items-center gap-1.5 shadow-lg transition-all"
+              >
+                <span className="material-symbols-outlined text-base">rocket_launch</span>
+                <span>Start Scan Now</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => folderInputRef.current?.click()}
+                disabled={scanning}
+                className="border border-outline-variant hover:border-on-surface text-on-surface font-mono text-xs py-2.5 px-3 rounded transition-colors"
+              >
+                Change
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedFolderFiles(null);
+                  setSelectedFolderName(null);
+                  setPathVal("test_corpus");
+                }}
+                disabled={scanning}
+                className="border border-error/40 text-error hover:bg-error/10 font-mono text-xs py-2.5 px-2.5 rounded transition-colors"
+              >
+                Clear
+              </button>
+            </div>
+          </div>
+
+          {/* Expandable file inspection */}
+          <div className="border-t border-tertiary/30 pt-2 flex items-center justify-between text-[11px] font-mono">
+            <button
+              type="button"
+              onClick={() => setShowFileList(!showFileList)}
+              className="text-tertiary hover:underline flex items-center gap-1"
+            >
+              <span className="material-symbols-outlined text-sm">
+                {showFileList ? "expand_less" : "expand_more"}
+              </span>
+              <span>{showFileList ? "Hide file list" : `View detected files (${selectedFolderFiles.length})`}</span>
+            </button>
+            <span className="text-outline">Status: Staged in browser memory (Not yet sent)</span>
+          </div>
+
+          {showFileList && (
+            <div className="max-h-40 overflow-y-auto bg-surface-container-lowest border border-outline-variant rounded p-2 text-[10px] font-mono space-y-0.5 text-on-surface-variant">
+              {selectedFolderFiles.slice(0, 100).map((f, i) => (
+                <div key={i} className="truncate">
+                  {f.webkitRelativePath || f.name} <span className="text-outline">({formatBytes(f.size)})</span>
+                </div>
+              ))}
+              {selectedFolderFiles.length > 100 && (
+                <div className="text-primary italic pt-1">
+                  ...and {selectedFolderFiles.length - 100} more files.
+                </div>
+              )}
+            </div>
+          )}
+        </section>
+      )}
+
+      {/* INPUT SELECTOR TABS */}
       <section className="space-y-3">
         <div className="text-xs font-mono text-on-surface-variant">1. SELECT INPUT TYPE</div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-          <Tab id="path"   icon="folder_open" label="Select Folder"  sub="Pick directory from this PC" />
+          <Tab id="path"   icon="folder_open" label="Select Folder"  sub="Pick folder from this PC" />
           <Tab id="upload" icon="upload_file" label="File / ZIP"     sub=".zip, .py, .java, .jar" />
           <Tab id="url"    icon="link"        label="URL / Git"      sub="GitHub or any git repo" />
           <Tab id="paste"  icon="code"        label="Paste Code"     sub="Inline source text" />
         </div>
       </section>
 
+      {/* INPUT DETAILS PANEL */}
       <section className="bg-surface-container-low border border-outline-variant rounded p-4 space-y-4">
         <div className="flex items-center gap-1.5 font-semibold text-sm text-primary border-b border-outline-variant pb-2">
           <span className="material-symbols-outlined text-base">
@@ -310,16 +472,15 @@ export const NewScanPage: React.FC = () => {
 
         {mode === "path" && (
           <div className="space-y-4">
-            {/* Primary Action: Direct Folder Selector */}
-            <div className="p-4 bg-surface-container-lowest border-2 border-primary/40 rounded-lg space-y-3 shadow-sm">
+            <div className="p-4 bg-surface-container-lowest border border-outline-variant rounded-lg space-y-3">
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <div className="flex items-center gap-2 text-sm font-mono font-bold text-on-surface">
                     <span className="material-symbols-outlined text-primary text-xl">folder</span>
-                    <span>Select Any Project Folder from Your PC</span>
+                    <span>Browse Any Project Folder from Your PC</span>
                   </div>
                   <p className="text-xs text-on-surface-variant mt-0.5">
-                    Click to open your file explorer and choose any directory. Works automatically with Docker and cloud containers.
+                    Opens your native Windows/Mac/Linux folder picker. No manual path typing needed.
                   </p>
                 </div>
                 <button
@@ -330,39 +491,11 @@ export const NewScanPage: React.FC = () => {
                   className="bg-primary hover:bg-primary/90 text-on-primary font-mono text-xs font-bold py-2.5 px-4 rounded flex items-center justify-center gap-2 transition-all shadow shrink-0"
                 >
                   <span className="material-symbols-outlined text-base">folder_open</span>
-                  <span>{selectedFolderFiles ? "Change Folder" : "Browse & Select Folder"}</span>
+                  <span>{selectedFolderFiles ? "Select Different Folder" : "Browse & Select Folder"}</span>
                 </button>
               </div>
-
-              {selectedFolderFiles && (
-                <div className="p-3 bg-tertiary/10 border border-tertiary/40 rounded flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-2.5 min-w-0">
-                    <span className="material-symbols-outlined text-tertiary text-2xl shrink-0">check_circle</span>
-                    <div className="truncate">
-                      <p className="text-xs font-mono font-bold text-tertiary truncate">
-                        Selected: {selectedFolderName}
-                      </p>
-                      <p className="text-[11px] font-mono text-on-surface-variant">
-                        {selectedFolderFiles.length} files ({formatBytes(folderTotalSize)}) • Ready for full cryptographic discovery & CBOM generation
-                      </p>
-                    </div>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setSelectedFolderFiles(null);
-                      setSelectedFolderName(null);
-                      setPathVal("test_corpus");
-                    }}
-                    className="text-[10px] font-mono text-error border border-error/40 px-2 py-1 rounded hover:bg-error/10 shrink-0"
-                  >
-                    Clear
-                  </button>
-                </div>
-              )}
             </div>
 
-            {/* Fallback: Direct server path or preset */}
             <div className="space-y-2 pt-1 border-t border-outline-variant/60">
               <label className="text-xs font-mono text-on-surface-variant block">
                 Or enter directory path (for server-local filesystem / controlled test corpus):
@@ -401,7 +534,7 @@ export const NewScanPage: React.FC = () => {
                 </button>
               </div>
               <p className="text-[11px] font-mono text-outline leading-relaxed">
-                Note: In Docker container environments, host drive paths (e.g. C:\Users\...) are isolated from the container. Use <strong>"Browse & Select Folder"</strong> above to scan any PC folder seamlessly.
+                Note: In Docker container environments, host drive paths (e.g. C:\Users\...) cannot be read directly inside the container. Always use <strong>"Browse & Select Folder"</strong> above to scan your PC project folders.
               </p>
             </div>
           </div>
@@ -422,12 +555,7 @@ export const NewScanPage: React.FC = () => {
                 {(uploadedFile || selectedFolderFiles) ? "task" : "cloud_upload"}
               </span>
 
-              {selectedFolderFiles ? (
-                <div className="text-center">
-                  <p className="text-sm font-semibold text-tertiary font-mono">Folder: {selectedFolderName}</p>
-                  <p className="text-xs text-on-surface-variant mt-1">{selectedFolderFiles.length} files ({formatBytes(folderTotalSize)})</p>
-                </div>
-              ) : uploadedFile ? (
+              {uploadedFile ? (
                 <div className="text-center">
                   <p className="text-sm font-semibold text-tertiary font-mono">{uploadedFile.name}</p>
                   <p className="text-xs text-on-surface-variant mt-1">{formatBytes(uploadedFile.size)}</p>
@@ -476,17 +604,15 @@ export const NewScanPage: React.FC = () => {
               />
             </div>
 
-            {(uploadedFile || selectedFolderFiles) && (
+            {uploadedFile && (
               <div className="flex items-center gap-2">
                 <span className="text-[11px] font-mono text-on-surface-variant flex-1">
-                  Selected: <span className="text-primary font-bold">{selectedFolderName || uploadedFile?.name}</span> ({formatBytes(folderTotalSize || uploadedFile?.size || 0)})
+                  Selected: <span className="text-primary font-bold">{uploadedFile.name}</span> ({formatBytes(uploadedFile.size)})
                 </span>
                 <button
                   type="button"
                   onClick={() => {
                     setUploadedFile(null);
-                    setSelectedFolderFiles(null);
-                    setSelectedFolderName(null);
                     if (fileInputRef.current) fileInputRef.current.value = "";
                   }}
                   className="text-[10px] font-mono text-error border border-error/40 px-2 py-0.5 rounded hover:bg-error/10 transition"
@@ -495,7 +621,6 @@ export const NewScanPage: React.FC = () => {
                 </button>
               </div>
             )}
-            <p className="text-[11px] font-mono text-outline">Archives and folders are extracted in an isolated sandbox. All temporary files are automatically cleaned up.</p>
           </div>
         )}
 
@@ -574,7 +699,7 @@ export const NewScanPage: React.FC = () => {
         )}
       </section>
 
-      {/* Active Collectors Informational Grid */}
+      {/* ACTIVE COLLECTORS INFORMATIONAL GRID */}
       <section className="bg-surface-container-low border border-outline-variant rounded p-4 space-y-3">
         <div className="flex items-center justify-between border-b border-outline-variant pb-2">
           <div className="flex items-center gap-1.5 font-semibold text-sm text-on-surface">
@@ -630,65 +755,102 @@ export const NewScanPage: React.FC = () => {
         </div>
       </section>
 
+      {/* LIVE SCANNING & UPLOADING PROGRESS OVERLAY */}
       {scanning && (
-        <section className="bg-surface-container-low border border-primary-container/60 rounded p-4 space-y-2">
-          <div className="flex justify-between items-center text-xs font-mono">
-            <span className="text-primary font-bold">⟳ Stage: {currentStage}</span>
-            <span className="text-on-surface-variant">{stageProgress}%</span>
+        <section className="bg-surface-container-low border-2 border-primary rounded-lg p-5 space-y-4 shadow-xl">
+          <div className="flex items-center justify-between border-b border-outline-variant pb-2">
+            <div className="flex items-center gap-2">
+              <span className="w-3 h-3 rounded-full bg-primary animate-ping" />
+              <span className="text-sm font-bold font-mono text-primary uppercase">
+                {activeStep === "compressing" ? "Step 1/3: Compressing Folder" : activeStep === "uploading" ? "Step 2/3: Uploading to Container" : "Step 3/3: Cryptographic Discovery Pipeline"}
+              </span>
+            </div>
+            <span className="text-xs font-mono text-on-surface font-bold">
+              {activeStep === "compressing" ? `${compressPercent}%` : activeStep === "uploading" ? `${uploadPercent}%` : `${stageProgress}%`}
+            </span>
           </div>
-          <div className="w-full bg-surface-container-highest rounded h-2 overflow-hidden">
-            <div className="bg-primary h-full transition-all duration-300 ease-out" style={{ width: `${stageProgress}%` }} />
+
+          {/* Progress bar */}
+          <div className="w-full bg-surface-container-highest rounded-full h-3 overflow-hidden">
+            <div
+              className="bg-primary h-full transition-all duration-300 ease-out"
+              style={{
+                width: `${
+                  activeStep === "compressing"
+                    ? Math.round(compressPercent * 0.3)
+                    : activeStep === "uploading"
+                    ? 30 + Math.round(uploadPercent * 0.35)
+                    : 65 + Math.round(stageProgress * 0.35)
+                }%`,
+              }}
+            />
           </div>
-          <p className="text-[11px] font-mono text-outline">
-            {STAGES.find((s) => s.name === currentStage)?.desc ?? "Executing cryptographic discovery pipeline..."}
-          </p>
-          <div className="flex gap-1 flex-wrap mt-1">
+
+          <div className="p-3 bg-surface-container-lowest border border-outline-variant rounded font-mono text-xs text-on-surface flex items-center gap-2">
+            <span className="material-symbols-outlined text-sm text-primary animate-spin">progress_activity</span>
+            <span>{stepDetail || "Processing cryptographic scan..."}</span>
+          </div>
+
+          <div className="flex gap-1.5 flex-wrap">
             {STAGES.map((s) => {
               const idx = STAGES.findIndex((x) => x.name === currentStage);
               const i = STAGES.indexOf(s);
               return (
-                <span key={s.name} className={`px-1.5 py-0.5 rounded text-[9px] font-mono border transition-colors ${
-                  i < idx ? "bg-tertiary/20 text-tertiary border-tertiary/50" : i === idx ? "bg-primary/20 text-primary border-primary font-bold" : "bg-surface-container text-outline border-outline-variant"
-                }`}>{s.name}</span>
+                <span
+                  key={s.name}
+                  className={`px-2 py-0.5 rounded text-[10px] font-mono border transition-colors ${
+                    i < idx
+                      ? "bg-tertiary/20 text-tertiary border-tertiary/50"
+                      : i === idx
+                      ? "bg-primary/20 text-primary border-primary font-bold animate-pulse"
+                      : "bg-surface-container text-outline border-outline-variant"
+                  }`}
+                >
+                  {s.name}
+                </span>
               );
             })}
           </div>
         </section>
       )}
 
+      {/* ERROR BANNER */}
       {error && (
-        <div className="bg-error-container/20 border border-error/40 p-3 rounded flex items-start gap-2">
-          <span className="material-symbols-outlined text-error text-sm mt-0.5">error</span>
-          <div className="flex-1">
-            <p className="text-error font-mono text-xs font-bold">Scan Failed</p>
-            <p className="text-error/90 font-mono text-xs mt-0.5">{error}</p>
+        <div className="bg-error-container/20 border-2 border-error p-4 rounded-lg flex items-start gap-3">
+          <span className="material-symbols-outlined text-error text-xl mt-0.5">error</span>
+          <div className="flex-1 space-y-2">
+            <p className="text-error font-mono text-xs font-bold uppercase">Cryptographic Scan Error</p>
+            <p className="text-on-surface font-mono text-xs leading-relaxed">{error}</p>
             {(error.includes("container") || error.includes("/app/") || error.includes("does not exist") || error.includes("drive path")) && (
-              <button
-                type="button"
-                onClick={() => folderInputRef.current?.click()}
-                className="mt-2 text-xs font-mono font-bold text-primary bg-primary/10 hover:bg-primary/20 border border-primary/40 px-3 py-1.5 rounded flex items-center gap-1.5 transition"
-              >
-                <span className="material-symbols-outlined text-sm">folder_open</span>
-                <span>Click here to select your folder with the Folder Picker</span>
-              </button>
+              <div className="pt-1">
+                <button
+                  type="button"
+                  onClick={() => folderInputRef.current?.click()}
+                  className="text-xs font-mono font-bold text-on-primary bg-primary hover:bg-primary/90 px-3 py-1.5 rounded flex items-center gap-1.5 shadow"
+                >
+                  <span className="material-symbols-outlined text-sm">folder_open</span>
+                  <span>Click here to select your folder with the Folder Picker instead</span>
+                </button>
+              </div>
             )}
           </div>
         </div>
       )}
 
-      <section className="pt-1">
+      {/* PRIMARY LAUNCH ACTION */}
+      <section className="pt-2">
         <button
           id="scan-start-btn"
           onClick={handleStartScan}
           disabled={!isReady()}
-          className="w-full bg-primary hover:bg-primary/90 text-on-primary font-mono text-sm font-bold py-3 px-4 rounded flex items-center justify-center gap-2 transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-lg"
+          className="w-full bg-primary hover:bg-primary/90 text-on-primary font-mono text-sm font-bold py-3.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-all disabled:opacity-40 disabled:cursor-not-allowed shadow-xl"
         >
-          <span className="material-symbols-outlined text-base">{scanning ? "sync" : "rocket_launch"}</span>
+          <span className="material-symbols-outlined text-lg">{scanning ? "sync" : "rocket_launch"}</span>
           <span>
             {scanning
-              ? "Executing Cryptographic Discovery Pipeline..."
+              ? "Running Pipeline..."
               : selectedFolderName
-              ? `Initiate AST Cryptographic Scan — Folder: ${selectedFolderName}`
+              ? `🚀 Initiate AST Cryptographic Scan — Folder: ${selectedFolderName}`
               : `Initiate AST Cryptographic Scan — ${
                   mode === "url" ? "GitHub / URL" :
                   mode === "path" ? "Local Path" :

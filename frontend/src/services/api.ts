@@ -63,19 +63,48 @@ export async function triggerScan(data: {
 
 export async function triggerUploadScan(
   file: File,
-  opts?: { scenario_year?: number; x_lifetime?: number; y_migration?: number }
+  opts?: { scenario_year?: number; x_lifetime?: number; y_migration?: number },
+  onProgress?: (percent: number) => void
 ): Promise<any> {
-  const fd = new FormData();
-  fd.append("file", file);
-  fd.append("scenario_year", String(opts?.scenario_year ?? 2035));
-  fd.append("x_lifetime", String(opts?.x_lifetime ?? 10.0));
-  fd.append("y_migration", String(opts?.y_migration ?? 3.0));
-  const res = await fetch(`${API_BASE}/scans/upload`, { method: "POST", body: fd });
-  if (!res.ok) {
-    const detail = await res.json().catch(() => ({ detail: res.statusText }));
-    throw new Error(detail?.detail ?? `Upload scan error: ${res.statusText}`);
-  }
-  return res.json();
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", `${API_BASE}/scans/upload`);
+
+    if (onProgress && xhr.upload) {
+      xhr.upload.onprogress = (event) => {
+        if (event.lengthComputable) {
+          const percent = Math.round((event.loaded / event.total) * 100);
+          onProgress(percent);
+        }
+      };
+    }
+
+    xhr.onload = () => {
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+          resolve(JSON.parse(xhr.responseText));
+        } catch {
+          resolve(xhr.responseText);
+        }
+      } else {
+        try {
+          const data = JSON.parse(xhr.responseText);
+          reject(new Error(data.detail || `Upload scan error: ${xhr.statusText}`));
+        } catch {
+          reject(new Error(`Upload scan error: ${xhr.statusText}`));
+        }
+      }
+    };
+
+    xhr.onerror = () => reject(new Error("Network connection error during file upload. Check container backend."));
+
+    const fd = new FormData();
+    fd.append("file", file);
+    fd.append("scenario_year", String(opts?.scenario_year ?? 2035));
+    fd.append("x_lifetime", String(opts?.x_lifetime ?? 10.0));
+    fd.append("y_migration", String(opts?.y_migration ?? 3.0));
+    xhr.send(fd);
+  });
 }
 
 export async function triggerPasteScan(
