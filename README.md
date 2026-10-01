@@ -4,6 +4,20 @@
 
 ---
 
+ECDAT is an enterprise cryptographic discovery and analysis prototype for identifying cryptographic assets, classifying quantum exposure, evaluating migration timing, and producing CycloneDX CBOM evidence. The verified evaluation includes a controlled demo corpus, ground-truth measurements, and scans of OpenSSL, CPython, and OpenSSH.
+
+**Live demo:** https://ecdat-sih-2026.vercel.app/  
+**Demo/video evidence:** https://drive.google.com/drive/folders/1Wmq3nGff2P4qEbl23E3n-kWzY5ClIipb
+
+### Quick Start
+1. Clone the repository.
+2. Create and activate a Python virtual environment.
+3. Install `requirements.txt`.
+4. Install frontend dependencies with `npm install` in `frontend/`.
+5. Run `python run.py`.
+
+---
+
 ## 🛡️ 1. What ECDAT Does
 
 ECDAT is a cybersecurity and Post-Quantum Cryptography (PQC) readiness prototype for discovering cryptographic assets, analyzing quantum risk, generating PQC guidance, and producing CycloneDX CBOM evidence. It enables defense and intelligence organizations to:
