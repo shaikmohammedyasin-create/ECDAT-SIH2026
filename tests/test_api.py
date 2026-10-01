@@ -202,6 +202,7 @@ def test_path_traversal_protection():
     assert resp_404.status_code == 404
 
     # Attempting to scan system root is rejected with 400 Bad Request
-    resp_root = client.post("/api/scans", json={"use_corpus": False, "path": "C:\\Windows"})
+    system_path = r"C:\Windows" if os.name == "nt" else "/etc"
+    resp_root = client.post("/api/scans", json={"use_corpus": False, "path": system_path})
     assert resp_root.status_code == 400
 
