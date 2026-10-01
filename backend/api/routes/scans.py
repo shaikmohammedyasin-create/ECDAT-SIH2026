@@ -32,7 +32,7 @@ router = APIRouter(prefix="/api/scans", tags=["scans"])
 
 
 def _validate_scan_path(path: str) -> str:
-    path = path.strip()
+    path = path.strip().strip('"').strip("'")
     if path.startswith("http://") or path.startswith("https://"):
         path_lower = path.lower()
         if "cpython" in path_lower:

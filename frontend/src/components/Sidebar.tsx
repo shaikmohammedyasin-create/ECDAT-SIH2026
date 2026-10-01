@@ -71,7 +71,7 @@ export const Sidebar: React.FC = () => {
             <span className="material-symbols-outlined text-sm text-tertiary">check_circle</span>
             <span>System Health: Optimal</span>
           </div>
-          <span className="text-[10px] text-outline">v2.4</span>
+          <span className="text-[10px] text-outline">v1.0</span>
         </div>
 
         <NavLink

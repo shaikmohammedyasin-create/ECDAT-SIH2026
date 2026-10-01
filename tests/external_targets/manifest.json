@@ -1,7 +1,7 @@
 {
   "manifest_version": "1.0",
   "generated_at": "2026-09-30T07:20:00Z",
-  "scanner_version": "2.4.0-ntro",
+  "scanner_version": "1.0.0-sih2026",
   "repositories": [
     {
       "repository": "openssl",

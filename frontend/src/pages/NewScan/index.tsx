@@ -1,4 +1,4 @@
-﻿import React, { useState, useRef, useCallback } from "react";
+import React, { useState, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { triggerScan, triggerUploadScan, triggerPasteScan } from "../../services/api";
 
@@ -237,7 +237,7 @@ export const NewScanPage: React.FC = () => {
                 controlled test_corpus
               </button>
             </div>
-            <p className="text-[11px] font-mono text-outline">Path traversal tokens (..) are blocked. System root directories are prohibited.</p>
+            <p className="text-[11px] font-mono text-outline">Project folders (e.g. C:\Users\... or local paths) are supported. Only system roots and relative traversal (..) are restricted.</p>
           </div>
         )}
 
@@ -263,9 +263,9 @@ export const NewScanPage: React.FC = () => {
                 </div>
               ) : (
                 <div className="text-center">
-                  <p className="text-sm font-semibold text-on-surface">Drop a file here or <span className="text-primary underline">browse</span></p>
-                  <p className="text-xs text-on-surface-variant mt-1">Accepts: .py, .java, .js, .ts, .c, .cpp, .go, .rs, .zip, .jar, .class, or any source file</p>
-                  <p className="text-xs text-on-surface-variant">Max size: 500 MB (ZIP auto-extracted)</p>
+                  <p className="text-sm font-semibold text-on-surface">Drop a file or <span className="text-tertiary font-bold">.ZIP archive</span> here, or <span className="text-primary underline">browse</span></p>
+                  <p className="text-xs text-on-surface-variant mt-1"><span className="text-tertiary font-semibold">To scan an entire folder:</span> Compress it to a .zip file and drop it here (auto-extracted in sandbox)</p>
+                  <p className="text-xs text-on-surface-variant">Also accepts: .py, .java, .js, .ts, .c, .cpp, .go, .rs, .jar, .class, .pem, .crt, .key (Max: 500 MB)</p>
                 </div>
               )}
               <input

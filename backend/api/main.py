@@ -40,7 +40,7 @@ from backend.api.routes import (
 app = FastAPI(
     title="ECDAT Security Workstation API",
     description="Enterprise Cryptographic Discovery & Analysis Tool API — NTRO PS-ID 26164",
-    version="2.4.0",
+    version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc"
 )
@@ -86,7 +86,7 @@ def health_check():
     return {
         "status": "healthy",
         "service": "ECDAT Security Workstation API",
-        "version": "2.4.0",
+        "version": "1.0.0",
         "air_gap": "enforced"
     }
 

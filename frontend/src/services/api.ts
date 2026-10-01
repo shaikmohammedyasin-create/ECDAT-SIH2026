@@ -54,7 +54,10 @@ export async function triggerScan(data: {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
-  if (!res.ok) throw new Error(`Scan API error: ${res.statusText}`);
+  if (!res.ok) {
+    const detail = await res.json().catch(() => ({ detail: res.statusText }));
+    throw new Error(detail?.detail ?? `Scan API error: ${res.statusText}`);
+  }
   return res.json();
 }
 
