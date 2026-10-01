@@ -257,19 +257,19 @@ export const FindingInspector: React.FC = () => {
               <div className="grid grid-cols-2 gap-2 text-[11px]">
                 <div className="bg-surface-container-lowest p-2 rounded border border-outline-variant">
                   <span className="text-on-surface-variant block text-[10px] uppercase font-bold">Shor Algorithm Impact</span>
-                  <span className={`font-semibold text-[12px] block mt-0.5 ${finding.quantum_status.includes("SHOR") ? "text-error" : "text-tertiary"}`}>
-                    {finding.quantum_status.includes("SHOR") ? "High Severity" : "Resistant"}
+                  <span className={`font-semibold text-[12px] block mt-0.5 ${finding.quantum_status === "Vulnerable" ? "text-error" : "text-tertiary"}`}>
+                    {finding.quantum_status === "Vulnerable" ? "High Severity" : "Resistant"}
                   </span>
                   <span className="text-on-surface-variant text-[10px]">
-                    {finding.quantum_status.includes("SHOR")
+                    {finding.quantum_status === "Vulnerable"
                       ? "Discrete log/factoring reduced to polynomial time."
                       : "No Shor period-finding weakness."}
                   </span>
                 </div>
                 <div className="bg-surface-container-lowest p-2 rounded border border-outline-variant">
                   <span className="text-on-surface-variant block text-[10px] uppercase font-bold">Grover Algorithm Impact</span>
-                  <span className={`font-semibold text-[12px] block mt-0.5 ${finding.quantum_status.includes("GROVER") ? "text-primary" : "text-on-surface-variant"}`}>
-                    {finding.quantum_status.includes("GROVER") ? "Weakened (√N)" : "Minimal"}
+                  <span className={`font-semibold text-[12px] block mt-0.5 ${finding.quantum_status === "Weakened" ? "text-primary" : "text-on-surface-variant"}`}>
+                    {finding.quantum_status === "Weakened" ? "Weakened (√N)" : "Minimal"}
                   </span>
                   <span className="text-on-surface-variant text-[10px]">
                     Effective key length halved under quadratic search.
