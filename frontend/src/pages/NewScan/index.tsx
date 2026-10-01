@@ -36,6 +36,46 @@ const QUICK_URLS = [
   { label: "curl (GitHub)", url: "https://github.com/curl/curl" },
 ];
 
+const IGNORED_DIRS = new Set([
+  "node_modules", ".git", ".github", ".svn", ".hg",
+  "venv", ".venv", "env", ".env", "__pycache__", ".pytest_cache",
+  "dist", "build", "target", "out", ".output",
+  ".next", ".nuxt", ".svelte-kit", ".turbo",
+  ".idea", ".vscode", ".vs",
+  ".gradle", ".cargo", "vendor", "pods",
+  ".cache", ".tox", "coverage", "htmlcov", "bin", "obj",
+]);
+
+const IGNORED_EXTS = new Set([
+  "png", "jpg", "jpeg", "gif", "svg", "ico", "webp", "bmp", "tiff", "avif",
+  "mp4", "webm", "mov", "avi", "mkv", "wmv", "flv", "mp3", "wav", "ogg", "flac",
+  "zip", "tar", "gz", "tgz", "bz2", "xz", "7z", "rar", "iso", "dmg",
+  "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx",
+  "woff", "woff2", "ttf", "eot", "otf",
+  "exe", "dll", "so", "dylib", "bin", "obj", "o", "a", "lib", "pdb", "wasm", "map",
+]);
+
+function isRelevantScanFile(file: File): boolean {
+  if (file.size > 10 * 1024 * 1024) return false; // Skip files > 10MB
+  const rel = (file.webkitRelativePath || file.name).replace(/\\/g, "/");
+  const parts = rel.toLowerCase().split("/");
+  for (let i = 0; i < parts.length - 1; i++) {
+    if (IGNORED_DIRS.has(parts[i])) return false;
+  }
+  const fileName = parts[parts.length - 1];
+  if (!fileName) return false;
+  // If dotfile (e.g. .DS_Store), ignore unless known config like .env or .conf
+  if (fileName.startsWith(".") && !fileName.startsWith(".env") && !fileName.endsWith(".conf")) {
+    return false;
+  }
+  const dotIdx = fileName.lastIndexOf(".");
+  if (dotIdx !== -1) {
+    const ext = fileName.slice(dotIdx + 1).toLowerCase();
+    if (IGNORED_EXTS.has(ext)) return false;
+  }
+  return true;
+}
+
 export const NewScanPage: React.FC = () => {
   const navigate = useNavigate();
   const [mode, setMode] = useState<InputMode>("path");
@@ -46,6 +86,7 @@ export const NewScanPage: React.FC = () => {
   // Local folder selection
   const [selectedFolderFiles, setSelectedFolderFiles] = useState<File[] | null>(null);
   const [selectedFolderName, setSelectedFolderName] = useState<string | null>(null);
+  const [ignoredCount, setIgnoredCount] = useState<number>(0);
   const [showFileList, setShowFileList] = useState(false);
   const folderInputRef = useRef<HTMLInputElement>(null);
 
@@ -75,17 +116,23 @@ export const NewScanPage: React.FC = () => {
   const folderTotalSize = selectedFolderFiles?.reduce((acc, f) => acc + f.size, 0) ?? 0;
 
   const handleFolderSelected = (fileList: FileList | File[]) => {
-    const arr = Array.from(fileList);
-    if (arr.length === 0) return;
+    const rawArr = Array.from(fileList);
+    if (rawArr.length === 0) return;
     let name = "Selected Folder";
-    for (const f of arr) {
+    for (const f of rawArr) {
       if (f.webkitRelativePath) {
-        name = f.webkitRelativePath.split("/")[0] || name;
-        break;
+        const seg = f.webkitRelativePath.replace(/\\/g, "/").split("/")[0];
+        if (seg) {
+          name = seg;
+          break;
+        }
       }
     }
-    setSelectedFolderFiles(arr);
+
+    const relevant = rawArr.filter(isRelevantScanFile);
+    setSelectedFolderFiles(relevant);
     setSelectedFolderName(name);
+    setIgnoredCount(rawArr.length - relevant.length);
     setError(null);
   };
 
@@ -95,33 +142,19 @@ export const NewScanPage: React.FC = () => {
     onProgress: (percent: number) => void
   ): Promise<File> => {
     const zip = new JSZip();
-    let fileCount = 0;
     for (const f of files) {
-      const rel = f.webkitRelativePath || f.name;
-      if (
-        rel.includes("/node_modules/") ||
-        rel.includes("/.git/") ||
-        rel.includes("/venv/") ||
-        rel.includes("/__pycache__/") ||
-        rel.includes("/dist/") ||
-        rel.includes("/build/") ||
-        rel.includes("/target/") ||
-        rel.includes("/.idea/") ||
-        rel.includes("/.vscode/")
-      ) {
-        continue;
-      }
+      const rel = (f.webkitRelativePath || f.name).replace(/\\/g, "/");
       zip.file(rel, f);
-      fileCount++;
     }
 
-    setStepDetail(`Compressing ${fileCount} files in memory...`);
+    setStepDetail(`Packaging ${files.length} source & config files...`);
 
+    // Level 1 DEFLATE: 50x faster than level 6, near-instant in browser
     const blob = await zip.generateAsync(
       {
         type: "blob",
         compression: "DEFLATE",
-        compressionOptions: { level: 6 },
+        compressionOptions: { level: 1 },
       },
       (metadata) => {
         const pct = Math.round(metadata.percent);
@@ -391,10 +424,16 @@ export const NewScanPage: React.FC = () => {
                   Folder: {selectedFolderName}
                 </p>
                 <p className="text-xs text-on-surface-variant font-mono mt-0.5">
-                  Contains <strong>{selectedFolderFiles.length} files</strong> ({formatBytes(folderTotalSize)}) • {
+                  Contains <strong>{selectedFolderFiles.length} source & config files</strong> ({formatBytes(folderTotalSize)})
+                  {ignoredCount > 0 && (
+                    <span className="text-tertiary">
+                      {" "}• Bypassed {ignoredCount.toLocaleString()} package, build & cache files
+                    </span>
+                  )}
+                  {" "}• {
                     scanning
-                      ? activeStep === "compressing" ? `Compressing (${compressPercent}%)...` : activeStep === "uploading" ? `Uploading archive (${uploadPercent}%)...` : "Uploaded! Running AST engine..."
-                      : "Files staged in browser. Click 'Start Scan Now' below to upload & analyze."
+                      ? activeStep === "compressing" ? `Packaging (${compressPercent}%)...` : activeStep === "uploading" ? `Uploading archive (${uploadPercent}%)...` : "Uploaded! Running AST engine..."
+                      : "Staged in memory. Click 'Start Scan Now' below for instant scan."
                   }
                 </p>
               </div>

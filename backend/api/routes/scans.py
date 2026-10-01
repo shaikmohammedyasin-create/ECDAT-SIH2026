@@ -11,6 +11,8 @@ import tempfile
 import zipfile
 from typing import Optional
 from fastapi import APIRouter, HTTPException, Query, UploadFile, File, Form
+from starlette.concurrency import run_in_threadpool
+from app.pipeline import PRUNE_DIRS
 from backend.api.state import state, DEFAULT_CORPUS
 from backend.api.schemas import (
     ScanRequest,
@@ -78,10 +80,11 @@ def _validate_scan_path(path: str) -> str:
 
 
 @router.post("", response_model=ScanStatusResponse)
-def trigger_scan(req: ScanRequest):
+async def trigger_scan(req: ScanRequest):
     target = DEFAULT_CORPUS if req.use_corpus else _validate_scan_path(req.path)
 
-    res = state.run_scan(
+    res = await run_in_threadpool(
+        state.run_scan,
         directory=target,
         scenario_year=req.scenario_year,
         x_lifetime=req.x_lifetime,
@@ -127,12 +130,18 @@ async def upload_scan(
             os.makedirs(extract_dir, exist_ok=True)
             try:
                 with zipfile.ZipFile(dest_path, "r") as zf:
-                    # Zip-slip protection
+                    # Zip-slip protection & selective extraction skipping junk folders
                     for member in zf.infolist():
                         member_path = os.path.realpath(os.path.join(extract_dir, member.filename))
                         if not member_path.startswith(os.path.realpath(extract_dir)):
                             raise HTTPException(status_code=400, detail="ZIP contains path traversal entry.")
-                    zf.extractall(extract_dir)
+                        
+                        # Pruning optimization: ignore node_modules, .git, venv, etc. during extraction
+                        parts = [p.lower() for p in member.filename.replace('\\', '/').split('/') if p]
+                        if any(p in PRUNE_DIRS for p in parts):
+                            continue
+                        
+                        zf.extract(member, extract_dir)
             except zipfile.BadZipFile:
                 raise HTTPException(status_code=400, detail="Uploaded file is not a valid ZIP archive.")
             scan_target = extract_dir
@@ -140,7 +149,8 @@ async def upload_scan(
             # Single file — scan the temp dir containing the file
             scan_target = tmp_dir
 
-        state.run_scan(
+        await run_in_threadpool(
+            state.run_scan,
             directory=scan_target,
             scenario_year=scenario_year,
             x_lifetime=x_lifetime,
@@ -178,7 +188,8 @@ async def paste_scan(
         with open(dest_path, "w", encoding="utf-8", errors="replace") as f:
             f.write(code)
 
-        state.run_scan(
+        await run_in_threadpool(
+            state.run_scan,
             directory=tmp_dir,
             scenario_year=scenario_year,
             x_lifetime=x_lifetime,

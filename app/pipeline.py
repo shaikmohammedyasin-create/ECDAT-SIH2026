@@ -1,4 +1,4 @@
-﻿"""
+"""
 End-to-end ECDAT scan pipeline - Performance Optimized.
 Single-pass walk, O(1) dedup, parallel analysis via ThreadPoolExecutor.
 """
@@ -29,9 +29,11 @@ CONFIG_NAMES = {"nginx.conf", "sshd_config", "openssl.cnf", "Dockerfile"}
 BINARY_EXTS = (".class", ".jar", ".war")
 SOURCE_EXTS = (".py", ".js", ".java", ".ts", ".jsx", ".tsx", ".c", ".h", ".cpp", ".cc")
 PRUNE_DIRS = {
-    ".git", "node_modules", "venv", "__pycache__", ".pytest_cache",
-    ".hg", ".svn", "build", "dist", "target", ".idea", ".gradle",
-    ".tox", "htmlcov", ".eggs",
+    ".git", "node_modules", "venv", ".venv", "env", ".env",
+    "__pycache__", ".pytest_cache", ".cache",
+    ".hg", ".svn", "build", "dist", "target", "out",
+    ".idea", ".vscode", ".gradle", ".next", ".nuxt",
+    ".tox", "htmlcov", ".eggs", "vendor", "bin", "obj",
 }
 
 MAX_ASSETS_PER_SCAN = 2000
