@@ -115,7 +115,7 @@ export const NewScanPage: React.FC = () => {
       fileCount++;
     }
 
-    setStepDetail(`Compressing ${fileCount} source files...`);
+    setStepDetail(`Compressing ${fileCount} files in memory...`);
 
     const blob = await zip.generateAsync(
       {
@@ -161,6 +161,7 @@ export const NewScanPage: React.FC = () => {
     setScanning(true);
     setError(null);
     setActiveStep("idle");
+    window.scrollTo({ top: 0, behavior: "smooth" });
 
     try {
       let promise: Promise<any>;
@@ -304,7 +305,72 @@ export const NewScanPage: React.FC = () => {
         </div>
       </section>
 
-      {/* PROMINENT FOLDER SELECTED BANNER (Shown in Folder mode when selected) */}
+      {/* LIVE SCANNING & UPLOADING PROGRESS OVERLAY - PROMINENT AT TOP */}
+      {scanning && (
+        <section className="bg-surface-container-low border-2 border-primary rounded-lg p-5 space-y-4 shadow-2xl animate-fadeIn">
+          <div className="flex items-center justify-between border-b border-outline-variant pb-2">
+            <div className="flex items-center gap-2">
+              <span className="w-3.5 h-3.5 rounded-full bg-primary animate-ping" />
+              <span className="text-sm font-bold font-mono text-primary uppercase">
+                {activeStep === "compressing"
+                  ? "Step 1/3: In-Memory Compression"
+                  : activeStep === "uploading"
+                  ? "Step 2/3: Uploading Archive to Container Sandbox"
+                  : "Step 3/3: Running AST Discovery & Risk Analysis"}
+              </span>
+            </div>
+            <span className="text-xs font-mono text-on-surface font-bold bg-surface-container px-2 py-0.5 rounded border border-outline-variant">
+              {activeStep === "compressing" ? `${compressPercent}%` : activeStep === "uploading" ? `${uploadPercent}%` : `${stageProgress}%`}
+            </span>
+          </div>
+
+          <div className="w-full bg-surface-container-highest rounded-full h-3 overflow-hidden shadow-inner">
+            <div
+              className="bg-primary h-full transition-all duration-300 ease-out"
+              style={{
+                width: `${
+                  activeStep === "compressing"
+                    ? Math.round(compressPercent * 0.3)
+                    : activeStep === "uploading"
+                    ? 30 + Math.round(uploadPercent * 0.35)
+                    : 65 + Math.round(stageProgress * 0.35)
+                }%`,
+              }}
+            />
+          </div>
+
+          <div className="p-3 bg-surface-container-lowest border border-outline-variant rounded font-mono text-xs text-on-surface flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span className="material-symbols-outlined text-sm text-primary animate-spin">progress_activity</span>
+              <span className="font-semibold">{stepDetail || "Processing scan..."}</span>
+            </div>
+            <span className="text-[11px] text-tertiary font-mono">LIVE EXECUTION</span>
+          </div>
+
+          <div className="flex gap-1.5 flex-wrap">
+            {STAGES.map((s) => {
+              const idx = STAGES.findIndex((x) => x.name === currentStage);
+              const i = STAGES.indexOf(s);
+              return (
+                <span
+                  key={s.name}
+                  className={`px-2 py-0.5 rounded text-[10px] font-mono border transition-colors ${
+                    i < idx
+                      ? "bg-tertiary/20 text-tertiary border-tertiary/50"
+                      : i === idx
+                      ? "bg-primary/20 text-primary border-primary font-bold animate-pulse"
+                      : "bg-surface-container text-outline border-outline-variant"
+                  }`}
+                >
+                  {s.name}
+                </span>
+              );
+            })}
+          </div>
+        </section>
+      )}
+
+      {/* PROMINENT FOLDER SELECTED BANNER */}
       {mode === "path" && selectedFolderFiles && selectedFolderFiles.length > 0 && (
         <section className="p-4 bg-tertiary/10 border-2 border-tertiary rounded-lg space-y-3 shadow-md animate-fadeIn">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
@@ -313,32 +379,39 @@ export const NewScanPage: React.FC = () => {
               <div>
                 <div className="flex items-center gap-2 flex-wrap">
                   <h2 className="text-sm font-bold font-mono text-tertiary uppercase tracking-wide">
-                    Folder Selected & Ready to Scan
+                    {scanning ? "Folder Upload & Analysis In Progress" : "Folder Selected On Your PC"}
                   </h2>
-                  <span className="px-2 py-0.5 rounded bg-tertiary text-surface font-mono text-[10px] font-bold">
-                    READY
+                  <span className={`px-2 py-0.5 rounded font-mono text-[10px] font-bold ${
+                    scanning ? "bg-primary text-on-primary animate-pulse" : "bg-tertiary text-surface"
+                  }`}>
+                    {scanning ? (uploadPercent >= 100 ? "UPLOADED ✓" : `UPLOADING ${uploadPercent}%`) : "READY TO SCAN"}
                   </span>
                 </div>
                 <p className="text-sm font-semibold font-mono text-on-surface mt-1">
-                  {selectedFolderName}
+                  Folder: {selectedFolderName}
                 </p>
                 <p className="text-xs text-on-surface-variant font-mono mt-0.5">
-                  Contains <strong>{selectedFolderFiles.length} files</strong> ({formatBytes(folderTotalSize)}) • Will be analyzed in container sandbox
+                  Contains <strong>{selectedFolderFiles.length} files</strong> ({formatBytes(folderTotalSize)}) • {
+                    scanning
+                      ? activeStep === "compressing" ? `Compressing (${compressPercent}%)...` : activeStep === "uploading" ? `Uploading archive (${uploadPercent}%)...` : "Uploaded! Running AST engine..."
+                      : "Files staged in browser. Click 'Start Scan Now' below to upload & analyze."
+                  }
                 </p>
               </div>
             </div>
 
             <div className="flex items-center gap-2 shrink-0">
-              <button
-                type="button"
-                id="btn-scan-selected-folder"
-                onClick={handleStartScan}
-                disabled={scanning}
-                className="bg-primary hover:bg-primary/90 text-on-primary font-mono text-xs font-bold py-2.5 px-4 rounded flex items-center gap-1.5 shadow-lg transition-all"
-              >
-                <span className="material-symbols-outlined text-base">rocket_launch</span>
-                <span>Start Scan Now</span>
-              </button>
+              {!scanning && (
+                <button
+                  type="button"
+                  id="btn-scan-selected-folder"
+                  onClick={handleStartScan}
+                  className="bg-primary hover:bg-primary/90 text-on-primary font-mono text-xs font-bold py-2.5 px-4 rounded flex items-center gap-1.5 shadow-lg transition-all"
+                >
+                  <span className="material-symbols-outlined text-base">rocket_launch</span>
+                  <span>Start Scan Now</span>
+                </button>
+              )}
               <button
                 type="button"
                 onClick={() => folderInputRef.current?.click()}
@@ -373,7 +446,9 @@ export const NewScanPage: React.FC = () => {
               </span>
               <span>{showFileList ? "Hide file list" : `View detected files (${selectedFolderFiles.length})`}</span>
             </button>
-            <span className="text-outline">Status: Staged in browser memory</span>
+            <span className="text-outline">
+              {scanning ? "Status: Uploading / Running pipeline" : "Status: Staged locally (Not sent yet)"}
+            </span>
           </div>
 
           {showFileList && (
@@ -483,7 +558,7 @@ export const NewScanPage: React.FC = () => {
           </div>
         )}
 
-        {/* TAB 2: FILE / ZIP (Clean dropzone for single file or .zip only) */}
+        {/* TAB 2: FILE / ZIP */}
         {mode === "upload" && (
           <div className="space-y-3">
             <div
@@ -541,20 +616,51 @@ export const NewScanPage: React.FC = () => {
             </div>
 
             {uploadedFile && (
-              <div className="flex items-center gap-2">
-                <span className="text-[11px] font-mono text-on-surface-variant flex-1">
-                  Selected: <span className="text-primary font-bold">{uploadedFile.name}</span> ({formatBytes(uploadedFile.size)})
-                </span>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setUploadedFile(null);
-                    if (fileInputRef.current) fileInputRef.current.value = "";
-                  }}
-                  className="text-[10px] font-mono text-error border border-error/40 px-2 py-0.5 rounded hover:bg-error/10 transition"
-                >
-                  Remove
-                </button>
+              <div className="p-3 bg-surface-container border border-outline-variant rounded-lg flex items-center justify-between gap-3">
+                <div className="flex items-center gap-2.5">
+                  <span className="material-symbols-outlined text-primary text-2xl">description</span>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <p className="text-xs font-mono font-bold text-on-surface">{uploadedFile.name}</p>
+                      <span className={`px-1.5 py-0.5 rounded font-mono text-[9px] font-bold ${
+                        scanning ? "bg-primary text-on-primary animate-pulse" : "bg-amber-500/20 text-amber-400 border border-amber-500/40"
+                      }`}>
+                        {scanning ? (uploadPercent >= 100 ? "UPLOADED ✓" : `UPLOADING ${uploadPercent}%`) : "READY TO UPLOAD"}
+                      </span>
+                    </div>
+                    <p className="text-[11px] font-mono text-on-surface-variant">
+                      Size: {formatBytes(uploadedFile.size)} • {
+                        scanning
+                          ? uploadPercent >= 100 ? "File uploaded to container sandbox! Running analysis..." : `Uploading: ${uploadPercent}%`
+                          : "Staged on your computer. Click 'Start Scan' to upload & analyze."
+                      }
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-1.5 shrink-0">
+                  {!scanning && (
+                    <button
+                      type="button"
+                      onClick={handleStartScan}
+                      className="bg-primary hover:bg-primary/90 text-on-primary font-mono text-xs font-bold py-2 px-3 rounded flex items-center gap-1 shadow"
+                    >
+                      <span className="material-symbols-outlined text-sm">rocket_launch</span>
+                      <span>Start Scan</span>
+                    </button>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setUploadedFile(null);
+                      if (fileInputRef.current) fileInputRef.current.value = "";
+                    }}
+                    disabled={scanning}
+                    className="text-[10px] font-mono text-error border border-error/40 px-2 py-1.5 rounded hover:bg-error/10 transition"
+                  >
+                    Remove
+                  </button>
+                </div>
               </div>
             )}
           </div>
@@ -692,64 +798,6 @@ export const NewScanPage: React.FC = () => {
           </div>
         </div>
       </section>
-
-      {/* LIVE SCANNING & UPLOADING PROGRESS OVERLAY */}
-      {scanning && (
-        <section className="bg-surface-container-low border-2 border-primary rounded-lg p-5 space-y-4 shadow-xl">
-          <div className="flex items-center justify-between border-b border-outline-variant pb-2">
-            <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-primary animate-ping" />
-              <span className="text-sm font-bold font-mono text-primary uppercase">
-                {activeStep === "compressing" ? "Step 1/3: Compressing Folder" : activeStep === "uploading" ? "Step 2/3: Uploading to Container" : "Step 3/3: Cryptographic Discovery Pipeline"}
-              </span>
-            </div>
-            <span className="text-xs font-mono text-on-surface font-bold">
-              {activeStep === "compressing" ? `${compressPercent}%` : activeStep === "uploading" ? `${uploadPercent}%` : `${stageProgress}%`}
-            </span>
-          </div>
-
-          <div className="w-full bg-surface-container-highest rounded-full h-3 overflow-hidden">
-            <div
-              className="bg-primary h-full transition-all duration-300 ease-out"
-              style={{
-                width: `${
-                  activeStep === "compressing"
-                    ? Math.round(compressPercent * 0.3)
-                    : activeStep === "uploading"
-                    ? 30 + Math.round(uploadPercent * 0.35)
-                    : 65 + Math.round(stageProgress * 0.35)
-                }%`,
-              }}
-            />
-          </div>
-
-          <div className="p-3 bg-surface-container-lowest border border-outline-variant rounded font-mono text-xs text-on-surface flex items-center gap-2">
-            <span className="material-symbols-outlined text-sm text-primary animate-spin">progress_activity</span>
-            <span>{stepDetail || "Processing cryptographic scan..."}</span>
-          </div>
-
-          <div className="flex gap-1.5 flex-wrap">
-            {STAGES.map((s) => {
-              const idx = STAGES.findIndex((x) => x.name === currentStage);
-              const i = STAGES.indexOf(s);
-              return (
-                <span
-                  key={s.name}
-                  className={`px-2 py-0.5 rounded text-[10px] font-mono border transition-colors ${
-                    i < idx
-                      ? "bg-tertiary/20 text-tertiary border-tertiary/50"
-                      : i === idx
-                      ? "bg-primary/20 text-primary border-primary font-bold animate-pulse"
-                      : "bg-surface-container text-outline border-outline-variant"
-                  }`}
-                >
-                  {s.name}
-                </span>
-              );
-            })}
-          </div>
-        </section>
-      )}
 
       {/* ERROR BANNER */}
       {error && (
