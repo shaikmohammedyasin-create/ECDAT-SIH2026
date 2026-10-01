@@ -235,3 +235,8 @@ To demonstrate ECDAT for evaluators in 60 seconds:
 9. Go to **CycloneDX 1.6 CBOM** (`/cbom`): demonstrate **CBOM Schema Status: VALID ✓ (0 Errors)** and inspect the raw JSON.
 10. Go to **Terminal / Log** (`/terminal`): observe live stream telemetry and filter by log level.
 11. Go to **Reports & Evidence** (`/reports`): preview executive reports in-app and download deliverables.
+
+
+## License
+
+ECDAT is licensed under the [MIT License](LICENSE).
