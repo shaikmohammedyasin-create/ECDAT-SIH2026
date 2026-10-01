@@ -51,12 +51,12 @@ export const InventoryPage: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 p-6 space-y-4">
+    <div className="flex-1 p-3 sm:p-4 md:p-6 space-y-4">
       {/* Header Banner */}
       <section className="flex flex-col md:flex-row md:items-end justify-between border-b border-outline-variant pb-3 gap-2">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold tracking-tight text-on-surface">Cryptographic Asset Inventory</h1>
+          <div className="flex items-center gap-2 flex-wrap">
+            <h1 className="text-lg sm:text-xl font-bold tracking-tight text-on-surface">Cryptographic Asset Inventory</h1>
             <span className="px-1.5 py-0.5 rounded bg-primary-container/15 border border-primary-container/40 text-primary font-mono text-[10px] uppercase font-semibold">
               NORMALIZED CBOM VIEW
             </span>
@@ -72,8 +72,8 @@ export const InventoryPage: React.FC = () => {
 
       {/* Filter Toolbar matching Stitch */}
       <section className="bg-surface-container-low border border-outline-variant rounded p-3">
-        <form onSubmit={handleSearchSubmit} className="grid grid-cols-1 md:grid-cols-6 gap-2">
-          <div className="md:col-span-2">
+        <form onSubmit={handleSearchSubmit} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2">
+          <div className="sm:col-span-2">
             <div className="relative flex items-center">
               <span className="material-symbols-outlined absolute left-2 text-outline text-xs">search</span>
               <input

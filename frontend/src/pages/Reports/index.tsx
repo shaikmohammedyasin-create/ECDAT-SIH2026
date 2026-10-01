@@ -54,19 +54,19 @@ export const ReportsPage: React.FC = () => {
   const deliverables = metadata?.available_formats || [];
 
   return (
-    <div className="flex-1 flex flex-col overflow-y-auto bg-background p-4 space-y-4">
+    <div className="flex-1 flex flex-col overflow-y-auto bg-background p-3 sm:p-4 space-y-4">
       {/* Top Header */}
       <section className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-outline-variant pb-3">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-headline-xl font-headline-xl text-on-surface tracking-tight font-bold">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h1 className="text-lg sm:text-xl font-headline-xl text-on-surface tracking-tight font-bold">
               Reports & Evidence Deliverables
             </h1>
             <span className="px-2 py-0.5 rounded text-code-sm font-code-sm bg-surface-container-highest border border-outline-variant text-primary font-mono">
               NTRO SEC-3 SPEC
             </span>
           </div>
-          <p className="text-body-sm font-body-sm text-on-surface-variant mt-0.5">
+          <p className="text-body-sm font-body-sm text-on-surface-variant mt-0.5 text-xs">
             Cryptographic audit deliverables, executive summaries, technical finding dossiers, CycloneDX CBOM, and CSV matrices.
           </p>
         </div>
@@ -80,7 +80,7 @@ export const ReportsPage: React.FC = () => {
       </section>
 
       {/* Filter Controls Toolbar */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-3 p-3 bg-surface-container-low border border-outline-variant rounded">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 p-3 bg-surface-container-low border border-outline-variant rounded">
         {/* Filter 1: Scan ID */}
         <div className="flex flex-col">
           <label className="text-[10px] font-mono text-on-surface-variant uppercase mb-1 flex items-center justify-between">

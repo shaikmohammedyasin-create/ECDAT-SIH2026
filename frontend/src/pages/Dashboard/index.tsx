@@ -51,12 +51,12 @@ export const DashboardPage: React.FC = () => {
   };
 
   return (
-    <div className="flex-1 p-6 space-y-5">
+    <div className="flex-1 p-3 sm:p-4 md:p-6 space-y-4 md:space-y-5">
       {/* Header Banner */}
       <section className="flex flex-col md:flex-row md:items-end justify-between border-b border-outline-variant pb-3 gap-2">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold tracking-tight text-on-surface">Cryptographic Security Overview</h1>
+          <div className="flex items-center gap-2 flex-wrap">
+            <h1 className="text-lg sm:text-xl font-bold tracking-tight text-on-surface">Cryptographic Security Overview</h1>
             <span className="px-1.5 py-0.5 rounded bg-primary-container/15 border border-primary-container/40 text-primary font-mono text-[10px] uppercase font-semibold">
               EXECUTIVE AUDIT VIEW
             </span>
@@ -71,7 +71,7 @@ export const DashboardPage: React.FC = () => {
       </section>
 
       {/* 5 KPI Cards */}
-      <section className="grid grid-cols-2 md:grid-cols-5 gap-3">
+      <section className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3">
         <div className="bg-surface-container-low border border-outline-variant rounded p-3">
           <div className="text-[10px] font-mono font-semibold uppercase text-outline tracking-wider">TOTAL CRYPTO ASSETS</div>
           <div className="text-2xl font-bold font-mono text-on-surface mt-1">{metrics.total_assets}</div>
@@ -96,7 +96,7 @@ export const DashboardPage: React.FC = () => {
           <div className="text-[11px] text-on-surface-variant mt-1">Key size &lt; 256-bit</div>
         </div>
 
-        <div className="bg-surface-container-low border border-outline-variant rounded p-3">
+        <div className="bg-surface-container-low border border-outline-variant rounded p-3 col-span-2 sm:col-span-1">
           <div className="text-[10px] font-mono font-semibold uppercase text-outline tracking-wider">MOSCA VIOLATIONS</div>
           <div className="text-2xl font-bold font-mono text-red-400 mt-1">{metrics.mosca_violations}</div>
           <div className="text-[11px] text-on-surface-variant mt-1">X + Y &gt; Z Window</div>
@@ -106,7 +106,7 @@ export const DashboardPage: React.FC = () => {
       {/* Middle 2-Column Split */}
       <section className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* Left Column: Risk & Quantum Distribution */}
-        <div className="bg-surface-container-low border border-outline-variant rounded p-4 flex flex-col justify-between">
+        <div className="bg-surface-container-low border border-outline-variant rounded p-3 sm:p-4 flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between border-b border-outline-variant pb-2 mb-3">
               <div className="flex items-center gap-1.5 font-semibold text-sm">
@@ -141,7 +141,7 @@ export const DashboardPage: React.FC = () => {
           </div>
 
           {/* Quantum Exposure Grid */}
-          <div className="grid grid-cols-4 gap-2 pt-4 border-t border-outline-variant mt-4">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-4 border-t border-outline-variant mt-4">
             <div className="bg-surface-container-lowest border border-outline-variant p-2 rounded text-center">
               <div className="text-[9px] font-mono text-outline uppercase">SHOR BROKEN</div>
               <div className="text-lg font-bold font-mono text-red-300 mt-0.5">{quantum_exposure.SHOR_BROKEN || 0}</div>
@@ -162,7 +162,7 @@ export const DashboardPage: React.FC = () => {
         </div>
 
         {/* Right Column: Recent Critical Findings */}
-        <div className="bg-surface-container-low border border-outline-variant rounded p-4">
+        <div className="bg-surface-container-low border border-outline-variant rounded p-3 sm:p-4">
           <div className="flex items-center justify-between border-b border-outline-variant pb-2 mb-3">
             <div className="flex items-center gap-1.5 font-semibold text-sm">
               <span className="material-symbols-outlined text-red-400 text-base">priority_high</span>

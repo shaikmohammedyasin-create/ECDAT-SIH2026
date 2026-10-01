@@ -8,6 +8,7 @@ export const CBOMPage: React.FC = () => {
   const [filterType, setFilterType] = useState<string>("ALL");
   const [copied, setCopied] = useState(false);
   const [validating, setValidating] = useState(false);
+  const [mobileTab, setMobileTab] = useState<"tree" | "raw">("tree");
 
   useEffect(() => {
     loadCBOM();
@@ -73,10 +74,10 @@ export const CBOMPage: React.FC = () => {
   return (
     <div className="flex-1 flex flex-col bg-surface overflow-hidden">
       {/* Top Header */}
-      <div className="px-4 py-2 border-b border-outline-variant bg-surface-container-low shrink-0 flex items-center justify-between">
+      <div className="px-3 sm:px-4 py-2 border-b border-outline-variant bg-surface-container-low shrink-0 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-headline-md font-headline-md text-on-surface tracking-tight font-bold">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h1 className="text-base sm:text-lg font-headline-md text-on-surface tracking-tight font-bold">
               CycloneDX v1.6 Cryptographic Bill of Materials (CBOM)
             </h1>
             <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-surface-container-highest border border-outline-variant text-primary">
@@ -170,10 +171,43 @@ export const CBOMPage: React.FC = () => {
         </div>
       </div>
 
-      {/* Split Workbench Canvases (45% Left / 55% Right) */}
+      {/* Mobile Tab Switcher */}
+      <div className="lg:hidden flex border-b border-outline-variant bg-surface-container-low shrink-0 text-xs font-mono">
+        <button
+          type="button"
+          onClick={() => setMobileTab("tree")}
+          className={`flex-1 py-2 text-center border-b-2 font-semibold flex items-center justify-center gap-1.5 transition-colors ${
+            mobileTab === "tree"
+              ? "border-primary text-primary bg-surface-container"
+              : "border-transparent text-on-surface-variant hover:text-on-surface"
+          }`}
+        >
+          <span className="material-symbols-outlined text-sm">account_tree</span>
+          <span>Assets Tree ({filteredComponents.length})</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setMobileTab("raw")}
+          className={`flex-1 py-2 text-center border-b-2 font-semibold flex items-center justify-center gap-1.5 transition-colors ${
+            mobileTab === "raw"
+              ? "border-primary text-primary bg-surface-container"
+              : "border-transparent text-on-surface-variant hover:text-on-surface"
+          }`}
+        >
+          <span className="material-symbols-outlined text-sm">data_object</span>
+          <span>Raw JSON Spec</span>
+        </button>
+      </div>
+
+      {/* Split Workbench Canvases (45% Left / 55% Right on lg, Tabbed on mobile) */}
       <div className="flex-1 flex overflow-hidden">
-        {/* Left Pane (45%): Cryptographic Components Tree */}
-        <section className="w-[45%] border-r border-outline-variant flex flex-col bg-surface-container-lowest overflow-hidden">
+        {/* Left Pane: Cryptographic Components Tree */}
+        <section
+          className={`
+            w-full lg:w-[45%] border-r border-outline-variant flex-col bg-surface-container-lowest overflow-hidden
+            ${mobileTab === "tree" ? "flex" : "hidden lg:flex"}
+          `}
+        >
           <div className="h-9 px-3 border-b border-outline-variant bg-surface-container-low flex items-center justify-between shrink-0">
             <div className="flex items-center gap-2">
               <span className="material-symbols-outlined text-primary text-sm">account_tree</span>
@@ -268,8 +302,13 @@ export const CBOMPage: React.FC = () => {
           </div>
         </section>
 
-        {/* Right Pane (55%): Live CycloneDX Raw JSON View */}
-        <section className="w-[55%] flex flex-col bg-[#090f15] overflow-hidden">
+        {/* Right Pane: Live CycloneDX Raw JSON View */}
+        <section
+          className={`
+            w-full lg:w-[55%] flex-col bg-[#090f15] overflow-hidden
+            ${mobileTab === "raw" ? "flex" : "hidden lg:flex"}
+          `}
+        >
           <div className="h-9 px-3 border-b border-outline-variant bg-[#111720] flex items-center justify-between shrink-0 select-none">
             <div className="flex items-center gap-2">
               <span className="material-symbols-outlined text-[14px] text-primary">data_object</span>

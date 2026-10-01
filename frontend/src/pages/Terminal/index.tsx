@@ -85,10 +85,10 @@ export const TerminalPage: React.FC = () => {
   return (
     <div className="flex-1 flex flex-col bg-surface overflow-hidden">
       {/* Top Context Section */}
-      <section className="px-4 py-2 border-b border-outline-variant bg-surface-container-low shrink-0 flex flex-wrap items-center justify-between gap-3">
+      <section className="px-3 sm:px-4 py-2 border-b border-outline-variant bg-surface-container-low shrink-0 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-headline-md font-headline-md text-on-surface tracking-tight font-bold">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h1 className="text-base sm:text-lg font-headline-md text-on-surface tracking-tight font-bold">
               Terminal / Scan Log
             </h1>
             <span className="px-2 py-0.5 rounded text-[10px] font-mono bg-surface-container-highest border border-outline-variant text-primary font-bold">

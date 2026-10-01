@@ -39,17 +39,17 @@ export const SettingsPage: React.FC = () => {
   return (
     <div className="flex-1 flex flex-col bg-surface overflow-hidden">
       {/* Top Header */}
-      <section className="px-4 py-2 border-b border-outline-variant bg-surface-container-low shrink-0 flex flex-wrap items-center justify-between gap-3">
+      <section className="px-3 sm:px-4 py-2 border-b border-outline-variant bg-surface-container-low shrink-0 flex flex-wrap items-center justify-between gap-3">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-headline-md font-headline-md text-on-surface tracking-tight font-bold">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h1 className="text-base sm:text-lg font-headline-md text-on-surface tracking-tight font-bold">
               Workstation Configuration & Security Settings
             </h1>
             <span className="bg-surface-container border border-outline-variant text-primary px-1.5 py-0.5 rounded text-[10px] font-mono">
               Profile: {settings?.profile || "default"}
             </span>
             {settings?.target_path && (
-              <span className="bg-surface-container-highest border border-outline-variant text-secondary px-2 py-0.5 rounded text-[10px] font-mono truncate max-w-sm">
+              <span className="bg-surface-container-highest border border-outline-variant text-secondary px-2 py-0.5 rounded text-[10px] font-mono truncate max-w-xs sm:max-w-sm">
                 Target: {settings.target_path}
               </span>
             )}
@@ -59,10 +59,10 @@ export const SettingsPage: React.FC = () => {
           </p>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <span className="text-[10px] font-mono text-tertiary border border-tertiary/40 px-2 py-1 rounded bg-tertiary/10 font-bold flex items-center gap-1">
             <span className="material-symbols-outlined text-[13px]">lock</span>
-            AIR-GAP STATE: STRICT ENFORCED
+            AIR-GAP: ENFORCED
           </span>
           <button
             onClick={handleSave}
@@ -74,10 +74,10 @@ export const SettingsPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Two-Column Main Configuration Area */}
-      <div className="flex-1 grid grid-cols-12 overflow-hidden">
-        {/* Left Column: Sub-navigation / Sub-categories (3 Cols) */}
-        <div className="col-span-3 border-r border-outline-variant bg-surface-container-lowest p-3 overflow-y-auto flex flex-col justify-between">
+      {/* Main Configuration Area */}
+      <div className="flex-1 flex flex-col md:grid md:grid-cols-12 overflow-hidden">
+        {/* Left Column: Sub-navigation / Sub-categories */}
+        <div className="w-full md:col-span-4 lg:col-span-3 border-b md:border-b-0 md:border-r border-outline-variant bg-surface-container-lowest p-2 sm:p-3 overflow-y-auto shrink-0 max-h-48 md:max-h-full flex flex-col justify-between">
           <div className="flex flex-col gap-1">
             <span className="text-[10px] font-mono text-outline uppercase tracking-wider px-2 pb-1 font-semibold">
               Configuration Domains
@@ -95,7 +95,7 @@ export const SettingsPage: React.FC = () => {
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`w-full text-left px-3 py-2 rounded text-xs flex items-center justify-between transition-colors ${
+                className={`w-full text-left px-2.5 sm:px-3 py-1.5 sm:py-2 rounded text-xs flex items-center justify-between transition-colors ${
                   activeTab === tab.id
                     ? "bg-surface-container border-l-2 border-primary text-primary font-semibold"
                     : "text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low"
@@ -113,7 +113,7 @@ export const SettingsPage: React.FC = () => {
           </div>
 
           {/* Left Nav Footnote: Security Clearance Token */}
-          <div className="border border-outline-variant bg-surface-container p-2.5 rounded mt-4">
+          <div className="hidden md:block border border-outline-variant bg-surface-container p-2.5 rounded mt-4">
             <div className="flex items-center gap-1.5 text-primary text-xs font-semibold mb-1">
               <span className="material-symbols-outlined text-[14px]">verified_user</span>
               <span>NTRO OPERATIONAL SPEC</span>
@@ -124,8 +124,8 @@ export const SettingsPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Right Column: Active Configuration View (9 Cols) */}
-        <div className="col-span-9 overflow-y-auto p-4 space-y-4">
+        {/* Right Column: Active Configuration View */}
+        <div className="flex-1 md:col-span-8 lg:col-span-9 overflow-y-auto p-3 sm:p-4 space-y-4">
           {/* Section 1: AST Collector Engine Controls */}
           {activeTab === 1 && (
             <section className="border border-outline-variant bg-surface-container-low rounded p-3 space-y-3">

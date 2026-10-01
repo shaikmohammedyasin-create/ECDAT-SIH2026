@@ -12,6 +12,7 @@ export const FindingInspector: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const [mobileTab, setMobileTab] = useState<"meta" | "code">("meta");
 
   useEffect(() => {
     setLoading(true);
@@ -84,16 +85,16 @@ export const FindingInspector: React.FC = () => {
   return (
     <div className="flex-1 flex flex-col min-w-0 bg-surface overflow-hidden">
       {/* Top Finding Header & Action Toolbar */}
-      <div className="border-b border-outline-variant bg-surface-container-low px-4 py-2 flex flex-wrap items-center justify-between gap-y-2 shrink-0">
+      <div className="border-b border-outline-variant bg-surface-container-low px-3 sm:px-4 py-2 flex flex-col lg:flex-row lg:items-center justify-between gap-3 shrink-0">
         {/* Left Breadcrumb & Severity Pill Stack */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
           <div className="flex items-center gap-2 font-code-md text-sm">
             <Link to="/inventory" className="text-on-surface-variant hover:text-on-surface">Finding Inspector</Link>
             <span className="text-outline">/</span>
             <span className="text-primary font-semibold font-mono">{finding.rule_id}</span>
           </div>
           {/* Status Badges */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 flex-wrap">
             <span
               className={`px-2 py-0.5 rounded text-[11px] font-code-sm font-semibold tracking-wide flex items-center gap-1 ${
                 finding.risk_band === "CRITICAL"
@@ -119,24 +120,24 @@ export const FindingInspector: React.FC = () => {
         </div>
 
         {/* Right Workbench Action Bar */}
-        <div className="flex items-center gap-2 font-code-sm">
+        <div className="flex items-center gap-1.5 sm:gap-2 font-code-sm flex-wrap">
           <button
             onClick={() => navigate(`/mosca`)}
-            className="bg-primary-container text-on-primary-container hover:bg-primary font-semibold px-3 py-1 rounded text-code-sm flex items-center gap-1 transition-colors"
+            className="bg-primary-container text-on-primary-container hover:bg-primary font-semibold px-3 py-1 rounded text-code-sm flex items-center gap-1 transition-colors text-xs"
           >
             <span className="material-symbols-outlined text-[14px]">timeline</span>
             <span>Run Mosca Simulation</span>
           </button>
           <button
             onClick={() => navigate(`/migration`)}
-            className="bg-surface-container-high border border-outline-variant hover:border-outline text-on-surface px-2.5 py-1 rounded text-code-sm flex items-center gap-1 transition-colors"
+            className="bg-surface-container-high border border-outline-variant hover:border-outline text-on-surface px-2.5 py-1 rounded text-code-sm flex items-center gap-1 transition-colors text-xs"
           >
             <span className="material-symbols-outlined text-[14px]">swap_calls</span>
             <span>View Migration Plan</span>
           </button>
           <button
             onClick={exportFindingJson}
-            className="bg-surface-container-high border border-outline-variant hover:border-outline text-on-surface px-2.5 py-1 rounded text-code-sm flex items-center gap-1 transition-colors"
+            className="bg-surface-container-high border border-outline-variant hover:border-outline text-on-surface px-2.5 py-1 rounded text-code-sm flex items-center gap-1 transition-colors text-xs"
             title="Download Finding JSON"
           >
             <span className="material-symbols-outlined text-[14px]">file_download</span>
@@ -146,14 +147,14 @@ export const FindingInspector: React.FC = () => {
           <button
             onClick={() => navigate(`/findings/${findingId > 0 ? findingId - 1 : 0}`)}
             disabled={findingId <= 0}
-            className="bg-surface-container-high border border-outline-variant hover:border-primary disabled:opacity-40 text-on-surface px-2 py-1 rounded text-code-sm flex items-center gap-1"
+            className="bg-surface-container-high border border-outline-variant hover:border-primary disabled:opacity-40 text-on-surface px-2 py-1 rounded text-code-sm flex items-center gap-1 text-xs"
           >
             <span className="material-symbols-outlined text-[14px]">navigate_before</span>
             <span>Prev</span>
           </button>
           <button
             onClick={() => navigate(`/findings/${findingId + 1}`)}
-            className="bg-surface-container-high border border-outline-variant hover:border-primary text-primary px-2 py-1 rounded text-code-sm flex items-center gap-1"
+            className="bg-surface-container-high border border-outline-variant hover:border-primary text-primary px-2 py-1 rounded text-code-sm flex items-center gap-1 text-xs"
           >
             <span>Next</span>
             <span className="material-symbols-outlined text-[14px]">navigate_next</span>
@@ -161,10 +162,43 @@ export const FindingInspector: React.FC = () => {
         </div>
       </div>
 
+      {/* Mobile Tab Switcher */}
+      <div className="lg:hidden flex border-b border-outline-variant bg-surface-container-low shrink-0 text-xs font-mono">
+        <button
+          type="button"
+          onClick={() => setMobileTab("meta")}
+          className={`flex-1 py-2 text-center border-b-2 font-semibold flex items-center justify-center gap-1.5 transition-colors ${
+            mobileTab === "meta"
+              ? "border-primary text-primary bg-surface-container"
+              : "border-transparent text-on-surface-variant hover:text-on-surface"
+          }`}
+        >
+          <span className="material-symbols-outlined text-sm">badge</span>
+          <span>Asset & Risk Vector</span>
+        </button>
+        <button
+          type="button"
+          onClick={() => setMobileTab("code")}
+          className={`flex-1 py-2 text-center border-b-2 font-semibold flex items-center justify-center gap-1.5 transition-colors ${
+            mobileTab === "code"
+              ? "border-primary text-primary bg-surface-container"
+              : "border-transparent text-on-surface-variant hover:text-on-surface"
+          }`}
+        >
+          <span className="material-symbols-outlined text-sm">code</span>
+          <span>Source & Evidence</span>
+        </button>
+      </div>
+
       {/* Two-Column Workbench Layout */}
       <div className="flex-1 flex overflow-hidden">
-        {/* ================= LEFT COLUMN: METADATA & CRYPTOGRAPHIC BREAKDOWN (40%) ================= */}
-        <div className="w-[42%] border-r border-outline-variant overflow-y-auto p-3 flex flex-col gap-3 bg-surface-container-lowest">
+        {/* ================= LEFT COLUMN: METADATA & CRYPTOGRAPHIC BREAKDOWN ================= */}
+        <div
+          className={`
+            w-full lg:w-[42%] border-r border-outline-variant overflow-y-auto p-3 flex-col gap-3 bg-surface-container-lowest
+            ${mobileTab === "meta" ? "flex" : "hidden lg:flex"}
+          `}
+        >
           {/* Asset Identity Card */}
           <div className="bg-surface-container border border-outline-variant rounded p-3 flex flex-col gap-2">
             <div className="flex items-center justify-between border-b border-outline-variant pb-1.5">
@@ -383,8 +417,13 @@ export const FindingInspector: React.FC = () => {
           </div>
         </div>
 
-        {/* ================= RIGHT COLUMN: CODE EVIDENCE & AST CONTEXT (58%) ================= */}
-        <div className="w-[58%] flex flex-col bg-surface-container-lowest overflow-hidden">
+        {/* ================= RIGHT COLUMN: CODE EVIDENCE & AST CONTEXT ================= */}
+        <div
+          className={`
+            w-full lg:w-[58%] flex-col bg-surface-container-lowest overflow-hidden
+            ${mobileTab === "code" ? "flex" : "hidden lg:flex"}
+          `}
+        >
           {/* IDE Header with File Tabs & AST Status */}
           <div className="h-9 bg-surface-container-low border-b border-outline-variant flex items-center justify-between px-3 shrink-0 select-none">
             <div className="flex items-center h-full">

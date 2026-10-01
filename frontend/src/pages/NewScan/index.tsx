@@ -271,7 +271,7 @@ export const NewScanPage: React.FC = () => {
   );
 
   return (
-    <div className="flex-1 p-6 space-y-5 max-w-4xl mx-auto">
+    <div className="flex-1 p-3 sm:p-4 md:p-6 space-y-4 md:space-y-5 max-w-4xl mx-auto">
       {/* Hidden Native Directory Picker */}
       <input
         ref={folderInputRef}
@@ -289,8 +289,8 @@ export const NewScanPage: React.FC = () => {
       {/* Header */}
       <section className="flex flex-col md:flex-row md:items-end justify-between border-b border-outline-variant pb-3 gap-2">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-xl font-bold tracking-tight text-on-surface">New Scan Configuration</h1>
+          <div className="flex items-center gap-2 flex-wrap">
+            <h1 className="text-lg sm:text-xl font-bold tracking-tight text-on-surface">New Scan Configuration</h1>
             <span className="px-1.5 py-0.5 rounded bg-primary-container/15 border border-primary-container/40 text-primary font-mono text-[10px] uppercase font-semibold">
               PROFILE: AST-CRYPT-STRICT
             </span>

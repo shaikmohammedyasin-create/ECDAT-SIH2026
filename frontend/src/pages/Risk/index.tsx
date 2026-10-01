@@ -36,23 +36,23 @@ export const RiskAnalysis: React.FC = () => {
   const topFindings = riskData?.top_findings || [];
 
   return (
-    <div className="flex-1 flex flex-col overflow-y-auto bg-background p-4 space-y-4">
+    <div className="flex-1 flex flex-col overflow-y-auto bg-background p-3 sm:p-4 space-y-4">
       {/* Top Header */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 border-b border-outline-variant pb-3">
         <div>
-          <div className="flex items-center gap-2">
-            <h1 className="text-headline-xl font-headline-xl text-on-surface tracking-tight font-bold">
+          <div className="flex items-center gap-2 flex-wrap">
+            <h1 className="text-lg sm:text-xl font-headline-xl text-on-surface tracking-tight font-bold">
               Cryptographic Risk Analysis
             </h1>
             <span className="px-2 py-0.5 rounded text-code-sm font-code-sm bg-surface-container-highest border border-outline-variant text-primary font-mono">
               RFC-NTRO-892 Engine
             </span>
           </div>
-          <p className="text-body-sm font-body-sm text-on-surface-variant mt-0.5">
+          <p className="text-body-sm font-body-sm text-on-surface-variant mt-0.5 text-xs">
             Quantitative risk scoring and threat surface exposure engine according to ECDAT deterministic formula.
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           <Link
             to="/inventory"
             className="border border-outline-variant bg-surface-container-low hover:bg-surface-container-high text-on-surface px-3 py-1 rounded text-code-sm font-code-sm flex items-center gap-1.5"
