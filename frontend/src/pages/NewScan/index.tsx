@@ -43,16 +43,18 @@ export const NewScanPage: React.FC = () => {
   const [urlVal, setUrlVal] = useState("https://github.com/python/cpython");
   const [pathVal, setPathVal] = useState("test_corpus");
 
-  // Selection state
-  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  // Local folder selection
   const [selectedFolderFiles, setSelectedFolderFiles] = useState<File[] | null>(null);
   const [selectedFolderName, setSelectedFolderName] = useState<string | null>(null);
   const [showFileList, setShowFileList] = useState(false);
-
-  const [dragOver, setDragOver] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const folderInputRef = useRef<HTMLInputElement>(null);
 
+  // File / ZIP upload
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [dragOver, setDragOver] = useState(false);
+
+  // Paste code
   const [pasteCode, setPasteCode] = useState("");
   const [pasteLang, setPasteLang] = useState<LangExt>("py");
   const [pasteFilename, setPasteFilename] = useState("snippet");
@@ -84,7 +86,6 @@ export const NewScanPage: React.FC = () => {
     }
     setSelectedFolderFiles(arr);
     setSelectedFolderName(name);
-    setUploadedFile(null);
     setError(null);
   };
 
@@ -132,69 +133,13 @@ export const NewScanPage: React.FC = () => {
     return new File([blob], `${folderName || "scan_target"}.zip`, { type: "application/zip" });
   };
 
-  const onDrop = useCallback(async (e: React.DragEvent) => {
+  const onDrop = useCallback((e: React.DragEvent) => {
     e.preventDefault();
     setDragOver(false);
-
-    const items = e.dataTransfer.items;
-    if (items && items.length > 0) {
-      const files: File[] = [];
-      const queue: any[] = [];
-      for (let i = 0; i < items.length; i++) {
-        const item = items[i];
-        if ((item as any).webkitGetAsEntry) {
-          const entry = (item as any).webkitGetAsEntry();
-          if (entry) queue.push(entry);
-        }
-      }
-
-      if (queue.length > 0) {
-        const traverse = async (entry: any, currentPath = ""): Promise<void> => {
-          if (entry.isFile) {
-            await new Promise<void>((resolve) => {
-              entry.file((file: File) => {
-                Object.defineProperty(file, "webkitRelativePath", {
-                  value: currentPath ? `${currentPath}/${file.name}` : file.name,
-                  writable: false,
-                });
-                files.push(file);
-                resolve();
-              });
-            });
-          } else if (entry.isDirectory) {
-            if (["node_modules", ".git", "venv", "__pycache__", "dist", "build", "target"].includes(entry.name)) {
-              return;
-            }
-            const dirReader = entry.createReader();
-            const readEntries = (): Promise<any[]> =>
-              new Promise((resolve) => dirReader.readEntries((ents: any[]) => resolve(ents)));
-            let entries = await readEntries();
-            while (entries.length > 0) {
-              for (const child of entries) {
-                await traverse(child, currentPath ? `${currentPath}/${entry.name}` : entry.name);
-              }
-              entries = await readEntries();
-            }
-          }
-        };
-
-        for (const q of queue) {
-          await traverse(q, "");
-        }
-
-        if (files.length > 1 || (files.length === 1 && files[0].webkitRelativePath)) {
-          handleFolderSelected(files);
-          setMode("path");
-          return;
-        }
-      }
-    }
-
     const f = e.dataTransfer.files[0];
     if (f) {
       setUploadedFile(f);
-      setSelectedFolderFiles(null);
-      setSelectedFolderName(null);
+      setError(null);
     }
   }, []);
 
@@ -220,36 +165,44 @@ export const NewScanPage: React.FC = () => {
     try {
       let promise: Promise<any>;
 
-      // Priority 1: User selected a local folder
-      if (selectedFolderFiles && selectedFolderFiles.length > 0) {
-        setActiveStep("compressing");
-        setStepDetail("Step 1/3: Compressing folder in browser memory...");
-        setCompressPercent(0);
+      if (mode === "path") {
+        if (selectedFolderFiles && selectedFolderFiles.length > 0) {
+          setActiveStep("compressing");
+          setStepDetail("Step 1/3: Compressing folder in browser memory...");
+          setCompressPercent(0);
 
-        const zipFile = await bundleFolderToZip(
-          selectedFolderFiles,
-          selectedFolderName || "project",
-          (pct) => setStepDetail(`Step 1/3: In-Memory Compression (${pct}%)`)
-        );
+          const zipFile = await bundleFolderToZip(
+            selectedFolderFiles,
+            selectedFolderName || "project",
+            (pct) => setStepDetail(`Step 1/3: In-Memory Compression (${pct}%)`)
+          );
 
-        setActiveStep("uploading");
-        setStepDetail("Step 2/3: Uploading archive to container sandbox (0%)...");
-        setUploadPercent(0);
+          setActiveStep("uploading");
+          setStepDetail("Step 2/3: Uploading archive to container sandbox (0%)...");
+          setUploadPercent(0);
 
-        const timer = runPipelineAnimation();
-        promise = triggerUploadScan(
-          zipFile,
-          { scenario_year: 2035, x_lifetime: 10.0, y_migration: 3.0 },
-          (pct) => {
-            setUploadPercent(pct);
-            setStepDetail(`Step 2/3: Uploading archive to container sandbox (${pct}%)...`);
-            if (pct >= 100) {
-              setActiveStep("analyzing");
-              setStepDetail("Step 3/3: Running AST discovery & CycloneDX CBOM validation...");
+          const timer = runPipelineAnimation();
+          promise = triggerUploadScan(
+            zipFile,
+            { scenario_year: 2035, x_lifetime: 10.0, y_migration: 3.0 },
+            (pct) => {
+              setUploadPercent(pct);
+              setStepDetail(`Step 2/3: Uploading archive to container sandbox (${pct}%)...`);
+              if (pct >= 100) {
+                setActiveStep("analyzing");
+                setStepDetail("Step 3/3: Running AST discovery & CycloneDX CBOM validation...");
+              }
             }
-          }
-        ).finally(() => clearInterval(timer));
-      } else if (mode === "upload" && uploadedFile) {
+          ).finally(() => clearInterval(timer));
+        } else {
+          setActiveStep("analyzing");
+          setStepDetail(`Scanning directory path: ${pathVal}...`);
+          const useCorpus = pathVal.trim() === "test_corpus";
+          const timer = runPipelineAnimation();
+          promise = triggerScan({ path: pathVal, use_corpus: useCorpus }).finally(() => clearInterval(timer));
+        }
+      } else if (mode === "upload") {
+        if (!uploadedFile) throw new Error("No file selected. Please choose a .ZIP archive or source file.");
         setActiveStep("uploading");
         setStepDetail(`Step 1/2: Uploading ${uploadedFile.name} (0%)...`);
         const timer = runPipelineAnimation();
@@ -270,12 +223,6 @@ export const NewScanPage: React.FC = () => {
         setStepDetail(`Cloning repository from ${urlVal} and analyzing...`);
         const timer = runPipelineAnimation();
         promise = triggerScan({ path: urlVal, use_corpus: false }).finally(() => clearInterval(timer));
-      } else if (mode === "path") {
-        setActiveStep("analyzing");
-        setStepDetail(`Scanning directory path: ${pathVal}...`);
-        const useCorpus = pathVal.trim() === "test_corpus";
-        const timer = runPipelineAnimation();
-        promise = triggerScan({ path: pathVal, use_corpus: useCorpus }).finally(() => clearInterval(timer));
       } else {
         if (!pasteCode.trim()) throw new Error("Code area is empty. Please paste some source code.");
         setActiveStep("analyzing");
@@ -299,10 +246,9 @@ export const NewScanPage: React.FC = () => {
 
   const isReady = () => {
     if (scanning) return false;
-    if (selectedFolderFiles !== null && selectedFolderFiles.length > 0) return true;
-    if (mode === "url") return urlVal.trim().length > 0;
-    if (mode === "path") return pathVal.trim().length > 0;
+    if (mode === "path") return (selectedFolderFiles !== null && selectedFolderFiles.length > 0) || pathVal.trim().length > 0;
     if (mode === "upload") return uploadedFile !== null;
+    if (mode === "url") return urlVal.trim().length > 0;
     return pasteCode.trim().length > 0;
   };
 
@@ -313,12 +259,12 @@ export const NewScanPage: React.FC = () => {
       onClick={() => setMode(id)}
       className={`flex-1 flex flex-col items-center gap-1 py-3 px-2 rounded border transition-all text-center ${
         mode === id
-          ? "bg-primary/10 border-primary text-primary"
+          ? "bg-primary/10 border-primary text-primary font-bold"
           : "bg-surface-container border-outline-variant text-on-surface-variant hover:border-outline hover:text-on-surface"
       }`}
     >
       <span className="material-symbols-outlined text-xl">{icon}</span>
-      <span className="text-xs font-semibold font-mono">{label}</span>
+      <span className="text-xs font-mono">{label}</span>
       <span className="text-[10px] font-sans opacity-70 leading-tight">{sub}</span>
     </button>
   );
@@ -358,8 +304,8 @@ export const NewScanPage: React.FC = () => {
         </div>
       </section>
 
-      {/* PROMINENT ALERT WHEN FOLDER IS SELECTED */}
-      {selectedFolderFiles && selectedFolderFiles.length > 0 && (
+      {/* PROMINENT FOLDER SELECTED BANNER (Shown in Folder mode when selected) */}
+      {mode === "path" && selectedFolderFiles && selectedFolderFiles.length > 0 && (
         <section className="p-4 bg-tertiary/10 border-2 border-tertiary rounded-lg space-y-3 shadow-md animate-fadeIn">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
             <div className="flex items-start gap-3">
@@ -370,14 +316,14 @@ export const NewScanPage: React.FC = () => {
                     Folder Selected & Ready to Scan
                   </h2>
                   <span className="px-2 py-0.5 rounded bg-tertiary text-surface font-mono text-[10px] font-bold">
-                    DETECTED ON YOUR PC
+                    READY
                   </span>
                 </div>
                 <p className="text-sm font-semibold font-mono text-on-surface mt-1">
                   {selectedFolderName}
                 </p>
                 <p className="text-xs text-on-surface-variant font-mono mt-0.5">
-                  Contains <strong>{selectedFolderFiles.length} files</strong> ({formatBytes(folderTotalSize)}) • Ready to be analyzed in container sandbox
+                  Contains <strong>{selectedFolderFiles.length} files</strong> ({formatBytes(folderTotalSize)}) • Will be analyzed in container sandbox
                 </p>
               </div>
             </div>
@@ -416,7 +362,6 @@ export const NewScanPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Expandable file inspection */}
           <div className="border-t border-tertiary/30 pt-2 flex items-center justify-between text-[11px] font-mono">
             <button
               type="button"
@@ -428,7 +373,7 @@ export const NewScanPage: React.FC = () => {
               </span>
               <span>{showFileList ? "Hide file list" : `View detected files (${selectedFolderFiles.length})`}</span>
             </button>
-            <span className="text-outline">Status: Staged in browser memory (Not yet sent)</span>
+            <span className="text-outline">Status: Staged in browser memory</span>
           </div>
 
           {showFileList && (
@@ -453,7 +398,7 @@ export const NewScanPage: React.FC = () => {
         <div className="text-xs font-mono text-on-surface-variant">1. SELECT INPUT TYPE</div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
           <Tab id="path"   icon="folder_open" label="Select Folder"  sub="Pick folder from this PC" />
-          <Tab id="upload" icon="upload_file" label="File / ZIP"     sub=".zip, .py, .java, .jar" />
+          <Tab id="upload" icon="upload_file" label="File / ZIP"     sub="Upload .zip or single file" />
           <Tab id="url"    icon="link"        label="URL / Git"      sub="GitHub or any git repo" />
           <Tab id="paste"  icon="code"        label="Paste Code"     sub="Inline source text" />
         </div>
@@ -466,10 +411,11 @@ export const NewScanPage: React.FC = () => {
             {mode === "path" ? "folder_open" : mode === "upload" ? "upload_file" : mode === "url" ? "link" : "code"}
           </span>
           <span>
-            {mode === "path" ? "2. Local Directory Folder" : mode === "upload" ? "2. File or Archive Upload" : mode === "url" ? "2. Repository URL" : "2. Paste Source Code"}
+            {mode === "path" ? "2. Local Directory Folder" : mode === "upload" ? "2. Upload File or .ZIP Archive" : mode === "url" ? "2. Repository URL" : "2. Paste Source Code"}
           </span>
         </div>
 
+        {/* TAB 1: SELECT FOLDER */}
         {mode === "path" && (
           <div className="space-y-4">
             <div className="p-4 bg-surface-container-lowest border border-outline-variant rounded-lg space-y-3">
@@ -477,10 +423,10 @@ export const NewScanPage: React.FC = () => {
                 <div>
                   <div className="flex items-center gap-2 text-sm font-mono font-bold text-on-surface">
                     <span className="material-symbols-outlined text-primary text-xl">folder</span>
-                    <span>Browse Any Project Folder from Your PC</span>
+                    <span>Browse Project Folder from Your PC</span>
                   </div>
                   <p className="text-xs text-on-surface-variant mt-0.5">
-                    Opens your native Windows/Mac/Linux folder picker. No manual path typing needed.
+                    Opens your native folder picker to select any local directory.
                   </p>
                 </div>
                 <button
@@ -533,13 +479,11 @@ export const NewScanPage: React.FC = () => {
                   controlled test_corpus
                 </button>
               </div>
-              <p className="text-[11px] font-mono text-outline leading-relaxed">
-                Note: In Docker container environments, host drive paths (e.g. C:\Users\...) cannot be read directly inside the container. Always use <strong>"Browse & Select Folder"</strong> above to scan your PC project folders.
-              </p>
             </div>
           </div>
         )}
 
+        {/* TAB 2: FILE / ZIP (Clean dropzone for single file or .zip only) */}
         {mode === "upload" && (
           <div className="space-y-3">
             <div
@@ -547,12 +491,13 @@ export const NewScanPage: React.FC = () => {
               onDragOver={(e) => { e.preventDefault(); setDragOver(true); }}
               onDragLeave={() => setDragOver(false)}
               onDrop={onDrop}
-              className={`border-2 border-dashed rounded-lg p-8 flex flex-col items-center gap-3 transition-all ${
-                dragOver ? "border-primary bg-primary/5" : (uploadedFile || selectedFolderFiles) ? "border-tertiary bg-tertiary/5" : "border-outline-variant hover:border-outline bg-surface-container"
+              onClick={() => fileInputRef.current?.click()}
+              className={`border-2 border-dashed rounded-lg p-8 flex flex-col items-center gap-3 cursor-pointer transition-all ${
+                dragOver ? "border-primary bg-primary/5" : uploadedFile ? "border-tertiary bg-tertiary/5" : "border-outline-variant hover:border-outline bg-surface-container"
               }`}
             >
               <span className="material-symbols-outlined text-4xl text-on-surface-variant">
-                {(uploadedFile || selectedFolderFiles) ? "task" : "cloud_upload"}
+                {uploadedFile ? "task" : "cloud_upload"}
               </span>
 
               {uploadedFile ? (
@@ -562,30 +507,23 @@ export const NewScanPage: React.FC = () => {
                 </div>
               ) : (
                 <div className="text-center space-y-1">
-                  <p className="text-sm font-semibold text-on-surface">Drag & drop any folder or file here</p>
-                  <p className="text-xs text-on-surface-variant">Accepts: Folders, .zip, .jar, .py, .java, .js, .ts, .c, .cpp, .go, .rs, or any source code</p>
-                  <p className="text-xs text-outline">Max size: 500 MB (Auto-extracted in air-gapped sandbox)</p>
+                  <p className="text-sm font-semibold text-on-surface">Drop a .ZIP archive or source file here, or <span className="text-primary underline">browse</span></p>
+                  <p className="text-xs text-on-surface-variant">Accepts: .zip, .jar, .py, .java, .js, .ts, .c, .cpp, .go, .rs (Max: 500 MB)</p>
+                  <p className="text-[11px] text-outline">ZIP archives are automatically extracted and analyzed in the container sandbox.</p>
                 </div>
               )}
 
-              <div className="flex items-center gap-2 pt-2">
-                <button
-                  type="button"
-                  onClick={() => folderInputRef.current?.click()}
-                  className="bg-primary/10 hover:bg-primary/20 text-primary border border-primary/40 px-3 py-1.5 rounded text-xs font-mono font-bold flex items-center gap-1.5 transition"
-                >
-                  <span className="material-symbols-outlined text-sm">folder_open</span>
-                  <span>Select Folder</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  className="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant text-on-surface px-3 py-1.5 rounded text-xs font-mono flex items-center gap-1.5 transition"
-                >
-                  <span className="material-symbols-outlined text-sm">upload_file</span>
-                  <span>Select File / ZIP</span>
-                </button>
-              </div>
+              <button
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  fileInputRef.current?.click();
+                }}
+                className="bg-primary hover:bg-primary/90 text-on-primary font-mono text-xs font-bold px-4 py-2 rounded flex items-center gap-1.5 transition shadow"
+              >
+                <span className="material-symbols-outlined text-sm">upload_file</span>
+                <span>{uploadedFile ? "Change File / .ZIP" : "Browse File / .ZIP"}</span>
+              </button>
 
               <input
                 id="scan-file-input"
@@ -597,8 +535,6 @@ export const NewScanPage: React.FC = () => {
                   const f = e.target.files?.[0];
                   if (f) {
                     setUploadedFile(f);
-                    setSelectedFolderFiles(null);
-                    setSelectedFolderName(null);
                   }
                 }}
               />
@@ -624,6 +560,7 @@ export const NewScanPage: React.FC = () => {
           </div>
         )}
 
+        {/* TAB 3: URL / GIT */}
         {mode === "url" && (
           <div className="space-y-3">
             <div>
@@ -659,6 +596,7 @@ export const NewScanPage: React.FC = () => {
           </div>
         )}
 
+        {/* TAB 4: PASTE CODE */}
         {mode === "paste" && (
           <div className="space-y-3">
             <div className="flex gap-2 items-end flex-wrap">
@@ -770,7 +708,6 @@ export const NewScanPage: React.FC = () => {
             </span>
           </div>
 
-          {/* Progress bar */}
           <div className="w-full bg-surface-container-highest rounded-full h-3 overflow-hidden">
             <div
               className="bg-primary h-full transition-all duration-300 ease-out"
@@ -825,7 +762,10 @@ export const NewScanPage: React.FC = () => {
               <div className="pt-1">
                 <button
                   type="button"
-                  onClick={() => folderInputRef.current?.click()}
+                  onClick={() => {
+                    setMode("path");
+                    folderInputRef.current?.click();
+                  }}
                   className="text-xs font-mono font-bold text-on-primary bg-primary hover:bg-primary/90 px-3 py-1.5 rounded flex items-center gap-1.5 shadow"
                 >
                   <span className="material-symbols-outlined text-sm">folder_open</span>
@@ -849,12 +789,12 @@ export const NewScanPage: React.FC = () => {
           <span>
             {scanning
               ? "Running Pipeline..."
-              : selectedFolderName
+              : mode === "path" && selectedFolderName
               ? `🚀 Initiate AST Cryptographic Scan — Folder: ${selectedFolderName}`
               : `Initiate AST Cryptographic Scan — ${
-                  mode === "url" ? "GitHub / URL" :
                   mode === "path" ? "Local Path" :
-                  mode === "upload" ? (uploadedFile ? uploadedFile.name : "File Upload") :
+                  mode === "upload" ? (uploadedFile ? uploadedFile.name : "File / ZIP Upload") :
+                  mode === "url" ? "GitHub / URL" :
                   "Pasted Code"
                 }`}
           </span>
