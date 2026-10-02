@@ -452,16 +452,28 @@ def export_pdf_report(assets: List[CryptoAsset], metrics: Dict, validation_resul
     ]))
     story += [mt, Spacer(1, 5 * mm)]
 
+    limit = 50
     story += [_p("Top Prioritized Findings & Post-Quantum Recommendations", h2)]
+    if len(assets) > limit:
+        story += [_p(f"Displaying top {limit} prioritized findings ranked by risk score ({len(assets)} total assets detected). Full asset inventory is available in inventory.csv and CycloneDX 1.6 CBOM.", small), Spacer(1, 2 * mm)]
+
     finding_rows = [["Rule ID", "Algorithm", "Quantum Class", "Risk Band", "Location", "PQC Target"]]
-    for a in sorted(assets, key=lambda x: -x.risk_score)[:30]:
+    sorted_assets = sorted(assets, key=lambda x: -(x.risk_score if getattr(x, 'risk_score', None) is not None else 0.0))[:limit]
+    for a in sorted_assets:
+        q_class = a.quantum_vuln_class.value if hasattr(a.quantum_vuln_class, "value") else str(a.quantum_vuln_class or "UNKNOWN")
+        risk_val = a.risk_score if getattr(a, 'risk_score', None) is not None else 0.0
+        risk_band = a.risk_band or "Unknown"
+        loc_str = f"{os.path.basename(a.file_path or 'unknown')}:{a.line_number or 0}"
+        algo_str = f"{a.algorithm or 'Unknown'} ({a.key_size or ''})".strip()
+        rule_str = a.rule_id or "ECDAT-GEN"
+        rec_str = (a.recommendation or "Maintain quantum-safe configuration")[:45]
         finding_rows.append([
-            a.rule_id or "ECDAT-GEN",
-            f"{a.algorithm} ({a.key_size or ''})".strip(),
-            a.quantum_vuln_class.value,
-            f"{a.risk_band} ({a.risk_score:.1f})",
-            f"{os.path.basename(a.file_path)}:{a.line_number}",
-            (a.recommendation or "N/A")[:35]
+            rule_str,
+            algo_str,
+            q_class,
+            f"{risk_band} ({risk_val:.1f})",
+            loc_str,
+            rec_str
         ])
 
     ft = Table([[_p(c, cell) for c in r] for r in finding_rows], colWidths=[28 * mm, 28 * mm, 32 * mm, 24 * mm, 34 * mm, 36 * mm], repeatRows=1)
@@ -470,6 +482,7 @@ def export_pdf_report(assets: List[CryptoAsset], metrics: Dict, validation_resul
         ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#E2E8F0")),
         ("VALIGN", (0, 0), (-1, -1), "TOP"),
     ]))
+    story.append(ft)
     try:
         doc.build(story)
         return filepath
