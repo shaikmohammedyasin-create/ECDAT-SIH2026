@@ -62,15 +62,17 @@ def main():
     assert m0["violations_count"] == 16
 
     # Simulate updated horizon
-    r_sim = c.post("/api/mosca/simulate", json={"scenario_year": 2040, "x_lifetime": 5.0, "y_migration": 2.0, "recompute_scan": False})
-    assert r_sim.status_code == 200
-    m_sim = r_sim.json()
-    print("Simulation (2040, X=5, Y=2) Security Margin:", m_sim["security_margin"], "| At risk:", m_sim["at_risk"])
-    assert m_sim["security_margin"] == 7.0
-    assert m_sim["at_risk"] is False
-
-    # Restore scenario
-    c.post("/api/mosca/simulate", json={"scenario_year": 2035, "x_lifetime": 10.0, "y_migration": 3.0, "recompute_scan": False})
+    try:
+        r_sim = c.post("/api/mosca/simulate", json={"scenario_year": 2040, "x_lifetime": 5.0, "y_migration": 2.0, "recompute_scan": False})
+        assert r_sim.status_code == 200
+        m_sim = r_sim.json()
+        print("Simulation (2040, X=5, Y=2) Security Margin:", m_sim["security_margin"], "| At risk:", m_sim["at_risk"])
+        assert m_sim["security_margin"] == 7.0
+        assert m_sim["at_risk"] is False
+    finally:
+        # Restore scenario
+        r_restore = c.post("/api/mosca/simulate", json={"scenario_year": 2035, "x_lifetime": 10.0, "y_migration": 3.0, "recompute_scan": False})
+        assert r_restore.status_code == 200
 
     print("=== 6. RISK ANALYSIS ===")
     r = c.get("/api/risk")

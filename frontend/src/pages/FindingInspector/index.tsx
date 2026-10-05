@@ -289,6 +289,8 @@ export const FindingInspector: React.FC = () => {
                     ? "bg-amber-900/60 text-amber-200 border border-amber-600"
                     : finding.quantum_status === "Legacy-broken" || finding.quantum_vuln_class === "CLASSICALLY_BROKEN"
                     ? "bg-fuchsia-950/60 text-fuchsia-200 border border-fuchsia-600"
+                    : finding.quantum_status === "Safe" || finding.quantum_status === "PQC-ready" || finding.quantum_vuln_class === "QUANTUM_SAFE"
+                    ? "bg-emerald-950/60 text-emerald-300 border border-emerald-600"
                     : "bg-surface-container-highest text-primary"
                 }`}
               >
@@ -299,7 +301,19 @@ export const FindingInspector: React.FC = () => {
               <div className="p-2 bg-surface-container-lowest rounded border border-outline-variant flex flex-col gap-1">
                 <div className="flex items-center justify-between">
                   <span className="text-on-surface-variant">Classification Signature:</span>
-                  <span className="text-error font-bold font-mono">{finding.quantum_status}</span>
+                  <span
+                    className={`font-bold font-mono ${
+                      finding.quantum_status === "Safe" || finding.quantum_status === "PQC-ready" || finding.quantum_vuln_class === "QUANTUM_SAFE"
+                        ? "text-tertiary"
+                        : finding.quantum_status === "Weakened" || finding.quantum_vuln_class === "GROVER_WEAKENED"
+                        ? "text-primary"
+                        : finding.quantum_status === "Legacy-broken" || finding.quantum_vuln_class === "CLASSICALLY_BROKEN"
+                        ? "text-secondary"
+                        : "text-error"
+                    }`}
+                  >
+                    {finding.quantum_status}
+                  </span>
                 </div>
                 <p className="text-on-surface-variant text-[11px] leading-relaxed">
                   {finding.why_risky ||
