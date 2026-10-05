@@ -284,3 +284,28 @@ def get_scan_cbom(scan_id: str):
 def get_scan_reports(scan_id: str):
     return get_reports_metadata()
 
+
+@router.post("/reset")
+def reset_scan():
+    """Reset the global scan state to a clean IDLE baseline with 0 assets."""
+    state.reset()
+    return {
+        "status": "SUCCESS",
+        "message": "Scan state reset to clean IDLE state.",
+        "total_assets": 0,
+        "current_stage": "IDLE"
+    }
+
+
+@router.delete("")
+def delete_scan():
+    """Clear all active scan findings and restore initial clean state."""
+    state.reset()
+    return {
+        "status": "SUCCESS",
+        "message": "Scan findings cleared successfully.",
+        "total_assets": 0,
+        "current_stage": "IDLE"
+    }
+
+

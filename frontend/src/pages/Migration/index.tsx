@@ -91,7 +91,7 @@ export const MigrationGuidance: React.FC = () => {
             </div>
           </div>
           <div className="text-code-sm text-outline text-[11px] flex items-center gap-1">
-            <span className="text-error font-medium">Shor broken</span> • {summary?.immediate_algos?.length ? summary.immediate_algos.join(", ") : "RSA ≤ 2048, ECDSA-P256"}
+            <span className="text-error font-medium">Shor broken</span> • {summary?.immediate_algos?.length ? summary.immediate_algos.join(", ") : "None detected"}
           </div>
         </div>
 
@@ -105,14 +105,14 @@ export const MigrationGuidance: React.FC = () => {
           </div>
           <div className="my-2">
             <div className="text-2xl font-code-lg text-primary font-bold tracking-tight">
-              {summary ? `${summary.hybrid_count} Hybrid` : "Hybrid"}
+              {summary ? `${summary.hybrid_count} Hybrid` : "0 Hybrid"}
             </div>
             <div className="text-body-sm font-body-sm text-on-surface font-medium text-xs">
               Dual-Key Hybrid Encapsulation
             </div>
           </div>
           <div className="text-code-sm text-outline text-[11px] flex items-center gap-1">
-            <span className="text-primary font-medium">Dual-Envelope</span> • {summary?.hybrid_algos?.length ? summary.hybrid_algos.join(", ") : "X25519 + ML-KEM-768"}
+            <span className="text-primary font-medium">Dual-Envelope</span> • {summary?.hybrid_algos?.length ? summary.hybrid_algos.join(", ") : "None detected"}
           </div>
         </div>
 
@@ -126,14 +126,14 @@ export const MigrationGuidance: React.FC = () => {
           </div>
           <div className="my-2">
             <div className="text-2xl font-code-lg text-secondary font-bold tracking-tight">
-              {summary ? `${summary.deprecate_count} Deprecate` : "Deprecate"}
+              {summary ? `${summary.deprecate_count} Deprecate` : "0 Deprecate"}
             </div>
             <div className="text-body-sm font-body-sm text-on-surface font-medium text-xs">
               Legacy Symmetric & Hashes
             </div>
           </div>
           <div className="text-code-sm text-outline text-[11px] flex items-center gap-1">
-            <span className="text-secondary font-medium">Upgrade</span> • {summary?.deprecate_algos?.length ? summary.deprecate_algos.join(", ") : "MD5, SHA-1 → SHA-256 / SHA-3"}
+            <span className="text-secondary font-medium">Upgrade</span> • {summary?.deprecate_algos?.length ? summary.deprecate_algos.join(", ") : "None detected"}
           </div>
         </div>
 
@@ -147,14 +147,14 @@ export const MigrationGuidance: React.FC = () => {
           </div>
           <div className="my-2">
             <div className="text-2xl font-code-lg text-tertiary font-bold tracking-tight">
-              {summary ? `${summary.compliant_count} Compliant` : "Compliant"}
+              {summary ? `${summary.compliant_count} Compliant` : "0 Compliant"}
             </div>
             <div className="text-body-sm font-body-sm text-on-surface font-medium text-xs">
               NIST Standardized Lattice Target
             </div>
           </div>
           <div className="text-code-sm text-outline text-[11px] flex items-center gap-1">
-            <span className="text-tertiary font-medium">Standard</span> • {summary?.compliant_algos?.length ? summary.compliant_algos.join(", ") : "ML-KEM-768, ML-DSA-65"}
+            <span className="text-tertiary font-medium">Standard</span> • {summary?.compliant_algos?.length ? summary.compliant_algos.join(", ") : "None detected"}
           </div>
         </div>
       </section>
@@ -186,11 +186,15 @@ export const MigrationGuidance: React.FC = () => {
               Discrete logarithm & integer factorization primitives vulnerable to Shor polynomial quantum attacks.
             </p>
             <div className="mt-2 flex flex-wrap gap-1">
-              {(summary?.immediate_algos?.length ? summary.immediate_algos : ["RSA-2048", "ECDSA-P256", "Diffie-Hellman"]).map((algo) => (
-                <span key={algo} className="text-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-error border border-error/20 text-xs font-mono">
-                  {algo}
-                </span>
-              ))}
+              {summary?.immediate_algos?.length ? (
+                summary.immediate_algos.map((algo) => (
+                  <span key={algo} className="text-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-error border border-error/20 text-xs font-mono">
+                    {algo}
+                  </span>
+                ))
+              ) : (
+                <span className="text-code-sm text-outline text-xs italic font-mono">No vulnerable assets detected</span>
+              )}
             </div>
           </div>
 
@@ -198,7 +202,7 @@ export const MigrationGuidance: React.FC = () => {
           <div className="bg-surface-container border border-primary/40 p-3 rounded relative">
             <div className="flex items-center justify-between mb-1">
               <span className="text-[10px] font-mono text-primary uppercase bg-primary/10 px-1.5 py-0.5 rounded border border-primary/20 font-bold">
-                Stage 1: Intermediate
+                Stage 1: Intermediate ({summary?.hybrid_count ?? 0})
               </span>
               <span className="text-code-sm text-primary text-[11px]">In-Flight</span>
             </div>
@@ -207,11 +211,15 @@ export const MigrationGuidance: React.FC = () => {
               Simultaneous classical-PQC derivation preserving legacy compatibility while injecting lattice resistance.
             </p>
             <div className="mt-2 flex flex-wrap gap-1">
-              {(summary?.hybrid_algos?.length ? summary.hybrid_algos : ["X25519 + ML-KEM-768", "Composite Dual Signatures"]).map((algo) => (
-                <span key={algo} className="text-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-primary border border-primary/20 text-xs font-mono">
-                  {algo}
-                </span>
-              ))}
+              {summary?.hybrid_algos?.length ? (
+                summary.hybrid_algos.map((algo) => (
+                  <span key={algo} className="text-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-primary border border-primary/20 text-xs font-mono">
+                    {algo}
+                  </span>
+                ))
+              ) : (
+                <span className="text-code-sm text-outline text-xs italic font-mono">No hybrid transitions queued</span>
+              )}
             </div>
           </div>
 
@@ -219,7 +227,7 @@ export const MigrationGuidance: React.FC = () => {
           <div className="bg-surface-container border border-tertiary/40 p-3 rounded">
             <div className="flex items-center justify-between mb-1">
               <span className="text-[10px] font-mono text-tertiary uppercase bg-tertiary/10 px-1.5 py-0.5 rounded border border-tertiary/20 font-bold">
-                Stage 2: Target Posture
+                Stage 2: Target Posture ({summary?.compliant_count ?? 0})
               </span>
               <span className="text-code-sm text-tertiary text-[11px]">NIST Standard</span>
             </div>
@@ -228,11 +236,15 @@ export const MigrationGuidance: React.FC = () => {
               Direct deployment of NIST FIPS 203/204/205 parameter sets completely decoupled from classical assumptions.
             </p>
             <div className="mt-2 flex flex-wrap gap-1">
-              {(summary?.compliant_algos?.length ? summary.compliant_algos : ["ML-KEM-768 / 1024", "ML-DSA-65", "SLH-DSA-128"]).map((algo) => (
-                <span key={algo} className="text-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-tertiary border border-tertiary/20 text-xs font-mono">
-                  {algo}
-                </span>
-              ))}
+              {summary?.compliant_algos?.length ? (
+                summary.compliant_algos.map((algo) => (
+                  <span key={algo} className="text-code-sm bg-surface-container-high px-1.5 py-0.5 rounded text-tertiary border border-tertiary/20 text-xs font-mono">
+                    {algo}
+                  </span>
+                ))
+              ) : (
+                <span className="text-code-sm text-outline text-xs italic font-mono">Awaiting scan results</span>
+              )}
             </div>
           </div>
         </div>
@@ -250,75 +262,85 @@ export const MigrationGuidance: React.FC = () => {
           <span className="text-code-sm text-outline text-xs">NIST Special Publication 800-56C Rev. 2 Aligned</span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {matrix.map((item, idx) => (
-            <div
-              key={idx}
-              className="bg-surface-container border border-outline-variant rounded p-3 flex flex-col justify-between hover:border-primary/60 transition-colors"
-            >
-              <div>
-                <div className="flex items-center justify-between text-code-sm mb-1.5">
-                  <span className="text-primary font-mono font-bold text-xs">RULE-MIG-0{idx + 1}</span>
-                  <span
-                    className={`px-1.5 py-0.2 rounded text-[10px] font-bold ${
-                      item.risk_band?.toUpperCase() === "CRITICAL"
-                        ? "bg-error-container text-on-error-container"
-                        : "bg-primary-container/20 text-primary border border-primary/30"
-                    }`}
-                  >
-                    {item.risk_band}
-                  </span>
-                </div>
+        {matrix.length === 0 ? (
+          <div className="p-8 text-center flex flex-col items-center justify-center space-y-2 border border-outline-variant rounded bg-surface-container">
+            <span className="material-symbols-outlined text-outline text-3xl">swap_calls</span>
+            <div className="text-on-surface font-semibold text-sm">No Migration Guidance Available</div>
+            <p className="text-xs text-on-surface-variant max-w-md">
+              Run a scan on your codebase or upload repository files to generate deterministic NIST PQC migration roadmaps.
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
+            {matrix.map((item, idx) => (
+              <div
+                key={idx}
+                className="bg-surface-container border border-outline-variant rounded p-3 flex flex-col justify-between hover:border-primary/60 transition-colors"
+              >
+                <div>
+                  <div className="flex items-center justify-between text-code-sm mb-1.5">
+                    <span className="text-primary font-mono font-bold text-xs">RULE-MIG-0{idx + 1}</span>
+                    <span
+                      className={`px-1.5 py-0.2 rounded text-[10px] font-bold ${
+                        item.risk_band?.toUpperCase() === "CRITICAL"
+                          ? "bg-error-container text-on-error-container"
+                          : "bg-primary-container/20 text-primary border border-primary/30"
+                      }`}
+                    >
+                      {item.risk_band}
+                    </span>
+                  </div>
 
-                <div className="bg-surface-container-lowest p-2 rounded border border-outline-variant mb-2">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <span className="text-[10px] text-on-surface-variant uppercase block">Current</span>
-                      <span className="text-error font-bold font-mono text-xs">{item.algorithm}</span>
+                  <div className="bg-surface-container-lowest p-2 rounded border border-outline-variant mb-2">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <span className="text-[10px] text-on-surface-variant uppercase block">Current</span>
+                        <span className="text-error font-bold font-mono text-xs">{item.algorithm}</span>
+                      </div>
+                      <span className="material-symbols-outlined text-on-surface-variant text-sm">arrow_forward</span>
+                      <div className="text-right">
+                        <span className="text-[10px] text-on-surface-variant uppercase block">Recommended Target</span>
+                        <span className="text-tertiary font-bold font-mono text-xs">{item.recommended_target}</span>
+                      </div>
                     </div>
-                    <span className="material-symbols-outlined text-on-surface-variant text-sm">arrow_forward</span>
-                    <div className="text-right">
-                      <span className="text-[10px] text-on-surface-variant uppercase block">Recommended Target</span>
-                      <span className="text-tertiary font-bold font-mono text-xs">{item.recommended_target}</span>
+                  </div>
+
+                  <p className="text-xs text-on-surface-variant leading-relaxed mb-2">
+                    {item.migration_strategy}
+                  </p>
+
+                  <div className="text-[11px] text-outline font-mono space-y-1 border-t border-outline-variant pt-2">
+                    <div className="flex justify-between">
+                      <span>Standard:</span>
+                      <span className="text-on-surface">{item.standard}</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Effort / Complexity:</span>
+                      <span className="text-primary">{item.effort}</span>
                     </div>
                   </div>
                 </div>
 
-                <p className="text-xs text-on-surface-variant leading-relaxed mb-2">
-                  {item.migration_strategy}
-                </p>
-
-                <div className="text-[11px] text-outline font-mono space-y-1 border-t border-outline-variant pt-2">
-                  <div className="flex justify-between">
-                    <span>Standard:</span>
-                    <span className="text-on-surface">{item.standard}</span>
+                {/* Migration Path Steps */}
+                {item.migration_path && item.migration_path.length > 0 && (
+                  <div className="mt-3 pt-2 border-t border-outline-variant">
+                    <span className="text-[10px] text-on-surface-variant uppercase block mb-1 font-semibold">
+                      Staged Implementation Steps:
+                    </span>
+                    <ul className="text-[11px] text-on-surface space-y-1 pl-2">
+                      {item.migration_path.map((step, sIdx) => (
+                        <li key={sIdx} className="flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span>
+                          <span className="truncate">{step}</span>
+                        </li>
+                      ))}
+                    </ul>
                   </div>
-                  <div className="flex justify-between">
-                    <span>Effort / Complexity:</span>
-                    <span className="text-primary">{item.effort}</span>
-                  </div>
-                </div>
+                )}
               </div>
-
-              {/* Migration Path Steps */}
-              {item.migration_path && item.migration_path.length > 0 && (
-                <div className="mt-3 pt-2 border-t border-outline-variant">
-                  <span className="text-[10px] text-on-surface-variant uppercase block mb-1 font-semibold">
-                    Staged Implementation Steps:
-                  </span>
-                  <ul className="text-[11px] text-on-surface space-y-1 pl-2">
-                    {item.migration_path.map((step, sIdx) => (
-                      <li key={sIdx} className="flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span>
-                        <span className="truncate">{step}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </section>
     </div>
   );

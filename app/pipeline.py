@@ -31,9 +31,11 @@ SOURCE_EXTS = (".py", ".js", ".java", ".ts", ".jsx", ".tsx", ".c", ".h", ".cpp",
 PRUNE_DIRS = {
     ".git", "node_modules", "venv", ".venv", "env", ".env",
     "__pycache__", ".pytest_cache", ".cache",
-    ".hg", ".svn", "build", "dist", "target", "out",
-    ".idea", ".vscode", ".gradle", ".next", ".nuxt",
-    ".tox", "htmlcov", ".eggs", "vendor", "bin", "obj",
+    ".hg", ".svn", "build", "dist", "target", "out", ".output",
+    ".idea", ".vscode", ".vs", ".gradle", ".next", ".nuxt", ".svelte-kit", ".turbo",
+    ".tox", "htmlcov", "coverage", ".coverage", ".mypy_cache", ".ruff_cache",
+    ".eggs", "vendor", "bin", "obj", "pods", ".cargo", "site-packages",
+    ".terraform", "temp", "tmp", "docs", "documentation",
 }
 
 MAX_ASSETS_PER_SCAN = 2000
@@ -63,7 +65,11 @@ def run_full_scan(
     _log("INFO", f"ECDAT engine starting. Target: {directory}")
     _log("INFO", f"Mosca: Z={scenario_year}, X={x_lifetime}y, Y={y_migration}y | Workers: {_WORKERS}")
 
-    src, deps, certs, cfgs, bins = [], [], [], [], []
+    dep_fps = []
+    cert_fps = []
+    cfg_fps = []
+    bin_fps = []
+    src_fps = []
 
     for root, dirs, files in os.walk(directory):
         dirs[:] = [d for d in dirs if d not in PRUNE_DIRS]
@@ -71,15 +77,46 @@ def run_full_scan(
             fp = os.path.join(root, f)
             fl = f.lower()
             if fl in DEP_FILENAMES:
-                deps.extend(scan_dependency_file(fp))
+                dep_fps.append(fp)
             elif fl.endswith(CERT_EXTS) or ".crt" in fl:
-                certs.extend(scan_certificate_file(fp))
+                cert_fps.append(fp)
             elif fl.endswith(CONFIG_EXTS) or fl in CONFIG_NAMES or "tls" in fl:
-                cfgs.extend(scan_config_file(fp))
+                cfg_fps.append(fp)
             elif fl.endswith(BINARY_EXTS):
-                bins.extend(scan_binary_file(fp))
+                bin_fps.append(fp)
             elif fl.endswith(SOURCE_EXTS):
+                src_fps.append(fp)
+
+    src, deps, certs, cfgs, bins = [], [], [], [], []
+
+    # Parallel source code scanning
+    if src_fps:
+        if len(src_fps) > 1 and _WORKERS > 1:
+            with ThreadPoolExecutor(max_workers=_WORKERS) as executor:
+                for batch in executor.map(scan_file, src_fps, chunksize=32):
+                    src.extend(batch)
+        else:
+            for fp in src_fps:
                 src.extend(scan_file(fp))
+
+    # Parallel binary artifact scanning
+    if bin_fps:
+        if len(bin_fps) > 1 and _WORKERS > 1:
+            with ThreadPoolExecutor(max_workers=_WORKERS) as executor:
+                for batch in executor.map(scan_binary_file, bin_fps):
+                    bins.extend(batch)
+        else:
+            for fp in bin_fps:
+                bins.extend(scan_binary_file(fp))
+
+    for fp in dep_fps:
+        deps.extend(scan_dependency_file(fp))
+
+    for fp in cert_fps:
+        certs.extend(scan_certificate_file(fp))
+
+    for fp in cfg_fps:
+        cfgs.extend(scan_config_file(fp))
 
     raw = src + deps + certs + cfgs + bins
     _log("INFO", f"Discovery: {len(src)} src, {len(deps)} deps, {len(certs)} certs, {len(cfgs)} cfg, {len(bins)} bin.")

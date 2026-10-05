@@ -44,6 +44,7 @@ const IGNORED_DIRS = new Set([
   ".idea", ".vscode", ".vs",
   ".gradle", ".cargo", "vendor", "pods",
   ".cache", ".tox", "coverage", "htmlcov", "bin", "obj",
+  "docs", "documentation", "man", "assets", "static", "public"
 ]);
 
 const IGNORED_EXTS = new Set([
@@ -53,6 +54,25 @@ const IGNORED_EXTS = new Set([
   "pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx",
   "woff", "woff2", "ttf", "eot", "otf",
   "exe", "dll", "so", "dylib", "bin", "obj", "o", "a", "lib", "pdb", "wasm", "map",
+  "css", "scss", "sass", "less", "html", "htm", "md", "markdown"
+]);
+
+const RELEVANT_SCAN_EXTS = new Set([
+  // Source Code
+  "py", "js", "java", "ts", "jsx", "tsx", "c", "h", "cpp", "cc", "go", "rs",
+  // Certificates & Keystores
+  "pem", "crt", "cer", "der", "p12", "pfx", "pub",
+  // Configurations
+  "conf", "cfg", "cnf",
+  // Java Bytecode Binaries
+  "class", "jar", "war",
+]);
+
+const RELEVANT_FILENAMES = new Set([
+  "requirements.txt", "requirements-dev.txt", "pom.xml",
+  "package.json", "package-lock.json", "pyproject.toml",
+  "go.mod", "cargo.toml", "build.gradle",
+  "nginx.conf", "sshd_config", "openssl.cnf", "dockerfile", "docker-compose.yml"
 ]);
 
 function isRelevantScanFile(file: File): boolean {
@@ -64,16 +84,22 @@ function isRelevantScanFile(file: File): boolean {
   }
   const fileName = parts[parts.length - 1];
   if (!fileName) return false;
-  // If dotfile (e.g. .DS_Store), ignore unless known config like .env or .conf
+
+  // Exact manifest or config match
+  if (RELEVANT_FILENAMES.has(fileName)) return true;
+
+  // Dotfile check
   if (fileName.startsWith(".") && !fileName.startsWith(".env") && !fileName.endsWith(".conf")) {
     return false;
   }
+
   const dotIdx = fileName.lastIndexOf(".");
   if (dotIdx !== -1) {
     const ext = fileName.slice(dotIdx + 1).toLowerCase();
     if (IGNORED_EXTS.has(ext)) return false;
+    return RELEVANT_SCAN_EXTS.has(ext);
   }
-  return true;
+  return false;
 }
 
 interface ScanTabProps {

@@ -13,7 +13,7 @@ import time
 import argparse
 import webbrowser
 
-def run_backend(port: int = 8000, reload: bool = False):
+def run_backend(port: int = 8000, reload: bool = True):
     cmd = [sys.executable, "-m", "uvicorn", "backend.api.main:app", "--host", "127.0.0.1", "--port", str(port)]
     if reload:
         cmd.append("--reload")
@@ -29,6 +29,7 @@ def main():
     parser.add_argument("--frontend-only", action="store_true", help="Launch React frontend only")
     parser.add_argument("--port", type=int, default=8000, help="FastAPI port (default: 8000)")
     parser.add_argument("--no-browser", action="store_true", help="Do not open browser automatically")
+    parser.add_argument("--no-reload", action="store_true", help="Disable auto-reload on code change")
     args = parser.parse_args()
 
     procs = []
@@ -40,7 +41,7 @@ def main():
     try:
         if not args.frontend_only:
             print(f"[*] Starting FastAPI Backend on http://127.0.0.1:{args.port}...")
-            p_back = run_backend(port=args.port)
+            p_back = run_backend(port=args.port, reload=not args.no_reload)
             procs.append(p_back)
 
         if not args.backend_only:

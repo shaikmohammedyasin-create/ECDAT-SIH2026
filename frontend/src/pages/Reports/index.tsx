@@ -79,6 +79,16 @@ export const ReportsPage: React.FC = () => {
         </div>
       </section>
 
+      {/* Empty scan state notice */}
+      {metadata?.total_assets === 0 && (
+        <div className="bg-primary/10 border border-primary/30 p-3 rounded flex items-center justify-between text-xs font-mono">
+          <div className="flex items-center gap-2 text-on-surface">
+            <span className="material-symbols-outlined text-primary text-base">info</span>
+            <span>No repository scan data is currently loaded. Launch a scan to generate populated audit deliverables and dossiers.</span>
+          </div>
+        </div>
+      )}
+
       {/* Filter Controls Toolbar */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-3 p-3 bg-surface-container-low border border-outline-variant rounded">
         {/* Filter 1: Scan ID */}

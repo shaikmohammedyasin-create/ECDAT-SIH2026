@@ -80,14 +80,16 @@ export const RiskAnalysis: React.FC = () => {
             </span>
             <span
               className={`px-2 py-0.5 rounded text-[10px] font-code-sm uppercase font-bold tracking-wide ${
-                avg >= 70
+                topFindings.length === 0
+                  ? "bg-surface-container-high text-outline border border-outline-variant"
+                  : avg >= 70
                   ? "bg-error-container text-on-error-container border border-error/40"
                   : avg >= 50
                   ? "bg-primary-container/20 text-primary border border-primary/40"
                   : "bg-tertiary/10 text-tertiary border border-tertiary/30"
               }`}
             >
-              {avg >= 75 ? "CRITICAL RISK BAND" : avg >= 60 ? "HIGH RISK BAND" : "MODERATE BAND"}
+              {topFindings.length === 0 ? "NO SCAN DATA" : avg >= 75 ? "CRITICAL RISK BAND" : avg >= 60 ? "HIGH RISK BAND" : "MODERATE BAND"}
             </span>
           </div>
 
@@ -127,7 +129,7 @@ export const RiskAnalysis: React.FC = () => {
           </div>
 
           <div className="mt-4 pt-2 border-t border-outline-variant flex items-center justify-between text-code-sm font-code-sm text-on-surface-variant">
-            <span>Primary Driver: <strong className="text-on-surface font-mono">{topFindings.length > 0 ? `Shor-vulnerable Primitives (${topFindings[0].algorithm})` : "Cryptographic Primitives"}</strong></span>
+            <span>Primary Driver: <strong className="text-on-surface font-mono">{topFindings.length > 0 ? `Shor-vulnerable Primitives (${topFindings[0].algorithm})` : "None (Awaiting Scan)"}</strong></span>
             <Link to="/inventory" className="text-primary hover:underline text-xs">Inspect Inventory →</Link>
           </div>
         </div>
@@ -336,43 +338,51 @@ export const RiskAnalysis: React.FC = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-outline-variant bg-surface-container-lowest">
-              {topFindings.map((item) => (
-                <tr key={item.id} className="hover:bg-surface-container-high/50 transition-colors">
-                  <td className="py-2 px-3 text-primary font-mono">{item.rule_id}</td>
-                  <td className="py-2 px-3 font-semibold text-on-surface font-mono">{item.algorithm}</td>
-                  <td className="py-2 px-3 text-on-surface-variant">{item.primitive}</td>
-                  <td className="py-2 px-3 text-secondary font-mono truncate max-w-xs">{item.file_path}:{item.line}</td>
-                  <td className="py-2 px-3">
-                    <span className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-surface-container border border-outline-variant text-primary">
-                      {item.quantum}
-                    </span>
-                  </td>
-                  <td className="py-2 px-3">
-                    <span
-                      className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
-                        item.risk_band?.toUpperCase() === "CRITICAL"
-                          ? "bg-error-container text-on-error-container"
-                          : item.risk_band?.toUpperCase() === "HIGH"
-                          ? "bg-primary-container/20 text-primary border border-primary/30"
-                          : "bg-surface-container-high text-secondary"
-                      }`}
-                    >
-                      {item.risk_band}
-                    </span>
-                  </td>
-                  <td className="py-2 px-3 text-right font-bold text-on-surface font-mono">
-                    {Math.round(item.risk_score)}
-                  </td>
-                  <td className="py-2 px-3 text-center">
-                    <Link
-                      to={`/findings/${item.id}`}
-                      className="px-2 py-0.5 bg-surface-container-high border border-outline-variant hover:border-primary text-primary rounded text-xs transition-colors"
-                    >
-                      Inspect
-                    </Link>
+              {topFindings.length === 0 ? (
+                <tr>
+                  <td colSpan={8} className="py-8 text-center text-outline font-mono text-xs">
+                    No risk findings recorded. Run a scan to populate cryptographic risk analysis.
                   </td>
                 </tr>
-              ))}
+              ) : (
+                topFindings.map((item) => (
+                  <tr key={item.id} className="hover:bg-surface-container-high/50 transition-colors">
+                    <td className="py-2 px-3 text-primary font-mono">{item.rule_id}</td>
+                    <td className="py-2 px-3 font-semibold text-on-surface font-mono">{item.algorithm}</td>
+                    <td className="py-2 px-3 text-on-surface-variant">{item.primitive}</td>
+                    <td className="py-2 px-3 text-secondary font-mono truncate max-w-xs">{item.file_path}:{item.line}</td>
+                    <td className="py-2 px-3">
+                      <span className="px-1.5 py-0.5 rounded text-[10px] font-mono bg-surface-container border border-outline-variant text-primary">
+                        {item.quantum}
+                      </span>
+                    </td>
+                    <td className="py-2 px-3">
+                      <span
+                        className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
+                          item.risk_band?.toUpperCase() === "CRITICAL"
+                            ? "bg-error-container text-on-error-container"
+                            : item.risk_band?.toUpperCase() === "HIGH"
+                            ? "bg-primary-container/20 text-primary border border-primary/30"
+                            : "bg-surface-container-high text-secondary"
+                        }`}
+                      >
+                        {item.risk_band}
+                      </span>
+                    </td>
+                    <td className="py-2 px-3 text-right font-bold text-on-surface font-mono">
+                      {Math.round(item.risk_score)}
+                    </td>
+                    <td className="py-2 px-3 text-center">
+                      <Link
+                        to={`/findings/${item.id}`}
+                        className="px-2 py-0.5 bg-surface-container-high border border-outline-variant hover:border-primary text-primary rounded text-xs transition-colors"
+                      >
+                        Inspect
+                      </Link>
+                    </td>
+                  </tr>
+                ))
+              )}
             </tbody>
           </table>
         </div>

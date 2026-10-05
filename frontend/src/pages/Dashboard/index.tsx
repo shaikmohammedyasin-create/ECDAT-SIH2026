@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { fetchDashboard } from "../../services/api";
+import { fetchDashboard, resetScanState } from "../../services/api";
 import type { DashboardData } from "../../types";
 
 export const DashboardPage: React.FC = () => {
@@ -8,8 +8,10 @@ export const DashboardPage: React.FC = () => {
   const [data, setData] = useState<DashboardData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [resetting, setResetting] = useState<boolean>(false);
 
-  useEffect(() => {
+  const loadData = () => {
+    setLoading(true);
     fetchDashboard()
       .then((res) => {
         setData(res);
@@ -19,7 +21,25 @@ export const DashboardPage: React.FC = () => {
         setError(err.message);
         setLoading(false);
       });
+  };
+
+  useEffect(() => {
+    loadData();
   }, []);
+
+  const handleReset = async () => {
+    if (!window.confirm("Are you sure you want to clear active scan findings and return to clean baseline state?")) return;
+    setResetting(true);
+    try {
+      await resetScanState();
+      const updated = await fetchDashboard();
+      setData(updated);
+    } catch (e: any) {
+      alert(`Failed to reset: ${e.message}`);
+    } finally {
+      setResetting(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -65,10 +85,45 @@ export const DashboardPage: React.FC = () => {
             Continuous quantum vulnerability, Harvest-Now-Decrypt-Later (HNDL) exposure, and PQC transition metrics
           </p>
         </div>
-        <div className="text-xs font-mono text-outline">
-          Profile: <span className="text-primary font-semibold">AST-Crypt-Strict</span>
+        <div className="flex items-center gap-2">
+          <div className="text-xs font-mono text-outline">
+            Profile: <span className="text-primary font-semibold">AST-Crypt-Strict</span>
+          </div>
+          {metrics.total_assets > 0 && (
+            <button
+              onClick={handleReset}
+              disabled={resetting}
+              className="text-[11px] font-mono text-outline hover:text-red-400 border border-outline-variant hover:border-red-400/50 px-2 py-0.5 rounded bg-surface-container flex items-center gap-1 transition-colors"
+              title="Clear active scan data and return to clean IDLE state"
+            >
+              <span className="material-symbols-outlined text-[13px]">restart_alt</span>
+              <span>{resetting ? "Resetting..." : "Reset Data"}</span>
+            </button>
+          )}
         </div>
       </section>
+
+      {/* Initial Clean State Banner for New Users */}
+      {metrics.total_assets === 0 && (
+        <section className="bg-primary/10 border border-primary/30 rounded p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <div className="flex items-center gap-3">
+            <span className="material-symbols-outlined text-primary text-2xl shrink-0">radar</span>
+            <div>
+              <div className="font-bold text-sm text-on-surface">No Cryptographic Scan Data Loaded</div>
+              <div className="text-xs text-on-surface-variant font-sans">
+                Launch a scan on your target repository or run the demo corpus to view discovered cryptographic assets, quantum exposure, and CBOM.
+              </div>
+            </div>
+          </div>
+          <Link
+            to="/scan"
+            className="bg-primary hover:bg-primary/90 text-on-primary font-mono text-xs px-3.5 py-1.5 rounded font-bold transition-all shrink-0 flex items-center gap-1.5 shadow"
+          >
+            <span className="material-symbols-outlined text-base">play_arrow</span>
+            <span>Launch New Scan</span>
+          </Link>
+        </section>
+      )}
 
       {/* 5 KPI Cards */}
       <section className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3">
@@ -174,36 +229,42 @@ export const DashboardPage: React.FC = () => {
           </div>
 
           <div className="space-y-2">
-            {recent_findings.map((f) => (
-              <div
-                key={f.id}
-                className="bg-surface-container border border-outline-variant rounded p-2 flex items-center justify-between hover:border-outline transition-colors"
-              >
-                <div className="min-w-0 pr-2">
-                  <div className="flex items-center gap-1.5">
-                    <span className={`px-1.5 py-0.2 rounded font-mono text-[10px] font-bold border ${bandColors[f.risk_band] || "bg-slate-700"}`}>
-                      {f.risk_band.toUpperCase()} {f.risk_score}
-                    </span>
-                    <span className="font-mono text-xs font-bold text-on-surface">{f.algorithm}</span>
-                    {f.threat !== "None" && (
-                      <span className="px-1 py-0.2 rounded bg-red-900/60 border border-red-500 text-red-300 font-mono text-[9px] font-bold">
-                        {f.threat}
-                      </span>
-                    )}
-                  </div>
-                  <div className="font-mono text-[11px] text-on-surface-variant truncate mt-1">
-                    {f.file_name}:{f.line_number} · <span className="text-primary">{f.usage}</span>
-                  </div>
-                </div>
-
-                <button
-                  onClick={() => navigate(`/findings/${f.id}`)}
-                  className="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant text-primary font-mono text-xs px-2.5 py-1 rounded transition-colors shrink-0"
-                >
-                  Inspect
-                </button>
+            {recent_findings.length === 0 ? (
+              <div className="text-center py-8 font-mono text-xs text-outline">
+                No findings recorded. Launch a scan to inspect findings.
               </div>
-            ))}
+            ) : (
+              recent_findings.map((f) => (
+                <div
+                  key={f.id}
+                  className="bg-surface-container border border-outline-variant rounded p-2 flex items-center justify-between hover:border-outline transition-colors"
+                >
+                  <div className="min-w-0 pr-2">
+                    <div className="flex items-center gap-1.5">
+                      <span className={`px-1.5 py-0.2 rounded font-mono text-[10px] font-bold border ${bandColors[f.risk_band] || "bg-slate-700"}`}>
+                        {f.risk_band.toUpperCase()} {f.risk_score}
+                      </span>
+                      <span className="font-mono text-xs font-bold text-on-surface">{f.algorithm}</span>
+                      {f.threat !== "None" && (
+                        <span className="px-1 py-0.2 rounded bg-red-900/60 border border-red-500 text-red-300 font-mono text-[9px] font-bold">
+                          {f.threat}
+                        </span>
+                      )}
+                    </div>
+                    <div className="font-mono text-[11px] text-on-surface-variant truncate mt-1">
+                      {f.file_name}:{f.line_number} · <span className="text-primary">{f.usage}</span>
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() => navigate(`/findings/${f.id}`)}
+                    className="bg-surface-container-high hover:bg-surface-container-highest border border-outline-variant text-primary font-mono text-xs px-2.5 py-1 rounded transition-colors shrink-0"
+                  >
+                    Inspect
+                  </button>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </section>
@@ -234,19 +295,27 @@ export const DashboardPage: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-outline-variant">
-                {migration_priority.map((m, idx) => (
-                  <tr key={idx} className="hover:bg-surface-container transition-colors">
-                    <td className="py-1.5 px-2 font-bold text-on-surface">{m.algorithm}</td>
-                    <td className="py-1.5 px-2 text-on-surface-variant">{m.usage}</td>
-                    <td className="py-1.5 px-2 text-red-300">{m.risk}</td>
-                    <td className="py-1.5 px-2 text-primary font-semibold">{m.recommendation}</td>
-                    <td className="py-1.5 px-2">
-                      <span className={`px-1 py-0.2 rounded text-[10px] font-bold border ${bandColors[m.priority] || "bg-slate-700"}`}>
-                        {m.priority.toUpperCase()}
-                      </span>
+                {migration_priority.length === 0 ? (
+                  <tr>
+                    <td colSpan={5} className="py-6 text-center text-outline font-mono text-xs">
+                      No migration priorities available. Launch a scan to generate NIST PQC guidance.
                     </td>
                   </tr>
-                ))}
+                ) : (
+                  migration_priority.map((m, idx) => (
+                    <tr key={idx} className="hover:bg-surface-container transition-colors">
+                      <td className="py-1.5 px-2 font-bold text-on-surface">{m.algorithm}</td>
+                      <td className="py-1.5 px-2 text-on-surface-variant">{m.usage}</td>
+                      <td className="py-1.5 px-2 text-red-300">{m.risk}</td>
+                      <td className="py-1.5 px-2 text-primary font-semibold">{m.recommendation}</td>
+                      <td className="py-1.5 px-2">
+                        <span className={`px-1 py-0.2 rounded text-[10px] font-bold border ${bandColors[m.priority] || "bg-slate-700"}`}>
+                          {m.priority.toUpperCase()}
+                        </span>
+                      </td>
+                    </tr>
+                  ))
+                )}
               </tbody>
             </table>
           </div>

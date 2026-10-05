@@ -18,7 +18,7 @@ DEFAULT_CORPUS = os.path.abspath("test_corpus")
 class ECDATStateManager:
     def __init__(self):
         self.scan_id: str = str(uuid.uuid4())
-        self.scan_path: str = DEFAULT_CORPUS
+        self.scan_path: str = ""
         self.scenario_year: int = 2035
         self.x_lifetime: float = 10.0
         self.y_migration: float = 3.0
@@ -29,9 +29,20 @@ class ECDATStateManager:
         self.current_stage: str = "IDLE"
         self._cbom_cache: Optional[Dict[str, Any]] = None
         self._validation_cache: Optional[Dict[str, Any]] = None
+        # Start in IDLE state with 0 assets so new users see clean dashboard until scan is run
 
-        # Auto-initialize with default controlled corpus if present
-        self.initialize_default()
+    def reset(self):
+        """Reset state back to initial clean IDLE baseline with 0 assets."""
+        self.scan_id = str(uuid.uuid4())
+        self.scan_path = ""
+        self.assets = []
+        self.metrics = {}
+        self.scan_logs = []
+        self.scan_in_progress = False
+        self.current_stage = "IDLE"
+        self._cbom_cache = None
+        self._validation_cache = None
+        self.log_event("INFO", "Scan state reset to clean IDLE state.")
 
     def log_event(self, level: str, message: str):
         t_str = time.strftime("%H:%M:%S")

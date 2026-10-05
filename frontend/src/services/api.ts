@@ -42,6 +42,12 @@ export async function fetchDashboard(): Promise<DashboardData> {
   return res.json();
 }
 
+export async function resetScanState(): Promise<any> {
+  const res = await fetch(`${API_BASE}/scans/reset`, { method: "POST" });
+  if (!res.ok) throw new Error(`Reset API error: ${res.statusText}`);
+  return res.json();
+}
+
 export async function triggerScan(data: {
   path: string;
   use_corpus?: boolean;

@@ -178,7 +178,28 @@ export const InventoryPage: React.FC = () => {
         {loading ? (
           <div className="p-8 text-center font-mono text-xs text-outline">Loading cryptographic inventory...</div>
         ) : !data || data.items.length === 0 ? (
-          <div className="p-8 text-center font-mono text-xs text-outline">No cryptographic assets match the selected filters.</div>
+          <div className="p-12 text-center flex flex-col items-center justify-center space-y-3">
+            <span className="material-symbols-outlined text-outline text-4xl">inventory_2</span>
+            <div className="text-on-surface font-semibold text-sm font-mono">
+              {!submittedSearch && algorithm === "All" && quantumStatus === "All" && threat === "All" && riskBand === "All"
+                ? "No Cryptographic Assets Discovered Yet"
+                : "No cryptographic assets match the selected filters"}
+            </div>
+            <p className="text-xs text-on-surface-variant max-w-md font-sans">
+              {!submittedSearch && algorithm === "All" && quantumStatus === "All" && threat === "All" && riskBand === "All"
+                ? "Run a scan on your repository or directory to analyze cryptographic algorithms, quantum risk postures, and generate CBOM."
+                : "Try clearing your search query or loosening the filter criteria to see cryptographic findings."}
+            </p>
+            {!submittedSearch && algorithm === "All" && quantumStatus === "All" && threat === "All" && riskBand === "All" && (
+              <button
+                onClick={() => navigate("/scan")}
+                className="mt-2 px-3.5 py-1.5 rounded bg-primary text-on-primary font-mono text-xs font-semibold hover:bg-primary/90 transition-colors flex items-center gap-1.5"
+              >
+                <span className="material-symbols-outlined text-sm">play_arrow</span>
+                Launch New Scan
+              </button>
+            )}
+          </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full font-mono text-xs text-left">

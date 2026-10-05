@@ -240,7 +240,16 @@ export const CBOMPage: React.FC = () => {
 
           {/* Components List */}
           <div className="flex-1 overflow-y-auto divide-y divide-outline-variant/60 font-code-sm">
-            {filteredComponents.map((comp, idx) => {
+            {filteredComponents.length === 0 ? (
+              <div className="p-8 text-center flex flex-col items-center justify-center space-y-2 text-outline font-mono text-xs">
+                <span className="material-symbols-outlined text-3xl">account_tree</span>
+                <span className="font-semibold text-on-surface">No Cryptographic Components Discovered</span>
+                <p className="text-[11px] text-on-surface-variant max-w-xs">
+                  Run a scan on your target codebase to generate CycloneDX 1.6 Cryptographic Bill of Materials components.
+                </p>
+              </div>
+            ) : (
+              filteredComponents.map((comp, idx) => {
               const cryptoProps = comp.cryptoProperties || {};
               const algo = comp.name || "Unknown";
               const isPqc = algo.includes("ML-KEM") || algo.includes("Kyber") || algo.includes("Dilithium");
@@ -297,7 +306,7 @@ export const CBOMPage: React.FC = () => {
                   </div>
                 </div>
               );
-            })}
+            }))}
           </div>
         </section>
 

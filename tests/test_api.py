@@ -13,6 +13,13 @@ from backend.api.main import app
 client = TestClient(app)
 
 
+@pytest.fixture(autouse=True, scope="module")
+def ensure_test_state_loaded():
+    from backend.api.state import state, DEFAULT_CORPUS
+    if not state.assets:
+        state.run_scan(DEFAULT_CORPUS)
+
+
 def test_health_check():
     resp = client.get("/health")
     assert resp.status_code == 200

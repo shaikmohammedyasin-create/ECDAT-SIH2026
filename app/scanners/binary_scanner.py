@@ -128,19 +128,20 @@ def scan_class_bytes(raw_bytes: bytes, file_path: str, container_name: str = "")
     if not strings:
         return []
 
-    has_crypto_api = any(cls in s for s in strings for cls in KNOWN_CRYPTO_CLASSES)
+    # Optimize search by converting strings to uppercase set once
+    strings_upper = {s.upper() for s in strings}
+    joined_upper = " ".join(strings_upper)
+    has_crypto_api = any(cls.upper() in joined_upper for cls in KNOWN_CRYPTO_CLASSES)
     assets = []
 
     for algo, (usage, ksize, rule_id) in ALGO_INDICATORS.items():
         found = False
-        for s in strings:
-            s_up = s.upper()
-            if s_up == algo or f"/{algo}/" in s_up or f"{algo}/" in s_up or f"/{algo}" in s_up or f"\"{algo}\"" in s_up:
-                found = True
-                break
-            elif has_crypto_api and algo in s_up:
-                found = True
-                break
+        if algo in strings_upper:
+            found = True
+        elif f"/{algo}/" in joined_upper or f"{algo}/" in joined_upper or f"/{algo}" in joined_upper or f'"{algo}"' in joined_upper:
+            found = True
+        elif has_crypto_api and algo in joined_upper:
+            found = True
 
         if found:
             canon_algo = "DES3" if algo in ("3DES", "DESEDE") else ("SHA-1" if algo == "SHA1" else ("SHA-256" if algo == "SHA256" else algo))
@@ -173,7 +174,11 @@ def scan_class_bytes(raw_bytes: bytes, file_path: str, container_name: str = "")
 
 def scan_binary_file(filepath: str) -> List[CryptoAsset]:
     """Scan a compiled binary (.class, .jar) statically without execution."""
-    ext = os.path.splitext(filepath)[1].lower()
+    lower_path = filepath.lower()
+    if lower_path.endswith("-sources.jar"):
+        return []
+
+    ext = os.path.splitext(lower_path)[1]
     if ext == ".class":
         try:
             with open(filepath, "rb") as f:

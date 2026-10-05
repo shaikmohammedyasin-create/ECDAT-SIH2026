@@ -118,6 +118,29 @@ for algo, p_list in PATTERNS.items():
         regex_str, conf, usage, keysize_extractor, rule_id = p_tuple
         COMPILED_PATTERNS.append((algo, re.compile(regex_str), conf, usage, keysize_extractor, rule_id))
 
+# High-performance compiled pre-filters for file-level and line-level screening
+FILE_CRYPTO_PREFILTER = re.compile(
+    r'\b(?:'
+    r'rsa|dsa|ecdsa|ecdh|diffiehellman|x25519|ed25519|curve25519|'
+    r'aes|des|des3|desede|rc4|arc4|arcfour|chacha20|poly1305|'
+    r'sha(?:1|224|256|384|512|3)?|md5|rs(?:256|384|512)|'
+    r'hashlib|keypairgenerator|keyagreement|messagedigest|cipher|signature|'
+    r'createcipheriv|createhash|createecdh|evp_\w+|rsa_\w+|ssh-rsa|ssh-ed25519|ecdsa-sha2|rsa-sha2|'
+    r'secp256\w*|secp384\w*|secp521\w*|prime256\w*|generate_private_key'
+    r')\b|aes\d+|evp_|rsa_|secp|prime256|"AES|"DES|"DESede',
+    re.IGNORECASE
+)
+
+PY_AST_PREFILTER = re.compile(
+    r'\b(?:hashlib|rsa|generate_private_key|secp\w*|x25519|ed25519|aes|des|des3|arc4|rc4|chacha20)\b',
+    re.IGNORECASE
+)
+
+LINE_CRYPTO_PREFILTER = re.compile(
+    r'\b(?:rsa|dsa|ecdsa|ecdh|diffiehellman|x25519|ed25519|curve25519|aes|des|des3|desede|rc4|arc4|arcfour|chacha20|poly1305|sha1|sha256|sha384|sha512|sha3|md5|rs(?:256|384|512)|hashlib|keypairgenerator|keyagreement|messagedigest|cipher|signature|createcipheriv|createhash|createecdh|evp_\w+|rsa_\w+|ssh-rsa|ssh-ed25519|ecdsa-sha2|rsa-sha2|secp256|prime256)\b|aes\d+|evp_|rsa_|secp|prime256|"AES|"DES|"DESede',
+    re.IGNORECASE
+)
+
 def _extract_mode(algo, match) -> str | None:
     if algo != "AES" or not match.groups():
         return None
@@ -464,19 +487,23 @@ def scan_file(filepath: str) -> List[CryptoAsset]:
     if filepath.lower().endswith(non_source_exts):
         return []
 
-    assets = []
     try:
         with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
             content = f.read()
     except Exception:
         return []
 
+    # Fast file-level screening: skip files without any crypto keywords
+    if not content or not FILE_CRYPTO_PREFILTER.search(content):
+        return []
+
     lines = content.splitlines()
     matched_ast_lines = set()
     ast_succeeded = False
+    assets = []
 
     # Step 1: AST-based Call-Site Analysis for Python source files
-    if filepath.endswith('.py'):
+    if filepath.endswith('.py') and PY_AST_PREFILTER.search(content):
         try:
             tree = ast.parse(content, filename=filepath)
             visitor = PythonCryptoASTVisitor(filepath, lines)
@@ -489,8 +516,7 @@ def scan_file(filepath: str) -> List[CryptoAsset]:
 
     # If Python AST parsing succeeded, don't execute raw regex fallback on comments/strings
     if ast_succeeded and filepath.endswith('.py'):
-        # Only check regex for explicit patterns on non-comment lines if not matched by AST
-        pass
+        return assets
 
     # Step 2: Line-by-line pattern matching (Regex Fallback / Multi-language Java, JS, TS, C)
     for line_idx, line in enumerate(lines):
@@ -509,17 +535,8 @@ def scan_file(filepath: str) -> List[CryptoAsset]:
         if line_clean.startswith(("http://", "https://", "ftp://")):
             continue
 
-        # If Python AST already parsed the file, skip arbitrary assignments/strings
-        if ast_succeeded and filepath.endswith('.py'):
-            continue
-
-        # Fast keyword pre-filter for non-Python or non-AST files
-        lower_line = line_clean.lower()
-        if not any(k in lower_line for k in (
-            "rsa", "dsa", "ec", "secp", "prime256", "x25519", "ed25519", "aes", "des", "rc4", "arcfour",
-            "chacha", "poly1305", "sha", "md5", "cipher", "digest", "keypair", "keyagreement",
-            "evp_", "ssh-"
-        )):
+        # Fast line-level regex pre-filter
+        if not LINE_CRYPTO_PREFILTER.search(line_clean):
             continue
 
         for algo, compiled_re, conf, usage, keysize_extractor, rule_id in COMPILED_PATTERNS:
