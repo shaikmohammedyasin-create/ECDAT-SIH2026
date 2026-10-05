@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchInventory } from "../../services/api";
 import type { InventoryResponse } from "../../types";
@@ -13,32 +13,49 @@ export const InventoryPage: React.FC = () => {
   const [riskBand, setRiskBand] = useState<string>("All");
   const [page, setPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
-
-  const loadInventory = useCallback(() => {
-    fetchInventory({
-      search,
-      algorithm,
-      quantum_status: quantumStatus,
-      threat,
-      risk_band: riskBand,
-      page,
-      page_size: 50,
-    })
-      .then((res) => {
-        setData(res);
-        setLoading(false);
-      })
-      .catch(() => setLoading(false));
-  }, [search, algorithm, quantumStatus, threat, riskBand, page]);
+  const [refreshKey, setRefreshKey] = useState<number>(0);
 
   useEffect(() => {
-    loadInventory();
-  }, [loadInventory]);
+    let isCurrent = true;
+    const controller = new AbortController();
+
+    // oxlint-disable-next-line react/set-state-in-effect
+    setLoading(true);
+    fetchInventory(
+      {
+        search,
+        algorithm,
+        quantum_status: quantumStatus,
+        threat,
+        risk_band: riskBand,
+        page,
+        page_size: 50,
+      },
+      controller.signal
+    )
+      .then((res) => {
+        if (isCurrent) {
+          setData(res);
+          setLoading(false);
+        }
+      })
+      .catch((err: any) => {
+        if (err?.name === "AbortError") return;
+        if (isCurrent) {
+          setLoading(false);
+        }
+      });
+
+    return () => {
+      isCurrent = false;
+      controller.abort();
+    };
+  }, [search, algorithm, quantumStatus, threat, riskBand, page, refreshKey]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setPage(1);
-    loadInventory();
+    setRefreshKey((k) => k + 1);
   };
 
   const bandColors: Record<string, string> = {

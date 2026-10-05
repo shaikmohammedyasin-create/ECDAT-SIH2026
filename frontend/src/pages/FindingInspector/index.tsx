@@ -16,7 +16,11 @@ export const FindingInspector: React.FC = () => {
 
   useEffect(() => {
     let isCurrent = true;
-    fetchFindingDetail(findingId)
+    const controller = new AbortController();
+
+    // oxlint-disable-next-line react/set-state-in-effect
+    setLoading(true);
+    fetchFindingDetail(findingId, controller.signal)
       .then((data) => {
         if (isCurrent) {
           setFinding(data);
@@ -24,14 +28,17 @@ export const FindingInspector: React.FC = () => {
           setLoading(false);
         }
       })
-      .catch((err) => {
+      .catch((err: any) => {
+        if (err?.name === "AbortError") return;
         if (isCurrent) {
-          setError(err.message || "Failed to load finding details");
+          setError(err?.message || "Failed to load finding details");
           setLoading(false);
         }
       });
+
     return () => {
       isCurrent = false;
+      controller.abort();
     };
   }, [findingId]);
 

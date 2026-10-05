@@ -132,15 +132,18 @@ export async function fetchScanStatus(): Promise<any> {
   return res.json();
 }
 
-export async function fetchInventory(params?: {
-  search?: string;
-  algorithm?: string;
-  quantum_status?: string;
-  threat?: string;
-  risk_band?: string;
-  page?: number;
-  page_size?: number;
-}): Promise<InventoryResponse> {
+export async function fetchInventory(
+  params?: {
+    search?: string;
+    algorithm?: string;
+    quantum_status?: string;
+    threat?: string;
+    risk_band?: string;
+    page?: number;
+    page_size?: number;
+  },
+  signal?: AbortSignal
+): Promise<InventoryResponse> {
   const q = new URLSearchParams();
   if (params?.search) q.set("search", params.search);
   if (params?.algorithm && params.algorithm !== "All") q.set("algorithm", params.algorithm);
@@ -150,13 +153,13 @@ export async function fetchInventory(params?: {
   if (params?.page) q.set("page", params.page.toString());
   if (params?.page_size) q.set("page_size", params.page_size.toString());
 
-  const res = await fetch(`${API_BASE}/inventory?${q.toString()}`);
+  const res = await fetch(`${API_BASE}/inventory?${q.toString()}`, { signal });
   if (!res.ok) throw new Error(`Inventory API error: ${res.statusText}`);
   return res.json();
 }
 
-export async function fetchFindingDetail(id: number | string): Promise<FindingDetail> {
-  const res = await fetch(`${API_BASE}/findings/${id}`);
+export async function fetchFindingDetail(id: number | string, signal?: AbortSignal): Promise<FindingDetail> {
+  const res = await fetch(`${API_BASE}/findings/${id}`, { signal });
   if (!res.ok) throw new Error(`Finding detail error: ${res.statusText}`);
   return res.json();
 }
