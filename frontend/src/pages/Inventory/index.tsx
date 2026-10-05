@@ -7,13 +7,13 @@ export const InventoryPage: React.FC = () => {
   const navigate = useNavigate();
   const [data, setData] = useState<InventoryResponse | null>(null);
   const [search, setSearch] = useState<string>("");
+  const [submittedSearch, setSubmittedSearch] = useState<string>("");
   const [algorithm, setAlgorithm] = useState<string>("All");
   const [quantumStatus, setQuantumStatus] = useState<string>("All");
   const [threat, setThreat] = useState<string>("All");
   const [riskBand, setRiskBand] = useState<string>("All");
   const [page, setPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
-  const [refreshKey, setRefreshKey] = useState<number>(0);
 
   useEffect(() => {
     let isCurrent = true;
@@ -23,7 +23,7 @@ export const InventoryPage: React.FC = () => {
     setLoading(true);
     fetchInventory(
       {
-        search,
+        search: submittedSearch,
         algorithm,
         quantum_status: quantumStatus,
         threat,
@@ -50,12 +50,12 @@ export const InventoryPage: React.FC = () => {
       isCurrent = false;
       controller.abort();
     };
-  }, [search, algorithm, quantumStatus, threat, riskBand, page, refreshKey]);
+  }, [submittedSearch, algorithm, quantumStatus, threat, riskBand, page]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setPage(1);
-    setRefreshKey((k) => k + 1);
+    setSubmittedSearch(search);
   };
 
   const bandColors: Record<string, string> = {
