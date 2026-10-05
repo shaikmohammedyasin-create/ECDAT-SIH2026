@@ -39,7 +39,7 @@ ECDAT is a cybersecurity and Post-Quantum Cryptography (PQC) readiness prototype
 ```text
 ┌────────────────────────────────────────────────────────────────────────┐
 │               REACT + TYPESCRIPT + VITE STITCH WORKSTATION             │
-│                       (Port 5173 / Localhost)                         │
+│                       (Port 5173 / Localhost)                          │
 │                                                                        │
 │   • Dashboard             • Finding Inspector      • CBOM Inspector    │
 │   • New Scan Pipeline     • Mosca Simulator        • Terminal & Log    │
@@ -51,7 +51,7 @@ ECDAT is a cybersecurity and Post-Quantum Cryptography (PQC) readiness prototype
                                     ▼
 ┌────────────────────────────────────────────────────────────────────────┐
 │                   FASTAPI ASYNC BACKEND ENGINE                         │
-│                       (Port 8000 / Localhost)                         │
+│                       (Port 8000 / Localhost)                          │
 │                                                                        │
 │   GET  /api/dashboard          GET  /api/risk      GET  /api/cbom      │
 │   POST /api/scans              GET  /api/migration GET  /api/reports   │
