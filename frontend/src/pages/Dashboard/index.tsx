@@ -61,6 +61,7 @@ export const DashboardPage: React.FC = () => {
   }
 
   const { metrics, risk_distribution, quantum_exposure, recent_findings, migration_priority, cbom_status } = data;
+  const hasScan = Boolean(data.target_path || (data.status && data.status.toLowerCase() !== "idle"));
 
   const bandColors: Record<string, string> = {
     Critical: "bg-red-800 text-white border-red-600",
@@ -89,7 +90,7 @@ export const DashboardPage: React.FC = () => {
           <div className="text-xs font-mono text-outline">
             Profile: <span className="text-primary font-semibold">AST-Crypt-Strict</span>
           </div>
-          {metrics.total_assets > 0 && (
+          {hasScan && (
             <button
               onClick={handleReset}
               disabled={resetting}
@@ -104,7 +105,7 @@ export const DashboardPage: React.FC = () => {
       </section>
 
       {/* Initial Clean State Banner for New Users */}
-      {metrics.total_assets === 0 && (
+      {!hasScan && (
         <section className="bg-primary/10 border border-primary/30 rounded p-4 flex flex-col sm:flex-row items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <span className="material-symbols-outlined text-primary text-2xl shrink-0">radar</span>

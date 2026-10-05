@@ -44,7 +44,7 @@ const IGNORED_DIRS = new Set([
   ".idea", ".vscode", ".vs",
   ".gradle", ".cargo", "vendor", "pods",
   ".cache", ".tox", "coverage", "htmlcov", "bin", "obj",
-  "docs", "documentation", "man", "assets", "static", "public"
+  "docs", "documentation", "man", "assets"
 ]);
 
 const IGNORED_EXTS = new Set([
@@ -72,7 +72,8 @@ const RELEVANT_FILENAMES = new Set([
   "requirements.txt", "requirements-dev.txt", "pom.xml",
   "package.json", "package-lock.json", "pyproject.toml",
   "go.mod", "cargo.toml", "build.gradle",
-  "nginx.conf", "sshd_config", "openssl.cnf", "dockerfile", "docker-compose.yml"
+  "nginx.conf", "sshd_config", "openssl.cnf", "dockerfile", "docker-compose.yml",
+  "tls.yaml", "tls.yml"
 ]);
 
 function isRelevantScanFile(file: File): boolean {
@@ -97,6 +98,9 @@ function isRelevantScanFile(file: File): boolean {
   if (dotIdx !== -1) {
     const ext = fileName.slice(dotIdx + 1).toLowerCase();
     if (IGNORED_EXTS.has(ext)) return false;
+    if ((ext === "yaml" || ext === "yml") && (fileName === "tls.yaml" || fileName === "tls.yml" || fileName.includes("tls"))) {
+      return true;
+    }
     return RELEVANT_SCAN_EXTS.has(ext);
   }
   return false;

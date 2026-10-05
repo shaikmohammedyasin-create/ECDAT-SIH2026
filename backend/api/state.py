@@ -35,6 +35,9 @@ class ECDATStateManager:
         """Reset state back to initial clean IDLE baseline with 0 assets."""
         self.scan_id = str(uuid.uuid4())
         self.scan_path = ""
+        self.scenario_year = 2035
+        self.x_lifetime = 10.0
+        self.y_migration = 3.0
         self.assets = []
         self.metrics = {}
         self.scan_logs = []

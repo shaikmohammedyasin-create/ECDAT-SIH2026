@@ -69,3 +69,72 @@ def test_external_targets_manifest_integrity():
     for r in data["repositories"]:
         assert r["commit"]
         assert r["status"] == "PINNED"
+
+
+def test_sha3_ast_visitor_detection():
+    py_code = """
+import hashlib
+
+def run_hashes(val: bytes):
+    # hashlib.sha3_256(b"in comment") should be ignored
+    h224 = hashlib.sha3_224(val).hexdigest()
+    h384 = hashlib.sha3_384(val).hexdigest()
+    return h224, h384
+"""
+    tmp_path = os.path.join(os.path.dirname(__file__), "temp_test_sha3.py")
+    with open(tmp_path, "w", encoding="utf-8") as f:
+        f.write(py_code)
+    try:
+        findings = scan_file(tmp_path)
+        assert len(findings) == 2
+        for f in findings:
+            assert f.algorithm == "SHA-3"
+            assert f.rule_id == "ECDAT-SRC-SHA3-001"
+            assert f.library == "hashlib"
+        line_numbers = {f.line_number for f in findings}
+        assert 6 in line_numbers
+        assert 7 in line_numbers
+    finally:
+        if os.path.exists(tmp_path):
+            os.remove(tmp_path)
+
+
+def test_state_reset_restores_all_defaults():
+    from backend.api.state import ECDATStateManager
+    mgr = ECDATStateManager()
+    mgr.scenario_year = 2050
+    mgr.x_lifetime = 25.0
+    mgr.y_migration = 7.0
+    mgr.scan_path = "/custom/scanned/path"
+
+    mgr.reset()
+
+    assert mgr.scenario_year == 2035
+    assert mgr.x_lifetime == 10.0
+    assert mgr.y_migration == 3.0
+    assert mgr.scan_path == ""
+    assert mgr.assets == []
+    assert mgr.current_stage == "IDLE"
+
+
+def test_dashboard_status_completed_scan_zero_assets():
+    from fastapi.testclient import TestClient
+    from backend.api.main import app
+    from backend.api.state import state
+
+    client = TestClient(app)
+    saved_path = state.scan_path
+    saved_assets = list(state.assets)
+    try:
+        state.scan_path = "/clean/target/repo"
+        state.assets = []
+        resp = client.get("/api/dashboard")
+        assert resp.status_code == 200
+        data = resp.json()
+        assert data["status"] == "Complete"
+        assert data["target_path"] == "/clean/target/repo"
+        assert data["metrics"]["total_assets"] == 0
+    finally:
+        state.scan_path = saved_path
+        state.assets = saved_assets
+

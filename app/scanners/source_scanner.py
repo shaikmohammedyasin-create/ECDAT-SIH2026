@@ -189,14 +189,16 @@ class PythonCryptoASTVisitor(ast.NodeVisitor):
         line_txt = self.lines[lineno - 1] if 0 < lineno <= len(self.lines) else ""
 
         # hashlib.md5, hashlib.sha1, hashlib.sha256, hashlib.sha384, hashlib.sha512, sha3
-        if module_name == "hashlib" and func_name in ("md5", "sha1", "sha256", "sha384", "sha512", "sha3_256", "sha3_512"):
+        if module_name == "hashlib" and func_name in ("md5", "sha1", "sha256", "sha384", "sha512", "sha3_224", "sha3_256", "sha3_384", "sha3_512"):
             algo_map = {
                 "md5": ("MD5", "ECDAT-SRC-MD5-001"),
                 "sha1": ("SHA-1", "ECDAT-SRC-SHA1-001"),
                 "sha256": ("SHA-256", "ECDAT-SRC-SHA256-001"),
                 "sha384": ("SHA-384", "ECDAT-SRC-SHA384-001"),
                 "sha512": ("SHA-512", "ECDAT-SRC-SHA512-001"),
+                "sha3_224": ("SHA-3", "ECDAT-SRC-SHA3-001"),
                 "sha3_256": ("SHA-3", "ECDAT-SRC-SHA3-001"),
+                "sha3_384": ("SHA-3", "ECDAT-SRC-SHA3-001"),
                 "sha3_512": ("SHA-3", "ECDAT-SRC-SHA3-001"),
             }
             algo, rule_id = algo_map[func_name]

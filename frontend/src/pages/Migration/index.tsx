@@ -329,9 +329,9 @@ export const MigrationGuidance: React.FC = () => {
                     </span>
                     <ul className="text-[11px] text-on-surface space-y-1 pl-2">
                       {item.migration_path.map((step, sIdx) => (
-                        <li key={sIdx} className="flex items-center gap-1.5">
-                          <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0"></span>
-                          <span className="truncate">{step}</span>
+                        <li key={sIdx} className="flex items-start gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0 mt-1"></span>
+                          <span className="break-words leading-relaxed">{step}</span>
                         </li>
                       ))}
                     </ul>

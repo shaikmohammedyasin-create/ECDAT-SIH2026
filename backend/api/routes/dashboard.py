@@ -112,5 +112,5 @@ def get_dashboard_summary():
         migration_priority=mig_priority,
         cbom_status=cbom_status,
         target_path=state.scan_path,
-        status="Complete" if assets else "Idle"
+        status="Complete" if (state.scan_path or assets) else "Idle"
     )
