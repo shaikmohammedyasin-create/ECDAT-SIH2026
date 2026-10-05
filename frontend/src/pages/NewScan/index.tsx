@@ -76,6 +76,32 @@ function isRelevantScanFile(file: File): boolean {
   return true;
 }
 
+interface ScanTabProps {
+  id: InputMode;
+  icon: string;
+  label: string;
+  sub: string;
+  active: boolean;
+  onSelect: (id: InputMode) => void;
+}
+
+const ScanTab: React.FC<ScanTabProps> = ({ id, icon, label, sub, active, onSelect }) => (
+  <button
+    id={`scan-tab-${id}`}
+    type="button"
+    onClick={() => onSelect(id)}
+    className={`flex-1 flex flex-col items-center gap-1 py-3 px-2 rounded border transition-all text-center ${
+      active
+        ? "bg-primary/10 border-primary text-primary font-bold"
+        : "bg-surface-container border-outline-variant text-on-surface-variant hover:border-outline hover:text-on-surface"
+    }`}
+  >
+    <span className="material-symbols-outlined text-xl">{icon}</span>
+    <span className="text-xs font-mono">{label}</span>
+    <span className="text-[10px] font-sans opacity-70 leading-tight">{sub}</span>
+  </button>
+);
+
 export const NewScanPage: React.FC = () => {
   const navigate = useNavigate();
   const [mode, setMode] = useState<InputMode>("path");
@@ -286,23 +312,6 @@ export const NewScanPage: React.FC = () => {
     return pasteCode.trim().length > 0;
   };
 
-  const Tab = ({ id, icon, label, sub }: { id: InputMode; icon: string; label: string; sub: string }) => (
-    <button
-      id={`scan-tab-${id}`}
-      type="button"
-      onClick={() => setMode(id)}
-      className={`flex-1 flex flex-col items-center gap-1 py-3 px-2 rounded border transition-all text-center ${
-        mode === id
-          ? "bg-primary/10 border-primary text-primary font-bold"
-          : "bg-surface-container border-outline-variant text-on-surface-variant hover:border-outline hover:text-on-surface"
-      }`}
-    >
-      <span className="material-symbols-outlined text-xl">{icon}</span>
-      <span className="text-xs font-mono">{label}</span>
-      <span className="text-[10px] font-sans opacity-70 leading-tight">{sub}</span>
-    </button>
-  );
-
   return (
     <div className="flex-1 p-3 sm:p-4 md:p-6 space-y-4 md:space-y-5 max-w-4xl mx-auto">
       {/* Hidden Native Directory Picker */}
@@ -511,10 +520,10 @@ export const NewScanPage: React.FC = () => {
       <section className="space-y-3">
         <div className="text-xs font-mono text-on-surface-variant">1. SELECT INPUT TYPE</div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
-          <Tab id="path"   icon="folder_open" label="Select Folder"  sub="Pick folder from this PC" />
-          <Tab id="upload" icon="upload_file" label="File / ZIP"     sub="Upload .zip or single file" />
-          <Tab id="url"    icon="link"        label="URL / Git"      sub="GitHub or any git repo" />
-          <Tab id="paste"  icon="code"        label="Paste Code"     sub="Inline source text" />
+          <ScanTab id="path"   active={mode === "path"}   onSelect={setMode} icon="folder_open" label="Select Folder"  sub="Pick folder from this PC" />
+          <ScanTab id="upload" active={mode === "upload"} onSelect={setMode} icon="upload_file" label="File / ZIP"     sub="Upload .zip or single file" />
+          <ScanTab id="url"    active={mode === "url"}    onSelect={setMode} icon="link"        label="URL / Git"      sub="GitHub or any git repo" />
+          <ScanTab id="paste"  active={mode === "paste"}  onSelect={setMode} icon="code"        label="Paste Code"     sub="Inline source text" />
         </div>
       </section>
 

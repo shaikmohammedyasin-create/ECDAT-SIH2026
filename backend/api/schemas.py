@@ -28,6 +28,7 @@ class MetricSummary(BaseModel):
     quantum_vulnerable: int
     grover_weakened: int
     classically_broken: int
+    quantum_safe: Optional[int] = 0
     mosca_violations: int
     critical_risk: int
     high_risk: int

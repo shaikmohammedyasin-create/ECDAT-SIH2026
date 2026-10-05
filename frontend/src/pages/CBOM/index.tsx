@@ -10,12 +10,7 @@ export const CBOMPage: React.FC = () => {
   const [validating, setValidating] = useState(false);
   const [mobileTab, setMobileTab] = useState<"tree" | "raw">("tree");
 
-  useEffect(() => {
-    loadCBOM();
-  }, []);
-
   const loadCBOM = () => {
-    setLoading(true);
     fetchCBOM()
       .then((data) => {
         setCbomData(data);
@@ -26,6 +21,10 @@ export const CBOMPage: React.FC = () => {
         setLoading(false);
       });
   };
+
+  useEffect(() => {
+    loadCBOM();
+  }, []);
 
   const revalidateSchema = () => {
     setValidating(true);

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { fetchInventory } from "../../services/api";
 import type { InventoryResponse } from "../../types";
@@ -14,8 +14,7 @@ export const InventoryPage: React.FC = () => {
   const [page, setPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(true);
 
-  const loadInventory = () => {
-    setLoading(true);
+  const loadInventory = useCallback(() => {
     fetchInventory({
       search,
       algorithm,
@@ -30,11 +29,11 @@ export const InventoryPage: React.FC = () => {
         setLoading(false);
       })
       .catch(() => setLoading(false));
-  };
+  }, [search, algorithm, quantumStatus, threat, riskBand, page]);
 
   useEffect(() => {
     loadInventory();
-  }, [algorithm, quantumStatus, threat, riskBand, page]);
+  }, [loadInventory]);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault();

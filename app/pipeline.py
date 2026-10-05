@@ -141,6 +141,7 @@ def run_full_scan(
         "quantum_vulnerable": sum(1 for a in ok if a.quantum_status.value == "Vulnerable"),
         "grover_weakened": sum(1 for a in ok if a.quantum_status.value == "Weakened"),
         "classically_broken": sum(1 for a in ok if a.quantum_status.value == "Legacy-broken"),
+        "quantum_safe": sum(1 for a in ok if a.quantum_status.value in ("Safe", "PQC-ready") or a.quantum_vuln_class.value == "QUANTUM_SAFE"),
         "mosca_violations": sum(1 for a in ok if a.mosca_at_risk),
         "critical_risk": sum(1 for a in ok if a.risk_band == "Critical"),
         "high_risk": sum(1 for a in ok if a.risk_band == "High"),

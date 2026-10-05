@@ -206,3 +206,49 @@ def test_path_traversal_protection():
     resp_root = client.post("/api/scans", json={"use_corpus": False, "path": system_path})
     assert resp_root.status_code == 400
 
+
+def test_paste_scan_endpoint():
+    resp = client.post(
+        "/api/scans/paste",
+        data={
+            "code": "import hashlib\nh = hashlib.sha256().hexdigest()",
+            "filename": "crypto_snippet.py",
+            "scenario_year": "2035",
+            "x_lifetime": "10.0",
+            "y_migration": "3.0"
+        }
+    )
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["scan_in_progress"] is False
+    assert data["current_stage"] == "COMPLETE"
+    assert data["total_assets"] >= 1
+    assert "quantum_safe" in data["metrics"]
+
+
+def test_upload_scan_endpoint():
+    import io
+    import zipfile
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w") as zf:
+        zf.writestr("sample.py", "import hashlib\nh = hashlib.md5().hexdigest()")
+    buf.seek(0)
+
+    resp = client.post(
+        "/api/scans/upload",
+        files={"file": ("project.zip", buf.getvalue(), "application/zip")},
+        data={"scenario_year": "2035", "x_lifetime": "10.0", "y_migration": "3.0"}
+    )
+    assert resp.status_code == 200
+    data = resp.json()
+    assert data["scan_in_progress"] is False
+    assert data["current_stage"] == "COMPLETE"
+    assert data["total_assets"] >= 1
+    assert data["metrics"]["classically_broken"] >= 1
+
+    # Reset state back to default controlled corpus
+    reset_resp = client.post("/api/scans", json={"use_corpus": True, "scenario_year": 2035})
+    assert reset_resp.status_code == 200
+    assert reset_resp.json()["total_assets"] == 25
+
+

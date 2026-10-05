@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { TopBar } from "./TopBar";
 import { Sidebar } from "./Sidebar";
 import { fetchDashboard } from "../services/api";
 
 export const Layout: React.FC = () => {
-  const location = useLocation();
   const [targetPath, setTargetPath] = useState<string>("test_corpus");
   const [scanStatus, setScanStatus] = useState<string>("Complete");
   const [cbomValid, setCbomValid] = useState<boolean>(true);
   const [isMobileNavOpen, setIsMobileNavOpen] = useState<boolean>(false);
 
-  // Auto-close mobile drawer whenever route changes
-  useEffect(() => {
-    setIsMobileNavOpen(false);
-  }, [location.pathname]);
+
 
   useEffect(() => {
     fetchDashboard()

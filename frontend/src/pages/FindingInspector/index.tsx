@@ -15,17 +15,24 @@ export const FindingInspector: React.FC = () => {
   const [mobileTab, setMobileTab] = useState<"meta" | "code">("meta");
 
   useEffect(() => {
-    setLoading(true);
-    setError(null);
+    let isCurrent = true;
     fetchFindingDetail(findingId)
       .then((data) => {
-        setFinding(data);
-        setLoading(false);
+        if (isCurrent) {
+          setFinding(data);
+          setError(null);
+          setLoading(false);
+        }
       })
       .catch((err) => {
-        setError(err.message || "Failed to load finding details");
-        setLoading(false);
+        if (isCurrent) {
+          setError(err.message || "Failed to load finding details");
+          setLoading(false);
+        }
       });
+    return () => {
+      isCurrent = false;
+    };
   }, [findingId]);
 
   const copyCode = () => {
@@ -269,8 +276,12 @@ export const FindingInspector: React.FC = () => {
               </span>
               <span
                 className={`px-1.5 py-0.5 rounded text-[10px] font-code-sm font-bold ${
-                  finding.quantum_status === "SHOR_BROKEN"
+                  finding.quantum_status === "Vulnerable" || finding.quantum_vuln_class === "SHOR_BROKEN"
                     ? "bg-error-container text-on-error-container"
+                    : finding.quantum_status === "Weakened" || finding.quantum_vuln_class === "GROVER_WEAKENED"
+                    ? "bg-amber-900/60 text-amber-200 border border-amber-600"
+                    : finding.quantum_status === "Legacy-broken" || finding.quantum_vuln_class === "CLASSICALLY_BROKEN"
+                    ? "bg-fuchsia-950/60 text-fuchsia-200 border border-fuchsia-600"
                     : "bg-surface-container-highest text-primary"
                 }`}
               >
@@ -291,19 +302,23 @@ export const FindingInspector: React.FC = () => {
               <div className="grid grid-cols-2 gap-2 text-[11px]">
                 <div className="bg-surface-container-lowest p-2 rounded border border-outline-variant">
                   <span className="text-on-surface-variant block text-[10px] uppercase font-bold">Shor Algorithm Impact</span>
-                  <span className={`font-semibold text-[12px] block mt-0.5 ${finding.quantum_status === "Vulnerable" ? "text-error" : "text-tertiary"}`}>
-                    {finding.quantum_status === "Vulnerable" ? "High Severity" : "Resistant"}
+                  <span className={`font-semibold text-[12px] block mt-0.5 ${
+                    finding.quantum_status === "Vulnerable" || finding.quantum_vuln_class === "SHOR_BROKEN" ? "text-error" : "text-tertiary"
+                  }`}>
+                    {finding.quantum_status === "Vulnerable" || finding.quantum_vuln_class === "SHOR_BROKEN" ? "High Severity" : "Resistant"}
                   </span>
                   <span className="text-on-surface-variant text-[10px]">
-                    {finding.quantum_status === "Vulnerable"
+                    {finding.quantum_status === "Vulnerable" || finding.quantum_vuln_class === "SHOR_BROKEN"
                       ? "Discrete log/factoring reduced to polynomial time."
                       : "No Shor period-finding weakness."}
                   </span>
                 </div>
                 <div className="bg-surface-container-lowest p-2 rounded border border-outline-variant">
                   <span className="text-on-surface-variant block text-[10px] uppercase font-bold">Grover Algorithm Impact</span>
-                  <span className={`font-semibold text-[12px] block mt-0.5 ${finding.quantum_status === "Weakened" ? "text-primary" : "text-on-surface-variant"}`}>
-                    {finding.quantum_status === "Weakened" ? "Weakened (√N)" : "Minimal"}
+                  <span className={`font-semibold text-[12px] block mt-0.5 ${
+                    finding.quantum_status === "Weakened" || finding.quantum_vuln_class === "GROVER_WEAKENED" ? "text-primary" : "text-on-surface-variant"
+                  }`}>
+                    {finding.quantum_status === "Weakened" || finding.quantum_vuln_class === "GROVER_WEAKENED" ? "Weakened (√N)" : "Minimal"}
                   </span>
                   <span className="text-on-surface-variant text-[10px]">
                     Effective key length halved under quadratic search.

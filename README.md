@@ -215,9 +215,9 @@ Run the full automated test suite:
     .\\venv\\Scripts\\python.exe -m pytest tests/ -v
 
 ### Verified Results
-- **66 tests total:** 48 core, 13 API, and 5 hardening tests.
+- **68 tests total:** 48 core, 15 API, and 5 hardening tests.
 - **Ground-truth evaluation:** 37 true positives, 0 false positives, 1 false negative, and 15 true negatives; precision **1.0000**, recall **0.9737**, F1 **0.9867**.
-- **Demo scan (`test_corpus`):** 25 assets, 11 Shor-vulnerable, 5 Grover-weakened, 6 legacy-broken, 16 Mosca violations, with 14 Critical, 8 High, and 3 Medium findings.
+- **Demo scan (`test_corpus`):** 25 assets (11 Shor-vulnerable, 5 Grover-weakened, 6 legacy-broken, 3 Quantum-safe), 16 Mosca violations, with 14 Critical, 8 High, and 3 Medium findings.
 - **CycloneDX 1.6 CBOM:** 25 components and 0 schema errors on the verified demo scan.
 - **External scans:** OpenSSL 3.3.0 (5,295 files, 1,295 findings), CPython 3.12.3 (4,636 files, 45 findings), and OpenSSH 9.7p1 (849 files, 205 findings); all recorded 0 CBOM schema errors.
 
@@ -244,7 +244,7 @@ For a reproducible evaluator walkthrough:
 
 ### Verified Demo Evidence
 
-The verified `test_corpus` demonstration contains **25 assets**, **11 Shor-vulnerable**, **5 Grover-weakened**, **6 legacy-broken**, **16 Mosca violations**, **14 Critical**, **8 High**, and **3 Medium** findings. The resulting CycloneDX 1.6 CBOM contains **25 components** with **0 schema errors**.
+The verified `test_corpus` demonstration contains **25 assets** (**11 Shor-vulnerable**, **5 Grover-weakened**, **6 legacy-broken**, **3 Quantum-safe**), **16 Mosca violations**, **14 Critical**, **8 High**, and **3 Medium** findings. The resulting CycloneDX 1.6 CBOM contains **25 components** with **0 schema errors**.
 
 ![ECDAT Dashboard](tests/results/e2e_01_dashboard.png)
 

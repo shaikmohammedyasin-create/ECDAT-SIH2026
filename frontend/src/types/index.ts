@@ -3,6 +3,7 @@ export interface MetricSummary {
   quantum_vulnerable: number;
   grover_weakened: number;
   classically_broken: number;
+  quantum_safe?: number;
   mosca_violations: number;
   critical_risk: number;
   high_risk: number;

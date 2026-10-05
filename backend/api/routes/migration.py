@@ -44,7 +44,10 @@ def get_migration_guidance():
     imm_assets = [a for a in assets if a.quantum_status.value == "Vulnerable"]
     hyb_assets = [a for a in assets if a.hybrid_option]
     dep_assets = [a for a in assets if a.quantum_status.value == "Legacy-broken"]
-    comp_assets = [a for a in assets if a.quantum_status.value == "Safe"]
+    comp_assets = [
+        a for a in assets
+        if a.quantum_status.value in ("Safe", "PQC-ready") or a.quantum_vuln_class.value == "QUANTUM_SAFE"
+    ]
 
     summary = {
         "immediate_count": len(imm_assets),

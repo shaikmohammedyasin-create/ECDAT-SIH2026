@@ -19,7 +19,10 @@ def get_dashboard_summary():
     shor_vuln = sum(1 for a in assets if a.quantum_status.value == "Vulnerable")
     grover_weak = sum(1 for a in assets if a.quantum_status.value == "Weakened")
     classical_broken = sum(1 for a in assets if a.quantum_status.value == "Legacy-broken")
-    safe_count = sum(1 for a in assets if a.quantum_status.value == "Quantum-safe")
+    safe_count = sum(
+        1 for a in assets
+        if a.quantum_status.value in ("Safe", "PQC-ready") or a.quantum_vuln_class.value == "QUANTUM_SAFE"
+    )
     mosca_viol = sum(1 for a in assets if a.mosca_at_risk)
     crit_count = sum(1 for a in assets if a.risk_band == "Critical")
     high_count = sum(1 for a in assets if a.risk_band == "High")
@@ -31,6 +34,7 @@ def get_dashboard_summary():
         quantum_vulnerable=shor_vuln,
         grover_weakened=grover_weak,
         classically_broken=classical_broken,
+        quantum_safe=safe_count,
         mosca_violations=mosca_viol,
         critical_risk=crit_count,
         high_risk=high_count,
